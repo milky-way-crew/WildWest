@@ -1,0 +1,11 @@
+### don't commit that ###
+# Compiled source
+*.class
+
+# Target directory
+target/*
+
+# Eclipse stuff
+.settings/*
+.project
+.classpath
