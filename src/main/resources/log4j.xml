@@ -17,7 +17,6 @@
 		<param name="Append" value="true" />
 		<param name="MaxFileSize" value="1MB" />
 		<param name="MaxBackupIndex" value="3" />
-		<param name="append" value="true" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d [%t] [%-p] %C{5}  method:%M line:%L - %m%n" />
 		</layout>
