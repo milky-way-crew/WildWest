@@ -1,7 +1,8 @@
 Milky-way games inc.
 ====================
 
-Иииии!
+http://wiki.eclipse.org/EGit/User_Guide#Manual_conflict_resolution
+
 
 Tasks
 -------
@@ -10,8 +11,3 @@ Current tasks will be here:
 
 * implement `login system`
 * implement `database`
-Go a way
-
-Tomcat gavno!!!
-tomcat is good=))
-
