@@ -1,17 +1,11 @@
-##Test
-commit#2
-lol
-shayrma!!!
-1223465678
-###1
-#2
-ertyuihgf
-#3
-hfhf
-123345
-##7
-ππ8
-##444
-bllalaaa
-yes
-play
+Milky-way games inc.
+====================
+
+È…………!
+
+Tasks
+-------
+
+Current tasks will be here:
+
+* implement `login system`
