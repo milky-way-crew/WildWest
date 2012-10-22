@@ -21,7 +21,7 @@
 			<label>Enter Email <input type=text name="email" size=20></label>
 		</p>
 		<p>
-			<label>Enter Password <input type=text name="password"
+			<label>Enter Password <input  type=password name="password"
 				size=20></label>
 		</p>
 		<p>

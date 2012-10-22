@@ -13,7 +13,7 @@
 			Enter NickName <input type=text name="nickName" size=20>
 		</p>
 		<p>
-			Enter Password <input type=text name="password" size=20>
+			Enter Password <input  type=password name="password" size=20>
 		</p>
 		<p>
 			<input type="submit" value="Login" name="login">
