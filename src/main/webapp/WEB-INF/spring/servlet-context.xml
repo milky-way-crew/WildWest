@@ -16,11 +16,15 @@
 		<property name="password" value="root" />
 	</bean>
 
-	<bean id="worldGamesDao"
-		class="com.web.app.worldgames.Name-must-be-here">
+	<bean id="worldGamesDao" class="com.web.app.worldgames.dao.WorldGamesDao">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
@@ -28,8 +32,8 @@
 	<!-- Scans within the base package of the application for @Components to 
 		configure as beans -->
 	<!-- @Controller, @Service, @Configuration, etc. -->
+	<context:component-scan base-package="com.web.app.worldgames.dao" />
 	<context:component-scan base-package="com.web.app" />
-
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 
