@@ -17,16 +17,15 @@ public class WorldGamesDao {
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-
+	
 	public void createTables() {
 		log.debug("Executing create query");
 		jdbcTemplate.execute("create table user (id int(10));");
 	}
-
+	
 	public void dropTables() {
 		log.info("Dropping tables");
-		jdbcTemplate.execute("drop table user;");
-		
+		jdbcTemplate.execute("drop table user");
 	}
 
 }
