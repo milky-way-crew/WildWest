@@ -13,11 +13,20 @@
 		<org.springframework-version>3.0.6.RELEASE</org.springframework-version>
 		<log4j-version>1.2.16</log4j-version>
 		<org.slf4j-version>1.6.1</org.slf4j-version>
+		<taglibs-version>1.1.2</taglibs-version>
+		<mysql-connector-version>5.1.18</mysql-connector-version>
 	</properties>
 
 
 	<!-- ** Libs for go here ** -->
 	<dependencies>
+		<!-- Jsp -->
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>${taglibs-version}</version>
+		</dependency>
+
 		<!-- Log4j -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -46,8 +55,22 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-	</dependencies>
 
+		<!-- spring-jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- mysql-driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-version}</version>
+		</dependency>
+		
+	</dependencies>
 
 	<!-- ** Plug-ins for deploy, etc ** -->
 	<build>
