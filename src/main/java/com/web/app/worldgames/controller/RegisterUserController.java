@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.web.app.worldgames.domain.User;
 
 @Controller
-@RequestMapping(value = { "register", "registration.html" })
+@RequestMapping(value = { "/register", "/registration.html" })
 public class RegisterUserController {
 	private static final Logger log = Logger
 			.getLogger(RegisterUserController.class);

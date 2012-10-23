@@ -11,8 +11,8 @@
 	<h1>Oh, hi doggy.</h1>
 	<p><%= new Date() %></p>
 	
-	<a href="login">login</a>
+	<a href="./loginform.html">login</a>
 	<br>
-	<a href="register">register</a>
+	<a href="./registration.html">register</a>
 </body>
 </html>

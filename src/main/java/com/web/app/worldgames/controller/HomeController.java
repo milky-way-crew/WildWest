@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	private final static Logger log = Logger.getLogger(HomeController.class);
 
-	@RequestMapping(value = { "/", "/home" })
+	@RequestMapping(value = { "/", "/index.html" })
 	public String home() {
 		// light comment
 		log.info("HomeController: Passing through...");
