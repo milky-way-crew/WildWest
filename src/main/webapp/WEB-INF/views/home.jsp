@@ -10,5 +10,9 @@
 <body>
 	<h1>Oh, hi doggy.</h1>
 	<p><%= new Date() %></p>
+	
+	<a href="login">login</a>
+	<br>
+	<a href="register">register</a>
 </body>
 </html>

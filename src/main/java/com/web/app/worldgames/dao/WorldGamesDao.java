@@ -25,7 +25,7 @@ public class WorldGamesDao {
 	
 	public void dropTables() {
 		log.info("Dropping tables");
-		jdbcTemplate.execute("drop table user");
+		jdbcTemplate.execute("drop table if exists user");
 	}
 
 }

@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<p>1</p>
+	<p>Hello user: </p>
+	<%= session.getAttribute("user") %>
 </body>
 </html>
