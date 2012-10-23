@@ -16,23 +16,23 @@ import com.web.app.worldgames.domain.User;
 @Controller
 @RequestMapping(value = { "/register", "/registration.html" })
 public class RegisterUserController {
-	private static final Logger log = Logger
-			.getLogger(RegisterUserController.class);
+    private static final Logger log = Logger
+	    .getLogger(RegisterUserController.class);
+ 
+    @RequestMapping(method = RequestMethod.GET)
+    public String showPage(Model model) {
+	log.debug("Register page showin'");
+	model.addAttribute("user", new User());
+	return "registration";
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String showPage(Model model) {
-		log.debug("Register page showin'");
-		model.addAttribute("user", new User());
-		return "registration";
-	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit(HttpServletRequest request,
-			HttpServletResponse response, @ModelAttribute User user,
-			BindingResult result) {
-		log.info("POST: Registering new User.");
-	    log.info(user.toString());
-		request.getSession().setAttribute("user", user);
-		return "redirect:index.html";
-	}
+    @RequestMapping(method = RequestMethod.POST)
+    public String onSubmit(HttpServletRequest request,
+	    HttpServletResponse response, @ModelAttribute User user,
+	    BindingResult result) {
+	log.info("POST: Registering new User.");
+	log.info(user.toString());
+	request.getSession().setAttribute("user", user);
+	return "redirect:index.html";
+    }
 }
