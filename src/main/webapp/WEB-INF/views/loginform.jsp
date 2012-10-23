@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="css/registration.css" type="text/css">
 <title>Login form</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
 						<td align="center"></td>
 					</tr>
 					<tr align="center" height="300">
-						<td><form:form action=".html" method="post"
+						<td><form:form action="login.html" method="post"
 								commandName="user">
 								<h2 align="center">Login</h2>
 								<form:input type="text" path="email" />

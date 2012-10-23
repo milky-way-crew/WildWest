@@ -7,9 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
+<link rel="stylesheet" href="css/registration.css" type="text/css">
 </head>
 <body>
-	<h3>Registration Page</h3>
 	<table align="center">
 		<tr>
 			<td align="center"></td>
