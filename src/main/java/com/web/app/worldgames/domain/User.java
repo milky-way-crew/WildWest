@@ -1,4 +1,4 @@
-package com.web.app.worldgames.domains;
+package com.web.app.worldgames.domain;
 
 public class User {
     private int id;
