@@ -13,8 +13,10 @@ public class SetupDatabaseManager {
 		log.info("Deleting tables");
 		tableManager.dropTables();
 		log.info("Starting creating tables");
+		tableManager.createUserStatistics();
 		tableManager.createTables();
 		log.info("Finished creating tables");
+		
 	}
 
 	public void setTableManager(WorldGamesDao wgd) {

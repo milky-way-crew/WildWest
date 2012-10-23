@@ -20,12 +20,40 @@ public class WorldGamesDao {
 	
 	public void createTables() {
 		log.debug("Executing create query");
-		jdbcTemplate.execute("create table user (id int(10));");
+		StringBuilder sql = new StringBuilder();
+		sql.append("CREATE TABLE users ( ");
+		sql.append("userId INT(10) UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE, ");
+		sql.append("userLogin VARCHAR(80) NOT NULL UNIQUE, ");
+		sql.append("userPassword VARCHAR(80) NOT NULL, ");
+		sql.append("userEmail VARCHAR(100) NOT NULL, ");
+		sql.append("userNickname VARCHAR(80) NOT NULL, ");
+		sql.append("userImage VARCHAR(100) NOT NULL, ");
+		sql.append("userProf VARCHAR(45) NOT NULL DEFAULT 'player', ");
+		sql.append("userDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, ");
+		sql.append("PRIMARY KEY (userId), ");
+		sql.append("INDEX (userId), ");
+		sql.append("FOREIGN KEY (userId) REFERENCES userStatistics(statId)");
+		sql.append(") ENGINE=INNODB");
+		jdbcTemplate.execute(sql.toString());
+	}
+	public void createUserStatistics(){
+		log.debug("Executing create query");
+		StringBuilder sql = new StringBuilder();
+		sql.append("CREATE TABLE userStatistics ( ");
+		sql.append("statId INT(10) UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE, ");
+		sql.append("userAllGames INT(10) UNSIGNED DEFAULT NULL, ");
+		sql.append("userPoints INT(15) UNSIGNED DEFAULT NULL, ");
+		sql.append("userMoneyAmount INT(15) UNSIGNED DEFAULT NULL, ");
+		sql.append("userAllWinGames INT(10) UNSIGNED DEFAULT NULL, ");
+		sql.append("PRIMARY KEY (statId)");
+		sql.append(") ENGINE=INNODB");
+		jdbcTemplate.execute(sql.toString());
 	}
 	
 	public void dropTables() {
 		log.info("Dropping tables");
-		jdbcTemplate.execute("drop table if exists user");
+		jdbcTemplate.execute("drop table if exists users");
+		jdbcTemplate.execute("drop table if exists userStatistics");
 	}
 
 }

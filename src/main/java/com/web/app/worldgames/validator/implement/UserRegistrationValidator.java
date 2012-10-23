@@ -15,7 +15,6 @@ public class UserRegistrationValidator implements IValidator {
     @Autowired
     private IUserServiceManager userServiceManager;
 
-    @Override
     public void validate(Object object, Errors errors) {
 	log.info("Register validating");
 	if (!supports(object.getClass())) {
@@ -48,7 +47,6 @@ public class UserRegistrationValidator implements IValidator {
 	}
     }
 
-    @Override
     public boolean supports(Class<?> vclass) {
 	return vclass.equals(User.class);
     }
