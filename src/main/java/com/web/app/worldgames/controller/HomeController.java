@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	private final static Logger log = Logger.getLogger(HomeController.class);
 
-	@RequestMapping(value = { "/", "/index.html" })
+	@RequestMapping(value = { "/", "/index.html", "/WildWest/" })
 	public String home() {
 		// light comment
 //		if (session.getAttribute("user") == null) {

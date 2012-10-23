@@ -28,7 +28,8 @@
 							<div class="controls">
 								<form:input type="text" path="login" class="input-xlarge"
 									id="login" name="login" rel="popover"
-									data-content="Enter your login." data-original-title="Login" />
+									data-content="What's your login, buddy?"
+									data-original-title="Login field" />
 							</div>
 						</div>
 
@@ -38,8 +39,8 @@
 							<div class="controls">
 								<form:input type="password" path="password" class="input-xlarge"
 									id="password" name="password" rel="popover"
-									data-content="What’s your password?"
-									data-original-title="Password" />
+									data-content="What's your password?"
+									data-original-title="Password field" />
 							</div>
 						</div>
 
@@ -83,42 +84,27 @@
 			}, function() {
 				$(this).popover('hide');
 			});
+
 			$("#registerHere").validate({
 				rules : {
-					user_name : "required",
-					user_email : {
+					login : "required",
+					password : {
 						required : true,
-						email : true
-					},
-					pwd : {
-						required : true,
-						minlength : 6
-					},
-					cpwd : {
-						required : true,
-						equalTo : "#pwd"
-					},
-					gender : "required"
+						minlength : 1
+					}
 				},
 				messages : {
-					user_name : "Enter your first and last name",
-					user_email : {
-						required : "Enter your email address",
-						email : "Enter valid email address"
+					login : {
+						required : "You forgot to enter your login here."
 					},
-					pwd : {
-						required : "Enter your password",
-						minlength : "Password must be minimum 6 characters"
-					},
-					cpwd : {
-						required : "Enter confirm password",
-						equalTo : "Password and Confirm Password must match"
-					},
-					gender : "Select Gender"
+					password : {
+						required : "Cmon enter your password.",
+					}
 				},
 				errorClass : "help-inline",
 				errorElement : "span",
 				highlight : function(element, errorClass, validClass) {
+					$(element).parents('.control-group').removeClass('success');
 					$(element).parents('.control-group').addClass('error');
 				},
 				unhighlight : function(element, errorClass, validClass) {
