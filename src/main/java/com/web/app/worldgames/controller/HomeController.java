@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	private final static Logger log = Logger.getLogger(HomeController.class);
 
-	@RequestMapping(value = { "/", "/home" })
-	public String home(HttpSession session) {
+	@RequestMapping(value = { "/", "/index.html" })
+	public String home() {
 		// light comment
 //		if (session.getAttribute("user") == null) {
 //			return "redirect:login";

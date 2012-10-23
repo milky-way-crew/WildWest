@@ -7,10 +7,74 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
+<link rel="stylesheet" href="css/bootstarp.css" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
 </head>
 <body>
-	<h3>Registration Page</h3>
-	<table align="center">
+	<div class="container">
+		<div class="row">
+			<div class="span8">
+				<form:form class="form-horizontal" id="registerHere"
+					action="registration.html" method="post" commandName="user">
+					<fieldset>
+
+						<legend>Registration</legend>
+
+						<div class="control-group">
+							<label class="control-label">Login</label>
+							<div class="controls">
+								<form:input type="text" path="login" class="input-xlarge" id="login"
+									name="login" rel="popover"
+									data-content="Enter your login."
+									data-original-title="Login"/>
+							</div>
+						</div>
+
+
+						<div class="control-group">
+							<label class="control-label">Nickname</label>
+							<div class="controls">
+								<form:input type="text" path="nickname" class="input-xlarge" id="nickname"
+									name="nickname" rel="popover"
+									data-content="What’s your nickName?"
+									data-original-title="NickName"/>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Email</label>
+							<div class="controls">
+								<form:input type="text" path="email" class="input-xlarge" id="email"
+									name="email" rel="popover"
+									data-content="What’s your email?"
+									data-original-title="Email"/>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Password</label>
+							<div class="controls">
+								<form:input type="password" path="password" class="input-xlarge" id="password"
+									name="password" rel="popover"
+									data-content="What’s your password?"
+									data-original-title="Password"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label"></label>
+							<div class="controls">
+								<button type="submit" class="btn btn-success">Yes</button>
+							</div>
+						</div>
+
+					</fieldset>
+					</form:form>
+			</div>
+		</div>
+	</div>
+
+
+	<!--  <table align="center">
 		<tr>
 			<td align="center"></td>
 		</tr>
@@ -48,5 +112,6 @@
 			</td>
 		</tr>
 	</table>
+	-->
 </body>
 </html>

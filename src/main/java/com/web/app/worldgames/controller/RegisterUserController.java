@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.web.app.worldgames.domain.User;
 
 @Controller
-@RequestMapping(value = { "register", "registration.html" })
+@RequestMapping(value = { "/register", "/registration.html" })
 public class RegisterUserController {
-	private static final Logger log = Logger.getLogger(RegisterUserController.class);
-	
-	
+	private static final Logger log = Logger
+			.getLogger(RegisterUserController.class);
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String showPage(Model model) {
 		log.debug("Register page showin'");
@@ -31,10 +31,8 @@ public class RegisterUserController {
 			HttpServletResponse response, @ModelAttribute User user,
 			BindingResult result) {
 		log.info("POST: Registering new User.");
-		
-		
-		
 	    log.info(user.toString());
+		request.getSession().setAttribute("user", user);
 		return "redirect:home";
 	}
 }
