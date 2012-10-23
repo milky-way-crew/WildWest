@@ -33,6 +33,6 @@ public class RegisterUserController {
 		log.info("POST: Registering new User.");
 	    log.info(user.toString());
 		request.getSession().setAttribute("user", user);
-		return "redirect:home";
+		return "redirect:index.html";
 	}
 }

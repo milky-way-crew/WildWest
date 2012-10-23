@@ -35,6 +35,6 @@ public class LoginUserConroller {
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
-		return "redirect:home";
+		return "redirect:index.html";
 	}
 }
