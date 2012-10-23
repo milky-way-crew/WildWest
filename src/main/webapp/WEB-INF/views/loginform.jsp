@@ -36,10 +36,10 @@
 						<div class="control-group">
 							<label class="control-label">Password</label>
 							<div class="controls">
-								<form:input type="password" path="password" class="input-xlarge" id="password"
-									name="password" rel="popover"
+								<form:input type="password" path="password" class="input-xlarge"
+									id="password" name="password" rel="popover"
 									data-content="What’s your password?"
-									data-original-title="Password"/>
+									data-original-title="Password" />
 							</div>
 						</div>
 
@@ -55,6 +55,85 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Include Bootstrap Asserts JavaScript Files. -->
+	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
+	<script type="text/javascript"
+		src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('input').hover(function() {
+				$(this).popover('show');
+			}, function() {
+				$(this).popover('hide');
+			});
+			$("#registerHere").validate({
+				rules : {
+					user_name : "required",
+					user_email : {
+						required : true,
+						email : true
+					},
+					pwd : {
+						required : true,
+						minlength : 6
+					},
+					cpwd : {
+						required : true,
+						equalTo : "#pwd"
+					},
+					gender : "required"
+				},
+				messages : {
+					user_name : "Enter your first and last name",
+					user_email : {
+						required : "Enter your email address",
+						email : "Enter valid email address"
+					},
+					pwd : {
+						required : "Enter your password",
+						minlength : "Password must be minimum 6 characters"
+					},
+					cpwd : {
+						required : "Enter confirm password",
+						equalTo : "Password and Confirm Password must match"
+					},
+					gender : "Select Gender"
+				},
+				errorClass : "help-inline",
+				errorElement : "span",
+				highlight : function(element, errorClass, validClass) {
+					$(element).parents('.control-group').addClass('error');
+				},
+				unhighlight : function(element, errorClass, validClass) {
+					$(element).parents('.control-group').removeClass('error');
+					$(element).parents('.control-group').addClass('success');
+				}
+			});
+		});
+	</script>
+
+
+
+
+
+
 	<!-- 
 	<div class="container">
 		<div class="row">
