@@ -21,7 +21,7 @@
 						<td align="center"></td>
 					</tr>
 					<tr align="center" height="300">
-						<td><form:form action=".html" method="post"
+						<td><form:form action="registration.html" method="post"
 								commandName="user">
 								<h2 align="center">Login</h2>
 								<form:input type="text" path="login" />
