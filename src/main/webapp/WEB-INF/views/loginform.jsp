@@ -6,55 +6,72 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="css/registration_login.css" type="text/css">
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap-responsive.css"
+	type="text/css">
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap-alert.js"></script>
+<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="js/bootstrap-modal.js"></script>
+<script type="text/javascript" src="js/bootstrap-popover.js"></script>
+<script type="text/javascript" src="js/jbootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="js/jbootstrap-tab.js"></script>
+<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="js/bootstrap-transition.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <title>Login form</title>
 </head>
 <body>
-
+	<div class="box monopoly">Monopoly</div>
 	<div class="container">
 		<div class="row">
 			<div class="span8">
-				<form:form class="form-horizontal" id="registerHere" method='post'
+				<form:form class="form-horizontal" id="loginHere" method='post'
 					action='loginform.html' commandName="user">
 					<fieldset>
-
-						<legend>Sign in</legend>
-
+							<h2>
+								<legend>Sign in</legend>
+							</h2>
 						<div class="control-group">
 							<label class="control-label">Login</label>
 							<div class="controls">
-								<form:input type="text" path="login" class="input-xlarge"
-									id="login" name="login" rel="popover"
-									data-content="What's your login, buddy?"
-									data-original-title="Login field" />
+								<div class="box transparent">
+									<form:input type="text" path="login" class="input-xlarge"
+										id="login" name="login" rel="popover"
+										data-content="What is your login, buddy?"
+										data-original-title="Login field" />
+								</div>
 							</div>
 						</div>
 
 
 						<div class="control-group">
-							<label class="control-label">Password</label>
+							<h3>
+								<label class="control-label">Password</label>
+							</h3>
 							<div class="controls">
-								<form:input type="password" path="password" class="input-xlarge"
-									id="password" name="password" rel="popover"
-									data-content="What's your password?"
-									data-original-title="Password field" />
+								<div class="box transparent">
+									<form:input type="password" path="password"
+										class="input-xlarge" id="password" name="password"
+										rel="popover" data-content="What is your password?"
+										data-original-title="Password field" />
+								</div>
 							</div>
 						</div>
 
-						<div class="control-group">
-							<label class="control-label"></label>
-							<div class="controls">
-								<button type="submit" class="btn btn-success">Create</button>
+							<div class="control-group">
+								<label class="control-label"></label>
+								<div class="controls">
+									<button type="submit" class="btn">Sing in</button>
+									<a href="registration.html"> Registration</a>
+								</div>
 							</div>
-						</div>
-
-					</fieldset>
-				</form:form>
-			</div>
+							
+			</fieldset>
+			</form:form>
 		</div>
+	</div>
 	</div>
 
 	<!-- Include Bootstrap Asserts JavaScript Files. -->
@@ -78,122 +95,58 @@
 	<script type="text/javascript"
 		src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('input').hover(function() {
-				$(this).popover('show');
-			}, function() {
-				$(this).popover('hide');
-			});
+		$(document)
+				.ready(
+						function() {
+							$('input').hover(function() {
+								$(this).popover('show');
+							}, function() {
+								$(this).popover('hide');
+							});
 
-			$("#registerHere").validate({
-				rules : {
-					login : "required",
-					password : {
-						required : true,
-						minlength : 1
-					}
-				},
-				messages : {
-					login : {
-						required : "You forgot to enter your login here."
-					},
-					password : {
-						required : "Cmon enter your password.",
-					}
-				},
-				errorClass : "help-inline",
-				errorElement : "span",
-				highlight : function(element, errorClass, validClass) {
-					$(element).parents('.control-group').removeClass('success');
-					$(element).parents('.control-group').addClass('error');
-				},
-				unhighlight : function(element, errorClass, validClass) {
-					$(element).parents('.control-group').removeClass('error');
-					$(element).parents('.control-group').addClass('success');
-				}
-			});
-		});
+							$("#loginHere")
+									.validate(
+											{
+												rules : {
+													login : "required",
+													password : {
+														required : true,
+														minlength : 1
+													}
+												},
+												messages : {
+													login : {
+														required : "You forgot to enter your login here"
+													},
+													password : {
+														required : "C'mon enter your password",
+													}
+												},
+												errorClass : "help-inline",
+												errorElement : "span",
+												highlight : function(element,
+														errorClass, validClass) {
+													$(element).parents(
+															'.control-group')
+															.removeClass(
+																	'success');
+													$(element).parents(
+															'.control-group')
+															.addClass('error');
+												},
+												unhighlight : function(element,
+														errorClass, validClass) {
+													$(element).parents(
+															'.control-group')
+															.removeClass(
+																	'error');
+													$(element)
+															.parents(
+																	'.control-group')
+															.addClass('success');
+												}
+											});
+						});
 	</script>
-
-
-
-
-
-
-	<!-- 
-	<div class="container">
-		<div class="row">
-			<div class="span8">
-				<form class="form-horizontal" action="login.html" method="post"
-								 id="loginHere" >
-					<fieldset>
-
-						<legend>Sing in</legend>
-
-						<div class="control-group">
-							<label class="control-label">Login</label>
-							<div class="controls">
-								<input type="text"  class="input-xlarge" id="login"
-									name="login" rel="popover"
-									data-content="Enter your login."
-									data-original-title="Login">
-							</div>
-						</div>
-
-
-						<div class="control-group">
-							<label class="control-label">Password</label>
-							<div class="controls">
-								<input type="text"  class="input-xlarge" id="password"
-									name="password" rel="popover"
-									data-content="What’s your password?"
-									data-original-title="Password"/>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label"></label>
-							<div class="controls">
-								<button type="submit" class="btn btn-success">Sing in</button>
-							</div>
-						</div>
-
-					</fieldset>
-				</form>
-			</div>
-		</div>
-	</div>
- -->
-	<!-- 
-	<table align="center" width="500">
-
-		<tr align="center" height="300">
-			<td><form:form action="login.html" method="post"
-					commandName="user" class="form-horizontal">
-					<div class="control-group">
-							<label class="control-label" for="inputLogin">Login</label>
-						<div class="controls">
-							<form:input type="text" path="login" />
-							<font color="red"> <form:errors path="login" /></font>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="inputPassword">Password</label>
-						<div class="controls">
-							<form:input type="password" path="password" />
-							<font color="red"> <form:errors path="password" />
-								</font>
-						</div>
-					</div>
-					<br />
-					<div class="control-group">
-						<div class="controls">
-							<button type="submit" id="button" class="btn">Sign in</button>
-						</div>
-					</div>
-				</form:form></td>
-			<td align="justify"><a href="registration.html">Register</a></td>
-		</tr>
-	</table>
-	 -->
 </body>
 </html>

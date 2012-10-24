@@ -1,0 +1,70 @@
+body {
+	background-image: url("../images/start.png");
+	color: white;
+	font-family: 'impact';
+	font-size: 14pt;
+}
+
+.transparent {
+	filter: alpha(opacity =   50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
+
+.location {
+	margin-top: 50px;
+	margin-bottom: 5px;
+	margin-right: 20px;
+	margin-left: 600px;
+}
+
+h2 {
+	color: black;
+	font-family: monospace;
+	font-size: 20pt;
+}
+
+h3 {
+	color: white;
+	font-family: fantasy;
+	font-size: 20pt;
+}
+
+.monopoly {
+	margin-top: 50px;
+	margin-bottom: 10px;
+	text-align:center;
+	color: 330000;
+	font-family: 'fantasy';
+	font-size: 80pt;
+}
+A:link {
+text-decoration: underline;
+color: white;
+font-size: 20pt;
+}
+
+A:visited {
+text-decoration: underline;
+color: white;
+font-size: 20pt;
+}
+
+A:active {
+text-decoration: underline;
+color: white;
+font-size: 20pt;
+}
+
+A:hover {
+text-decoration: underline;
+color: white;
+font-size: 20pt;
+}
+
+a {
+color: black;
+font-family: monospace;
+font-size: 20pt;
+}

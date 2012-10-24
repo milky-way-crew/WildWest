@@ -7,8 +7,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
-<link rel="stylesheet" href="css/bootstarp.css" type="text/css">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="css/bootstrap-responsive.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap-alert.js"></script>
+<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="js/bootstrap-modal.js"></script>
+<script type="text/javascript" src="js/bootstrap-popover.js"></script>
+<script type="text/javascript" src="js/jbootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="js/jbootstrap-tab.js"></script>
+<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="js/bootstrap-transition.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -23,10 +33,9 @@
 						<div class="control-group">
 							<label class="control-label">Login</label>
 							<div class="controls">
-								<form:input type="text" path="login" class="input-xlarge" id="login"
-									name="login" rel="popover"
-									data-content="Enter your login."
-									data-original-title="Login"/>
+								<form:input type="text" path="login" class="input-xlarge"
+									id="login" name="login" rel="popover"
+									data-content="Enter your login" data-original-title="Login" />
 							</div>
 						</div>
 
@@ -34,30 +43,29 @@
 						<div class="control-group">
 							<label class="control-label">Nickname</label>
 							<div class="controls">
-								<form:input type="text" path="nickname" class="input-xlarge" id="nickname"
-									name="nickname" rel="popover"
-									data-content="What’s your nickName?"
-									data-original-title="NickName"/>
+								<form:input type="text" path="nickname" class="input-xlarge"
+									id="nickname" name="nickname" rel="popover"
+									data-content="Enter your nickname"
+									data-original-title="Nickname" />
 							</div>
 						</div>
-						
+
 						<div class="control-group">
 							<label class="control-label">Email</label>
 							<div class="controls">
-								<form:input type="text" path="email" class="input-xlarge" id="email"
-									name="email" rel="popover"
-									data-content="What’s your email?"
-									data-original-title="Email"/>
+								<form:input type="text" path="email" class="input-xlarge"
+									id="email" name="email" rel="popover"
+									data-content="Enter your email" data-original-title="Email" />
 							</div>
 						</div>
-						
+
 						<div class="control-group">
 							<label class="control-label">Password</label>
 							<div class="controls">
-								<form:input type="password" path="password" class="input-xlarge" id="password"
-									name="password" rel="popover"
-									data-content="What’s your password?"
-									data-original-title="Password"/>
+								<form:input type="password" path="password" class="input-xlarge"
+									id="password" name="password" rel="popover"
+									data-content="Enter your password"
+									data-original-title="Password" />
 							</div>
 						</div>
 						<div class="control-group">
@@ -68,50 +76,91 @@
 						</div>
 
 					</fieldset>
-					</form:form>
+				</form:form>
 			</div>
 		</div>
 	</div>
+	<!-- Include Bootstrap Asserts JavaScript Files. 
+	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
+	<script
+		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
+	<script type="text/javascript"
+		src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>-->
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('input').hover(function() {
+								$(this).popover('show');
+							}, function() {
+								$(this).popover('hide');
+							});
 
-
-	<!--  <table align="center">
-		<tr>
-			<td align="center"></td>
-		</tr>
-		<tr>
-			<td>
-				<table align="center" width="500">
-					<tr>
-						<td align="center"></td>
-					</tr>
-					<tr align="center" height="300">
-						<td><form:form action="registration.html" method="post"
-								commandName="user">
-								<h2 align="center">Login</h2>
-								<form:input type="text" path="login" />
-								<font color="red"><br /> <form:errors path="login" /><br /></font>
-
-								<h2 align="center">Email</h2>
-								<form:input type="text" path="email" />
-								<font color="red"><br /> <form:errors path="email" /><br /></font>
-
-								<h2 align="center">Nickname</h2>
-								<form:input type="text" path="nickname" />
-								<font color="red"><br /> <form:errors path="nickname" /><br /></font>
-
-								<h2 align="center">Password</h2>
-								<form:input type="password" path="password" />
-								<font color="red"><br /> <form:errors path="password" /><br /></font>
-
-								<br />
-								<button type="submit" id="button">Log in</button>
-							</form:form></td>
-					</tr>
-					
-				</table>
-			</td>
-		</tr>
-	</table>
-	-->
+							$("#registerHere")
+									.validate(
+											{
+												rules : {
+													login : "required",
+													nickname : "required",
+													email : "required",
+													password : {
+														required : true,
+														minlength : 1
+													}
+												},
+												messages : {
+													login : {
+														required : "You forgot to enter your login here."
+													},
+													nickname : {
+														required : "You forgot to enter your nickname here."
+													},
+													email : {
+														required : "You forgot to enter your email here."
+													},
+													password : {
+														required : "C'mon enter your password.",
+													}
+												},
+												errorClass : "help-inline",
+												errorElement : "span",
+												highlight : function(element,
+														errorClass, validClass) {
+													$(element).parents(
+															'.control-group')
+															.removeClass(
+																	'success');
+													$(element).parents(
+															'.control-group')
+															.addClass('error');
+												},
+												unhighlight : function(element,
+														errorClass, validClass) {
+													$(element).parents(
+															'.control-group')
+															.removeClass(
+																	'error');
+													$(element)
+															.parents(
+																	'.control-group')
+															.addClass('success');
+												}
+											});
+						});
+	</script>
 </body>
 </html>
