@@ -10,22 +10,9 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="css/bootstrap-responsive.css">
 
-<!-- 
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/bootstrap-alert.js"></script>
-<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
-<script type="text/javascript" src="js/bootstrap-modal.js"></script>
-<script type="text/javascript" src="js/bootstrap-popover.js"></script>
-<script type="text/javascript" src="js/jbootstrap-scrollspy.js"></script>
-<script type="text/javascript" src="js/jbootstrap-tab.js"></script>
-<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
-<script type="text/javascript" src="js/bootstrap-transition.js"></script>
-<script type="text/javascript" src="js/jquery.validate.js"></script>
- -->
-
-
 </head>
 <body>
+	<div class="hero-unit"><h1>Registration page</h1></div>
 	<div class="container">
 		<div class="row">
 			<div class="span8">
@@ -33,7 +20,7 @@
 					action="registration.html" method="post" commandName="user">
 					<fieldset>
 
-						<legend>Registration</legend>
+						<legend>Fill the form below</legend>
 
 						<div class="control-group">
 							<label class="control-label">Login</label>
@@ -98,107 +85,16 @@
 		</div>
 	</div>
 
-	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
-	<script
-		src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$('input').hover(function() {
-								$(this).popover('show');
-							}, function() {
-								$(this).popover('hide');
-							});
-
-							$("#registerHere")
-									.validate(
-											{
-												rules : {
-													login : {
-														required : true,
-														minlength : 6,
-													},
-													nickname : {
-														required : true,
-														minlength : 4,
-													},
-													email : {
-														required : true,
-														email : true,
-													},
-													password : {
-														required : true,
-														minlength : 6,
-													}, 
-													conf_password : {
-														required : true,
-														equalTo: "#password"
-													}
-												},
-												messages : {
-													login : {
-														required : "You forgot to enter your login here.",
-														minlength : "Login must be longer than 6 symbols."
-													},
-													nickname : {
-														required : "You forgot to enter your nickname here.",
-														minlength : "Nickname must be longer than 4 symbols."
-													},
-													email : {
-														required : "You forgot to enter your email here.",
-														email : "Incorrect email."
-													},
-													password : {
-														required : "C'mon enter your password.",
-														minlength : "Password must be longer than 6 symbols."
-													},
-													conf_password : {
-															required:"Enter confirm password",
-															equalTo:"Password and Confirm Password must match",
-													},
-												},
-												errorClass : "help-inline",
-												errorElement : "span",
-												highlight : function(element,
-														errorClass, validClass) {
-													$(element).parents(
-															'.control-group')
-															.removeClass(
-																	'success');
-													$(element).parents(
-															'.control-group')
-															.addClass('error');
-												},
-												unhighlight : function(element,
-														errorClass, validClass) {
-													$(element).parents(
-															'.control-group')
-															.removeClass(
-																	'error');
-													$(element)
-															.parents(
-																	'.control-group')
-															.addClass('success');
-												}
-											});
-						});
-	</script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap-transition.js"></script>
+	<script type="text/javascript" src="js/bootstrap-alert.js"></script>
+	<script type="text/javascript" src="js/bootstrap-modal.js"></script>
+	<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
+	<script type="text/javascript" src="js/bootstrap-scrollspy.js"></script>
+	<script type="text/javascript" src="js/bootstrap-tab.js"></script>
+	<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="js/bootstrap-popover.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
+	<script type="text/javascript" src="js/register.js"></script>
 </body>
 </html>

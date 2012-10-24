@@ -22,6 +22,7 @@ public class LoginUserConroller {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showPage(Model model) {
 		log.info("LoginController GET");
+		
 		model.addAttribute("user", new User());
 		return "loginform";
 	}

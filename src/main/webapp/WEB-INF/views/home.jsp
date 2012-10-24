@@ -12,18 +12,24 @@
 <title>KaBoom</title>
 </head>
 <body>
+	<div class="hero-unit">
+		<h1>Oh, hi doggy.</h1>
+	</div>
 	<div class="container">
-		<div class="hero-unit">
-			<h1>Oh, hi doggy.</h1>
 			<p><%=new Date()%></p>
 			<strong class="muted">Logined: <%=session.getAttribute("user") != null%>
+			<!-- 
 			<%=session.getAttribute("user").toString() %>
+			 -->
 			</strong>
 			<p>
 				<a href="./loginform.html" class="btn">login</a> <a
 					href="./registration.html" class="btn btn-danger">register</a>
 			</p>
-		</div>
+			
+			<p>
+				<a href="./monopoly-game.html" class="btn btn-primary">Link to game rooms</a>
+			</p>
 	</div>
 
 
