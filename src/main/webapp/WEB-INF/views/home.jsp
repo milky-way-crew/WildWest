@@ -34,6 +34,9 @@
 					<a href="./chatRooms.html" class="btn btn-primary">Link to
 						game rooms</a>
 				</p>
+								<p>
+					<a href="./logout.html" class="btn btn-danger">Logout</a>
+				</p>
 			</c:otherwise>
 		</c:choose>
 	</div>
