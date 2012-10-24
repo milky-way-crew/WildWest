@@ -6,24 +6,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- 
 <link rel="stylesheet" href="css/registration_login.css" type="text/css">
+ -->
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="css/bootstrap-responsive.css"
 	type="text/css">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/bootstrap-alert.js"></script>
-<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
-<script type="text/javascript" src="js/bootstrap-modal.js"></script>
-<script type="text/javascript" src="js/bootstrap-popover.js"></script>
-<script type="text/javascript" src="js/jbootstrap-scrollspy.js"></script>
-<script type="text/javascript" src="js/jbootstrap-tab.js"></script>
-<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
-<script type="text/javascript" src="js/bootstrap-transition.js"></script>
-<script type="text/javascript" src="js/jquery.validate.js"></script>
 <title>Login form</title>
 </head>
 <body>
-	<div class="box monopoly">Monopoly</div>
+	<div class="hero-unit"><h1>Monopoly</h1></div>
 	<div class="container">
 		<div class="row">
 			<div class="span8">
@@ -73,8 +65,20 @@
 		</div>
 	</div>
 	</div>
-
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap-transition.js"></script>
+	<script type="text/javascript" src="js/bootstrap-alert.js"></script>
+	<script type="text/javascript" src="js/bootstrap-modal.js"></script>
+	<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
+	<script type="text/javascript" src="js/bootstrap-scrollspy.js"></script>
+	<script type="text/javascript" src="js/bootstrap-tab.js"></script>
+	<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="js/bootstrap-popover.js"></script>
+<!-- 
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
+ -->
 	<!-- Include Bootstrap Asserts JavaScript Files. -->
+	<!-- 
 	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
 	<script
 		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
@@ -94,59 +98,8 @@
 		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
 	<script type="text/javascript"
 		src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$('input').hover(function() {
-								$(this).popover('show');
-							}, function() {
-								$(this).popover('hide');
-							});
+ -->
 
-							$("#loginHere")
-									.validate(
-											{
-												rules : {
-													login : "required",
-													password : {
-														required : true,
-														minlength : 1
-													}
-												},
-												messages : {
-													login : {
-														required : "You forgot to enter your login here"
-													},
-													password : {
-														required : "C'mon enter your password",
-													}
-												},
-												errorClass : "help-inline",
-												errorElement : "span",
-												highlight : function(element,
-														errorClass, validClass) {
-													$(element).parents(
-															'.control-group')
-															.removeClass(
-																	'success');
-													$(element).parents(
-															'.control-group')
-															.addClass('error');
-												},
-												unhighlight : function(element,
-														errorClass, validClass) {
-													$(element).parents(
-															'.control-group')
-															.removeClass(
-																	'error');
-													$(element)
-															.parents(
-																	'.control-group')
-															.addClass('success');
-												}
-											});
-						});
-	</script>
+	<script type="text/javascript" src="js/login.js"></script>
 </body>
 </html>
