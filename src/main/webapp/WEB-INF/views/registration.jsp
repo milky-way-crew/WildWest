@@ -9,6 +9,8 @@
 <title>Registration</title>
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="css/bootstrap-responsive.css">
+
+<!-- 
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap-alert.js"></script>
 <script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
@@ -19,6 +21,9 @@
 <script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
 <script type="text/javascript" src="js/bootstrap-transition.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
+ -->
+
+
 </head>
 <body>
 	<div class="container">
@@ -68,10 +73,22 @@
 									data-original-title="Password" />
 							</div>
 						</div>
+
+						<div class="control-group">
+							<label class="control-label">Confirm password</label>
+							<div class="controls">
+								<input type="password" class="input-xlarge" id="conf_password"
+									name="conf_password" rel="popover"
+									data-content="Confirm your password"
+									data-original-title="Password" />
+							</div>
+						</div>
+
+
 						<div class="control-group">
 							<label class="control-label"></label>
 							<div class="controls">
-								<button type="submit" class="btn btn-success">Yes</button>
+								<button type="submit" class="btn btn-success">Create my account</button>
 							</div>
 						</div>
 
@@ -80,7 +97,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Include Bootstrap Asserts JavaScript Files. 
+
 	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
 	<script
 		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
@@ -98,8 +115,8 @@
 		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
 	<script
 		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
-	<script type="text/javascript"
-		src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>-->
+	<script
+		src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
 	<script type="text/javascript">
 		$(document)
 				.ready(
@@ -114,27 +131,48 @@
 									.validate(
 											{
 												rules : {
-													login : "required",
-													nickname : "required",
-													email : "required",
+													login : {
+														required : true,
+														minlength : 6,
+													},
+													nickname : {
+														required : true,
+														minlength : 4,
+													},
+													email : {
+														required : true,
+														email : true,
+													},
 													password : {
 														required : true,
-														minlength : 1
+														minlength : 6,
+													}, 
+													conf_password : {
+														required : true,
+														equalTo: "#password"
 													}
 												},
 												messages : {
 													login : {
-														required : "You forgot to enter your login here."
+														required : "You forgot to enter your login here.",
+														minlength : "Login must be longer than 6 symbols."
 													},
 													nickname : {
-														required : "You forgot to enter your nickname here."
+														required : "You forgot to enter your nickname here.",
+														minlength : "Nickname must be longer than 4 symbols."
 													},
 													email : {
-														required : "You forgot to enter your email here."
+														required : "You forgot to enter your email here.",
+														email : "Incorrect email."
 													},
 													password : {
 														required : "C'mon enter your password.",
-													}
+														minlength : "Password must be longer than 6 symbols."
+													},
+													conf_password : {
+															required:"Enter confirm password",
+															equalTo:"Password and Confirm Password must match",
+													},
 												},
 												errorClass : "help-inline",
 												errorElement : "span",
