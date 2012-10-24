@@ -28,7 +28,11 @@
 			</p>
 			
 			<p>
-				<a href="./monopoly-game.html" class="btn btn-primary">Link to game rooms</a>
+				<a href="./chatRooms.html" class="btn btn-primary">Link to game rooms</a>
+			</p>
+
+			<p>
+				<a href="./chat.html" class="btn btn-primary">Chat</a>
 			</p>
 	</div>
 
