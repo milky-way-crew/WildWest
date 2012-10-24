@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.web.app.worldgames.domain.User;
 
@@ -20,22 +21,24 @@ public class LoginUserConroller {
 	private static final Logger log = Logger.getLogger(LoginUserConroller.class);
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String showPage(Model model) {
+	public String showPage(HttpServletRequest request, Model model) {
 		log.info("LoginController GET");
+		if (request.getSession().getAttribute("user") != null) {
+			return "redirect:index.html";
+		}
 		
 		model.addAttribute("user", new User());
 		return "loginform";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit(HttpServletRequest request,
+	public ModelAndView onSubmit(HttpServletRequest request,
 			HttpServletResponse response, @ModelAttribute User user,
 			BindingResult result) {
-		
-		// validate here
-		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:index.html");
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
-		return "redirect:index.html";
+		return modelAndView;
 	}
 }

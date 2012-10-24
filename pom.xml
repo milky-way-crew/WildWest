@@ -27,6 +27,12 @@
 			<version>${taglibs-version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
 		<!-- Log4j -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -62,14 +68,14 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+
 		<!-- mysql-driver -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-version}</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<!-- ** Plug-ins for deploy, etc ** -->
