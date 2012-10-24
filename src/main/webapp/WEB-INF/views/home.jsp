@@ -31,7 +31,7 @@
 			</c:when>
 			<c:otherwise>
 				<p>
-					<a href="./monopoly-game.html" class="btn btn-primary">Link to
+					<a href="./chatRooms.html" class="btn btn-primary">Link to
 						game rooms</a>
 				</p>
 			</c:otherwise>
