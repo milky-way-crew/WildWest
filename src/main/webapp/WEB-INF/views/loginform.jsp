@@ -56,7 +56,8 @@
 								<label class="control-label"></label>
 								<div class="controls">
 									<button type="submit" class="btn">Sing in</button>
-									<a href="registration.html"> Registration</a>
+									 or
+									<a href="registration.html" > Register here</a>
 								</div>
 							</div>
 							
@@ -74,32 +75,7 @@
 	<script type="text/javascript" src="js/bootstrap-tab.js"></script>
 	<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
 	<script type="text/javascript" src="js/bootstrap-popover.js"></script>
-<!-- 
 	<script type="text/javascript" src="js/jquery.validate.js"></script>
- -->
-	<!-- Include Bootstrap Asserts JavaScript Files. -->
-	<!-- 
-	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
-	<script
-		src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
-	<script type="text/javascript"
-		src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
- -->
-
 	<script type="text/javascript" src="js/login.js"></script>
 </body>
 </html>

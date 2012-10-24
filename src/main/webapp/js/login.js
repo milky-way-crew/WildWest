@@ -32,4 +32,5 @@ $(document).ready(function() {
 			$(element).parents('.control-group').addClass('success');
 		}
 	});
+
 });
