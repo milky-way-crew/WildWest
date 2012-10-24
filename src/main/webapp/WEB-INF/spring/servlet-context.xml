@@ -20,13 +20,14 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="SetupDatabaseManager"
-		class="com.web.app.worldgames.controller.SetupDatabaseManager">
+	<bean id="SetupDatabaseManager" class="com.web.app.worldgames.controller.SetupDatabaseManager">
 		<property name="tableManager" ref="worldGamesDao"></property>
 	</bean>
 
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!-- 
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		 -->
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>

@@ -15,6 +15,7 @@ public class UserRegistrationValidator implements IValidator {
 	@Autowired
 	private IUserServiceManager userServiceManager;
 
+
 	public void validate(Object object, Errors errors) {
 		log.info("Register validating");
 		if (!supports(object.getClass())) {
@@ -45,9 +46,12 @@ public class UserRegistrationValidator implements IValidator {
 			log.error("Nickname " + user.getNickname() + " are busy!");
 			errors.rejectValue("nickname", "nickname busy");
 		}
+
 	}
+
 
 	public boolean supports(Class<?> vclass) {
 		return vclass.equals(User.class);
 	}
+
 }
