@@ -9,14 +9,12 @@ import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.service.IUserServiceManager;
 import com.web.app.worldgames.validator.IValidator;
 
-
 public class UserLogInValidator implements IValidator {
     private static final Logger log = Logger
 	    .getLogger(UserRegistrationValidator.class);
     @Autowired
     private IUserServiceManager userServiceManager;
 
-    
     public void validate(Object object, Errors errors) {
 	log.info("LogIn validating");
 	if (!supports(object.getClass())) {
@@ -38,7 +36,6 @@ public class UserLogInValidator implements IValidator {
 	}
     }
 
-    
     public boolean supports(Class<?> vclass) {
 	return vclass.equals(User.class);
     }
