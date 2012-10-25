@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-<link rel="stylesheet" href="css/bootstrap-responsive.css">
+<link rel="stylesheet" href="resources/css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="resources/css/bootstrap-responsive.css">
 
 </head>
 <body>
@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="span8">
 				<form:form class="form-horizontal" id="registerHere"
-					action="registration.html" method="post" commandName="user">
+					action="register" method="post" commandName="user">
 					<fieldset>
 
 						<legend>Fill the form below</legend>
@@ -88,16 +88,16 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/bootstrap-transition.js"></script>
-	<script type="text/javascript" src="js/bootstrap-alert.js"></script>
-	<script type="text/javascript" src="js/bootstrap-modal.js"></script>
-	<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
-	<script type="text/javascript" src="js/bootstrap-scrollspy.js"></script>
-	<script type="text/javascript" src="js/bootstrap-tab.js"></script>
-	<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
-	<script type="text/javascript" src="js/bootstrap-popover.js"></script>
-	<script type="text/javascript" src="js/jquery.validate.js"></script>
-	<script type="text/javascript" src="js/register.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap-transition.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap-modal.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap-dropdown.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap-scrollspy.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap-tab.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap-popover.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.validate.js"></script>
+	<script type="text/javascript" src="resources/js/register.js"></script>
 </body>
 </html>

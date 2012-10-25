@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.web.app.worldgames.dao.interfaces.IDataBaseDao;
+
 
 @Repository
-public class WorldGamesDao {
-	private static final Logger log = Logger.getLogger(WorldGamesDao.class);
+public class DataBaseDao implements IDataBaseDao{
+	private static final Logger log = Logger.getLogger(DataBaseDao.class);
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
@@ -18,21 +20,22 @@ public class WorldGamesDao {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
-	public void createTables() {
+	public void createUserTable() {
 		log.debug("Executing create query");
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE users ( ");
 		sql.append("userId INT(10) UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE, ");
 		sql.append("userLogin VARCHAR(80) NOT NULL UNIQUE, ");
 		sql.append("userPassword VARCHAR(80) NOT NULL, ");
-		sql.append("userEmail VARCHAR(100) NOT NULL, ");
-		sql.append("userNickname VARCHAR(80) NOT NULL, ");
+		sql.append("userEmail VARCHAR(100) NOT NULL UNIQUE, ");
+		sql.append("userNickname VARCHAR(80) NOT NULL UNIQUE, ");
+		sql.append("userStat INT(10) UNSIGNED NOT NULL UNIQUE, ");
 		sql.append("userImage VARCHAR(100) NOT NULL, ");
 		sql.append("userProf VARCHAR(45) NOT NULL DEFAULT 'player', ");
 		sql.append("userDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, ");
 		sql.append("PRIMARY KEY (userId), ");
-		sql.append("INDEX (userId), ");
-		sql.append("FOREIGN KEY (userId) REFERENCES userStatistics(statId)");
+		sql.append("INDEX (userStat), ");
+		sql.append("FOREIGN KEY (userStat) REFERENCES userStatistics(statId)");
 		sql.append(") ENGINE=INNODB");
 		jdbcTemplate.execute(sql.toString());
 	}

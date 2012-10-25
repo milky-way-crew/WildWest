@@ -1,25 +1,25 @@
-package com.web.app.worldgames.controller;
+package com.web.app.worldgames.web;
 
 import org.apache.log4j.Logger;
+import com.web.app.worldgames.dao.DataBaseDao;
 
-import com.web.app.worldgames.dao.WorldGamesDao;
 
 public class SetupDatabaseManager {
 	private Logger log = Logger.getLogger(SetupDatabaseManager.class);
 
-	private WorldGamesDao tableManager;
+	private DataBaseDao tableManager;
 
 	public void refreshTables() {
 		log.info("Deleting tables");
 		tableManager.dropTables();
 		log.info("Starting creating tables");
 		tableManager.createUserStatistics();
-		tableManager.createTables();
+		tableManager.createUserTable();
 		log.info("Finished creating tables");
 		
 	}
 
-	public void setTableManager(WorldGamesDao wgd) {
-		this.tableManager = wgd;
+	public void setTableManager(DataBaseDao DBdao) {
+		this.tableManager = DBdao;
 	}
 }

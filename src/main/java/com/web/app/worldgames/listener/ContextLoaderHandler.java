@@ -6,7 +6,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.web.app.worldgames.controller.SetupDatabaseManager;
+import com.web.app.worldgames.web.SetupDatabaseManager;
 
 public class ContextLoaderHandler extends ContextLoaderListener {
 	@Override
