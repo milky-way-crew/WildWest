@@ -1,13 +1,17 @@
 package com.web.app.worldgames.domain;
 
+import java.sql.Timestamp;
+
 public class User {
 	private int id;
 	private String login;
 	private String password;
 	private String nickname;
 	private String email;
+	private int userStat;
 	private String avatar;
 	private String role;
+	private Timestamp userDate;
 
 	public User() {
 		login = new String();
@@ -18,23 +22,27 @@ public class User {
 		role = new String();
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", password=" + password
-				+ ", nickname=" + nickname + ", email=" + email + ", avatar="
-				+ avatar + ", role=" + role + "]";
-	}
-
 	public User(int id, String login, String password, String nickname,
-			String email, String avatar, String role) {
+			String email, int userStat, String avatar, String role,
+			Timestamp userDate) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.nickname = nickname;
 		this.email = email;
+		this.userStat = userStat;
 		this.avatar = avatar;
 		this.role = role;
+		this.userDate = userDate;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", login=" + login + ", password=" + password
+				+ ", nickname=" + nickname + ", email=" + email + ", userStat="
+				+ userStat + ", avatar=" + avatar + ", role=" + role
+				+ ", userDate=" + userDate + "]";
 	}
 
 	public int getId() {
@@ -93,6 +101,22 @@ public class User {
 		this.role = role;
 	}
 
+	public void setUserDate(Timestamp userDate) {
+		this.userDate = userDate;
+	}
+
+	public Timestamp getUserDate() {
+		return userDate;
+	}
+
+	public int getUserStat() {
+		return userStat;
+	}
+
+	public void setUserStat(int userStat) {
+		this.userStat = userStat;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -106,6 +130,9 @@ public class User {
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result
+				+ ((userDate == null) ? 0 : userDate.hashCode());
+		result = prime * result + userStat;
 		return result;
 	}
 
@@ -149,6 +176,13 @@ public class User {
 			if (other.role != null)
 				return false;
 		} else if (!role.equals(other.role))
+			return false;
+		if (userDate == null) {
+			if (other.userDate != null)
+				return false;
+		} else if (!userDate.equals(other.userDate))
+			return false;
+		if (userStat != other.userStat)
 			return false;
 		return true;
 	}

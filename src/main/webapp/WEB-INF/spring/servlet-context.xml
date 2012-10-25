@@ -16,12 +16,12 @@
 		<property name="password" value="root" />
 	</bean>
 
-	<bean id="worldGamesDao" class="com.web.app.worldgames.dao.WorldGamesDao">
+	<bean id="dataBaseDao" class="com.web.app.worldgames.dao.DataBaseDao">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 	<bean id="SetupDatabaseManager" class="com.web.app.worldgames.controller.SetupDatabaseManager">
-		<property name="tableManager" ref="worldGamesDao"></property>
+		<property name="tableManager" ref="dataBaseDao"></property>
 	</bean>
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
