@@ -32,5 +32,7 @@ public interface IUserDao {
 	* @return User object
 	* */
     User logInUser(final String login, final String password);
+
+	User insertUser(User user);
 	
 }

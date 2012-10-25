@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
 import com.web.app.worldgames.domain.User;
-import com.web.app.worldgames.service.IUserServiceManager;
+import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 import com.web.app.worldgames.validator.IValidator;
 
 public class UserRegistrationValidator implements IValidator {
