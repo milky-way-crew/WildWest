@@ -8,8 +8,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value="css/bootstrap.css" />" type="text/css">
+<link rel="stylesheet" href="<c:url value="css/bootstrap-responsive.css" />" type="text/css">
 <title>KaBoom</title>
 </head>
 <body>

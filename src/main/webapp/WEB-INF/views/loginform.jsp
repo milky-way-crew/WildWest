@@ -20,7 +20,7 @@
 		<div class="row">
 			<div class="span8">
 				<form:form class="form-horizontal" id="loginHere" method='post'
-					action='loginform.html' commandName="user">
+					action='login' commandName="user">
 					<fieldset>
 							<h2>
 								<legend>Sign in</legend>
@@ -57,7 +57,7 @@
 								<div class="controls">
 									<button type="submit" class="btn">Sing in</button>
 									 or
-									<a href="registration.html" > Register here</a>
+									<a href="register" > Register here</a>
 								</div>
 							</div>
 							

@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.web.app.worldgames.domain.User;
 
 @Controller
-@RequestMapping(value = { "/loginform.html" })
+@RequestMapping(value = { "/login" })
 public class LoginUserConroller {
 	private static final Logger log = Logger.getLogger(LoginUserConroller.class);
 	

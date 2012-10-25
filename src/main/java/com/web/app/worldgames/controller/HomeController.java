@@ -16,7 +16,7 @@ public class HomeController {
 	public String home(HttpServletRequest request, HttpServletResponse responsce, Model model) {
 		Object loginedUser = request.getSession().getAttribute("user");
 		if (loginedUser == null) {
-			return "redirect:loginform.html";
+			return "redirect:login";
 		}
 		log.info("HomeController: Passing through...");
 		model.addAttribute("user", loginedUser);
