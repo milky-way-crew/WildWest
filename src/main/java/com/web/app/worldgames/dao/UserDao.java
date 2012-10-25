@@ -25,33 +25,22 @@ public class UserDao implements IUserDao {
 
 	private final class UserMapping implements RowMapper<User> {
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return new User(rs.getInt("id"), rs.getString("login"),
-					rs.getString("password"), rs.getString("nickName"),
-					rs.getString("email"), rs.getInt("userStat"),
-					rs.getString("avatar"), rs.getString("role"),
+			return new User(rs.getInt("userId"), rs.getString("userLogin"),
+					rs.getString("userPassword"), rs.getString("userEmail"),
+					rs.getString("userNickname"), rs.getInt("userStat"),
+					rs.getString("userImage"), rs.getString("userProf"),
 					rs.getTimestamp("userDate"));
 		}
 	}
 
 	public User findUserByLogin(final String login) {
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userImage, userProf, userDate from users WHERE userLogin=?";
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userLogin=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userLogin=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { login });
 		if (num > 0) {
 
 			User user = jdbcTemplate.queryForObject(query,
-					new Object[] { login }, new RowMapper<User>() {
-						public User mapRow(ResultSet rs, int rowNum)
-								throws SQLException {
-							return new User(rs.getInt("id"), login, rs
-									.getString("nickname"), rs
-									.getString("password"), rs
-									.getString("email"), rs.getInt("userStat"),
-									rs.getString("avatar"), rs
-											.getString("role"), rs
-											.getTimestamp("userDate"));
-						}
-					});
+					new Object[] { login }, new UserMapping());
 			return user;
 		} else {
 			return null;
@@ -59,25 +48,14 @@ public class UserDao implements IUserDao {
 	}
 
 	public User findUserByNickname(final String nickname) {
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userImage, userProf, userDate from users WHERE userNickname=?";
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userNickname=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userNickname=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY,
 				new Object[] { nickname });
 		if (num > 0) {
 
 			User user = jdbcTemplate.queryForObject(query,
-					new Object[] { nickname }, new RowMapper<User>() {
-						public User mapRow(ResultSet rs, int rowNum)
-								throws SQLException {
-							return new User(rs.getInt("id"), rs
-									.getString("login"), rs
-									.getString("password"), nickname, rs
-									.getString("email"), rs.getInt("userStat"),
-									rs.getString("avatar"), rs
-											.getString("role"), rs
-											.getTimestamp("userDate"));
-						}
-					});
+					new Object[] { nickname }, new UserMapping());
 			return user;
 		} else {
 			return null;
@@ -86,25 +64,13 @@ public class UserDao implements IUserDao {
 
 	public User findUserByEmail(final String email) {
 
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userImage, userProf, userDate from users WHERE userEmail=?";
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userEmail=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userEmail=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { email });
 		if (num > 0) {
 
 			User user = jdbcTemplate.queryForObject(query,
-					new Object[] { email }, new RowMapper<User>() {
-						public User mapRow(ResultSet rs, int rowNum)
-								throws SQLException {
-							return new User(rs.getInt("id"), rs
-									.getString("login"), rs
-									.getString("password"), rs
-									.getString("nickName"), email, rs
-									.getInt("userStat"),
-									rs.getString("avatar"), rs
-											.getString("role"), rs
-											.getTimestamp("userDate"));
-						}
-					});
+					new Object[] { email }, new UserMapping());
 			return user;
 		} else {
 			return null;
@@ -112,23 +78,14 @@ public class UserDao implements IUserDao {
 	}
 
 	public User logInUser(final String login, final String password) {
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userImage, userProf, userDate from users WHERE userLogin=? AND userPassword=?";
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userLogin=? AND userPassword=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userLogin=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { login,
 				password });
 		if (num > 0) {
 
 			User user = jdbcTemplate.queryForObject(query, new Object[] {
-					login, password }, new RowMapper<User>() {
-				public User mapRow(ResultSet rs, int rowNum)
-						throws SQLException {
-					return new User(rs.getInt("id"), login, rs
-							.getString("nickname"), password, rs
-							.getString("email"), rs.getInt("userStat"), rs
-							.getString("avatar"), rs.getString("role"), rs
-							.getTimestamp("userDate"));
-				}
-			});
+					login, password }, new UserMapping());
 			return user;
 		} else {
 			return null;
