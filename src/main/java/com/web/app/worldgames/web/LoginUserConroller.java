@@ -22,15 +22,16 @@ import com.web.app.worldgames.validator.IValidator;
 @Controller
 @RequestMapping(value = { "/login" })
 public class LoginUserConroller {
-	private static final Logger log = Logger.getLogger(LoginUserConroller.class);
-	
+	private static final Logger log = Logger
+			.getLogger(LoginUserConroller.class);
+
 	@Autowired
 	private IUserServiceManager userService;
-	
+
 	@Autowired
-	@Qualifier(value="userLogInValidator")
+	@Qualifier(value = "userLogInValidator")
 	private IValidator validator;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String showPage(HttpServletRequest request, Model model) {
 		log.debug("LoginController passing through");
@@ -38,7 +39,7 @@ public class LoginUserConroller {
 			log.info("User already logined redirecting to home.");
 			return "redirect:home";
 		}
-		
+
 		model.addAttribute("user", new User());
 		return "loginform";
 	}
@@ -48,7 +49,7 @@ public class LoginUserConroller {
 			HttpServletResponse response, @ModelAttribute User user,
 			BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView();
-		
+
 		validator.validate(user, result);
 
 		if (result.hasErrors()) {
@@ -58,10 +59,14 @@ public class LoginUserConroller {
 		} else {
 			log.info("User logined succesfully, redirecting to home page.");
 			modelAndView.setViewName("redirect:home");
-			recordUserInSession(request, user);
+			recordUserInSession(request, restoreUserFromDatabase(user));
 			return modelAndView;
 		}
-		
+
+	}
+
+	private User restoreUserFromDatabase(User user) {
+		return userService.findUserByLogin(user.getLogin());
 	}
 
 	private void recordUserInSession(HttpServletRequest request, User user) {

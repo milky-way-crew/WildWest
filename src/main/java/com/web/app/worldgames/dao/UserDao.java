@@ -99,13 +99,11 @@ public class UserDao implements IUserDao {
 		}
 	}
 
-	@Override
 	public int insertUser(final User user) {
 		
 		final String query = "INSERT INTO users (userLogin, userPassword, userEmail, userNickname, userStat, userImage) VALUES(?,?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, user.getLogin());
@@ -128,7 +126,6 @@ public class UserDao implements IUserDao {
 		final String query = "INSERT INTO userStatistics VALUES()";
 		jdbcTemplate.update(
 				new PreparedStatementCreator() {
-					@Override
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 						PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 //											 

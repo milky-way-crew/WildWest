@@ -33,6 +33,6 @@ public interface IUserDao {
 	* */
     User logInUser(final String login, final String password);
 
-	int insertUser(User user);
+	int insertUser(final User user);
 	
 }

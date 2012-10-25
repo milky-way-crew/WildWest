@@ -2,6 +2,7 @@ package com.web.app.worldgames.validator.implement;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
@@ -9,6 +10,7 @@ import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 import com.web.app.worldgames.validator.IValidator;
 
+@Service
 public class UserRegistrationValidator implements IValidator {
     private static final Logger log = Logger
 	    .getLogger(UserRegistrationValidator.class);
