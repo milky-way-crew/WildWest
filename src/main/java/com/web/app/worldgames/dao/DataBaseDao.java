@@ -9,9 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.web.app.worldgames.dao.interfaces.IDataBaseDao;
 
-
 @Repository
-public class DataBaseDao implements IDataBaseDao{
+public class DataBaseDao implements IDataBaseDao {
 	private static final Logger log = Logger.getLogger(DataBaseDao.class);
 	private JdbcTemplate jdbcTemplate;
 
@@ -19,7 +18,7 @@ public class DataBaseDao implements IDataBaseDao{
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
+
 	public void createUserTable() {
 		log.debug("Executing create query");
 		StringBuilder sql = new StringBuilder();
@@ -39,7 +38,8 @@ public class DataBaseDao implements IDataBaseDao{
 		sql.append(") ENGINE=INNODB");
 		jdbcTemplate.execute(sql.toString());
 	}
-	public void createUserStatistics(){
+
+	public void createUserStatistics() {
 		log.debug("Executing create query");
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE userStatistics ( ");
@@ -53,6 +53,23 @@ public class DataBaseDao implements IDataBaseDao{
 		jdbcTemplate.execute(sql.toString());
 	}
 	
+	public void fillStatistics() {
+		StringBuilder sql = new StringBuilder("INSERT INTO userStatistics ");
+		sql.append("(userAllGames, userPoints, userMoneyAmount, userAllWinGAmes) ");
+		sql.append(" VALUES(1, 1, 1, 1)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+			
+	}
+	public void fillUser() {
+		StringBuilder sql = new StringBuilder("INSERT INTO users ");
+		sql.append("(userLogin, userPassword, userEmail, userNickname, userStat, userImage) ");
+		sql.append(" VALUES('test', 'test', 'test@gmail.com', 'test', 1, '/img')");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+			
+	}
+
 	public void dropTables() {
 		log.info("Dropping tables");
 		jdbcTemplate.execute("drop table if exists users");

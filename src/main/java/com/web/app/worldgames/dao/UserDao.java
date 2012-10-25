@@ -135,4 +135,10 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	@Override
+	public User insertUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
