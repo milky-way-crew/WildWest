@@ -1,12 +1,19 @@
 package com.web.app.worldgames.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.web.app.worldgames.dao.interfaces.IUserDao;
@@ -93,9 +100,41 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
-	public User insertUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertUser(final User user) {
+		
+		final String query = "INSERT INTO users (userLogin, userPassword, userEmail, userNickname, userStat, userImage) VALUES(?,?,?,?,?,?)";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, user.getLogin());
+				ps.setString(2, user.getPassword());
+				ps.setString(3, user.getEmail());
+				ps.setString(4, user.getNickname());
+				ps.setInt(5, insertEmptyStatistics());
+				ps.setString(6, user.getAvatar());
+				return ps;
+			}
+		}, keyHolder);
+		int i = keyHolder.getKey().intValue();
+		return i;
+						
 	}
-
+	
+	
+	public int insertEmptyStatistics(){
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		final String query = "INSERT INTO userStatistics VALUES()";
+		jdbcTemplate.update(
+				new PreparedStatementCreator() {
+					@Override
+					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+						PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+//											 
+						return ps;
+					}
+				}, keyHolder);
+		return keyHolder.getKey().intValue();	
+	}
 }

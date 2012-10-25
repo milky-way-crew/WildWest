@@ -7,5 +7,5 @@ public interface IUserServiceManager {
     User findUserByNickname(String nickname);
     User findUserByEmail(String email);
     User logInUser(String login, String password);
-	User insertUser(User user);
+	int insertUser(User user);
 }

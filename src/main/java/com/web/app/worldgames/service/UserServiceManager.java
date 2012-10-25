@@ -29,7 +29,7 @@ public class UserServiceManager implements IUserServiceManager {
 		return userDao.logInUser(login, password);
 	}
 	
-	public User insertUser(User user) {
+	public int insertUser(User user) {
 		return userDao.insertUser(user);
 	}
 }
