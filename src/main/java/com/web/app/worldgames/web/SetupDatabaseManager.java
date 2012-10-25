@@ -1,4 +1,4 @@
-package com.web.app.worldgames.controller;
+package com.web.app.worldgames.web;
 
 import org.apache.log4j.Logger;
 import com.web.app.worldgames.dao.DataBaseDao;
