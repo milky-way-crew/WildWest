@@ -12,7 +12,9 @@
 
 </head>
 <body>
-	<div class="hero-unit"><h1>Registration page</h1></div>
+	<div class="hero-unit">
+		<h1>Registration page</h1>
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="span8">
@@ -64,8 +66,8 @@
 						<div class="control-group">
 							<label class="control-label">Confirm password</label>
 							<div class="controls">
-								<form:input type="password" path="password" class="input-xlarge" id="conf_password"
-									name="conf_password" rel="popover"
+								<form:input type="password" path="password" class="input-xlarge"
+									id="conf_password" name="conf_password" rel="popover"
 									data-content="Confirm your password"
 									data-original-title="Password" />
 							</div>
@@ -75,7 +77,8 @@
 						<div class="control-group">
 							<label class="control-label"></label>
 							<div class="controls">
-								<button type="submit" class="btn btn-success">Create my account</button>
+								<button type="submit" class="btn btn-success">Create my
+									account</button>
 							</div>
 						</div>
 
