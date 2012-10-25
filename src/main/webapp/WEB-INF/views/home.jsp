@@ -8,8 +8,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="<c:url value="css/bootstrap.css" />" type="text/css">
-<link rel="stylesheet" href="<c:url value="css/bootstrap-responsive.css" />" type="text/css">
+<link rel="stylesheet" href="resources/css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="resources/bootstrap-responsive.css" type="text/css">
 <title>KaBoom</title>
 </head>
 <body>
@@ -21,21 +21,20 @@
 	</div>
 	<div class="container">
 		<p><%=new Date()%></p>
-		</strong>
 		<c:choose>
 			<c:when test="${user == null }">
 				<p>
-					<a href="./loginform.html" class="btn">login</a> <a
-						href="./registration.html" class="btn btn-danger">register</a>
+					<a href="./login" class="btn">login</a> <a
+						href="./register" class="btn btn-danger">register</a>
 				</p>
 			</c:when>
 			<c:otherwise>
 				<p>
-					<a href="./chatRooms.html" class="btn btn-primary">Link to
+					<a href="./chatRooms" class="btn btn-primary">Link to
 						game rooms</a>
 				</p>
 								<p>
-					<a href="./logout.html" class="btn btn-danger">Logout</a>
+					<a href="./logout" class="btn btn-danger">Logout</a>
 				</p>
 			</c:otherwise>
 		</c:choose>

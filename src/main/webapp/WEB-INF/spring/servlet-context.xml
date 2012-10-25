@@ -20,7 +20,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="SetupDatabaseManager" class="com.web.app.worldgames.controller.SetupDatabaseManager">
+	<bean id="SetupDatabaseManager" class="com.web.app.worldgames.web.SetupDatabaseManager">
 		<property name="tableManager" ref="worldGamesDao"></property>
 	</bean>
 
@@ -42,5 +42,5 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<context:component-scan base-package="com.web.app" />
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
-	<mvc:resources location="/css/" mapping="/css/**"/>
+	<mvc:resources location="/resources/" mapping="/resources/**"/>
 </beans>

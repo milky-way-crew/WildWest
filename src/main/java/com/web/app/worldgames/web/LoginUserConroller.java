@@ -1,4 +1,4 @@
-package com.web.app.worldgames.controller;
+package com.web.app.worldgames.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ public class LoginUserConroller {
 	public String showPage(HttpServletRequest request, Model model) {
 		log.info("LoginController GET");
 		if (request.getSession().getAttribute("user") != null) {
-			return "redirect:index.html";
+			return "redirect:home";
 		}
 		
 		model.addAttribute("user", new User());
@@ -36,7 +36,7 @@ public class LoginUserConroller {
 			HttpServletResponse response, @ModelAttribute User user,
 			BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:index.html");
+		modelAndView.setViewName("redirect:home");
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 		return modelAndView;

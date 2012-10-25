@@ -1,4 +1,4 @@
-package com.web.app.worldgames.controller;
+package com.web.app.worldgames.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	private final static Logger log = Logger.getLogger(HomeController.class);
 
-	@RequestMapping(value = { "/", "/index.html", "/WildWest/" })
+	@RequestMapping(value = { "/", "/index.html", "/home" })
 	public String home(HttpServletRequest request, HttpServletResponse responsce, Model model) {
 		Object loginedUser = request.getSession().getAttribute("user");
 		if (loginedUser == null) {
