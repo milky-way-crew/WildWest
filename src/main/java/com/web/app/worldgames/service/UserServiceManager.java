@@ -32,4 +32,5 @@ public class UserServiceManager implements IUserServiceManager {
 	public int insertUser(User user) {
 		return userDao.insertUser(user);
 	}
+	
 }

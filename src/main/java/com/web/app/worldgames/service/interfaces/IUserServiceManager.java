@@ -8,4 +8,5 @@ public interface IUserServiceManager {
     User findUserByEmail(String email);
     User logInUser(String login, String password);
 	int insertUser(User user);
+	
 }
