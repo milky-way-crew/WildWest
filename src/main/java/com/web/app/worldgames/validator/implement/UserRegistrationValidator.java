@@ -23,13 +23,13 @@ public class UserRegistrationValidator implements IValidator {
 	    return;
 	}
 	ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login",
-		"login empty");
+		"empty.login");
 	ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
-		"password empty");
+		"empty.password");
 	ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email",
-		"email empty");
+		"empty.email");
 	ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nickname",
-		"nickname empty");
+		"empty.nickname");
 	User user = (User) object;
 	User userByEmail = userServiceManager.findUserByEmail(user.getEmail());
 	User userByLogin = userServiceManager.findUserByLogin(user.getLogin());
@@ -37,15 +37,15 @@ public class UserRegistrationValidator implements IValidator {
 		.getNickname());
 	if (userByEmail != null) {
 	    log.error("Email " + user.getEmail() + " are busy!");
-	    errors.rejectValue("email", "email busy");
+	    errors.rejectValue("email", "busy.email", "Email already used");
 	}
 	if (userByLogin != null) {
 	    log.error("Login " + user.getLogin() + " are busy!");
-	    errors.rejectValue("login", "login busy");
+	    errors.rejectValue("login", "busy.login", "Login already exists");
 	}
 	if (userByNickname != null) {
 	    log.error("Nickname " + user.getNickname() + " are busy!");
-	    errors.rejectValue("nickname", "nickname busy");
+	    errors.rejectValue("nickname", "busy.nickname", "Nickname already exists");
 	}
 
     }

@@ -7,7 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
-<link rel="stylesheet" href="resources/css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="resources/css/bootstrap.css"
+	type="text/css">
 <link rel="stylesheet" href="resources/css/bootstrap-responsive.css">
 
 </head>
@@ -30,6 +31,7 @@
 								<form:input type="text" path="login" class="input-xlarge"
 									id="login" name="login" rel="popover"
 									data-content="Enter your login" data-original-title="Login" />
+								<form:errors path="login" cssClass="btn-mini btn-danger"></form:errors>
 							</div>
 						</div>
 
@@ -41,6 +43,7 @@
 									id="nickname" name="nickname" rel="popover"
 									data-content="Enter your nickname"
 									data-original-title="Nickname" />
+								<form:errors path="nickname" cssClass="btn-mini btn-danger"></form:errors>
 							</div>
 						</div>
 
@@ -50,6 +53,7 @@
 								<form:input type="text" path="email" class="input-xlarge"
 									id="email" name="email" rel="popover"
 									data-content="Enter your email" data-original-title="Email" />
+								<form:errors path="email" cssClass="btn-mini btn-danger"></form:errors>
 							</div>
 						</div>
 
@@ -60,6 +64,7 @@
 									id="password" name="password" rel="popover"
 									data-content="Enter your password"
 									data-original-title="Password" />
+								<form:errors path="password" cssClass="btn-mini btn-danger"></form:errors>
 							</div>
 						</div>
 
@@ -70,6 +75,7 @@
 									id="conf_password" name="conf_password" rel="popover"
 									data-content="Confirm your password"
 									data-original-title="Password" />
+								<form:errors path="password" cssClass="btn-mini btn-danger"></form:errors>
 							</div>
 						</div>
 
@@ -89,11 +95,13 @@
 	</div>
 
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap-transition.js"></script>
+	<script type="text/javascript"
+		src="resources/js/bootstrap-transition.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-modal.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-dropdown.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap-scrollspy.js"></script>
+	<script type="text/javascript"
+		src="resources/js/bootstrap-scrollspy.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-tab.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-tooltip.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-popover.js"></script>

@@ -42,7 +42,7 @@ public class RegisterUserController {
 			HttpServletResponse response, @ModelAttribute User user,
 			BindingResult result) {
 		
-//		validator.validate(user, result);
+		validator.validate(user, result);
 		
 		if (result.hasErrors()) {
 			log.warn("Errors in registration form.");
