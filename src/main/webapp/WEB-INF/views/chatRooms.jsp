@@ -18,12 +18,13 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="#">Project name</a>
+				</a> <a class="brand" href="#">MONOPOLY</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#contact">Contact</a></li>
+						<li><a href="#">Profile</a></li>
+						<li><a href="#">TOP-100</a></li>
+						<li><a href="#">Sign out</a></li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->
@@ -44,9 +45,21 @@
 			<div class="span4">
 				<div class="well sidebar-nav">
 					<h2>Rooms</h2>
-					<textarea id="message" name="message" class="input-xlarge"
-						rows="15"></textarea>
-					<button type="submit" class="btn">Create room</button>
+					<div class="control-group select optional">
+						<label class="select optional control-label"
+							for="article_category"> Room's list</label>
+						<div class="controls">
+							<form name="roomsForm" action="chatRooms.html" method="post">
+								<select id="rooms" name="rooms">
+								</select> <br>Enter room's name <br> <input type='text'
+									value='' name='roomName' id='roomName' class="input-xlarge" />
+							</form>
+						</div>
+					</div>
+					<textarea id="listUser" name="listUser" class="input-xlarge"
+						rows="6"></textarea>
+					<button type="submit" class="btn" name="createRoom" id="createRoom"
+						onClick="createOption()">Create room</button>
 					<button type="submit" class="btn">Join to room</button>
 				</div>
 			</div>
@@ -63,7 +76,8 @@
 
 	</div>
 
-
+	<script type="text/javascript"
+		src="resources/js/rooma/createListrooms.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>
@@ -80,6 +94,9 @@
 	<script type="text/javascript" src="resources/js/bootstrap-collapse.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-carousel.js"></script>
 	<script type="text/javascript"
-		src="resources/js/bootstrap-typeahead.js"></script>
+		src="resources/js/bootstrap-typeahead.js">
+		
+	</script>
+
 </body>
 </html>
