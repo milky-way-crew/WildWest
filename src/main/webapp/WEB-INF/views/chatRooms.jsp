@@ -33,7 +33,7 @@
 
 	<div class="container">
 		<h1>Chat</h1>
-		<p>	</p>
+		<p></p>
 		<div class="row-fluid">
 			<div class="span8">
 				<div class="well">
