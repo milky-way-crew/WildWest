@@ -71,11 +71,10 @@
 						<div class="control-group">
 							<label class="control-label">Confirm password</label>
 							<div class="controls">
-								<form:input type="password" path="password" class="input-xlarge"
+								<input type="password" path="password" class="input-xlarge"
 									id="conf_password" name="conf_password" rel="popover"
 									data-content="Confirm your password"
 									data-original-title="Password" />
-								<form:errors path="password" cssClass="btn-mini btn-danger"></form:errors>
 							</div>
 						</div>
 
