@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class Player {
+public abstract class Player {
 	private int id;
 	private String nick;
 	
@@ -44,10 +44,6 @@ public class Player {
 		return ownerFigures;
 	}
 	
-	public Position makePromt() {
-		
-		return new Position(1,2);
-		
-	}
+	public abstract Move askForNextMove();
 	
 }

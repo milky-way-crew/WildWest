@@ -1,5 +1,7 @@
 package com.web.app.worldgames.domain.chess;
 
+import java.util.Map;
+
 
 public class TrickyChessGame {
 	private static final int COUNT_PLAYERS = 2;
@@ -12,13 +14,40 @@ public class TrickyChessGame {
 	}
 	
 	public void startGame() {
-		Player next = getNextPlayer();
+		while (!this.isEnded()) {
+			Player nextPlayer = getNextPlayer();
+			Move playerMove = nextPlayer.askForNextMove();
+			ResultEnum resultOfBattle = updateBoard(playerMove);
+			notifyPlayers(resultOfBattle);
+			
+		}
+	}
+
+
+	private void notifyPlayers(ResultEnum resultOfBattle) {
+		// TODO Auto-generated method stub
+		// TODO: Implement
+	}
+
+	private ResultEnum updateBoard(Move playerMove) {
+		// TODO: Totally wrong.
+		Map<Position, Figure> map = board.getBoard();
+		Figure figurePlayer = map.remove(playerMove.getStart());
+		Figure figureOponent = map.get(playerMove.getEnd());
+		if (figureOponent.getType() == null) {
+			// Empty cell
+			return null;
+		} else {
+			// Returning result of battle
+			return figurePlayer.getType().beat(figureOponent.getType());
+		}
+		
 	}
 
 
 	private int _cursor = 0;
 	private Player getNextPlayer() {
-		_cursor = (_cursor > players.length) ? _cursor - players.length : _cursor;
+		_cursor = (_cursor >= players.length) ? _cursor - players.length : _cursor;
 		return players[_cursor++];
 	}
 	
@@ -29,5 +58,13 @@ public class TrickyChessGame {
 			}
 		}
 		return false;
+	}
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 }

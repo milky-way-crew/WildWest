@@ -1,7 +1,15 @@
 package com.web.app.worldgames.domain.chess;
 
 public enum FigureTypesEnum {
-	ROCK, PAPER, SCISSORS;
+	ROCK(0, "R"), PAPER(1, "P"), SCISSORS(2, "S");
+
+	private int id;
+	private String view;
+
+	private FigureTypesEnum(int id, String view) {
+		this.id = id;
+		this.view = view;
+	}
 
 	public ResultEnum beat(FigureTypesEnum that) {
 		switch (this) {
@@ -36,5 +44,25 @@ public enum FigureTypesEnum {
 		}
 		System.err.println("It cannot be, argument out of range.");
 		return null;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public static FigureTypesEnum getTypeById(int typeId) {
+		return typeId == 0 ? FigureTypesEnum.ROCK
+				: (typeId == 1 ? FigureTypesEnum.PAPER
+						: (typeId == 2 ? FigureTypesEnum.SCISSORS 
+								: null));
+	}
+
+	public String getView() {
+		return view;
+	}
+
+	@Override
+	public String toString() {
+		return view;
 	}
 }

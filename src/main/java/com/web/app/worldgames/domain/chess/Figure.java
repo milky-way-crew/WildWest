@@ -12,6 +12,12 @@ public class Figure {
 		this.owner = owner;
 	}
 
+	@Override
+	public String toString() {
+		return "Figure [type=" + type + ", position=" + position + ", owner="
+				+ owner + "]";
+	}
+
 	public Figure() {
 	}
 
