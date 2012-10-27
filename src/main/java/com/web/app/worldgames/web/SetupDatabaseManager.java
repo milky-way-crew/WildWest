@@ -18,6 +18,7 @@ public class SetupDatabaseManager {
 		tableManager.createUserTable();
 		log.info("Finished creating tables");
 		tableManager.fillStatistics();
+		tableManager.fillStatistics();
 		tableManager.fillUser();
 		
 	}

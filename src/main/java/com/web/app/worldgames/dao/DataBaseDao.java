@@ -55,8 +55,8 @@ public class DataBaseDao implements IDataBaseDao {
 	
 	public void fillStatistics() {
 		StringBuilder sql = new StringBuilder("INSERT INTO userStatistics ");
-		sql.append("(userAllGames, userPoints, userMoneyAmount, userAllWinGAmes) ");
-		sql.append(" VALUES(1, 1, 1, 1)");
+		//sql.append("(userAllGames, userPoints, userMoneyAmount, userAllWinGAmes) ");
+		sql.append(" VALUES()");
 		jdbcTemplate.update(sql.toString());
 		sql.delete(0, sql.length());
 			
@@ -65,6 +65,12 @@ public class DataBaseDao implements IDataBaseDao {
 		StringBuilder sql = new StringBuilder("INSERT INTO users ");
 		sql.append("(userLogin, userPassword, userEmail, userNickname, userStat, userImage) ");
 		sql.append(" VALUES('test', 'test', 'test@gmail.com', 'test', 1, '/img')");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO users ");
+		sql.append("(userLogin, userPassword, userEmail, userNickname, userStat, userImage) ");
+		sql.append(" VALUES('doggi', 'doggi', 'doggi@doggi.doggi', 'doggi', 2, '/img')");
 		jdbcTemplate.update(sql.toString());
 		sql.delete(0, sql.length());
 			
