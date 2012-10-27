@@ -13,6 +13,35 @@
 
 </head>
 <body>
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand" href="#" name="top">MONOPOLY</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="#"><i class="icon-home"></i> Home</a></li>
+						<li class="divider-vertical"></li>
+						<li class="active"><a href="#"><i class="icon-user"></i>
+								Profile</a></li>
+						<li class="divider-vertical"></li>
+						<li><a href="#"><i class="icon-globe"></i>TOP-100</a></li>
+						<li class="divider-vertical"></li>
+					</ul>
+					<ul class="nav pull-right">
+						<li class="divider-vertical"></li>
+							<li><a href="#"><i class="icon-question-sign"></i>Help</a></li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+			<!--/.container-fluid -->
+		</div>
+		<!--/.navbar-inner -->
+	</div>
+	<!--/.navbar -->
 	<div class="hero-unit">
 		<h1>Registration page</h1>
 	</div>
