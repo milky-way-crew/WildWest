@@ -1,8 +1,8 @@
-var ajaxUrl = "ajax";
+var ajax_url = "ajax";
 
-$("#sender").click(function() {
+var sender = function() {
 	$.ajax({
-		url : 'ajax',
+		url : ajax_url,
 		type : "POST",
 		data : {
 			type : "message",
@@ -15,20 +15,28 @@ $("#sender").click(function() {
 			$("#message").val("");
 		}
 	});
-});
+};
 
-$("#update").click(function() {
+var updater = function() {
 	$.ajax({
-		url : 'ajax',
+		url : ajax_url,
 		type : "POST",
 		data : {
 			type : "update",
-			data : {}
+			data : ""
 		},
 		success : function(json) {
 			// Hot stuff
-			$("#chat").append("\n");
 			$("#chat").append(json);
 		}
 	});
+};
+
+var auto_refresh = setInterval(updater, 1000);
+
+$("#update").click(function() {
+	updater();
+	clearInterval(auto_refresh);
 });
+
+$("#sender").click(sender);

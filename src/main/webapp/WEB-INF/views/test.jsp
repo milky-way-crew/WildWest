@@ -15,7 +15,7 @@
 	</div>
 
 	<div class="container well" align="center">
-		<legend>Chat will be here</legend>
+		<legend><h2 class="muted">Chat will be here</h2></legend>
 		<textarea class="input-xxlarge" id="chat" name="message" rows=5
 			cols=170 ></textarea>
 		<br> <input id="message" type="text" placeholder="Enter your message..."></input>

@@ -66,6 +66,9 @@ public class TestController {
 	}
 
 	private String join(List<String> messages, String delimiter) {
+		if (messages.size() < 1) {
+			return "";
+		}
 		StringBuilder sb = new StringBuilder();
 		for (String message : messages) {
 			sb.append(message);
@@ -73,5 +76,4 @@ public class TestController {
 		}
 		return sb.toString();
 	}
-
 }
