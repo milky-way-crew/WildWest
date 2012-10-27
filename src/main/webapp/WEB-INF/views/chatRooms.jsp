@@ -77,7 +77,7 @@
 	</div>
 
 	<script type="text/javascript"
-		src="resources/js/rooma/createListrooms.js"></script>
+		src="resources/js/rooms/createRoom.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>
