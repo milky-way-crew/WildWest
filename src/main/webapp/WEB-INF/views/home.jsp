@@ -8,8 +8,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="resources/css/bootstrap.css" type="text/css">
-<link rel="stylesheet" href="resources/bootstrap-responsive.css" type="text/css">
+<link rel="stylesheet" href="resources/css/bootstrap.css"
+	type="text/css">
+<link rel="stylesheet" href="resources/bootstrap-responsive.css"
+	type="text/css">
 <title>KaBoom</title>
 </head>
 <body>
@@ -17,25 +19,32 @@
 		<!-- 
 		<h1>Oh, hi doggy.</h1>
 		 -->
-		 <h1>Oh, hi <c:out value="${user.login}"/></h1>
+		<h1>
+			Oh, hi
+			<c:out value="${user.login}" />
+		</h1>
 	</div>
 	<div class="container">
 		<p><%=new Date()%></p>
 		<c:choose>
 			<c:when test="${user == null }">
 				<p>
-					<a href="./login" class="btn">login</a> <a
-						href="./register" class="btn btn-danger">register</a>
+					<a href="./login" class="btn">login</a> <a href="./register"
+						class="btn btn-danger">register</a>
 				</p>
 			</c:when>
 			<c:otherwise>
 				<p>
-					<a href="./chatRooms" class="btn btn-primary">Link to
-						game rooms</a>
+					<a href="./chatRooms" class="btn btn-primary">Link to game
+						rooms</a>
 				</p>
-								<p>
+				<p>
 					<a href="./logout" class="btn btn-danger">Logout</a>
 				</p>
+				<p>
+					<a href="./test" class="btn btn-warning">&#9827; Link to buggy chat &#9827;</a>
+				</p>
+
 			</c:otherwise>
 		</c:choose>
 	</div>
