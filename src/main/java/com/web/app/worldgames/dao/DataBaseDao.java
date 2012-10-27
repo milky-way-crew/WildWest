@@ -39,7 +39,7 @@ public class DataBaseDao implements IDataBaseDao {
 		jdbcTemplate.execute(sql.toString());
 	}
 
-	public void createUserStatistics() {
+	public void createUserStatisticsTable() {
 		log.debug("Executing create query");
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE userStatistics ( ");

@@ -40,6 +40,7 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	@Override
 	public User findUserByLogin(final String login) {
 		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userLogin=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userLogin=?";
@@ -54,6 +55,7 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	@Override
 	public User findUserByNickname(final String nickname) {
 		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userNickname=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userNickname=?";
@@ -69,6 +71,7 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	@Override
 	public User findUserByEmail(final String email) {
 
 		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userEmail=?";
@@ -84,6 +87,7 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	@Override
 	public User logInUser(final String login, final String password) {
 		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userLogin=? AND userPassword=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userLogin=?";
@@ -99,13 +103,16 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	@Override
 	public int insertUser(final User user) {
-		
+
 		final String query = "INSERT INTO users (userLogin, userPassword, userEmail, userNickname, userStat, userImage) VALUES(?,?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			public PreparedStatement createPreparedStatement(
+					Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(query,
+						Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, user.getLogin());
 				ps.setString(2, user.getPassword());
 				ps.setString(3, user.getEmail());
@@ -117,21 +124,38 @@ public class UserDao implements IUserDao {
 		}, keyHolder);
 		int i = keyHolder.getKey().intValue();
 		return i;
-						
+
 	}
-	
-	
-	public int insertEmptyStatistics(){
+
+	@Override
+	public int insertEmptyStatistics() {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		final String query = "INSERT INTO userStatistics VALUES()";
-		jdbcTemplate.update(
-				new PreparedStatementCreator() {
-					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-						PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-//											 
-						return ps;
-					}
-				}, keyHolder);
-		return keyHolder.getKey().intValue();	
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(
+					Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(query,
+						Statement.RETURN_GENERATED_KEYS);
+				//
+				return ps;
+			}
+		}, keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+
+	@Override
+	public User findUserById(int id) {
+
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userId=?";
+		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userEmail=?";
+		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { id });
+		if (num > 0) {
+
+			User user = jdbcTemplate.queryForObject(query, new Object[] { id },
+					new UserMapping());
+			return user;
+		} else {
+			return null;
+		}
 	}
 }

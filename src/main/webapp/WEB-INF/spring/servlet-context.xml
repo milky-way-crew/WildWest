@@ -20,8 +20,12 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
+	<bean id="tableManager" class="com.web.app.worldgames.service.DataBaseServiceManager">
+		<property name="dataBaseDao" ref="dataBaseDao"></property>
+	</bean>
+
 	<bean id="SetupDatabaseManager" class="com.web.app.worldgames.web.SetupDatabaseManager">
-		<property name="tableManager" ref="dataBaseDao"></property>
+		<property name="tableManager" ref="tableManager"></property>
 	</bean>
 
 	<bean
