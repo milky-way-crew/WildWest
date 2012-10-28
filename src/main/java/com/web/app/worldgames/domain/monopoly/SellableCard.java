@@ -3,6 +3,7 @@ package com.web.app.worldgames.domain.monopoly;
 public abstract class SellableCard extends Cell{
     private int price;
     private boolean mortage;
+    private Player owner;
 
     public boolean isMortage() {
         return mortage;
@@ -19,5 +20,14 @@ public abstract class SellableCard extends Cell{
     public void setPrice(int price) {
         this.price = price;
     }
+
+	public Player getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
+	}
+    
     
 }
