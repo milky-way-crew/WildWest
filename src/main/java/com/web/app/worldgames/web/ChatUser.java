@@ -30,8 +30,7 @@ public class ChatUser {
 	public List<String> getMessages() {
 		ArrayList<String> messages = new ArrayList<String>(deliver);
 		deliver.clear();
-		return messages;
-		
+		return messages;	
 	}
 	
 	public User getUser() {
