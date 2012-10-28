@@ -1,5 +1,8 @@
 package com.web.app.worldgames.domain.chess;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+
+@JsonAutoDetect
 public class Position {
 	@Override
 	public int hashCode() {
@@ -26,37 +29,39 @@ public class Position {
 		return true;
 	}
 
-	private int x;
-	private int y;
+	private Integer x;
+	private Integer y;
 
 	public Position() {
 	}
 
 	@Override
 	public String toString() {
-		return "Position [x=" + x + ", y=" + y + "]";
+		// Like a json 
+		return "{ \"x\" :" + x + ", \"y\":" + y + "}";
 	}
 
-	public Position(int x, int y) {
+	public Integer getX() {
+		return x;
+	}
+
+	public void setX(Integer x) {
+		this.x = x;
+	}
+
+	public Integer getY() {
+		return y;
+	}
+
+	public void setY(Integer y) {
+		this.y = y;
+	}
+
+	public Position(Integer x, Integer y) {
 		super();
 		this.x = x;
 		this.y = y;
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
 
 }
