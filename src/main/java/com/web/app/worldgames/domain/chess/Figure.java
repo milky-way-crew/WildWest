@@ -1,6 +1,7 @@
 package com.web.app.worldgames.domain.chess;
 
 public class Figure {
+	public static final Figure EMPTY = new Figure();
 	private FigureTypesEnum type;
 	private Position position;
 	private Player owner;

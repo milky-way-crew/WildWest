@@ -8,12 +8,20 @@ import java.util.Set;
 
 public class Board {
 	private Map<Position, Figure> board = new HashMap<Position, Figure>();
+	public static final int BOARD_SIZE_X = 6;
+	public static final int BOARD_SIZE_Y = 8;
 
 	private static class BoardInitializer {
 		private void initBoard(Map<Position, Figure> board) {
-			for (int i = 0; i < 10; i++) {
-				for (int j = 0; j < 10; j++) {
-					Figure figure = getRandomFigure();
+			for (int i = 0; i < BOARD_SIZE_X + 1; i++) {
+				for (int j = 0; j < BOARD_SIZE_Y + 1; j++) {
+					Figure figure;
+
+					if (!(i > 1 && i < 7)) {
+						figure = getRandomFigure();
+					} else {
+						figure = Figure.EMPTY;
+					}
 					board.put(new Position(i, j), figure);
 				}
 			}
@@ -34,6 +42,7 @@ public class Board {
 
 	public Board() {
 	}
+
 	public Board(BoardInitializer boardInitializer) {
 		boardInitializer.initBoard(board);
 	}
@@ -62,6 +71,8 @@ public class Board {
 	public String toString() {
 		return "Board [board=" + board + "]";
 	}
-	
-	
+
+	public Figure putFigure(Position key, Figure value) {
+		return board.put(key, value);
+	}
 }

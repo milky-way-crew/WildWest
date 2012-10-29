@@ -1,21 +1,46 @@
 package com.web.app.worldgames.domain.chess;
 
-import java.util.Collection;
+import java.util.Scanner;
+
 
 public class Main {
+	static Position from = new Position(), to = new Position();
+	
 	public static void main(String[] args) {
 		Board board = Board.createInitializedBoard();
 		
-		for (int i =0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				System.out.print(board.getFigure(new Position(i, j)).getType());
-				System.out.print(" ");
+		TrickyChessGame game = new TrickyChessGame(new ConsolePlayer() {
+			{
+				setNick("ONE");
 			}
-			System.out.println();
-		}
-		System.out.println(board);
+		}, new ConsolePlayer() {
+			{
+				setNick("TWO");
+			}
+		});
 		
+		game.setBoard(board);
 		
-//		new TrickyChessGame(player1, player2)
+		game.startGame();
+		
+//		while (true) {
+			
+//			game.isValidMove(from, to);
+//			//			game.moveFigure(from, to);
+//			System.out.println(game.isValidMove(from, to));
+//		}
 	}
+
+	private static void promt() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Go from:");
+		from.setX(scanner.nextInt());
+		from.setY(scanner.nextInt());
+		System.out.println(from);
+		System.out.print("Go to:");
+		to.setX(scanner.nextInt());
+		to.setY(scanner.nextInt());
+		System.out.println(to);
+	}
+
 }
