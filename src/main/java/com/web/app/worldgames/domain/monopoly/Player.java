@@ -26,7 +26,7 @@ public void setPosition(int position) {
 	this.position = position;
 }
 
-public double getMoney() {
+public int getMoney() {
 	return money;
 }
 
@@ -35,4 +35,7 @@ public void setMoney(int money) {
 }
 
 public void action(Cell cell){};
+public static Player getPlayer(Player player){
+	return player;
+}
 }
