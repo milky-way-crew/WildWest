@@ -4,7 +4,6 @@ public class Player {
 private String name;
 private int position;
 private int money;
-private Statistic statistic;
 public Player(String name, int position, int money){
 	this.name=name;
 	this.position=position;

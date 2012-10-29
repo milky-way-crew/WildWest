@@ -94,4 +94,13 @@ public class CityCard extends SellableCard {
 
 	}
 
+	public boolean buildCastle(Player player) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean buildFortress(Player player) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }
