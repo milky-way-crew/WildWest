@@ -1,14 +1,15 @@
 package com.web.app.worldgames.domain.chess;
 
+import java.util.ArrayList;
 import java.util.Scanner;
-
 
 public class Main {
 	static Position from = new Position(), to = new Position();
-	
+
 	public static void main(String[] args) {
-		Board board = Board.createInitializedBoard();
-		
+		 Board board = Board.createInitializedBoard();
+//		Board board = new Board();
+
 		TrickyChessGame game = new TrickyChessGame(new ConsolePlayer() {
 			{
 				setNick("ONE");
@@ -18,29 +19,15 @@ public class Main {
 				setNick("TWO");
 			}
 		});
-		
+		Figure figure = new Figure();
+		figure.setType(FigureTypesEnum.PAPER);
+
+		board.putFigure(new Position(0, 1), figure);
+		board.putFigure(new Position(5, 8), figure);
+
 		game.setBoard(board);
-		
 		game.startGame();
-		
-//		while (true) {
-			
-//			game.isValidMove(from, to);
-//			//			game.moveFigure(from, to);
-//			System.out.println(game.isValidMove(from, to));
-//		}
-	}
 
-	private static void promt() {
-		Scanner scanner = new Scanner(System.in);
-		System.out.print("Go from:");
-		from.setX(scanner.nextInt());
-		from.setY(scanner.nextInt());
-		System.out.println(from);
-		System.out.print("Go to:");
-		to.setX(scanner.nextInt());
-		to.setY(scanner.nextInt());
-		System.out.println(to);
+		// TrickyChessGame.printBoard(test);
 	}
-
 }

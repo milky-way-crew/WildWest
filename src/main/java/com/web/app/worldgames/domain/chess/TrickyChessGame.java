@@ -1,6 +1,5 @@
 package com.web.app.worldgames.domain.chess;
 
-import java.util.Map;
 
 public class TrickyChessGame {
 	private static final int COUNT_PLAYERS = 2;
@@ -63,12 +62,11 @@ public class TrickyChessGame {
 	}
 
 	public boolean moveFigure(Position from, Position to) {
-		Map<Position, Figure> board = this.board.getBoard();
 
-		Figure figure = board.get(from);
+		Figure figure = board.getFigure(from);
 		if (figure != Figure.EMPTY && isValidMove(from, to)) {
 			// Potential opponent figure
-			Figure figure2 = board.get(to);
+			Figure figure2 = board.getFigure(to);
 			if (figure2 != Figure.EMPTY) {
 				battle(from, to, figure, figure2);
 			} else {
@@ -108,26 +106,27 @@ public class TrickyChessGame {
 	}
 
 	public boolean isValidMove(Position from, Position to) {
-		int x_offset = Math.abs(from.getX() - to.getX());
-		int y_offset = Math.abs(from.getY() - to.getY());
-
-		if (to.getX() > Board.BOARD_SIZE_X || to.getX() < 0
-				|| to.getY() > Board.BOARD_SIZE_Y || to.getY() < 0) {
-			return false;
-		}
-
-		if (y_offset > 1 || x_offset > 1) {
-			return false; // Moves on distant >1 cells not allowed
-		} else if (y_offset - x_offset == 0) {
-			return false; // Diagonal moves not allowed
-		} else {
-			return true;
-		}
+		return true;
+//		int x_offset = Math.abs(from.getX() - to.getX());
+//		int y_offset = Math.abs(from.getY() - to.getY());
+//
+//		if (to.getX() > Board.BOARD_SIZE_X || to.getX() < 0
+//				|| to.getY() > Board.BOARD_SIZE_Y || to.getY() < 0) {
+//			return false;
+//		}
+//
+//		if (y_offset > 1 || x_offset > 1) {
+//			return false; // Moves on distant >1 cells not allowed
+//		} else if (y_offset - x_offset == 0) {
+//			return false; // Diagonal moves not allowed
+//		} else {
+//			return true;
+//		}
 	}
 
-	private static void printBoard(Board board) {
-		for (int i = 0; i < Board.BOARD_SIZE_X + 1; i++) {
-			for (int j = 0; j < Board.BOARD_SIZE_Y + 1; j++) {
+	static void printBoard(Board board) {
+		for (int i = 0; i < Board.BOARD_SIZE_X; i++) {
+			for (int j = 0; j < Board.BOARD_SIZE_Y; j++) {
 				if (i == 0 && j == 0) {
 					System.out.println("  0 1 2 3 4 5 6 7 8");
 					System.out.println("  -----------------");
