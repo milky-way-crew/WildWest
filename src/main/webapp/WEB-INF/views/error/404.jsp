@@ -10,8 +10,6 @@
 <style type="text/css">
 body {
 	background: url(resources/img/bg.png);
-	/* Путь к фоновому изображению */
-	/* background-color: #c7b39b;  Цвет фона */
 }
 </style>
 </head>
