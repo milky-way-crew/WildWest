@@ -1,42 +1,24 @@
-var ajax_url = "ajax";
+$(document).ready(function() {
+	var sender = function() {
+		var message = $("#message").val();
+		socket.send(message);
+	};
 
-var sender = function() {
-	$.ajax({
-		url : ajax_url,
-		type : "POST",
-		data : {
-			type : "message",
-			data : $("#message").val()
-		},
-		success : function(json) {
-			// Adding own message to chat
-			$("#chat").append("me: " + $("#message").val() + "\n");
-			// Clear chat
-			$("#message").val("");
-		}
-	});
-};
+	var updater = function(data) {
+		$("#chat").append(data);
+	};
 
-var updater = function() {
-	$.ajax({
-		url : ajax_url,
-		type : "POST",
-		data : {
-			type : "update",
-			data : ""
-		},
-		success : function(json) {
-			// Hot stuff
-			$("#chat").append(json);
-		}
-	});
-};
+	$("#sender").click(sender);
 
-var auto_refresh = setInterval(updater, 1000);
-
-$("#update").click(function() {
-	updater();
-	clearInterval(auto_refresh);
+	var socket = new WebSocket("ws://localhost:8888/");
+	socket.onopen = function() {
+		console.log("Connection opened");
+	};
+	socket.onclose = function() {
+		console.log("Connection closed");
+	};
+	socket.onmessage = function(event) {
+		console.log("Message:", event.data);
+		updater(event.data + "\n");
+	};
 });
-
-$("#sender").click(sender);
