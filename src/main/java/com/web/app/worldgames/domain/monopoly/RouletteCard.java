@@ -7,8 +7,8 @@ public class RouletteCard extends Cell {
 	@Override
 	void effectOnPlayer(Player player) {
 		// TODO Auto-generated method stub
-		Random randRoulette = new Random(6);
-		int roulleteIndex = randRoulette.nextInt();
+		Random randRoulette = new Random();
+		int roulleteIndex = randRoulette.nextInt(6)+1;
 		for (Roulette r : Roulette.values()) {
 			if (r.ordinal() == roulleteIndex) {
 				if (r.getWhoIsGet().equals("player")) {

@@ -1,23 +1,14 @@
 package com.web.app.worldgames.domain.monopoly;
 
 public class StartCard extends Cell {
-	private int startMoney;
+	private static final int START_MONEY = 500;
+	private static final int START_POSITION = 1;
 
-	public StartCard(int startMoney) {
-		this.startMoney = startMoney;
-	}
-
-	public int getStartMoney() {
-		return startMoney;
-	}
-
-	public void setStartMoney(int startMoney) {
-		this.startMoney = startMoney;
-	}
-
+	
 	@Override
 	public void effectOnPlayer(Player player) {
-		player.setMoney(getStartMoney());
+		player.setMoney(START_MONEY);
+		player.setPosition(START_POSITION);
 	}
 
 }

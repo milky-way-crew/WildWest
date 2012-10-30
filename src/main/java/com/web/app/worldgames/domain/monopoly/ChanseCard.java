@@ -1,11 +1,18 @@
 package com.web.app.worldgames.domain.monopoly;
 
-public class ChanseCard extends Cell{
+import java.util.Random;
 
-    @Override
-    void effectOnPlayer(Player player) {
-	// TODO Auto-generated method stub
-	
-    }
+public class ChanseCard extends Cell {
+
+	@Override
+	void effectOnPlayer(Player player) {
+		Random randChance = new Random();
+		int chanceChoose = randChance.nextInt(8)+1;
+		for(Chance chance: Chance.values()){
+			if(chance.ordinal()==chanceChoose){
+				player.setPosition(chance.getPosition());
+			}
+		}
+	}
 
 }
