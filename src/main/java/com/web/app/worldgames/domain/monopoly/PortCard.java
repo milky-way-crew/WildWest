@@ -1,7 +1,6 @@
 package com.web.app.worldgames.domain.monopoly;
 
 public class PortCard extends SellableCard{
-private int price;
 private int taxOneCard;
 private int taxTwoCard;
 private int taxThreeCard;
@@ -10,20 +9,12 @@ private int taxFourCard;
     private PortCard(int price, int taxOneCard, int taxTwoCard, int taxThreeCard,
 		int taxFourCard) {
 	super();
-	this.price = price;
 	this.taxOneCard = taxOneCard;
 	this.taxTwoCard = taxTwoCard;
 	this.taxThreeCard = taxThreeCard;
 	this.taxFourCard = taxFourCard;
 }
 
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
 
 	public int getTaxOneCard() {
 		return taxOneCard;

@@ -2,8 +2,8 @@ package com.web.app.worldgames.domain.monopoly;
 
 public class ColiseumCard extends Cell {
 	private boolean payMoney = false;
-	private boolean buyCard = false;
-	private boolean hasCard = false;
+	private boolean buyFreeCard = false;
+	private boolean hasFreeCard = false;
 
 	public void payMoney() {
 
@@ -15,14 +15,16 @@ public class ColiseumCard extends Cell {
 		int numberOfCourses = 0;
 		if (payMoney) {
 			player.setMoney(player.getMoney() - CardPrices.RANSOM_FROM_COLISEUM);
-		} else if (buyCard) {
+		} else if (buyFreeCard) {
 			// Find PlayerList and buy card
-		} else if (hasCard) {
+		} else if (hasFreeCard) {
 
 		} else {
 			player.setPosition(player.getPosition());
-			i++;
-			if(i==3 || )
+			numberOfCourses++;
+			if ((numberOfCourses == 3) || (Dices.doublePoints())) {
+				player.setPosition(player.nextPosition());
+			}
 		}
 	}
 }

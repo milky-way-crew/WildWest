@@ -18,7 +18,10 @@ public class TaxCard extends Cell {
 
 	@Override
 	void effectOnPlayer(Player player) {
-		player.setMoney(player.getMoney() - getPrice());
+		if (player.getPosition() == CellPositions.TAX1 || player.getPosition() == CellPositions.TAX2) {
+			player.setMoney(player.getMoney() - CardPrices.TAX);
+		}
+
 	}
 
 }

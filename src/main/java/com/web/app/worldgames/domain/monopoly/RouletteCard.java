@@ -23,6 +23,8 @@ public class RouletteCard extends Cell {
 
 				} else if (r.getWhoIsGet().equals("none")) {
 
+				}else if(r.getWhoIsGet().equals("coliseum")){
+					//set freeCard to player
 				}
 			}
 		}

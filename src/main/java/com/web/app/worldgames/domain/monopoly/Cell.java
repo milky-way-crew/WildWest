@@ -15,8 +15,4 @@ public abstract class Cell {
         return position;
     }
 
-//	public void effectOnPlayer(Player player, int addMoney) {
-//		//player.setMoney(addMoney);
-//		
-//	}
 }

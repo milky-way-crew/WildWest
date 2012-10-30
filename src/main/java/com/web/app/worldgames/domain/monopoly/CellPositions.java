@@ -11,7 +11,7 @@ public interface CellPositions {
 	int CHANCE1 = 8;
 	int SARDINIA=9;
 	int GAUL=10;
-	int COLISEUM1 = 11;
+	int COLISEUM = 11;
 	int ILIRIC=12;
 	int MACEDONIA=13;
 	int ACHAIA=14;
@@ -20,11 +20,17 @@ public interface CellPositions {
 	int ASSYRIA=17;
 	int BAETIC=18;
 	int PORT2 = 19;
+	
 	int FREE_STATION = 21;
+	
 	int TAX2 = 23;
+	
+	
 	int PORT3 = 27;
+	
 	int CHANCE2 = 30;
-	int COLISEUM2 = 31;
+	int GO_TO_COLISEUM = 31;
 	int ROULETTE2 = 33;
+	
 	int PORT4 = 37;
 }

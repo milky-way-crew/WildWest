@@ -6,7 +6,8 @@ public enum Roulette {
 			"You've lost $400", 400, false, "player"), ROULETTE4(
 			"You've gift $600 all players", 600, false, "allPlayers"), ROULETTE5(
 			"Each players have gave $100 for you", 100, true, "allPlayers"), ROULETTE6(
-			"You are unlucky. You haven't get money", 0, false, "none");
+			"You are unlucky. You haven't get money", 0, false, "none"), ROULETTE7(
+			"You've got free card to entrace from Coliseum ", 0, true, "coliseum");
 	private final String message;
 	private final int money;
 	private final boolean isAdd;

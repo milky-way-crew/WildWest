@@ -1,23 +1,19 @@
 package com.web.app.worldgames.domain.monopoly;
 
 public enum Cities {
-	VENESIA("Veneto", 50, 70, 90, 90, 0, 100, false,2),
-	BARI("Apulia", 50, 70, 90, 100, 0, 110, false,3),
-	SICILY("Syracuse", 50, 70, 90, 120, 0, 125, false,4),
-	CORSICA("Ajaccio", 70, 100, 150, 120, 0, 125, false,7),
-	SARDINIA("Cagliari", 40, 60, 110, 120, 0, 130, false,9),
-	GAUL("Mediolane", 50, 89, 150, 160, 0, 140, false,10),
-	ILIRIC("Solin", 50, 90, 140, 140, 0, 130, false,12),
-	MACEDONIA("Dion", 60, 90, 120, 140, 0, 150, false,13),
-	ACHAIA("Kalavryta", 40, 80, 120, 150, 0, 140, false,14),
-	BITHYNIA("Nicomedia", 50, 80, 140, 130, 0, 120, false,16),
-	ASSYRIA("Assur", 50, 80, 160, 140, 0, 160, false,17),
-	BAETIC("Strabo", 30, 50, 110, 130, 0, 140, false,18),
-	ITALY("Rome", 50, 100, 150, 160, 0, 150, false,),
-	CRETE("Dasiti", 30, 70, 140, 130, 0, 150, false),
-	CYPRUS("Nicosia", 40, 70, 130, 150, 0, 140, false),
-	NUMIBIA("Tsyrta", 60, 90, 150, 120, 0, 110, false),
-	APULIA("Cannes", 40, 70, 100, 110, 0, 100, false);
+	VENESIA("Veneto", 50, 70, 90, 90, 0, 100, false,CellPositions.VENESIA),
+	BARI("Apulia", 50, 70, 90, 100, 0, 110, false,CellPositions.BARI),
+	SICILY("Syracuse", 50, 70, 90, 120, 0, 125, false,CellPositions.SICILY),
+	CORSICA("Ajaccio", 70, 100, 150, 120, 0, 125, false,CellPositions.CORSICA),
+	SARDINIA("Cagliari", 40, 60, 110, 120, 0, 130, false,CellPositions.SARDINIA),
+	GAUL("Mediolane", 50, 89, 150, 160, 0, 140, false,CellPositions.GAUL),
+	ILIRIC("Solin", 50, 90, 140, 140, 0, 130, false,CellPositions.ILIRIC),
+	MACEDONIA("Dion", 60, 90, 120, 140, 0, 150, false,CellPositions.MACEDONIA),
+	ACHAIA("Kalavryta", 40, 80, 120, 150, 0, 140, false,CellPositions.ACHAIA),
+	BITHYNIA("Nicomedia", 50, 80, 140, 130, 0, 120, false,CellPositions.BITHYNIA),
+	ASSYRIA("Assur", 50, 80, 160, 140, 0, 160, false,CellPositions.ASSYRIA),
+	BAETIC("Strabo", 30, 50, 110, 130, 0, 140, false,CellPositions.BAETIC);
+
 	
 	private final String region;
 	private final int taxOneCard;
