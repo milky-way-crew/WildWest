@@ -23,11 +23,11 @@ public class TestController {
 
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public ModelAndView showPage(HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("user");
-		ChatUser chatUser = new ChatUser(user);
+//		User user = (User) request.getSession().getAttribute("user");
+//		ChatUser chatUser = new ChatUser(user);
 
-		request.getSession().setAttribute("chatUser", chatUser);
-		chatUsers.add(chatUser);
+//		request.getSession().setAttribute("chatUser", chatUser);
+//		chatUsers.add(chatUser);
 
 		return new ModelAndView("test");
 	}

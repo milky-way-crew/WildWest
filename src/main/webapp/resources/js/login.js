@@ -33,4 +33,8 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#myCarousel').carousel({interval: 2000});
 });
+//$(document).ready(function(){
+    //Start carousel
+//});
