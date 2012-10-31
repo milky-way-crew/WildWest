@@ -5,6 +5,6 @@ import java.util.Map;
 
 public class GameBoard {
 public Map<Cell,Player> board(){
-	
+	return null;
 }
 }

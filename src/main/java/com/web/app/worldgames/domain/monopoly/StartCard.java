@@ -1,10 +1,14 @@
 package com.web.app.worldgames.domain.monopoly;
 
-public class StartCard extends Cell{
+public class StartCard extends Cell {
+	private static final int START_MONEY = 1500;
+	private static final int START_POSITION = 1;
 
-    @Override
-    void effectOnPlayer(Player player) {
-	// TODO Auto-generated method stub
 	
-    }
+	@Override
+	public void effectOnPlayer(Player player) {
+		player.setMoney(START_MONEY);
+		player.setPosition(START_POSITION);
+	}
+
 }

@@ -88,11 +88,7 @@ public class CityCard extends SellableCard {
 		this.numbersOfCastles = numbersOfCastles;
 	}
 
-	@Override
-	void effectOnPlayer(Player player) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	public boolean buildCastle(Player player) {
 		// TODO Auto-generated method stub
@@ -102,5 +98,11 @@ public class CityCard extends SellableCard {
 	public boolean buildFortress(Player player) {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	void effectOnPlayer(Player player) {
+		// TODO Auto-generated method stub
+		
 	}
 }
