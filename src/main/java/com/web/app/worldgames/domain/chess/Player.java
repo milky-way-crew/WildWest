@@ -1,6 +1,8 @@
 package com.web.app.worldgames.domain.chess;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -33,17 +35,15 @@ public abstract class Player {
 		this.nick = nick;
 	}
 
-	public Set<Entry<Position,Figure>> getFiguresFromBoad(Board board) {
-		Set<Entry<Position,Figure>> allFigures = board.getAllFigures();
-		Set<Entry<Position,Figure>> ownerFigures = new HashSet<Entry<Position,Figure>>();
-		for (Entry<Position, Figure> entry : allFigures) {
-			if (entry.getValue().getOwner().equals(this)) {
-				ownerFigures.add(entry);
+	public List<Figure> getFiguresFromBoad(Board board) {
+		ArrayList<Figure> ownerFigures = new ArrayList<Figure>();
+		for (Figure figure : board.getBoard()) {
+			if (figure.getOwner().equals(this)) {
+				ownerFigures.add(figure);
 			}
 		}
 		return ownerFigures;
 	}
 	
 	public abstract Move askForNextMove();
-	
 }

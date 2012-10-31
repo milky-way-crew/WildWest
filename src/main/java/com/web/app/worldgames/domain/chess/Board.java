@@ -7,45 +7,51 @@ import java.util.Random;
 import java.util.Set;
 
 public class Board {
-	private List<Figure> board = new ArrayList<Figure>(BOARD_SIZE_X * BOARD_SIZE_Y) {
-		{
-			for (int i = 0; i < BOARD_SIZE_X * BOARD_SIZE_Y; i++) {
-				this.add(Figure.EMPTY);
-			}
-		}
-	};
+	private List<Figure> board = new ArrayList<Figure>(BOARD_SIZE_X * BOARD_SIZE_Y);
 	public static final int BOARD_SIZE_X = 7;
 	public static final int BOARD_SIZE_Y = 9;
 
 	private static class BoardInitializer {
 		private static final int SIZE_OF_2_ROWS = BOARD_SIZE_Y * 2;
+		private static final int BOARD_SIZE = BOARD_SIZE_Y * BOARD_SIZE_X;
 
 		private void initBoard(Board board) {
-			randomizePlayerUp(board);
-			randomizePlayerDown(board);
+			// For "up" player
+			randomizePlayerArea(board, 0, SIZE_OF_2_ROWS, new Player() {
+				{
+					setId(1);
+				}
+				@Override
+				public Move askForNextMove() {
+					return null;
+				}
+				
+			});
+			// For "down" player
+			randomizePlayerArea(board, BOARD_SIZE - SIZE_OF_2_ROWS, BOARD_SIZE, new Player() {
+				{
+					setId(2);
+				}
+				@Override
+				public Move askForNextMove() {
+					return null;
+				}
+			});
 		}
 
-		private void randomizePlayerDown(Board board) {
-			int size = BOARD_SIZE_Y * BOARD_SIZE_X;
-			List<Figure> subList = board.getBoard().subList(size - SIZE_OF_2_ROWS, size);
+		private void randomizePlayerArea(Board board, int start, int end, Player owner) {
+			List<Figure> subList = board.getBoard().subList(start, end);
 			for (int i=0; i < subList.size(); i++) {
-				subList.set(i, getRandomFigure());
-			}
-		}
-
-		private void randomizePlayerUp(Board board) {
-			List<Figure> subList = board.getBoard().subList(0, SIZE_OF_2_ROWS);
-			for (int i=0; i < subList.size(); i++) {
-				subList.set(i, getRandomFigure());
+				Figure figure = subList.get(i);
+				figure.setType(getRandomFigure().getType());
+				figure.setOwner(owner);
 			}
 		}
 
 		private static Figure getRandomFigure() {
 			Random random = new Random();
-			int typeId = random.nextInt(FigureTypesEnum.values().length - 2); // minus
-																				// flag
-																				// and
-																				// empty
+			// * Minus flag and empty cell = 2
+			int typeId = random.nextInt(FigureTypesEnum.values().length - 2);
 			Figure figure = new Figure();
 			figure.setType(FigureTypesEnum.getTypeById(typeId));
 			return figure;
@@ -56,20 +62,23 @@ public class Board {
 		return new Board(new BoardInitializer());
 	}
 
+	private void initWithEmptyFigures() {
+		for (int i = 0; i < BOARD_SIZE_X * BOARD_SIZE_Y; i++) {
+			getBoard().add(null); // FIXME: must be another way
+			putFigureByIndex(i, new Figure());
+		}
+	}
+
 	public Board() {
 	}
 
 	public Board(BoardInitializer boardInitializer) {
+		initWithEmptyFigures();
 		boardInitializer.initBoard(this);
 	}
 
 	public Figure getFigure(Position key) {
-		return board.get(positiontToIndex(key));
-	}
-
-	public Set<Entry<Position, Figure>> getAllFigures() {
-		// TODO: FIXME
-		return null;
+		return board.get(Utils.positiontToIndex(key));
 	}
 
 	public List<Figure> getBoard() {
@@ -86,17 +95,15 @@ public class Board {
 	}
 
 	public Figure putFigure(Position key, Figure value) {
-		int index = positiontToIndex(key);
+		int index = Utils.positiontToIndex(key);
+		value.setPosition(key);
 		System.out.println(key);
 		System.out.println(index + "\n");
 		return board.set(index, value);
 	}
 
 	public Figure putFigureByIndex(int index, Figure value) {
+		value.setPosition(Utils.indexToPosition(index));
 		return board.set(index, value);
-	}
-
-	private int positiontToIndex(Position key) {
-		return key.getX() * BOARD_SIZE_Y + key.getY();
 	}
 }
