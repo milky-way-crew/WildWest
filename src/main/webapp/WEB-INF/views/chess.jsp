@@ -22,22 +22,22 @@
 	<table id="chess_board" cellpadding="0" cellspacing="0">
 		<tbody>
 		<tr>
-			<td id="00"><a href="#" class="figure rook black ui-draggable">♜</a></td>
-			<td id="01"><a href="#" class="figure knight black ui-draggable">♞</a></td>
-			<td id="02"><a href="#" class="figure bishop black ui-draggable">♝</a></td>
-			<td id="03"><a href="#" class="figure king black ui-draggable">♛</a></td>
-			<td id="04"><a href="#" class="figure queen black ui-draggable">♚</a></td>
-			<td id="05"><a href="#" class="figure bishop black ui-draggable">♝</a></td>
-			<td id="06"><a href="#" class="figure knight black ui-draggable">♞</a></td>
+			<td id="00"><a href="#" class="figure black ui-draggable">♜</a></td>
+			<td id="01"><a href="#" class="figure black ui-draggable">♞</a></td>
+			<td id="02"><a href="#" class="figure black ui-draggable">♝</a></td>
+			<td id="03"><a href="#" class="figure black ui-draggable">♛</a></td>
+			<td id="04"><a href="#" class="figure black ui-draggable">♚</a></td>
+			<td id="05"><a href="#" class="figure black ui-draggable">♝</a></td>
+			<td id="06"><a href="#" class="figure black ui-draggable">♞</a></td>
 		</tr>
 		<tr>
-			<td id="10"><a href="#" class="figure pawn black ui-draggable">♟</a></td>
-			<td id="11"><a href="#" class="figure pawn black ui-draggable">S</a></td>
-			<td id="12"><a href="#" class="figure pawn black ui-draggable">R</a></td>
-			<td id="13"><a href="#" class="figure pawn black ui-draggable">P</a></td>
-			<td id="14"><a href="#" class="figure pawn black ui-draggable">♟</a></td>
-			<td id="15"><a href="#" class="figure pawn black ui-draggable">♟</a></td>
-			<td id="16"><a href="#" class="figure pawn black ui-draggable">♟</a></td>
+			<td id="10"><a href="#" class="figure black ui-draggable">♟</a></td>
+			<td id="11"><a href="#" class="figure black ui-draggable">♟</a></td>
+			<td id="12"><a href="#" class="figure black ui-draggable">♟</a></td>
+			<td id="13"><a href="#" class="figure black ui-draggable">♟</a></td>
+			<td id="14"><a href="#" class="figure black ui-draggable">♟</a></td>
+			<td id="15"><a href="#" class="figure black ui-draggable">♟</a></td>
+			<td id="16"><a href="#" class="figure black ui-draggable">♟</a></td>
 		</tr>
 		<tr>
 			<td id="20"></td>
@@ -66,21 +66,21 @@
 			<td id="46"></td>
 		</tr>
 		<tr>
-			<td id="50"><a href="#" class="figure pawn white ui-draggable">♙</a></td>
-			<td id="51"><a href="#" class="figure pawn white ui-draggable">♙</a></td>
-			<td id="52"><a href="#" class="figure pawn white ui-draggable">♙</a></td>
-			<td id="53"><a href="#" class="figure pawn white ui-draggable">♙</a></td>
-			<td id="54"><a href="#" class="figure pawn white ui-draggable">♙</a></td>
-			<td id="55"><a href="#" class="figure pawn white ui-draggable">♙</a></td>
-			<td id="56"><a href="#" class="figure pawn white ui-draggable">♙</a></td>
+			<td id="50"><a href="#" class="figure white ui-draggable">♙</a></td>
+			<td id="51"><a href="#" class="figure white ui-draggable">♙</a></td>
+			<td id="52"><a href="#" class="figure white ui-draggable">♙</a></td>
+			<td id="53"><a href="#" class="figure white ui-draggable">♙</a></td>
+			<td id="54"><a href="#" class="figure white ui-draggable">♙</a></td>
+			<td id="55"><a href="#" class="figure white ui-draggable">♙</a></td>
+			<td id="56"><a href="#" class="figure white ui-draggable">♙</a></td>
 		<tr>
-			<td id="60"><a href="#" class="figure rook white ui-draggable">♖</a></td>
-			<td id="61"><a href="#" class="figure knight white ui-draggable">♘</a></td>
-			<td id="62"><a href="#" class="figure bishop white ui-draggable">♗</a></td>
-			<td id="63"><a href="#" class="figure king white ui-draggable">♕</a></td>
-			<td id="64"><a href="#" class="figure queen white ui-draggable">♔</a></td>
-			<td id="65"><a href="#" class="figure bishop white ui-draggable">♗</a></td>
-			<td id="66"><a href="#" class="figure knight white ui-draggable">♘</a></td>
+			<td id="60"><a href="#" class="figure white ui-draggable">♖</a></td>
+			<td id="61"><a href="#" class="figure white ui-draggable">♘</a></td>
+			<td id="62"><a href="#" class="figure white ui-draggable">♗</a></td>
+			<td id="63"><a href="#" class="figure white ui-draggable">♕</a></td>
+			<td id="64"><a href="#" class="figure white ui-draggable">♔</a></td>
+			<td id="65"><a href="#" class="figure white ui-draggable">♗</a></td>
+			<td id="66"><a href="#" class="figure white ui-draggable">♘</a></td>
 	</tbody></table>
 </body>
 </html>

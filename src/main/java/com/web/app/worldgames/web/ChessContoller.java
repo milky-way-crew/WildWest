@@ -25,9 +25,11 @@ public class ChessContoller {
 
 	@RequestMapping(value="/chess2")
 	public @ResponseBody Map<String, ? extends Object> test2() {
-		HashMap<String,List<Figure>> map = new HashMap<String, List<Figure>>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("board", Board.createInitializedBoard().getBoard());
 		return map;
 	}
+
+
 
 }
