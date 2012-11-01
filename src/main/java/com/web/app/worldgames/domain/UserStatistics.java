@@ -1,3 +1,4 @@
+
 package com.web.app.worldgames.domain;
 
 public class UserStatistics {
@@ -6,9 +7,19 @@ public class UserStatistics {
 	private int userPoints;
 	private int userMoneyAmount;
 	private int userAllWinGames;
-	
-	public UserStatistics(){
-		
+
+	public UserStatistics() {
+
+	}
+
+	public UserStatistics(int statId, int userAllGames, int userPoints,
+			int userMoneyAmount, int userAllWinGames) {
+		super();
+		this.statId = statId;
+		this.userAllGames = userAllGames;
+		this.userPoints = userPoints;
+		this.userMoneyAmount = userMoneyAmount;
+		this.userAllWinGames = userAllWinGames;
 	}
 
 	public int getStatId() {
@@ -48,16 +59,6 @@ public class UserStatistics {
 	}
 
 	public void setUserAllWinGames(int userAllWinGames) {
-		this.userAllWinGames = userAllWinGames;
-	}
-
-	public UserStatistics(int statId, int userAllGames, int userPoints,
-			int userMoneyAmount, int userAllWinGames) {
-		super();
-		this.statId = statId;
-		this.userAllGames = userAllGames;
-		this.userPoints = userPoints;
-		this.userMoneyAmount = userMoneyAmount;
 		this.userAllWinGames = userAllWinGames;
 	}
 
@@ -102,7 +103,5 @@ public class UserStatistics {
 			return false;
 		return true;
 	}
-	
-	
 
 }
