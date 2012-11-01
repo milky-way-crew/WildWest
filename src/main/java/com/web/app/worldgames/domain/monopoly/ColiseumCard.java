@@ -11,7 +11,6 @@ public class ColiseumCard extends Cell {
 
 	@Override
 	void effectOnPlayer(Player player) {
-		// TODO Auto-generated method stub
 		int numberOfCourses = 0;
 		if (payMoney) {
 			player.setMoney(player.getMoney() - CardPrices.RANSOM_FROM_COLISEUM);
@@ -22,8 +21,8 @@ public class ColiseumCard extends Cell {
 		} else {
 			player.setPosition(player.getPosition());
 			numberOfCourses++;
-			if ((numberOfCourses == 3) || (Dices.doublePoints())) {
-				player.setPosition(player.nextPosition());
+			if ((numberOfCourses == 3) || (Player.doublePoints())) {
+				player.setPosition(player.throwDicesAndMove());
 			}
 		}
 	}

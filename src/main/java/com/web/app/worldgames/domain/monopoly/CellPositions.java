@@ -3,34 +3,42 @@ package com.web.app.worldgames.domain.monopoly;
 public interface CellPositions {
 	int STAR = 1;
 	int VENESIA = 2;
-	int BARI=3;
-	int SICILY=4;
+	int CHANCE1 = 3;
+	int BARI = 4;
 	int TAX1 = 5;
 	int PORT1 = 6;
-	int CORSICA=7;
-	int CHANCE1 = 8;
-	int SARDINIA=9;
-	int GAUL=10;
+	int CORSICA = 7;
+	int ROULETTE1 = 8;
+	int PONTOS = 9;
+	int SARDINIA = 10;
 	int COLISEUM = 11;
-	int ILIRIC=12;
-	int MACEDONIA=13;
-	int ACHAIA=14;
-	int ROULETTE1 = 15;
-	int BITHYNIA=16;
-	int ASSYRIA=17;
-	int BAETIC=18;
-	int PORT2 = 19;
-	
+	int GAUL = 12;
+	int CHANCE2 = 13;
+	int ILIRIC = 14;
+	int MACEDONIA = 15;
+	int PORT2 = 16;
+	int ACHAIA = 17;
+	int BITHYNIA = 18;
+	int ROULETTE2 = 19;
+	int ASSYRIA = 20;
 	int FREE_STATION = 21;
-	
-	int TAX2 = 23;
-	
-	
-	int PORT3 = 27;
-	
-	int CHANCE2 = 30;
+	int BAETIC = 22;
+	int CHANCE3 = 23;
+	int GALATIA = 24;
+	int DACIA = 25;
+	int PORT3 = 26;
+	int CAPADOCIA = 27;
+	int KOMMAGENA = 28;
+	int ROULETTE3 = 29;
+	int LYCAONIA = 30;
 	int GO_TO_COLISEUM = 31;
-	int ROULETTE2 = 33;
-	
-	int PORT4 = 37;
+	int EPIRUS = 32;
+	int OSROENA = 33;
+	int CHANCE4 = 34;
+	int PAMPULIA = 35;
+	int PORT4 = 36;
+	int ROULETTE4 = 37;
+	int PANNONIA = 38;
+	int TAX2 = 39;
+	int SICILY = 40;
 }

@@ -1,19 +1,19 @@
 package com.web.app.worldgames.domain.monopoly;
 
 public class TaxCard extends Cell {
-	private int price;
+	private int tax;
 
 	public int getPrice() {
-		return price;
+		return tax;
 	}
 
-	public void setPrice(int price) {
-		this.price = price;
+	public void setPrice(int tax) {
+		this.tax = tax;
 	}
 
-	private TaxCard(int price) {
+	public TaxCard(int tax) {
 		super();
-		this.price = price;
+		this.tax = tax;
 	}
 
 	@Override

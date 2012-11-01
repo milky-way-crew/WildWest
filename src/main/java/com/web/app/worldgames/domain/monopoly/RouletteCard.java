@@ -8,7 +8,8 @@ public class RouletteCard extends Cell {
 	void effectOnPlayer(Player player) {
 		// TODO Auto-generated method stub
 		Random randRoulette = new Random();
-		int roulleteIndex = randRoulette.nextInt(6)+1;
+		StartGame playersInGame = new StartGame();
+		int roulleteIndex = randRoulette.nextInt(7) + 1;
 		for (Roulette r : Roulette.values()) {
 			if (r.ordinal() == roulleteIndex) {
 				if (r.getWhoIsGet().equals("player")) {
@@ -18,13 +19,17 @@ public class RouletteCard extends Cell {
 						player.setMoney(player.getMoney() - r.getMoney());
 					}
 				} else if (r.getWhoIsGet().equals("allPlayers")) {
-
+					for (Player players : playersInGame.playersList()) {
+						players.setMoney(players.getMoney() + r.getMoney());
+					}
 				} else if (r.getWhoIsGet().equals("allPlayersToYou")) {
-
+					for (Player players : playersInGame.playersList()) {
+						players.setMoney(players.getMoney() - r.getMoney());
+					}
 				} else if (r.getWhoIsGet().equals("none")) {
-
-				}else if(r.getWhoIsGet().equals("coliseum")){
-					//set freeCard to player
+					player.setMoney(player.getMoney());
+				} else if (r.getWhoIsGet().equals("coliseum")) {
+					player.setHasFreeCard(true);
 				}
 			}
 		}
