@@ -37,4 +37,14 @@ public class Utils {
 	public static int positiontToIndex(Position key) {
 		return key.getX() * Board.BOARD_SIZE_Y + key.getY();
 	}
+
+	public static Position stringToPosition(String pos) {
+		//12
+		if (pos.length() != 2) {
+			throw new RuntimeException("Unsupported operation");
+		}
+
+		return new Position(Integer.parseInt(pos.substring(0,1)), Integer.parseInt(pos.substring(1,2)));
+
+	}
 }

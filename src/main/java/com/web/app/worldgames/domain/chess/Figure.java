@@ -4,9 +4,9 @@ public class Figure {
 	public static final Figure EMPTY = new Figure();
 	private FigureTypesEnum type;
 	private Position position;
-	private Player owner;
+	private PlayerType owner;
 	
-	public Figure(FigureTypesEnum type, Position position, Player owner) {
+	public Figure(FigureTypesEnum type, Position position, PlayerType owner) {
 		super();
 		this.type = type;
 		this.position = position;
@@ -38,46 +38,11 @@ public class Figure {
 		this.position = position;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Figure other = (Figure) obj;
-		if (owner == null) {
-			if (other.owner != null)
-				return false;
-		} else if (!owner.equals(other.owner))
-			return false;
-		if (position == null) {
-			if (other.position != null)
-				return false;
-		} else if (!position.equals(other.position))
-			return false;
-		if (type != other.type)
-			return false;
-		return true;
-	}
-
-	public Player getOwner() {
+	public PlayerType getOwner() {
 		return owner;
 	}
 
-	public void setOwner(Player owner) {
+	public void setOwner(PlayerType owner) {
 		this.owner = owner;
 	}
 }

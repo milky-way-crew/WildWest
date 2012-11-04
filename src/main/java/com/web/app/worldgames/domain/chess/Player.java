@@ -1,22 +1,43 @@
 package com.web.app.worldgames.domain.chess;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 
 public abstract class Player {
 	private int id;
 	private String nick;
+	private PlayerType type;
+	private Deque<GameAction> notifiers = new LinkedList<GameAction>();
+
+	public void notifyAbout(GameAction action) {
+		notifiers.addLast(action);
+	}
+
+	public GameAction popAction() {
+		return notifiers.pollFirst();
+	}
+
+	private FigureTypesEnum drawChoice = null;	
 	
+	public void setDrawChoice(FigureTypesEnum drawChoice) {
+		this.drawChoice = drawChoice;
+	}
+
+	public FigureTypesEnum getDrawChoice() {
+		return this.drawChoice;
+	}
+
+
 	public Player() {
 	}
 
-	public Player(int id, String nick) {
+	public Player(int id, String nick, PlayerType type) {
 		super();
 		this.id = id;
 		this.nick = nick;
+		this.type = type;
 	}
 
 	public int getId() {
@@ -38,7 +59,7 @@ public abstract class Player {
 	public List<Figure> getFiguresFromBoad(Board board) {
 		ArrayList<Figure> ownerFigures = new ArrayList<Figure>();
 		for (Figure figure : board.getBoard()) {
-			if (figure.getOwner().equals(this)) {
+			if (figure.getOwner() != null && figure.getOwner().equals(this.getType())) {
 				ownerFigures.add(figure);
 			}
 		}
@@ -46,4 +67,12 @@ public abstract class Player {
 	}
 	
 	public abstract Move askForNextMove();
+
+	public PlayerType getType() {
+		return type;
+	}
+
+	public void setType(PlayerType type) {
+		this.type = type;
+	}
 }

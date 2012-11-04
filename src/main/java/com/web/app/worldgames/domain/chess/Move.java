@@ -13,6 +13,12 @@ public class Move {
 		this.end = end;
 	}
 
+	public static Move valueOf(String coords) {
+		// FIXME: Add regex check [0-9]{2}.[0-9]{2}
+		String[] split = coords.split("[^0-9]");
+		return new Move(Utils.stringToPosition(split[0]), Utils.stringToPosition(split[1]));
+	}
+
 	public Position getStart() {
 		return start;
 	}

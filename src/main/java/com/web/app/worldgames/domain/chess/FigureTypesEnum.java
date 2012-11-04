@@ -16,8 +16,8 @@ public enum FigureTypesEnum {
 	public ResultEnum beat(FigureTypesEnum that) {
 		if (that == TRAP) {
 			return ResultEnum.LOOSE;
-		}
-		
+		} 
+
 		if (that == FLAG) {
 			return ResultEnum.WIN;
 		}

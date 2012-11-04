@@ -1,237 +1,391 @@
-//var socket = new WebSocket("ws://localhost:8888/");
-//socket.onopen = function() {
-//	console.log("Connection opened");
-//};
-//socket.onclose = function() {
-//	console.log("Connection closed");
-//};
-//socket.onmessage = function(event) {
-//	console.log("Message:", event.data);
-//	updater(event.data + "\n");
-//};
+/*global jQuery, console, alert, document, setInterval, clearInterval, prompt*/
 
-var GAME = {
-	options : {
-		ajax_url : 'chess2',
-		owner : 1,
-		board : new Object(),
-		can_move : true
-	},
 
-	sendMessage : function(data, callback) {
-		// socket.send(data);
-		$.ajax({
-			url : GAME.options.ajax_url,
-			type : "POST",
-			data : data,
-			success : callback,
-		});
-	},
+(function($) {
+	"use strict";
+	var GAME = {};
 
-	initBoard : function() {
-		this.sendMessage({}, function(json) {
-			var board = json.board;
+	GAME = {
+		config: {
+			ajax: 'chess/update',
+			owner: null,
+			board: {},
+			canMove: false,
+			emptyFigure: {
+				type: null,
+				owner: null
+			}
+		},
+		sendMessage: function(data, callback) {
+			$.ajax({
+				url: GAME.config.ajax,
+				// cache: false,
+				type: "POST",
+				data: data,
+				success: callback
+			});
+		},
+		inform: function(text) {
+			$('.info').fadeOut(500, function() {
+				$(this).html(text);
+				$(this).fadeIn(500);
+			});
+		},
+		initBoard: function() {
+			console.log('INIT REQUEST + whoami');
+			this.sendMessage({
+				'whoami': null,
+				'init': null
+			}, function(json) {
+				GAME.config.owner = json.whoami;
+				console.log('OWNER IN GAME ' + GAME.config.owner);
+				console.log('OWNER IN JSON ' + json.whoami);
+				GAME.updateBoard(json.init);
+			});
+		},
+		// ######################## NOT TESTED ################# 
+		updateBoard: function(board) {
+			var i, cell, key;
+			for(i = 0; i < board.length; i += 1) {
+				cell = board[i];
+				key = cell.position.x.toString() + cell.position.y.toString();
 
-			for ( var i = 0; i < board.length; i++) {
-				var cell = board[i];
-				var key = cell.position.x + "" + cell.position.y;
-				GAME.options.board[key] = {
-					type : cell.type,
-					owner : cell.owner,
+				// Saving requested board into local storage
+				GAME.config.board[key] = {
+					type: cell.type,
+					owner: cell.owner
 				};
-				if (cell.owner == null) {
-				} else if (cell.owner.id == GAME.options.owner) {
+
+				if(cell.owner !== null && cell.owner === GAME.config.owner) {
+					// Player cell
 					$('#' + key + ' a').html(cell.type[0]);
 				} else {
+					// Opponent cell
 					$('#' + key + ' a').html('?');
 				}
 			}
-		});
-	},
+		},
+		// ######################## NOT TESTED ################# 
+		makeMove: function(idFrom, idTo) {
+			console.log('EVENT: MOVE');
+			console.log('Sending coordinates to server');
+			GAME.inform('Sending your move to server');
 
-	makeMove : function(from_id, to_id) {
-		var GAMEBoard = GAME.options.board;
-		var emptyCell = {
-			type : null,
-			owner : null,
-		};
-		if (GAMEBoard[to_id].owner == null) {
-			// Its ok, empty cell
-			console.log('MAKE_MOVE: Empty cell');
-			var copy = GAMEBoard[from_id];
-			GAMEBoard[from_id] = emptyCell;
-			GAMEBoard[to_id] = copy;
-			return GAME.view.animateMove(from_id, to_id);
+			GAME.sendMove(idFrom, idTo, function(json) {
+				GAME.inform('Result of move:' + json.result);
 
-		} else {
-			// Its opponent cell
-			console.log('MAKE_MOVE: Opponent cell');
+				if(typeof GAME.handleEvent[json.result] !== 'undefined') {
+					console.log('Result of move from server: ' + json.result);
+					GAME.handleEvent[json.result](idFrom, idTo, json);
+				} else {
+					console.error("*** Unknown server response");
+				}
+			});
+		},
 
-			var battleResult = GAME.battle(from_id, to_id);
-			// sendMessage( { MOVE }, function(data) onSucces {
-			// 	LOOSE, DRAW, WIN
-			// }  )
 
-			console.log('RESULT: ' + battleResult);
+		handleEvent: {
+			//***************************************//
+			//******** BE AWARE OF DRAGONS **********//
+			//***************************************//
+			'EMPTY': function(idFrom, idTo, json) {
+				console.log('RESULT: EMPTY CELL');
+				var copy = GAME.config.board[idFrom];
+				GAME.config.board[idFrom] = {
+					type: null,
+					owner: null
+				};
+				GAME.config.board[idTo] = copy;
+				GAME.view.animateMove(idFrom, idTo);
+			},
+			'WIN': function(idFrom, idTo, json) {
+				console.log('BATTLE: WIN');
+				var copy = GAME.config.board[idFrom];
 
-			if (battleResult === "WIN") {
-				var copy = GAMEBoard[from_id];
-				GAMEBoard[from_id] = emptyCell;
-				GAMEBoard[to_id] = copy;
+				GAME.config.board[idFrom] = {
+					type: null,
+					owner: null
+				};
+				GAME.config.board[idTo] = copy;
 
-				GAME.view.animateWin(from_id, to_id);
-				return;
-			} else if (battleResult === "LOOSE") {
-				GAMEBoard[from_id] = emptyCell;
-				// SHOW TYPE OF FIGURE DONT FORGET
-				GAME.view.animateLoose(from_id, to_id);
-				return;
-			} else if (battleResult === "DRAW") {
-				GAME.view.animateDraw(from_id, to_id);
-			} else {
-				console.error("*** Unknown battle result");
-			}
-		}
-	},
+				console.log('Win. From: ' + idFrom + ", To:" + idTo);
+				console.log('refreshing inner board positions');
 
-	isOwnerOf : function(id) {
-		console
-				.log("OWNER OF " + id + " is "
-						+ GAME.options.board[id].owner.id);
-		console.log("PLAYER OWNER ID: " + GAME.options.owner);
 
-		return GAME.options.board[id].owner.id == GAME.options.owner;
-	},
+				if(typeof json.invoker !== 'undefined') {
+					GAME.view.animateShowType(idFrom, json.invoker[0]);
+				}
+				if(typeof json.defender !== 'undefined') {
+					GAME.view.animateShowType(idTo, json.defender[0]);
+				}
 
-	battle : function(id_from, id_to) {
-		return "LOOSE";
-		// return "WIN";
-	},
 
-	view : {
-		animateMove : function(from_id, to_id) {
-			$('.selected').fadeOut(500, function() {
-				var $from = $('#' + from_id);
-				var $to = $('#' + to_id);
-				var $figure = $('.selected');
 
-				$from.effect("highlight", {}, 1000);
-				$to.html($('.selected'));
-				$figure.fadeIn(500, function() {
-					$to.effect("highlight", {}, 1000);
+				if(GAME.isOwnerOf(idTo) === false) {
+					// This player is defender
+					// It's enemy win
+					console.log('Its enemy win');
+					console.log('invoker type in json: ' + json.invoker);
+					console.log('setting invoker type to inner board');
+					console.log('was: ' + GAME.config.board[idTo].type);
+					GAME.config.board[idTo].type = json.invoker[0];
+					console.log('now: ' + GAME.config.board[idTo].type);
+					console.log('refreshing html');
+					// GAME.view.animateShowType(idFrom, json.invoker[0]);
+					GAME.view.animateWin(idFrom, idTo);
+
+				} else {
+					console.log('Its yours win');
+					GAME.config.board[idTo].type = json.invoker[0];
+					GAME.view.animateWin(idFrom, idTo);
+				}
+			},
+			'LOOSE': function(idFrom, idTo, json) {
+				console.log('BATTLE: LOOSE');
+
+				console.error('DONT FORGET TO IMPLEMENT ENEMY TYPE');
+				console.error(json.enemy);
+
+
+				if(typeof json.invoker !== 'undefined') {
+					GAME.view.animateShowType(idFrom, json.invoker[0]);
+				}
+				if(typeof json.defender !== 'undefined') {
+					GAME.config.board[idTo].type = json.defender[0];
+					GAME.view.animateShowType(idTo, json.defender[0]);
+				}
+
+
+				// Setting looser figure to null
+				GAME.config.board[idFrom] = {
+					type: null,
+					owner: null
+				};
+
+				// FIXME: Not sure if need that check
+				if(GAME.isOwnerOf(idFrom) === true) {
+					// This player is invoker 
+					// And he is loose the battle
+					// Showing him enemy type
+					GAME.config.board[idTo].type = json.defender[0];
+				}
+
+				return GAME.view.animateLoose(idFrom, idTo);
+			},
+
+			'DRAW': function(idFrom, idTo, json) {
+				console.log('BATTLE: DRAW');
+				//**************************//
+				//******** DANGER **********//
+				//**************************//
+				clearInterval(GAME.updaterService);
+				var choice = prompt("It's draw - chooose your weapon: type [ROCK, SCISSORS, PAPER]");
+
+
+				GAME.sendMessage({
+					'draw_choice': choice
+				}, function() {
+					setInterval(GAME.updaterService, 5000);
 				});
-				$figure.removeClass('selected');
+			},
+
+
+
+			"DRAW_WIN": function(idFrom, idTo, json) {
+				console.log('RESULT: DRAW RESOLVED');
+
+				GAME.config.board[idFrom].type = json.own[0];
+				GAME.view.animateShowType(idFrom, json.own[0]);
+
+
+
+				GAME.view.animateWin(idFrom, idTo, json);
+			}
+
+			//***************************************//
+			//******** END OF DRAGONS \0 ************//
+			//***************************************//
+		},
+
+
+		updaterService: function() {
+			GAME.sendMessage('changes', function(json) {
+				GAME.config.canMove = json.move;
+				GAME.inform('Move : ' + json.move);
+
+				if(typeof json.result !== 'undefined') {
+					var move = json.enemyMove,
+						idFrom = move.start.x.toString() + move.start.y.toString(),
+						idTo = move.end.x.toString() + move.end.y.toString();
+
+					GAME.inform('Opponent moved');
+					GAME.handleEvent[json.result](idFrom, idTo, json);
+				}
 			});
 		},
-		animateLoose : function(from_id, to_id) {
-			var $from = $('#' + from_id);
-			var $to = $('#' + to_id);
 
-			$from.find('.figure').fadeOut(1000);
-			$from.html('');
-			$to.find('.figure').effect("bounce", {
-				times : 3
-			}, 1000);
-			// THATS MUST BE NOT HERE
-			$('#' + to_id + ' a').html(GAME.options.board[to_id].type[0]);
+		isOwnerOf: function(id) {
+			console.log("OWNER OF " + id + " is " + GAME.config.board[id].owner);
+			console.log("PLAYER OWNER ID: " + GAME.config.owner);
+
+			return GAME.config.board[id].owner === GAME.config.owner;
 		},
-		animateWin : function(from_id, to_id) {
-			var $to = $('#' + to_id);
-			var $from_figure = $('.selected');
-			var $to_figure = $($to.find('a'));
 
-			$from_figure.fadeOut(500);
-			$to_figure.fadeOut(500, function() {
-				$to.html($from_figure);
-				$from_figure.fadeIn(500);
-				$from_figure.removeClass('.selected');
+		sendMove: function(idFrom, id_to, callback) {
+			this.sendMessage({
+				"move": idFrom + ":" + id_to
+			}, callback, function(msg) {
+				console.log('error while sending to server' + msg);
 			});
 		},
-		animateDraw : null,
-	},
 
-	isValid : function(from, to) {
-		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		// FIXME
-		// return true;
-		var xDelta = Math.abs(from[0] - to[0]);
-		var yDelta = Math.abs(from[1] - to[1]);
+		view: {
+			animateMove: function(from_id, to_id) {
+				var $from = $('#' + from_id),
+					$to = $('#' + to_id),
+					$figure = $from.find('a');
 
-		if (yDelta > 1 || xDelta > 1) {
-			return false; // Moves on distant >1 cells not allowed
-		} else if (yDelta - xDelta == 0) {
-			return false; // Diagonal moves not allowed
-		} else {
-			return true; // Everything is OK.
-		}
-		return true;
-	}
+				$figure.fadeOut(500, function() {
+					$from.effect("highlight", {}, 1000);
+					$to.html($figure);
+					$figure.fadeIn(500, function() {
+						$to.effect("highlight", {}, 500);
+					});
+					$figure.removeClass('selected');
+				});
+			},
+			animateLoose: function(from_id, to_id) {
+				var $from = $('#' + from_id),
+					$to = $('#' + to_id);
 
-};
 
-$(document).ready(function() {
+				$from.find('.figure').fadeOut(1000);
+				$from.html('');
+				$to.find('.figure').effect("bounce", {
+					times: 3
+				}, 1000);
+				// THATS MUST BE NOT HERE
+				$('#' + to_id + ' a').html(GAME.config.board[to_id].type[0]);
+			},
+			animateWin: function(from_id, to_id) {
+				console.log('starting refreshing html');
+				console.log('id from: ' + from_id + "\nto: " + to_id);
 
-	var board = $('#chess_board');
-	board = {
-		width : board.width(),
-		height : board.height()
-	};
+				var $from = $('#' + from_id),
+					$to = $('#' + to_id),
+					$from_figure = $from.find('a'),
+					$to_figure = $to.find('a');
 
-	var hoverIn = function() {
-		if ($('.selected').length > 0) {
-			var from = $('.selected').parent().attr('id');
-			if (GAME.isValid(from, $(this).attr('id'))) {
-				$(this).addClass('valid');
+				console.log('from html value -> ' + $from_figure.html() + "\n" + 'to html value -> ' + $to_figure.html());
+				console.log('starting animations');
+
+				$from_figure.fadeOut(500);
+				$to_figure.fadeOut(500, function() {
+					console.log('setting val from to ' + $from_figure.html());
+					$to.html($from_figure);
+					console.log('now val of $from is: ' + $from_figure.html());
+					console.log('now val of $to is: ' + $to_figure.html());
+					$from_figure.fadeIn(500);
+					$from_figure.removeClass('.selected');
+				});
+			},
+			animateDraw: function() {
+				console.error('*** animateDraw not supported');
+			},
+			animateShowType: function(id, type) {
+				console.log('setting new type to html :' + id);
+				console.log('new type is: ' + type);
+
+				// console.log('ID: ' + id);
+				// console.log('New type: ' + type);
+				$('#' + id + ' a').html(type[0]);
+			}
+		},
+		isValidMove: function(from, to) {
+			// Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+			var xDelta = Math.abs(from[0] - to[0]),
+				yDelta = Math.abs(from[1] - to[1]);
+
+			if(yDelta > 1 || xDelta > 1) {
+				return false; // Moves on distant >1 cells not allowed
+			} else if(yDelta - xDelta === 0) {
+				return false; // Diagonal moves not allowed
 			} else {
-				$(this).addClass('invalid');
+				return true; // Everything is OK.
 			}
 		}
 	};
 
-	var hoverOut = function() {
-		$(this).removeClass('valid');
-		$(this).removeClass('invalid');
-	};
+	$(document).ready(function() {
+		//		var hoverIn = function() {
+		//				if($('.selected').length > 0) {
+		//					var from = $('.selected').parent().attr('id');
+		//					if(GAME.isValidMove(from, $(this).attr('id'))) {
+		//						$(this).addClass('valid');
+		//					} else {
+		//						$(this).addClass('invalid');
+		//					}
+		//				}
+		//			},
+		//			hoverOut = function() {
+		//				$(this).removeClass('valid');
+		//				$(this).removeClass('invalid');
+		//			},
+		//			lock = false;
+		// TODO: Its laggy
+		// $('#chess_board td').each(function() {
+		// $(this).hover(hoverIn, hoverOut);
+		// });
+		$('#chess_board td').each(function() {
+			$(this).click(function() {
+				if($('.selected').length > 0) {
+					var $fromCell = $('.selected').parent(),
+						$toCell = $(this),
+						idFrom = $fromCell.attr('id'),
+						idClicked = $toCell.attr('id');
 
-	$('#chess_board td').each(function() {
-		$(this).hover(hoverIn, hoverOut);
-	});
+					console.log(idFrom);
+					console.log(idClicked);
 
-	var lock = false;
-
-	$('#chess_board td').each(function() {
-		$(this).click(function() {
-			if ($('.selected').length > 0) {
-				var $fromCell = $('.selected').parent();
-				var $toCell = $(this);
-
-				var id_from = $fromCell.attr('id');
-				var id_clicked = $toCell.attr('id');
-
-				console.log(id_from);
-				console.log(id_clicked);
-				GAME.makeMove(id_from, id_clicked);
-			}
+					if(GAME.isValidMove(idFrom, idClicked)) {
+						GAME.makeMove(idFrom, idClicked);
+					} else {
+						GAME.inform('invalid move');
+						console.log('invalid move');
+					}
+				}
+			});
 		});
-	});
 
-	$('.figure').each(function() {
-		$(this).click(function() {
-			var $clicked = $(this).parent().attr('id');
-			if (GAME.isOwnerOf($clicked)) {
-				console.log('CLICK ON OWN FIGURE');
-				$('.selected').removeClass('selected');
-				$(this).addClass('selected');
+		$('.figure').each(function() {
+			$(this).click(function() {
+				var $clicked = $(this).parent().attr('id');
+				if(GAME.isOwnerOf($clicked) && GAME.config.canMove) {
+					console.log('CLICK ON OWN FIGURE');
+					$('.selected').removeClass('selected');
+					$(this).addClass('selected');
 
-				$(this).effect("bounce", {
-					times : 3
-				}, 300);
-				return false;
-			} else {
-
-			}
+					$(this).effect("bounce", {
+						times: 3
+					}, 300);
+					return false;
+				}
+			});
 		});
-	});
 
-	GAME.initBoard();
-});
+		GAME.initBoard();
+		setInterval(GAME.updaterService, 5000);
+	});
+})(jQuery);
+//var socket = new WebSocket("ws://localhost:8888/");
+//socket.onopen = function() {
+//	console.log("KAWABUNGA!");
+//};
+//socket.onclose = function() {
+//	console.log("AGNUBAWAWK");
+//};
+//socket.onmessage = function(event) {
+//	console.log("Msg:", event.data);
+//	updater(event.data + "\n");
+//};
+// socket.send(data);

@@ -1,0 +1,44 @@
+package com.web.app.worldgames.domain.chess;
+
+import java.util.List;
+import java.util.Random;
+
+public class BoardRandomizer {
+		private static final int SIZE_OF_2_ROWS = Board.BOARD_SIZE_Y * 2;
+		private static final int BOARD_SIZE = Board.BOARD_SIZE_Y * Board.BOARD_SIZE_X;
+
+		void initBoard(Board board) {
+			// For "up" player
+			randomizeArea(board, PlayerType.WHITE);
+			// For "down" player
+			randomizeArea(board, PlayerType.BLACK);
+		}
+		
+		public void randomizeArea(Board board, PlayerType type) {
+			if (type == PlayerType.WHITE) {
+				randomizePlayerArea(board, 0, SIZE_OF_2_ROWS, PlayerType.WHITE);
+			} else if (type == PlayerType.BLACK) {
+				randomizePlayerArea(board, BOARD_SIZE - SIZE_OF_2_ROWS, BOARD_SIZE, PlayerType.BLACK);
+			} else {
+				System.out.println("Unknown type of player");
+			}
+		}
+
+		private void randomizePlayerArea(Board board, int start, int end, PlayerType owner) {
+			List<Figure> subList = board.getBoard().subList(start, end);
+			for (int i=0; i < subList.size(); i++) {
+				Figure figure = subList.get(i);
+				figure.setType(getRandomFigure().getType());
+				figure.setOwner(owner);
+			}
+		}
+
+		private static Figure getRandomFigure() {
+			Random random = new Random();
+			// * Minus flag and empty cell = 2
+			int typeId = random.nextInt(FigureTypesEnum.values().length - 2);
+			Figure figure = new Figure();
+			figure.setType(FigureTypesEnum.getTypeById(typeId));
+			return figure;
+		}
+	}
