@@ -21,14 +21,14 @@ public class ChatRoom {
     }
 
     public void addChatParticipant(ChatParticipant participant) {
-	log.debug("User " + participant.getNick() + " added to roomChat");
 	chatParticipants.add(participant);
+	log.debug("User " + participant.getNickname() + " added to roomChat");
     }
 
-    public ChatParticipant getChatParticipant(long id) {
+    public ChatParticipant getChatParticipantById(long id) {
 	for (ChatParticipant participant : chatParticipants) {
 	    if (id == participant.getParticipantId()) {
-		log.debug("User " + participant.getNick()
+		log.debug("User " + participant.getNickname()
 			+ " founded in roomChat");
 		return participant;
 	    }
@@ -36,11 +36,11 @@ public class ChatRoom {
 	return null;
     }
 
-    public boolean deleteChatParticipant(long id) {
+    public boolean deleteChatParticipantById(long id) {
 	for (int i = 0; i < chatParticipants.size(); i++) {
 	    if (id == chatParticipants.get(i).getParticipantId()) {
 		chatParticipants.remove(i);
-		log.debug("User " + chatParticipants.get(i).getNick()
+		log.debug("User " + chatParticipants.get(i).getNickname()
 			+ " removed from roomChat");
 		return true;
 	    }
@@ -48,11 +48,12 @@ public class ChatRoom {
 	return false;
     }
 
-    public boolean isUserInRoom(long userRoomId) {
-	if (this.roomId == userRoomId)
-	    return true;
-	else
-	    return false;
+    public boolean isParticipantInRoom(long id) {
+	for (ChatParticipant participant : chatParticipants) {
+	    if (participant.getParticipantId() == id)
+		return true;
+	}
+	return false;
     }
 
     public List<ChatParticipant> getChatParticipants() {

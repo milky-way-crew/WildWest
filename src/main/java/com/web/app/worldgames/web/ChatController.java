@@ -33,8 +33,9 @@ public class ChatController {
 	request.getSession().setAttribute("chatParticipant", chatParticipant);
 	request.getSession().setAttribute("chatRoom", chatRoom);
 
-	if (chatRoom.isUserInRoom(chatParticipant.getRoomId()))
+	if (chatRoom.isParticipantInRoom(chatParticipant.getId_room())){
 	    chatRoom.addChatParticipant(chatParticipant);
+	}
 
 	chatRooms.add(chatRoom);
 	return new ModelAndView("test");
@@ -47,11 +48,11 @@ public class ChatController {
 	ChatParticipant chatParticipant = getChatParticipantFromRequest(request);
 
 	if (type.toLowerCase().trim().equals("update")) {
-	    log.debug("Update request from user: " + chatParticipant.getNick());
+	    log.debug("Update request from user: " + chatParticipant.getNickname());
 	    return updateUserMessages(chatParticipant);
 	} else if (type.toLowerCase().trim().equals("message")) {
 	    log.debug("Broadcast request from user: "
-		    + chatParticipant.getNick());
+		    + chatParticipant.getNickname());
 	    broadcast(chatParticipant, data);
 	}
 	return "";
@@ -62,7 +63,7 @@ public class ChatController {
 	    for (ChatParticipant chatMember : chatRoom.getChatParticipants()) {
 		if (chatMember.getParticipantId() != participant
 			.getParticipantId()) {
-		    chatMember.addMessage(chatRoom.getRoomName()+"/"+participant.getNick() + ":" + data);
+		    chatMember.addMessage(chatRoom.getRoomName()+"/"+participant.getNickname() + ":" + data);
 		}
 	    }
 	}
