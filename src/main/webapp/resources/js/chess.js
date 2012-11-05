@@ -1,7 +1,7 @@
 /*global jQuery, console, alert, document, setInterval, clearInterval, prompt*/
 
 
-(function($) {
+// (function($) {
 	"use strict";
 	var GAME = {};
 
@@ -56,15 +56,15 @@
 					owner: cell.owner
 				};
 
-				if(cell.owner !== null && cell.owner === GAME.config.owner) {
+				if (cell.owner === null && cell.type === null) {
+					GAME.view.animateShowType(key, '');
+				} else if(cell.owner === GAME.config.owner) {
 					// Player cell
 					GAME.view.animateShowType(key, cell.type[0]);
-
-					// $('#' + key + ' a').html(cell.type[0]);
 				} else {
 					// Opponent cell
+					// var enemyType = GAME.config.board[key].isSeen === true ? cell.type[0] : '?';
 					GAME.view.animateShowType(key, '?');
-					// $('#' + key + ' a').html('?');
 				}
 			}
 		},
@@ -182,11 +182,13 @@
 				//******** DANGER **********//
 				//**************************//
 				clearInterval(GAME.updaterService);
-				
-				var choice = '1213';
-				var choices = ['ROCK', 'PAPER', 'SCISSORS'];
 
-				while (choices.indexOf(choice) < 0) {
+
+				// NEW FEATURE NOT TESTED
+				var choice = '1213',
+					choices = ['ROCK', 'PAPER', 'SCISSORS'];
+
+				while(choices.indexOf(choice) < 0) {
 					choice = prompt("It's draw - chooose your weapon: type [ROCK, SCISSORS, PAPER] ");
 				}
 
@@ -197,18 +199,10 @@
 					setInterval(GAME.updaterService, 5000);
 				});
 			},
-
-
-
-			"DRAW_WIN": function(idFrom, idTo, json) {
-				console.log('RESULT: DRAW RESOLVED');
-
-				GAME.config.board[idFrom].type = json.own[0];
-				GAME.view.animateShowType(idFrom, json.own[0]);
-
-
-
-				GAME.view.animateWin(idFrom, idTo, json);
+			"ABSOLUTE_WIN": function(idFrom, idTo, json) {
+				alert('You win the game');
+				
+				// GAME.view.animateAbsoluteWin(idFrom, idTo, json);
 			}
 
 			//***************************************//
@@ -273,9 +267,6 @@
 				$to.find('.figure').effect("bounce", {
 					times: 3
 				}, 1000);
-				// THATS MUST BE NOT HERE
-				//****************************************************************** BUUUUUUUUUUUUUUGS
-				// $('#' + to_id + ' .figure').html(GAME.config.board[to_id].type[0]);
 			},
 			animateWin: function(from_id, to_id) {
 				console.log('starting refreshing html');
@@ -302,29 +293,59 @@
 				console.error('*** animateDraw not supported');
 			},
 			animateShowType: function(id, type) {
+				if (type === '') {
+					$('#' + id).html('');
+					return;
+				}
+
 				console.log('setting new type to html :' + id);
 				console.log('new type is: ' + type);
 				type = type.toLowerCase()[0];
 				// GAME.config.board[id].owner.toLowerCase()
-				var resources = 'resources/img/chess/', fileName, color, img;
+				var resources = 'resources/img/chess/',
+					fileName, color, img,
+					type2img = {
+						'r': 'rock',
+						's': 'scissors',
+						'p': 'paper',
+						't': 'trap',
+						'f': 'flag'
+					};
 
-
-		
+				if (typeof $('#' + id + '.figure').attr('src') === 'undefined') {
+					alert('figure not setted, add <img> tag');
+					$('#' + id).html('<img>');
+					$('#' + id + ' img').addClass('figure');
+				}
 
 				if(type === '?') {
 					$('#' + id + ' .figure').attr('src', resources + 'unknown.png');
 				} else {
 					color = GAME.config.board[id].owner.toLowerCase();
-					fileName = (type === 'r') ? 'rock' : (type === 's' ? 'scissors' : 'paper');
+					fileName = type2img[type];
+
+					// if (fileName === 'flag' || fileName === 'trap') {
+					// 	alert('fileName: ' + fileName);
+					// 	alert('color: ' + color);
+					// 	alert('pos: ' + id);
+					// }
+
 					img = resources + fileName + '-' + color + '.png';
 
 					$('#' + id + ' .figure').attr('src', img);
+					// $('#' + id + ' .figure').addClass(color);
+					// } else {
+					// }
+					// If refresh then add css (.figure .white|.black) + add <img src=filename>
+
 				}
-				// console.log('ID: ' + id);
-				// console.log('New type: ' + type);
 			}
 		},
 		isValidMove: function(from, to) {
+			if (GAME.config.board[from].owner === GAME.config.board[to].owner) {
+				return false;
+			}
+
 			// Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 			var xDelta = Math.abs(from[0] - to[0]),
 				yDelta = Math.abs(from[1] - to[1]);
@@ -383,17 +404,20 @@
 		$('.figure').each(function() {
 			$(this).click(function() {
 				var $clicked = $(this).parent().attr('id');
-				if(GAME.isOwnerOf($clicked) && GAME.config.canMove) {
-					console.log('CLICK ON OWN FIGURE');
-					$('.selected').removeClass('selected');
-					$(this).addClass('selected');
+				var clickedType = GAME.config.board[$clicked].type.toLowerCase()[0];
 
-					// $($(this).parent()).addClass('selected');
+				if (clickedType !== 't' && clickedType !== 'f') {
+					if(GAME.isOwnerOf($clicked) && GAME.config.canMove) {
+						console.log('CLICK ON OWN FIGURE');
+						$('.selected').removeClass('selected');
+						$(this).addClass('selected');
 
-					$(this).effect("bounce", {
-						times: 3
-					}, 300);
-					return false;
+						// $($(this).parent()).addClass('selected');
+						$(this).effect("bounce", {
+							times: 3
+						}, 300);
+						return false;
+					}					
 				}
 			});
 		});
@@ -401,7 +425,7 @@
 		GAME.initBoard();
 		setInterval(GAME.updaterService, 5000);
 	});
-})(jQuery);
+// })(jQuery);
 
 //var socket = new WebSocket("ws://localhost:8888/");
 //socket.onopen = function() {

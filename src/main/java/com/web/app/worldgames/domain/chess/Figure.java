@@ -2,9 +2,9 @@ package com.web.app.worldgames.domain.chess;
 
 public class Figure {
 	public static final Figure EMPTY = new Figure();
-	private FigureTypesEnum type;
-	private Position position;
-	private PlayerType owner;
+	private FigureTypesEnum type = null;
+	private Position position = null;
+	private PlayerType owner = null;
 	
 	public Figure(FigureTypesEnum type, Position position, PlayerType owner) {
 		super();

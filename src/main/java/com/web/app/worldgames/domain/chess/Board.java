@@ -9,8 +9,8 @@ import org.apache.log4j.Logger;
 
 public class Board {
 	private static final Logger log = Logger.getLogger(Board.class); 
-	public static final int BOARD_SIZE_X = 7;
-	public static final int BOARD_SIZE_Y = 9;
+	public static final int BOARD_SIZE_X = 7; // was 7
+	public static final int BOARD_SIZE_Y = 7; // was 9
 	
 	private List<Figure> board = new ArrayList<Figure>(BOARD_SIZE_X * BOARD_SIZE_Y);
 
@@ -20,12 +20,15 @@ public class Board {
 
 	private void initWithEmptyFigures() {
 		for (int i = 0; i < BOARD_SIZE_X * BOARD_SIZE_Y; i++) {
-			getBoard().add(null); // FIXME: must be another way
+			board.add(null); // FIXME: must be another way
 			putFigureByIndex(i, new Figure());
 		}
+		log.info("After initializing with empty figure. Board size="  + board.size());
+		com.web.app.worldgames.domain.chess.Utils.printBoard(this);
 	}
 
 	public Board() {
+		initWithEmptyFigures();
 	}
 
 	public Board(BoardRandomizer boardInitializer) {

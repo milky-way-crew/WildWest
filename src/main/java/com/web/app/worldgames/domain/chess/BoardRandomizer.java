@@ -31,6 +31,32 @@ public class BoardRandomizer {
 				figure.setType(getRandomFigure().getType());
 				figure.setOwner(owner);
 			}
+			
+			randomizeFlagAndTrap(owner, subList);
+		}
+
+		private void randomizeFlagAndTrap(PlayerType owner, List<Figure> subList) {
+			Random random = new Random();
+			
+			int flagPosition = random.nextInt(subList.size());
+			
+			Figure flag = subList.get(flagPosition);
+			flag.setType(FigureTypesEnum.FLAG);
+//			flag.setOwner(owner);
+//			subList.set(flagPosition, flag);
+			
+			while (true) {
+				int trapPosition = random.nextInt(subList.size());
+				if (subList.get(trapPosition).getType() == FigureTypesEnum.FLAG) {
+					continue;
+				} else {
+					Figure trap = subList.get(trapPosition);
+					trap.setType(FigureTypesEnum.TRAP);
+//					flag.setOwner(owner);
+//					subList.set(trapPosition, trap);
+					break;
+				}
+			}
 		}
 
 		private static Figure getRandomFigure() {
