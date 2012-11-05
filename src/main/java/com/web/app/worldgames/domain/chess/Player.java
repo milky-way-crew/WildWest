@@ -5,12 +5,15 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Player {
+import com.web.app.worldgames.domain.User;
+
+public class Player {
 	private int id;
 	private String nick;
 	private PlayerType type;
 	private Deque<GameAction> notifiers = new LinkedList<GameAction>();
-
+	private boolean isReady = false;
+	
 	public void notifyAbout(GameAction action) {
 		notifiers.addLast(action);
 	}
@@ -30,7 +33,8 @@ public abstract class Player {
 	}
 
 
-	public Player() {
+	public Player(User user) {
+		this(user.getId(), user.getNickname(), null);
 	}
 
 	public Player(int id, String nick, PlayerType type) {
@@ -66,13 +70,19 @@ public abstract class Player {
 		return ownerFigures;
 	}
 	
-	public abstract Move askForNextMove();
-
 	public PlayerType getType() {
 		return type;
 	}
 
 	public void setType(PlayerType type) {
 		this.type = type;
+	}
+
+	public boolean isReady() {
+		return isReady;
+	}
+
+	public void setReady(boolean isReady) {
+		this.isReady = isReady;
 	}
 }
