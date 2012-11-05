@@ -42,7 +42,7 @@ public class ChessContoller {
 
 	@RequestMapping(value = "/1")
 	public String createServer(HttpSession session) {
-
+		log.info("1");
 		// Test user
 		if (game.getWhite() == null) {
 			log.info("**************** Setting test user to session ***************");

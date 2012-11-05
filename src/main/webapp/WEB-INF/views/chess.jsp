@@ -7,27 +7,27 @@
 <title>Chess</title>
 <link rel="stylesheet" href="resources/css/chess.css" type="text/css">
 <body>
-	<div id = "#container" >
-		<h1 class = "info">Information</h1>
+	<div id="#container" >
+		<h1 class="info">Information</h1>
 		<table id="chess_board" cellpadding="0" cellspacing="0">
 			<tbody>
 			<tr>
-				<td id="00"><a href="#" class="figure black">♜</a></td>
-				<td id="01"><a href="#" class="figure black">♞</a></td>
-				<td id="02"><a href="#" class="figure black">♝</a></td>
-				<td id="03"><a href="#" class="figure black">♛</a></td>
-				<td id="04"><a href="#" class="figure black">♚</a></td>
-				<td id="05"><a href="#" class="figure black">♝</a></td>
-				<td id="06"><a href="#" class="figure black">♞</a></td>
+				<td id="00"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="01"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="02"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="03"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="04"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="05"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="06"><img src="./resources/img/unknown.png" class="figure white"></td>
 			</tr>
 			<tr>
-				<td id="10"><a href="#" class="figure black">♟</a></td>
-				<td id="11"><a href="#" class="figure black">♟</a></td>
-				<td id="12"><a href="#" class="figure black">♟</a></td>
-				<td id="13"><a href="#" class="figure black">♟</a></td>
-				<td id="14"><a href="#" class="figure black">♟</a></td>
-				<td id="15"><a href="#" class="figure black">♟</a></td>
-				<td id="16"><a href="#" class="figure black">♟</a></td>
+				<td id="10"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="11"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="12"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="13"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="14"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="15"><img src="./resources/img/unknown.png" class="figure white"></td>
+				<td id="16"><img src="./resources/img/unknown.png" class="figure white"></td>
 			</tr>
 			<tr>
 				<td id="20"></td>
@@ -56,21 +56,21 @@
 				<td id="46"></td>
 			</tr>
 			<tr>
-				<td id="50"><a href="#" class="figure white">♙</a></td>
-				<td id="51"><a href="#" class="figure white">♙</a></td>
-				<td id="52"><a href="#" class="figure white">♙</a></td>
-				<td id="53"><a href="#" class="figure white">♙</a></td>
-				<td id="54"><a href="#" class="figure white">♙</a></td>
-				<td id="55"><a href="#" class="figure white">♙</a></td>
-				<td id="56"><a href="#" class="figure white">♙</a></td>
+				<td id="50"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="51"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="52"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="53"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="54"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="55"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="56"><img src="./resources/img/unknown.png" class="figure black"></td>
 			<tr>
-				<td id="60"><a href="#" class="figure white">♖</a></td>
-				<td id="61"><a href="#" class="figure white">♘</a></td>
-				<td id="62"><a href="#" class="figure white">♗</a></td>
-				<td id="63"><a href="#" class="figure white">♕</a></td>
-				<td id="64"><a href="#" class="figure white">♔</a></td>
-				<td id="65"><a href="#" class="figure white">♗</a></td>
-				<td id="66"><a href="#" class="figure white">♘</a></td>
+				<td id="60"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="61"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="62"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="63"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="64"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="65"><img src="./resources/img/unknown.png" class="figure black"></td>
+				<td id="66"><img src="./resources/img/unknown.png" class="figure black"></td>
 		</tbody></table>
 	</div>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>

@@ -58,10 +58,13 @@
 
 				if(cell.owner !== null && cell.owner === GAME.config.owner) {
 					// Player cell
-					$('#' + key + ' a').html(cell.type[0]);
+					GAME.view.animateShowType(key, cell.type[0]);
+
+					// $('#' + key + ' a').html(cell.type[0]);
 				} else {
 					// Opponent cell
-					$('#' + key + ' a').html('?');
+					GAME.view.animateShowType(key, '?');
+					// $('#' + key + ' a').html('?');
 				}
 			}
 		},
@@ -102,11 +105,6 @@
 				console.log('BATTLE: WIN');
 				var copy = GAME.config.board[idFrom];
 
-				GAME.config.board[idFrom] = {
-					type: null,
-					owner: null
-				};
-				GAME.config.board[idTo] = copy;
 
 				console.log('Win. From: ' + idFrom + ", To:" + idTo);
 				console.log('refreshing inner board positions');
@@ -119,6 +117,11 @@
 					GAME.view.animateShowType(idTo, json.defender[0]);
 				}
 
+				GAME.config.board[idFrom] = {
+					type: null,
+					owner: null
+				};
+				GAME.config.board[idTo] = copy;
 
 
 				if(GAME.isOwnerOf(idTo) === false) {
@@ -179,7 +182,13 @@
 				//******** DANGER **********//
 				//**************************//
 				clearInterval(GAME.updaterService);
-				var choice = prompt("It's draw - chooose your weapon: type [ROCK, SCISSORS, PAPER]");
+				
+				var choice = '1213';
+				var choices = ['ROCK', 'PAPER', 'SCISSORS'];
+
+				while (choices.indexOf(choice) < 0) {
+					choice = prompt("It's draw - chooose your weapon: type [ROCK, SCISSORS, PAPER] ");
+				}
 
 
 				GAME.sendMessage({
@@ -243,7 +252,7 @@
 			animateMove: function(from_id, to_id) {
 				var $from = $('#' + from_id),
 					$to = $('#' + to_id),
-					$figure = $from.find('a');
+					$figure = $from.find('.figure');
 
 				$figure.fadeOut(500, function() {
 					$from.effect("highlight", {}, 1000);
@@ -265,7 +274,8 @@
 					times: 3
 				}, 1000);
 				// THATS MUST BE NOT HERE
-				$('#' + to_id + ' a').html(GAME.config.board[to_id].type[0]);
+				//****************************************************************** BUUUUUUUUUUUUUUGS
+				// $('#' + to_id + ' .figure').html(GAME.config.board[to_id].type[0]);
 			},
 			animateWin: function(from_id, to_id) {
 				console.log('starting refreshing html');
@@ -273,8 +283,8 @@
 
 				var $from = $('#' + from_id),
 					$to = $('#' + to_id),
-					$from_figure = $from.find('a'),
-					$to_figure = $to.find('a');
+					$from_figure = $from.find('.figure'),
+					$to_figure = $to.find('.figure');
 
 				console.log('from html value -> ' + $from_figure.html() + "\n" + 'to html value -> ' + $to_figure.html());
 				console.log('starting animations');
@@ -283,8 +293,7 @@
 				$to_figure.fadeOut(500, function() {
 					console.log('setting val from to ' + $from_figure.html());
 					$to.html($from_figure);
-					console.log('now val of $from is: ' + $from_figure.html());
-					console.log('now val of $to is: ' + $to_figure.html());
+
 					$from_figure.fadeIn(500);
 					$from_figure.removeClass('.selected');
 				});
@@ -295,10 +304,24 @@
 			animateShowType: function(id, type) {
 				console.log('setting new type to html :' + id);
 				console.log('new type is: ' + type);
+				type = type.toLowerCase()[0];
+				// GAME.config.board[id].owner.toLowerCase()
+				var resources = 'resources/img/chess/', fileName, color, img;
 
+
+		
+
+				if(type === '?') {
+					$('#' + id + ' .figure').attr('src', resources + 'unknown.png');
+				} else {
+					color = GAME.config.board[id].owner.toLowerCase();
+					fileName = (type === 'r') ? 'rock' : (type === 's' ? 'scissors' : 'paper');
+					img = resources + fileName + '-' + color + '.png';
+
+					$('#' + id + ' .figure').attr('src', img);
+				}
 				// console.log('ID: ' + id);
 				// console.log('New type: ' + type);
-				$('#' + id + ' a').html(type[0]);
 			}
 		},
 		isValidMove: function(from, to) {
@@ -365,6 +388,8 @@
 					$('.selected').removeClass('selected');
 					$(this).addClass('selected');
 
+					// $($(this).parent()).addClass('selected');
+
 					$(this).effect("bounce", {
 						times: 3
 					}, 300);
@@ -377,6 +402,7 @@
 		setInterval(GAME.updaterService, 5000);
 	});
 })(jQuery);
+
 //var socket = new WebSocket("ws://localhost:8888/");
 //socket.onopen = function() {
 //	console.log("KAWABUNGA!");
