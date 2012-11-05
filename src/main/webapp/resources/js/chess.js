@@ -312,11 +312,11 @@
 						'f': 'flag'
 					};
 
-				if (typeof $('#' + id + '.figure').attr('src') === 'undefined') {
-					alert('figure not setted, add <img> tag');
-					$('#' + id).html('<img>');
-					$('#' + id + ' img').addClass('figure');
-				}
+				// if (typeof $('#' + id + '.figure').attr('src') === 'undefined') {
+				// 	alert('figure not setted, add <img> tag');
+				// 	$('#' + id).html('<img>');
+				// 	$('#' + id + ' img').addClass('figure');
+				// }
 
 				if(type === '?') {
 					$('#' + id + ' .figure').attr('src', resources + 'unknown.png');
