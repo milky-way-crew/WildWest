@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.web.app.worldgames.domain.Room;
 import com.web.app.worldgames.web.ChatController;
 
 public class ChatRoom {
@@ -15,9 +14,9 @@ public class ChatRoom {
     private long roomId;
     private String roomName;
 
-    public ChatRoom(Room room) {
-	this.roomId = room.getRoomId();
-	this.roomName = room.getRoomName();
+    public ChatRoom(String roomName, long id) {
+	this.roomId = id;
+	this.roomName = roomName;
     }
 
     public void addChatParticipant(ChatParticipant participant) {

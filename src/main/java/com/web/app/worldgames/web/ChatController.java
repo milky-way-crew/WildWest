@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.app.worldgames.domain.Room;
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.chat.ChatParticipant;
 import com.web.app.worldgames.domain.chat.ChatRoom;
@@ -27,17 +26,9 @@ public class ChatController {
     public ModelAndView showPage(HttpServletRequest request) {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
-	Room room = (Room) request.getSession().getAttribute("room");
-	ChatRoom chatRoom = new ChatRoom(room);
 
 	request.getSession().setAttribute("chatParticipant", chatParticipant);
-	request.getSession().setAttribute("chatRoom", chatRoom);
 
-	if (chatRoom.isParticipantInRoom(chatParticipant.getId_room())){
-	    chatRoom.addChatParticipant(chatParticipant);
-	}
-
-	chatRooms.add(chatRoom);
 	return new ModelAndView("test");
     }
 

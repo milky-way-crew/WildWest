@@ -14,7 +14,6 @@ public class ChatRoomsController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("chatRooms");
 		return modelAndView;
-		
 	}
 	
 }

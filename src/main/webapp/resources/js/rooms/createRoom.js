@@ -1,4 +1,4 @@
-var myselect = document.getElementById('rooms');
+//var myselect = document.getElementById('rooms');
 
 
 function createOption(){
@@ -10,4 +10,4 @@ function createOption(){
 }
 
 
-document.getElementById('createRoom').onclick = createOption;
+//document.getElementById('createRoom').onclick = createOption;
