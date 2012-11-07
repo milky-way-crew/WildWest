@@ -46,7 +46,7 @@
 		<div class="row-fluid">
 			<div class="span8">
 				<div class="well">
-					<h1>Chat</h1>
+					<h1>Room</h1>
 					<div id="chatBox"></div>
 					<form name="message" action="">
 						<input name="usermsg" type=text id="usermsg" size="100"> <a
@@ -58,41 +58,20 @@
 			<!-- room list -->
 			<div class="span4">
 				<div class="well sidebar-nav">
-					<h2>Room's list</h2>
-					<div id="roomList"></div>
-					<form name="roomAction" action="">
-						<a data-toggle="modal" href="#createRoomModal"
-							class="btn btn-primary btn-medium">Create room</a> <a
-							data-toggle="modal" href="#createRoomModal"
-							class="btn btn-primary btn-medium">Join to room</a>
+					<h2>User's list</h2>
+					<div id="userList"></div>
+					<form name="userAction" action="">
+						<a class="btn btn-primary btn-medium">Start</a> <a
+							class="btn btn-primary btn-medium">Ready</a> <a
+							class="btn btn-primary btn-medium">Exit</a>
 					</form>
 				</div>
 			</div>
 			<!-- room list -->
-			
+
 		</div>
 	</div>
 	<!-- world chat and room list -->
-
-	<!-- modal window create room -->
-	<div class="container">
-		<div id="createRoomModal" class="modal" style="display: none;">
-			<div class="modal-header">
-				<a class="close" data-dismiss="modal">×</a>
-				<h1>Create room</h1>
-			</div>
-			<div class="modal-body">
-				<h2></h2>
-				<p>Enter room name:</p>
-				<textarea id="message" name="message" class="input-medium" rows="1">Room</textarea>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn btn-success">Create</a> <a href="#"
-					class="btn" data-dismiss="modal">Close</a>
-			</div>
-		</div>
-	</div>
-	<!-- modal window create room -->
 
 	<script type="text/javascript" src="resources/js/rooms/createRoom.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
