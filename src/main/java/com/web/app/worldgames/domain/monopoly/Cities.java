@@ -1,103 +1,135 @@
 package com.web.app.worldgames.domain.monopoly;
 
 public enum Cities {
-	VENESIA("Apulia", 100,50, 70, 90, 90, 0, 100, false,CellPositions.VENESIA),
-	BARI("Apulia",100, 50, 70, 90, 100, 0, 110, false,CellPositions.BARI),
-	CORSICA("Strabo", 100,70, 100, 150, 120, 0, 125, false,CellPositions.CORSICA),
-	SARDINIA("Strabo",100, 40, 60, 110, 120, 0, 130, false,CellPositions.SARDINIA),
-	GAUL("Strabo", 100,50, 89, 150, 160, 0, 140, false,CellPositions.GAUL),
-	ILIRIC("Veneto", 100,50, 90, 140, 140, 0, 130, false,CellPositions.ILIRIC),
-	MACEDONIA("Veneto",100, 60, 90, 120, 140, 0, 150, false,CellPositions.MACEDONIA),
-	ACHAIA("Veneto",100, 40, 80, 120, 150, 0, 140, false,CellPositions.ACHAIA),
-	BITHYNIA("Dion", 100,50, 80, 140, 130, 0, 120, false,CellPositions.BITHYNIA),
-	ASSYRIA("Dion",100, 50, 80, 160, 140, 0, 160, false,CellPositions.ASSYRIA),
-	BAETIC("Dion",100, 30, 50, 110, 130, 0, 140, false,CellPositions.BAETIC),
-	GALATIA("Cagliari", 100,30, 50, 110, 130, 0, 140, false,CellPositions.GALATIA),
-	 DACIA("Cagliari",100, 30, 50, 110, 130, 0, 140, false,CellPositions.DACIA),
-	 CAPADOCIA("Cagliari", 100,30, 50, 110, 130, 0, 140, false,CellPositions.CAPADOCIA),
-	KOMMAGENA("Nicomedia",100, 30, 50, 110, 130, 0, 140, false,CellPositions.KOMMAGENA),
-	LYCAONIA("Nicomedia",100, 30, 50, 110, 130, 0, 140, false,CellPositions.LYCAONIA),
-	EPIRUS("Nicomedia",100, 30, 50, 110, 130, 0, 140, false,CellPositions.EPIRUS),
-	 OSROENA("Rome",100, 30, 50, 110, 130, 0, 140, false,CellPositions.OSROENA),
-	PAMPULIA("Rome",100, 30, 50, 110, 130, 0, 140, false,CellPositions.PAMPULIA),
-	PANNONIA("Rome",100, 30, 50, 110, 130, 0, 140, false,CellPositions.PANNONIA),
-	 PONTOS("Cannes",100, 30, 50, 110, 130, 0, 140, false,CellPositions.PONTOS),
-	 SICILY("Cannes", 100,30, 50, 110, 130, 0, 140, false,CellPositions.SICILY);
-	
+	GDYNIA("GDYNIA", "brown", 50, 20, 30, 50, 50, 0,20, 60,180, 50, false,430,CellPositions.GDYNIA), 
+			TAIPEI("TAIPEI", "brown", 60, 20, 30, 50, 50, 0,30, 80,190, 50, false,450, CellPositions.TAIPEI),
+			TOKYO("TOKYO", "azure",	100, 40, 60, 90, 50, 0,30, 90,270, 50, false, 550,CellPositions.TOKYO),
+			BARCELONA("BARCELONA", "azure",100, 40, 60, 90, 50,  0,30, 90,270, 50, false,550,CellPositions.BARCELONA), 
+			ATHENS("ATHENS", "azure", 120, 50, 70, 90, 70, 0,40, 100,300, 70, false, 600,CellPositions.ATHENS),
+			ISTAMBUL("ISTAMBUL", "violet", 140, 50, 100, 150, 100, 0,50, 150,450, 100, false,750,CellPositions.ISTAMBUL),
+			KYIV("KYIV", "violet", 140, 50, 100, 150, 100, 0,50, 150,450, 100, false, 750,CellPositions.KYIV), 
+			TORONTO("TORONTO","violet",160, 90, 100, 160, 100, 0,60, 180,500, 100, false,900,CellPositions.TORONTO),
+			ROME("ROME", "orange",180, 100, 170, 190, 100, 0,70, 200,550, 100, false, 950,CellPositions.ROME),
+			SHANGHAI("SHANGHAI","orange",180, 100, 170, 190, 100, 0,70, 200,550, 100, false,950,CellPositions.SHANGHAI),
+			VANCOVER("VANCOVER", "orange", 200, 110, 190, 210, 100, 0,80, 240,600, 100, false, 1000,CellPositions.VANCOVER),
+			SYDNEY(	"SYDNEY", "red", 220, 150, 170, 200, 150, 0,90, 250,700, 150, false,1050,	CellPositions.SYDNEY),
+			NEW_YORK("NEW_YORK", "red", 220, 150, 170, 200, 150, 0,90, 250,700, 150, false, 1050,CellPositions.NEW_YORK),
+			LONDON("LONDON","red", 240, 170, 190,210, 150, 0,100, 300,750, 150,false, 1100,CellPositions.LONDON),
+			BEIJING("BEIJING", "yellow", 260, 200, 270, 310, 150, 0,110, 330,800, 150,false,1150,CellPositions.BEIJING), 
+			HONG_KONG("HONG_KONG", "yellow",260, 200, 270, 310, 150, 0,110, 330,800, 150, false,1150, CellPositions.HONG_KONG),
+			JERUSALEM("JERUSALEM", "yellow", 280, 220, 300, 340, 150, 0,120, 360,850, 150, false,1200,CellPositions.JERUSALEM), 
+			PARIS("PARIS", "green",300, 260, 300, 350, 200, 0,130, 390,900, 200, false, 1280,CellPositions.PARIS),
+			BELGRADE("BELGRADE","green", 300, 260, 300, 350, 200, 0,130, 390,900, 200, false,1280,	CellPositions.BELGRADE),
+			CAPE_TOWN("CAPE_TOWN", "green",330, 270, 300, 360, 200, 0,160, 450,1000, 200, false, 1300,CellPositions.CAPE_TOWN), 
+			RIGA("RIGA","blue", 350, 290, 310, 400, 200, 0,180,500, 1100,200,  false, 1500,CellPositions.RIGA),
+			MONTREAL("MONTREAL", "blue", 400, 300, 330, 410, 200, 0,200, 600,1400, 200, false,2000,CellPositions.MONTREAL);
 
-	
+	private final String cityName;
 	private final String region;
 	private final int price;
 	private final int taxOneCard;
 	private final int taxTwoCard;
 	private final int taxThreeCard;
-	private final int castlePrice;
-	private  int numbersOfCastles;
-	private final int fortressPrice;
-	private  boolean isFortress;
+	private final int housePrice;
+	private int numbersOfHouses;
+	private final int taxOneHouse; 
+	private final int taxTwoHouse; 
+	private final int taxThreeHouse; 
+	private final int hotelPrice;
+	private boolean isHotel;
+	private final int taxHotel; 
 	private final int position;
 
-	Cities(String region, int price,int taxOneCard, int taxTwoCard, int taxThreeCard,
-			int castlePrice, int numbersOfCastles, int fortressPrice,
-			boolean isFortress, int positon) {
+	
+
+	private Cities(String cityName, String region, int price, int taxOneCard,
+			int taxTwoCard, int taxThreeCard, int housePrice,
+			int numbersOfHouses, int taxOneHouse, int taxTwoHouse,
+			int taxThreeHouse, int hotelPrice, boolean isHotel, int taxHotel,
+			int position) {
+		this.cityName = cityName;
 		this.region = region;
 		this.price = price;
 		this.taxOneCard = taxOneCard;
 		this.taxTwoCard = taxTwoCard;
 		this.taxThreeCard = taxThreeCard;
-		this.castlePrice = castlePrice;
-		this.numbersOfCastles = numbersOfCastles;
-		this.fortressPrice = fortressPrice;
-		this.isFortress = isFortress;
-		this.position = positon;
+		this.housePrice = housePrice;
+		this.numbersOfHouses = numbersOfHouses;
+		this.taxOneHouse = taxOneHouse;
+		this.taxTwoHouse = taxTwoHouse;
+		this.taxThreeHouse = taxThreeHouse;
+		this.hotelPrice = hotelPrice;
+		this.isHotel = isHotel;
+		this.taxHotel = taxHotel;
+		this.position = position;
 	}
 
-	public int getPosition() {
-		return position;
+	protected String getCityName() {
+		return cityName;
 	}
 
-	public int getPrice() {
-		return price;
-	}
-
-	public void setNumbersOfCastles(int numbersOfCastles) {
-		this.numbersOfCastles = numbersOfCastles;
-	}
-
-	public void setFortress(boolean isFortress) {
-		this.isFortress = isFortress;
-	}
-
-	public String getRegion() {
+	protected String getRegion() {
 		return region;
 	}
 
-	public int getTaxOneCard() {
+	protected int getPrice() {
+		return price;
+	}
+
+	protected int getTaxOneCard() {
 		return taxOneCard;
 	}
 
-	public int getTaxTwoCard() {
+	protected int getTaxTwoCard() {
 		return taxTwoCard;
 	}
 
-	public int getTaxThreeCard() {
+	protected int getTaxThreeCard() {
 		return taxThreeCard;
 	}
 
-	public int getCastlePrice() {
-		return castlePrice;
+	protected int getHousePrice() {
+		return housePrice;
 	}
 
-	public int getNumbersOfCastles() {
-		return numbersOfCastles;
+	protected int getNumbersOfHouses() {
+		return numbersOfHouses;
 	}
 
-	public int getFortressPrice() {
-		return fortressPrice;
+	protected void setNumbersOfHouses(int numbersOfHouses) {
+		this.numbersOfHouses = numbersOfHouses;
 	}
 
-	public boolean isFortress() {
-		return isFortress;
+	protected int getTaxOneHouse() {
+		return taxOneHouse;
+	}
+
+	protected int getTaxTwoHouse() {
+		return taxTwoHouse;
+	}
+
+	protected int getTaxThreeHouse() {
+		return taxThreeHouse;
+	}
+
+	protected int getHotelPrice() {
+		return hotelPrice;
+	}
+
+	protected boolean isHotel() {
+		return isHotel;
+	}
+
+	protected void setHotel(boolean isHotel) {
+		this.isHotel = isHotel;
+	}
+
+	protected int getTaxHotel() {
+		return taxHotel;
+	}
+
+	protected int getPosition() {
+		return position;
 	}
 
 }
