@@ -23,12 +23,7 @@ public class ChessGameService implements IChessGameService {
 	public synchronized int createGame(User host) {
 		WebChessGame chessGame = new WebChessGame(new ChessGame());
 		chessGame.setHost(new Player(host));
-		
-		synchronized (ChessGameService.class) {
-			counter++;
-		}
-		
-		serverMap.put(counter, chessGame);
+		serverMap.put(++counter, chessGame);
 		return counter;
 	}
 
@@ -45,6 +40,7 @@ public class ChessGameService implements IChessGameService {
 	public synchronized boolean removeGameById(int id) {
 		if (serverMap.containsKey(id)) {
 			serverMap.remove(id);
+			// counter--;
 			return true;
 		} else {
 			return false;

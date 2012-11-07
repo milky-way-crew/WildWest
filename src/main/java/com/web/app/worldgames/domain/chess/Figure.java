@@ -5,7 +5,15 @@ public class Figure {
 	private FigureTypesEnum type = null;
 	private Position position = null;
 	private PlayerType owner = null;
+	private boolean isShownToEnemy = false;
 	
+	public boolean isShownToEnemy() {
+		return isShownToEnemy;
+	}
+
+	public void setShownToEnemy(boolean isShownToEnemy) {
+		this.isShownToEnemy = isShownToEnemy;
+	}
 	public Figure(FigureTypesEnum type, Position position, PlayerType owner) {
 		super();
 		this.type = type;

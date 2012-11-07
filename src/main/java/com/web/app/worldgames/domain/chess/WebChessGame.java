@@ -7,11 +7,18 @@ import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.User;
 
-
 public class WebChessGame {
 	private static final Logger log = Logger.getLogger(WebChessGame.class);
-	
+
 	private ChessGame game;
+
+	public void setGame(ChessGame game) {
+		this.game = game;
+	}
+
+	public ChessGame getGame() {
+		return game;
+	}
 
 	public WebChessGame(ChessGame chessGame) {
 		this.game = chessGame;
@@ -44,40 +51,54 @@ public class WebChessGame {
 			game.startGame();
 		}
 	}
-	
-	public Map<String, ? extends Object> onRequestFromUser(Map<String, ? extends Object> params, User user) {
-		
-		
+
+	public Map<String, ? extends Object> onRequestFromUser(
+			Map<String, ? extends Object> params, User user) {
+
 		Map<String, Object> responseJson = new HashMap<String, Object>();
-		
+
 		if (params.containsKey("whoami")) {
-			onWhoamiRecieved(responseJson, game, user);
-		}
-		
-		if (params.containsKey("init")) {
-			onInitRecieved(responseJson, game);
+			onWhoamiRecieved(responseJson, user);
 		}
 
-		if (game.isStarted()) {
-			if (params.containsKey("draw_choice")) {
-				onDrawChoice(params, game, user);
-			}
-			
-			if (params.containsKey("changes")) {
-				onChanges(responseJson, game, user);
-			}
-			
-			
-			if (params.containsKey("move") && game.isStarted()) {
-				onMoveRecieved(params, responseJson, game);
-			}
+		if (params.containsKey("init")) {
+			onInitRecieved(responseJson);
 		}
-		
+
+		if (params.containsKey("shuffle") && !game.isStarted()) {
+			onShuffleReceived(responseJson, user);
+		}
+
+		if (game.isStarted() && !game.isEnded()) {
+			if (game.isStarted()) {
+				if (params.containsKey("draw_choice")) {
+					onDrawChoice(params, user);
+				}
+
+				if (params.containsKey("changes")) {
+					onChanges(responseJson, user);
+				}
+
+				if (params.containsKey("move") && game.isStarted()) {
+					onMoveRecieved(params, responseJson);
+				}
+			}
+		} else {
+			// responseJson.put("result", "END");
+		}
 		return responseJson;
 	}
-	
-	private void onDrawChoice(Map<String, ? extends Object> params,
-			final ChessGame game, User user) {
+
+	private void onShuffleReceived(Map<String, Object> responseJson, User user) {
+		BoardRandomizer randomizer = new BoardRandomizer();
+		Board board = game.getBoard();
+		randomizer.randomizeArea(board,
+				game.getBlack().getId() == user.getId() ? PlayerType.BLACK
+						: PlayerType.WHITE);
+		responseJson.put("shuffle", board);
+	}
+
+	private void onDrawChoice(Map<String, ? extends Object> params, User user) {
 		if (game.getLastMoveResult() == ResultEnum.DRAW) {
 			String choice = (String) params.get("draw_choice");
 			// * //
@@ -105,9 +126,7 @@ public class WebChessGame {
 				drawResult = game.resolveDraw();
 				game.setLastMoveResult(drawResult);
 
-				// game.resetPlayerChoices();
-				game.getWhite().setDrawChoice(null);
-				game.getBlack().setDrawChoice(null);
+				game.resetPlayerChoices();
 
 				final ResultEnum result = drawResult;
 
@@ -132,8 +151,7 @@ public class WebChessGame {
 		}
 	}
 
-	private void onChanges(Map<String, Object> responseJson,
-			final ChessGame game, User user) {
+	private void onChanges(Map<String, Object> responseJson, User user) {
 		boolean isCurrentPlayerMove = false;
 		responseJson.put("move", isCurrentPlayerMove);
 		Player player = game.getPlayerById(user.getId());
@@ -151,21 +169,20 @@ public class WebChessGame {
 						&& game.getLastMoveResult() != ResultEnum.DRAW);
 	}
 
-	private void onWhoamiRecieved(Map<String, Object> responseJson,
-			ChessGame game, User user) {
+	private void onWhoamiRecieved(Map<String, Object> responseJson, User user) {
 		log.info("REQUEST TYPE: Who am i");
 		responseJson.put("whoami",
 				game.getWhite().getId() == user.getId() ? "WHITE" : "BLACK");
 	}
 
-	private void onInitRecieved(Map<String, Object> responseJson, ChessGame game) {
+	private void onInitRecieved(Map<String, Object> responseJson) {
 		log.info("REQUEST TYPE: init");
 		com.web.app.worldgames.domain.chess.Utils.printBoard(game.getBoard());
 		responseJson.put("init", game.getBoard().getBoard());
 	}
 
 	private void onMoveRecieved(Map<String, ? extends Object> params,
-			Map<String, Object> responseJson, ChessGame game) {
+			Map<String, Object> responseJson) {
 		log.info("REQUEST TYPE: Player move");
 		String coords = (String) params.get("move");
 
@@ -204,5 +221,9 @@ public class WebChessGame {
 
 	public boolean isFull() {
 		return game.getWhite() != null && game.getBlack() != null;
+	}
+
+	public boolean isStarted() {
+		return game.isStarted();
 	}
 }

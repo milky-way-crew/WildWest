@@ -9,12 +9,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.app.worldgames.dao.interfaces.IUserDao;
 import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.domain.chess.Board;
 import com.web.app.worldgames.domain.chess.Player;
 import com.web.app.worldgames.domain.chess.WebChessGame;
 import com.web.app.worldgames.service.ChessGameService;
@@ -29,15 +31,29 @@ public class ChessContoller {
 	@Autowired
 	private ChessGameService chessService;
 
+
+	@RequestMapping(value = "/chess") 
+	public String showChessServers(Model model) {
+		model.addAttribute("test", "ChessContoller");
+		model.addAttribute("chess", chessService.getAllGames());
+		log.info("Showing all chess games to user");
+		return "chess/chess-list";
+	}
+
+
 	@RequestMapping(value = "/chess/all")
 	public @ResponseBody  Set<Entry<Integer,WebChessGame>> allServers() {
 		return chessService.getAllGames();
 	}
+
+	@RequestMapping(value = "/board") 
+	public @ResponseBody Board getBoard() {
+
+		return chessService.getGameById(1).getGame().getBoard();
+	} 
+
 	@RequestMapping(value = "/chess/create")
 	public String createServer(HttpSession session) {
-		log.info("1");
-		
-		
 		if (session.getAttribute("user") == null) {
 			log.info("**************** Setting test user to session ***************");
 			session.setAttribute("user", userDao.findUserByLogin("test"));
@@ -49,7 +65,7 @@ public class ChessContoller {
 		session.setAttribute("idChessGame", gameId);
 		log.info("Finished creating chess-game with id: " + gameId);
 
-		return "redirect:/server";
+		return "redirect:/chess-server";
 	}
 
 	@RequestMapping(value = "/chess/connect")
@@ -71,15 +87,33 @@ public class ChessContoller {
 			log.info("Server is full");
 			return "redirect:/home";
 		}
-		
 	}
 	
 
-	@RequestMapping(value = "/server")
+	@RequestMapping(value = "/chess-server")
 	public String startServer(HttpSession session) {
-		return "chess";
-
+		return "chess/chess-game";
 	}
+
+	@RequestMapping(value = "/reset") 
+	public String reset(HttpSession session) {
+		log.info("Reset requested");
+		session.removeAttribute("idChessGame");
+		session.removeAttribute("user");
+		// chessService.removeGameById()
+		return "home";
+	}
+
+	@RequestMapping(value = "/chess/exit") 
+	public String leaveGame(HttpSession session) {
+		log.info("Exit requested");
+		session.removeAttribute("idChessGame");
+		session.removeAttribute("user");
+
+		chessService.removeGameById((Integer)session.getAttribute("idChessGame"));
+		return "home";
+	}
+
 
 	@RequestMapping(value = "/chess/update")
 	public @ResponseBody
@@ -97,6 +131,5 @@ public class ChessContoller {
 		} else {
 			return null;
 		}
-		
 	}
 }

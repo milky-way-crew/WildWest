@@ -19,7 +19,7 @@ public enum FigureTypesEnum {
 		} 
 
 		if (that == FLAG) {
-			return ResultEnum.WIN;
+			return ResultEnum.ABSOLUTE_WIN;
 		}
 		
 		

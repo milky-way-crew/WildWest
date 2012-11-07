@@ -9,7 +9,7 @@
 	type="text/css">
 <style type="text/css">
 body {
-	background: url(resources/img/bg.png);
+	background: url(/resources/img/bg.png);
 }
 </style>
 </head>
