@@ -44,6 +44,7 @@
 				<p>
 					<a href="./test" class="btn btn-warning">&#9827; Link to buggy chat &#9827;</a>
 				</p>
+				<p><a href="./chess" class="btn btn-primary">&#9829; Chess-servers</a></p>
 
 			</c:otherwise>
 		</c:choose>

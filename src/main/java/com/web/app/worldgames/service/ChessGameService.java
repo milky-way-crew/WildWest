@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import org.springframework.stereotype.Service;
 
 import com.web.app.worldgames.domain.User;
@@ -16,7 +18,10 @@ import com.web.app.worldgames.service.interfaces.IChessGameService;
 
 @Service
 public class ChessGameService implements IChessGameService {
+	private static final Logger log = Logger.getLogger(ChessGameService.class);
+
 	private static final Map<Integer, WebChessGame> serverMap = Collections.synchronizedMap(new HashMap<Integer, WebChessGame>());
+	// private static final <Integer> removedId = new ArrayList<Integer>();
 	private static int counter = 0;
 	
 	@Override
@@ -39,10 +44,12 @@ public class ChessGameService implements IChessGameService {
 	@Override
 	public synchronized boolean removeGameById(int id) {
 		if (serverMap.containsKey(id)) {
+			log.info("removing game with id: " + id);
 			serverMap.remove(id);
 			// counter--;
 			return true;
 		} else {
+			log.info("Cannot found game with such id=" + id);
 			return false;
 		}
 	}

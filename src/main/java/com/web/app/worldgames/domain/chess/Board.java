@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class Board {
 	private static final Logger log = Logger.getLogger(Board.class); 
 	public static final int BOARD_SIZE_X = 7; // was 7
-	public static final int BOARD_SIZE_Y = 7; // was 9
+	public static final int BOARD_SIZE_Y = 7; // was 7
 	
 	private List<Figure> board = new ArrayList<Figure>(BOARD_SIZE_X * BOARD_SIZE_Y);
 

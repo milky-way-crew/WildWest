@@ -6,10 +6,6 @@ import org.apache.log4j.Logger;
 public class ChessGame {
 	private static final Logger log = Logger.getLogger(ChessGame.class);
 
-	@SuppressWarnings("unused")
-	// Yes, i know it unused. So what?
-	private static final int COUNT_PLAYERS = 2;
-
 	private Board board = new Board();
 	private Player[] players;
 	private boolean isStarted = false;
@@ -37,16 +33,13 @@ public class ChessGame {
 	}
 
 	public Player getPlayerById(int id) {
-		for (Player player : players) {
-			if (player.getId() == id) {
-				return player;
-			}
-		}
-		return null;
+		return (white != null && white.getId() == id) ? white : (black != null
+				&& black.getId() == id ? black : null);
 	}
 
 	public boolean canBeStarted() {
-		return white != null && black != null && board != null;
+		return white != null && black != null && board != null
+				&& white.isReady() && black.isReady();
 	}
 
 	public ChessGame() {
@@ -78,16 +71,20 @@ public class ChessGame {
 	}
 
 	public boolean isEnded() {
-		// TODO: FIXME: TODO: FIXME
+		// FIXME: 
+		// End will be in 2 cases:
+		// 1) Flag is beaten
+		// 2) All figures of player are down
 
 		if (lastMoveResult == ResultEnum.ABSOLUTE_WIN) {
 			return true;
 		}
-
-		for (Player player : players) {
-			if (player.getFiguresFromBoad(board).size() == 0) {
-				return true;
-			}
+		if (this.isStarted()) {
+			for (Player player : players) {
+				if (player.getFiguresFromBoad(board).size() == 0) {
+					return true;
+				}
+			}			
 		}
 
 		return false;
@@ -108,21 +105,17 @@ public class ChessGame {
 	public ResultEnum moveFigure(Position from, Position to) {
 		Figure figure = board.getFigure(from);
 
-		// if (figure.getOwner() != null && isValidMove(from, to)) {
 		if (figure.getType() != null && isValidMove(from, to)) {
 			// Potential opponent figure
 			Figure figure2 = board.getFigure(to);
 			if (figure2.getType() != null) {
-				// Ok its not empty -> Battle
-				return battle(from, to, figure, figure2);
+				return battle(from, to, figure, figure2); // Ok its not empty -> Battle
 			} else {
 				_move(from, to, figure);
+				return ResultEnum.EMPTY; // Valid move; Was (battle || empty space) there
 			}
-			// Valid move; Was (battle || empty space) there
-			return ResultEnum.EMPTY;
 		} else {
 			log.debug("*** Totally invalid move, cannot move there");
-			// Totally invalid move; Cannot move there
 			return null;
 		}
 	}
@@ -131,18 +124,15 @@ public class ChessGame {
 			Figure figureTo) {
 		ResultEnum resultOfBattle = battle(figureFrom, figureTo);
 		if (resultOfBattle == ResultEnum.WIN) {
-			// Logs here
-			System.err.println("* WIN: Updating position");
+			log.debug("* WIN: Updating position");
 			_move(from, to, figureFrom);
 			figureFrom.setShownToEnemy(true);
-
 		} else if (resultOfBattle == ResultEnum.LOOSE) {
-			// Logs here
-			System.err.println("* LOOSE: Removing figure.");
+			log.debug("* LOOSE: Removing figure");
 			_remove(from);
 			figureTo.setShownToEnemy(true);
 		} else if (resultOfBattle == ResultEnum.DRAW) {
-			//
+			log.debug("* DRAW: Waiting for choices");
 		}
 		return resultOfBattle;
 	}
@@ -222,15 +212,15 @@ public class ChessGame {
 
 		Position start = lastMove.getStart();
 		Figure figure = board.getFigure(start);
-		log.info("PLAYER ID: " + opponent.getId());
-		log.info("CHANGED FIGURE TYPE FROM: " + figure.getType() + " TO "
+		log.debug("PLAYER ID: " + opponent.getId());
+		log.debug("CHANGED FIGURE TYPE FROM: " + figure.getType() + " TO "
 				+ opponent.getDrawChoice());
 		figure.setType(getOpponentOf(currentPlayer).getDrawChoice());
 
 		Position end = lastMove.getEnd();
 		figure = board.getFigure(end);
-		log.info("PLAYER ID: " + currentPlayer.getId());
-		log.info("CHANGED FIGURE TYPE FROM: " + figure.getType() + " TO "
+		log.debug("PLAYER ID: " + currentPlayer.getId());
+		log.debug("CHANGED FIGURE TYPE FROM: " + figure.getType() + " TO "
 				+ currentPlayer.getDrawChoice());
 
 		figure.setType(currentPlayer.getDrawChoice());
@@ -240,7 +230,6 @@ public class ChessGame {
 
 	public Player getOpponentOf(Player player) {
 		return player.getId() == white.getId() ? black : white;
-
 	}
 
 	public void resetPlayerChoices() {

@@ -78,11 +78,21 @@ public class ChessContoller {
 		User client = (User) session.getAttribute("user");
 		WebChessGame chessGame = chessService.getGameById(idServer);
 		
+		if (chessGame == null || chessGame.getHost() == null) {
+			return "redirect:/404";
+		} else if (chessGame.getHost().getId() == client.getId()) {
+			return "/chess-server";
+		}
+		// TODO:
+		// connect to self
+		// connect if other games are running
+		// connect if
+		
 		if (!chessGame.isFull()) {
 			log.info("Connecting client to server with id" + idServer);
 			session.setAttribute("idChessGame", idServer);
 			chessGame.setClient(new Player(client));
-			return "redirect:/server";
+			return "redirect:/chess-server";
 		} else {
 			log.info("Server is full");
 			return "redirect:/home";
@@ -91,27 +101,21 @@ public class ChessContoller {
 	
 
 	@RequestMapping(value = "/chess-server")
-	public String startServer(HttpSession session) {
+	public String startServer(HttpSession session, Model model) {
+		model.addAttribute("sizeX", Board.BOARD_SIZE_X - 1);
+		model.addAttribute("sizeY", Board.BOARD_SIZE_Y - 1);
 		return "chess/chess-game";
-	}
-
-	@RequestMapping(value = "/reset") 
-	public String reset(HttpSession session) {
-		log.info("Reset requested");
-		session.removeAttribute("idChessGame");
-		session.removeAttribute("user");
-		// chessService.removeGameById()
-		return "home";
 	}
 
 	@RequestMapping(value = "/chess/exit") 
 	public String leaveGame(HttpSession session) {
 		log.info("Exit requested");
-		session.removeAttribute("idChessGame");
-		session.removeAttribute("user");
+		Integer id = (Integer) session.getAttribute("idChessGame");
 
-		chessService.removeGameById((Integer)session.getAttribute("idChessGame"));
-		return "home";
+		session.removeAttribute("idChessGame");
+		chessService.removeGameById(id);
+
+		return "redirect:/home";
 	}
 
 

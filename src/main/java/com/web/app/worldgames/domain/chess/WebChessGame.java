@@ -56,6 +56,10 @@ public class WebChessGame {
 			Map<String, ? extends Object> params, User user) {
 
 		Map<String, Object> responseJson = new HashMap<String, Object>();
+		
+		if (params.containsKey("is-started")) {
+			responseJson.put("started", game.isStarted());
+		}
 
 		if (params.containsKey("whoami")) {
 			onWhoamiRecieved(responseJson, user);
@@ -68,34 +72,76 @@ public class WebChessGame {
 		if (params.containsKey("shuffle") && !game.isStarted()) {
 			onShuffleReceived(responseJson, user);
 		}
+		
+		if (params.containsKey("ready")) {
+			onReadyReceived(responseJson, user);
+		}
 
 		if (game.isStarted() && !game.isEnded()) {
 			if (game.isStarted()) {
 				if (params.containsKey("draw_choice")) {
 					onDrawChoice(params, user);
 				}
-
 				if (params.containsKey("changes")) {
 					onChanges(responseJson, user);
 				}
-
-				if (params.containsKey("move") && game.isStarted()) {
+				if (params.containsKey("move")) {
 					onMoveRecieved(params, responseJson);
 				}
 			}
-		} else {
-			// responseJson.put("result", "END");
+		} 
+		if (game.isEnded()) {
+			if (params.containsKey("changes")) {
+				onChanges(responseJson, user);
+			}
+			// Player player = game.getPlayerById(user.getId());
+			// if (responseJson.get("result") != null) {
+			// 	responseJson.put("result", "END");
+			// }
 		}
 		return responseJson;
 	}
 
+	private void onReadyReceived(Map<String, Object> responseJson, User user) {
+		Player player = game.getPlayerById(user.getId());
+		player.setReady(true);
+		if (game.canBeStarted()) {
+			game.startGame();
+		}
+	}
+
 	private void onShuffleReceived(Map<String, Object> responseJson, User user) {
-		BoardRandomizer randomizer = new BoardRandomizer();
-		Board board = game.getBoard();
-		randomizer.randomizeArea(board,
-				game.getBlack().getId() == user.getId() ? PlayerType.BLACK
-						: PlayerType.WHITE);
-		responseJson.put("shuffle", board);
+		log.debug("[Shuffle request] From user: " + user.getId() + ":" + user.getNickname());
+		log.debug("Game isStarted: " + game.isStarted());
+		
+		if (!game.isStarted()) {
+			log.debug("So, game is started, radomizing figures");
+			BoardRandomizer randomizer = new BoardRandomizer();
+			Board board = game.getBoard();
+			if (log.isDebugEnabled()) {
+				log.debug("Board before randomizing");
+				Utils.printBoard(board);
+			}
+			
+			Player player = game.getPlayerById(user.getId());
+			if (player != null) {
+				randomizer.randomizeArea(board, player.getType());
+			} else {
+				log.error("User with id:" + user.getId() + " isn't player of game");
+			}
+
+			// randomizer.randomizeArea(board, game.getWhite().getId() == user.getId() ? PlayerType.WHITE
+			// 				: PlayerType.BLACK);
+			
+			if (log.isDebugEnabled()) {
+				log.debug("Board after randomizing");
+				Utils.printBoard(board);
+			}
+			responseJson.put("shuffle", board);
+		} else {
+			responseJson.put("shuffle", null);
+		}
+		
 	}
 
 	private void onDrawChoice(Map<String, ? extends Object> params, User user) {
