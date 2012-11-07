@@ -4,7 +4,7 @@ public class Figure {
 	public static final Figure EMPTY = new Figure();
 	private FigureTypesEnum type = null;
 	private Position position = null;
-	private PlayerType owner = null;
+	private ChessPlayerTypesEnum owner = null;
 	private boolean isShownToEnemy = false;
 	
 	public boolean isShownToEnemy() {
@@ -14,7 +14,7 @@ public class Figure {
 	public void setShownToEnemy(boolean isShownToEnemy) {
 		this.isShownToEnemy = isShownToEnemy;
 	}
-	public Figure(FigureTypesEnum type, Position position, PlayerType owner) {
+	public Figure(FigureTypesEnum type, Position position, ChessPlayerTypesEnum owner) {
 		super();
 		this.type = type;
 		this.position = position;
@@ -46,11 +46,11 @@ public class Figure {
 		this.position = position;
 	}
 
-	public PlayerType getOwner() {
+	public ChessPlayerTypesEnum getOwner() {
 		return owner;
 	}
 
-	public void setOwner(PlayerType owner) {
+	public void setOwner(ChessPlayerTypesEnum owner) {
 		this.owner = owner;
 	}
 }

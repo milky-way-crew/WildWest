@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.web.app.worldgames.dao.interfaces.IUserDao;
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.chess.Board;
-import com.web.app.worldgames.domain.chess.Player;
-import com.web.app.worldgames.domain.chess.WebChessGame;
+import com.web.app.worldgames.domain.chess.ChessPlayer;
+import com.web.app.worldgames.domain.chess.ChessGameManager;
 import com.web.app.worldgames.service.ChessGameService;
 
 @Controller
@@ -42,7 +42,7 @@ public class ChessContoller {
 
 
 	@RequestMapping(value = "/chess/all")
-	public @ResponseBody  Set<Entry<Integer,WebChessGame>> allServers() {
+	public @ResponseBody  Set<Entry<Integer,ChessGameManager>> allServers() {
 		return chessService.getAllGames();
 	}
 
@@ -76,7 +76,7 @@ public class ChessContoller {
 		}
 		
 		User client = (User) session.getAttribute("user");
-		WebChessGame chessGame = chessService.getGameById(idServer);
+		ChessGameManager chessGame = chessService.getGameById(idServer);
 		
 		if (chessGame == null || chessGame.getHost() == null) {
 			return "redirect:/404";
@@ -91,7 +91,7 @@ public class ChessContoller {
 		if (!chessGame.isFull()) {
 			log.info("Connecting client to server with id" + idServer);
 			session.setAttribute("idChessGame", idServer);
-			chessGame.setClient(new Player(client));
+			chessGame.setClient(new ChessPlayer(client));
 			return "redirect:/chess-server";
 		} else {
 			log.info("Server is full");
@@ -128,7 +128,7 @@ public class ChessContoller {
 		User user = (User) session.getAttribute("user");
 		Integer id = (Integer) session.getAttribute("idChessGame");
 		
-		WebChessGame chessGame = chessService.getGameById(id);
+		ChessGameManager chessGame = chessService.getGameById(id);
 		
 		if (chessGame != null) {
 			return chessGame.onRequestFromUser(params, user);

@@ -1,5 +1,5 @@
 package com.web.app.worldgames.domain.chess;
 
-public enum PlayerType {
+public enum ChessPlayerTypesEnum {
 	WHITE, BLACK
 }

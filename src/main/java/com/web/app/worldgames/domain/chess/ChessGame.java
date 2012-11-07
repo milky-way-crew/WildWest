@@ -7,20 +7,20 @@ public class ChessGame {
 	private static final Logger log = Logger.getLogger(ChessGame.class);
 
 	private Board board = new Board();
-	private Player[] players;
+	private ChessPlayer[] players;
 	private boolean isStarted = false;
-	private Player white, black;
-	private Player currentPlayer;
+	private ChessPlayer white, black;
+	private ChessPlayer currentPlayer;
 	private boolean isEnded;
 
 	private Move lastMove;
-	private ResultEnum lastMoveResult;
+	private BattleResultsEnum lastMoveResult;
 
-	public ResultEnum getLastMoveResult() {
+	public BattleResultsEnum getLastMoveResult() {
 		return lastMoveResult;
 	}
 
-	public void setLastMoveResult(ResultEnum result) {
+	public void setLastMoveResult(BattleResultsEnum result) {
 		lastMoveResult = result;
 	}
 
@@ -32,7 +32,7 @@ public class ChessGame {
 		return this.lastMove;
 	}
 
-	public Player getPlayerById(int id) {
+	public ChessPlayer getPlayerById(int id) {
 		return (white != null && white.getId() == id) ? white : (black != null
 				&& black.getId() == id ? black : null);
 	}
@@ -46,8 +46,8 @@ public class ChessGame {
 		// TODO Beeeeeep
 	}
 
-	public ChessGame(Player player1, Player player2) {
-		players = new Player[] { player1, player2 };
+	public ChessGame(ChessPlayer player1, ChessPlayer player2) {
+		players = new ChessPlayer[] { player1, player2 };
 	}
 
 	public void startGame() {
@@ -56,14 +56,14 @@ public class ChessGame {
 			log.debug("Game can be started");
 			this.setStarted(true);
 			if (getCurrentPlayer() == null) {
-				this.players = new Player[] { white, black };
+				this.players = new ChessPlayer[] { white, black };
 				setCurrentPlayer(white);
 			}
 			log.debug("Setting current player to WHITE");
 		}
 	}
 
-	public Player getNextPlayer() {
+	public ChessPlayer getNextPlayer() {
 		if (this.isStarted()) {
 			return currentPlayer.getId() == white.getId() ? black : white;
 		}
@@ -76,11 +76,11 @@ public class ChessGame {
 		// 1) Flag is beaten
 		// 2) All figures of player are down
 
-		if (lastMoveResult == ResultEnum.ABSOLUTE_WIN) {
+		if (lastMoveResult == BattleResultsEnum.ABSOLUTE_WIN) {
 			return true;
 		}
 		if (this.isStarted()) {
-			for (Player player : players) {
+			for (ChessPlayer player : players) {
 				if (player.getFiguresFromBoad(board).size() == 0) {
 					return true;
 				}
@@ -98,11 +98,11 @@ public class ChessGame {
 		this.board = board;
 	}
 
-	public ResultEnum moveTo(Move move) {
+	public BattleResultsEnum moveTo(Move move) {
 		return moveFigure(move.getStart(), move.getEnd());
 	}
 
-	public ResultEnum moveFigure(Position from, Position to) {
+	public BattleResultsEnum moveFigure(Position from, Position to) {
 		Figure figure = board.getFigure(from);
 
 		if (figure.getType() != null && isValidMove(from, to)) {
@@ -112,7 +112,7 @@ public class ChessGame {
 				return battle(from, to, figure, figure2); // Ok its not empty -> Battle
 			} else {
 				_move(from, to, figure);
-				return ResultEnum.EMPTY; // Valid move; Was (battle || empty space) there
+				return BattleResultsEnum.EMPTY; // Valid move; Was (battle || empty space) there
 			}
 		} else {
 			log.debug("*** Totally invalid move, cannot move there");
@@ -120,18 +120,18 @@ public class ChessGame {
 		}
 	}
 
-	private ResultEnum battle(Position from, Position to, Figure figureFrom,
+	private BattleResultsEnum battle(Position from, Position to, Figure figureFrom,
 			Figure figureTo) {
-		ResultEnum resultOfBattle = battle(figureFrom, figureTo);
-		if (resultOfBattle == ResultEnum.WIN) {
+		BattleResultsEnum resultOfBattle = battle(figureFrom, figureTo);
+		if (resultOfBattle == BattleResultsEnum.WIN) {
 			log.debug("* WIN: Updating position");
 			_move(from, to, figureFrom);
 			figureFrom.setShownToEnemy(true);
-		} else if (resultOfBattle == ResultEnum.LOOSE) {
+		} else if (resultOfBattle == BattleResultsEnum.LOOSE) {
 			log.debug("* LOOSE: Removing figure");
 			_remove(from);
 			figureTo.setShownToEnemy(true);
-		} else if (resultOfBattle == ResultEnum.DRAW) {
+		} else if (resultOfBattle == BattleResultsEnum.DRAW) {
 			log.debug("* DRAW: Waiting for choices");
 		}
 		return resultOfBattle;
@@ -147,7 +147,7 @@ public class ChessGame {
 		board.putFigure(to, figure);
 	}
 
-	private ResultEnum battle(Figure figure, Figure figure2) {
+	private BattleResultsEnum battle(Figure figure, Figure figure2) {
 		return figure.getType().beat(figure2.getType());
 	}
 
@@ -169,21 +169,21 @@ public class ChessGame {
 		}
 	}
 
-	public Player getWhite() {
+	public ChessPlayer getWhite() {
 		return white;
 	}
 
-	public void setWhite(Player white) {
-		white.setType(PlayerType.WHITE);
+	public void setWhite(ChessPlayer white) {
+		white.setType(ChessPlayerTypesEnum.WHITE);
 		this.white = white;
 	}
 
-	public Player getBlack() {
+	public ChessPlayer getBlack() {
 		return black;
 	}
 
-	public void setBlack(Player black) {
-		black.setType(PlayerType.BLACK);
+	public void setBlack(ChessPlayer black) {
+		black.setType(ChessPlayerTypesEnum.BLACK);
 		this.black = black;
 	}
 
@@ -195,11 +195,11 @@ public class ChessGame {
 		this.isStarted = isStarted;
 	}
 
-	public Player getCurrentPlayer() {
+	public ChessPlayer getCurrentPlayer() {
 		return currentPlayer;
 	}
 
-	public void setCurrentPlayer(Player currentPlayer) {
+	public void setCurrentPlayer(ChessPlayer currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
 
@@ -207,8 +207,8 @@ public class ChessGame {
 		return white.getDrawChoice() != null && black.getDrawChoice() != null;
 	}
 
-	public ResultEnum resolveDraw() {
-		Player opponent = getOpponentOf(currentPlayer);
+	public BattleResultsEnum resolveDraw() {
+		ChessPlayer opponent = getOpponentOf(currentPlayer);
 
 		Position start = lastMove.getStart();
 		Figure figure = board.getFigure(start);
@@ -228,7 +228,7 @@ public class ChessGame {
 		return this.moveTo(lastMove);
 	}
 
-	public Player getOpponentOf(Player player) {
+	public ChessPlayer getOpponentOf(ChessPlayer player) {
 		return player.getId() == white.getId() ? black : white;
 	}
 

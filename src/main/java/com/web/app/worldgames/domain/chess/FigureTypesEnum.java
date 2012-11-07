@@ -13,13 +13,13 @@ public enum FigureTypesEnum {
 
 	// Silent, its complete
 	@SuppressWarnings("incomplete-switch")
-	public ResultEnum beat(FigureTypesEnum that) {
+	public BattleResultsEnum beat(FigureTypesEnum that) {
 		if (that == TRAP) {
-			return ResultEnum.LOOSE;
+			return BattleResultsEnum.LOOSE;
 		} 
 
 		if (that == FLAG) {
-			return ResultEnum.ABSOLUTE_WIN;
+			return BattleResultsEnum.ABSOLUTE_WIN;
 		}
 		
 		
@@ -27,30 +27,30 @@ public enum FigureTypesEnum {
 		case PAPER: {
 			switch (that) {
 			case PAPER:
-				return ResultEnum.DRAW;
+				return BattleResultsEnum.DRAW;
 			case ROCK:
-				return ResultEnum.WIN;
+				return BattleResultsEnum.WIN;
 			case SCISSORS:
-				return ResultEnum.LOOSE;
+				return BattleResultsEnum.LOOSE;
 			}
 		}
 		case ROCK:
 			switch (that) {
 			case PAPER:
-				return ResultEnum.LOOSE;
+				return BattleResultsEnum.LOOSE;
 			case ROCK:
-				return ResultEnum.DRAW;
+				return BattleResultsEnum.DRAW;
 			case SCISSORS:
-				return ResultEnum.WIN;
+				return BattleResultsEnum.WIN;
 			}
 		case SCISSORS:
 			switch (that) {
 			case PAPER:
-				return ResultEnum.WIN;
+				return BattleResultsEnum.WIN;
 			case ROCK:
-				return ResultEnum.LOOSE;
+				return BattleResultsEnum.LOOSE;
 			case SCISSORS:
-				return ResultEnum.DRAW;
+				return BattleResultsEnum.DRAW;
 			}
 		}
 		System.err.println("It cannot be, argument out of range.");

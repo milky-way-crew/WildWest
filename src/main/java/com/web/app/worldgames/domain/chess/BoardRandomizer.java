@@ -9,22 +9,22 @@ public class BoardRandomizer {
 
 		void initBoard(Board board) {
 			// For "up" player
-			randomizeArea(board, PlayerType.WHITE);
+			randomizeArea(board, ChessPlayerTypesEnum.WHITE);
 			// For "down" player
-			randomizeArea(board, PlayerType.BLACK);
+			randomizeArea(board, ChessPlayerTypesEnum.BLACK);
 		}
 		
-		public void randomizeArea(Board board, PlayerType type) {
-			if (type == PlayerType.WHITE) {
-				randomizePlayerArea(board, 0, SIZE_OF_2_ROWS, PlayerType.WHITE);
-			} else if (type == PlayerType.BLACK) {
-				randomizePlayerArea(board, BOARD_SIZE - SIZE_OF_2_ROWS, BOARD_SIZE, PlayerType.BLACK);
+		public void randomizeArea(Board board, ChessPlayerTypesEnum type) {
+			if (type == ChessPlayerTypesEnum.WHITE) {
+				randomizePlayerArea(board, 0, SIZE_OF_2_ROWS, ChessPlayerTypesEnum.WHITE);
+			} else if (type == ChessPlayerTypesEnum.BLACK) {
+				randomizePlayerArea(board, BOARD_SIZE - SIZE_OF_2_ROWS, BOARD_SIZE, ChessPlayerTypesEnum.BLACK);
 			} else {
 				System.out.println("Unknown type of player");
 			}
 		}
 
-		private void randomizePlayerArea(Board board, int start, int end, PlayerType owner) {
+		private void randomizePlayerArea(Board board, int start, int end, ChessPlayerTypesEnum owner) {
 			List<Figure> subList = board.getBoard().subList(start, end);
 			for (int i=0; i < subList.size(); i++) {
 				Figure figure = subList.get(i);
@@ -35,7 +35,7 @@ public class BoardRandomizer {
 			randomizeFlagAndTrap(owner, subList);
 		}
 
-		private void randomizeFlagAndTrap(PlayerType owner, List<Figure> subList) {
+		private void randomizeFlagAndTrap(ChessPlayerTypesEnum owner, List<Figure> subList) {
 			Random random = new Random();
 			
 			int flagPosition = random.nextInt(subList.size());

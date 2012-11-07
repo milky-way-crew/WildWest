@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.User;
 
-public class WebChessGame {
-	private static final Logger log = Logger.getLogger(WebChessGame.class);
+public class ChessGameManager {
+	private static final Logger log = Logger.getLogger(ChessGameManager.class);
 
 	private ChessGame game;
 
@@ -20,11 +20,11 @@ public class WebChessGame {
 		return game;
 	}
 
-	public WebChessGame(ChessGame chessGame) {
+	public ChessGameManager(ChessGame chessGame) {
 		this.game = chessGame;
 	}
 
-	public void setHost(Player user) {
+	public void setHost(ChessPlayer user) {
 		if (game != null && user != null) {
 			log.info("Setting host: " + user);
 			game.setWhite(user);
@@ -36,15 +36,15 @@ public class WebChessGame {
 		}
 	}
 
-	public Player getHost() {
+	public ChessPlayer getHost() {
 		return game.getWhite();
 	}
 
-	public Player getClient() {
+	public ChessPlayer getClient() {
 		return game.getBlack();
 	}
 
-	public void setClient(Player client) {
+	public void setClient(ChessPlayer client) {
 		log.info("Setting client" + client);
 		game.setBlack(client);
 		if (game.canBeStarted()) {
@@ -103,7 +103,7 @@ public class WebChessGame {
 	}
 
 	private void onReadyReceived(Map<String, Object> responseJson, User user) {
-		Player player = game.getPlayerById(user.getId());
+		ChessPlayer player = game.getPlayerById(user.getId());
 		player.setReady(true);
 		if (game.canBeStarted()) {
 			game.startGame();
@@ -123,7 +123,7 @@ public class WebChessGame {
 				Utils.printBoard(board);
 			}
 			
-			Player player = game.getPlayerById(user.getId());
+			ChessPlayer player = game.getPlayerById(user.getId());
 			if (player != null) {
 				randomizer.randomizeArea(board, player.getType());
 			} else {
@@ -145,19 +145,19 @@ public class WebChessGame {
 	}
 
 	private void onDrawChoice(Map<String, ? extends Object> params, User user) {
-		if (game.getLastMoveResult() == ResultEnum.DRAW) {
+		if (game.getLastMoveResult() == BattleResultsEnum.DRAW) {
 			String choice = (String) params.get("draw_choice");
 			// * //
 			log.info("USER ID[" + user.getId() + "] CHOISE IS: " + choice); //
 
-			Player player = game.getPlayerById(user.getId());
+			ChessPlayer player = game.getPlayerById(user.getId());
 			FigureTypesEnum figureChoice = FigureTypesEnum.valueOf(choice);
 
 			if (player.getDrawChoice() == null) {
 				player.setDrawChoice(figureChoice);
 			}
 
-			ResultEnum drawResult;
+			BattleResultsEnum drawResult;
 
 			if (game.canResolveDraw()) {
 				log.info("Game can resolve the draw situation");
@@ -174,7 +174,7 @@ public class WebChessGame {
 
 				game.resetPlayerChoices();
 
-				final ResultEnum result = drawResult;
+				final BattleResultsEnum result = drawResult;
 
 				GameAction gameAction = new GameAction() {
 					@Override
@@ -200,7 +200,7 @@ public class WebChessGame {
 	private void onChanges(Map<String, Object> responseJson, User user) {
 		boolean isCurrentPlayerMove = false;
 		responseJson.put("move", isCurrentPlayerMove);
-		Player player = game.getPlayerById(user.getId());
+		ChessPlayer player = game.getPlayerById(user.getId());
 		GameAction action = player.popAction();
 
 		if (action != null) {
@@ -212,7 +212,7 @@ public class WebChessGame {
 		responseJson.put(
 				"move",
 				game.getCurrentPlayer().getId() == user.getId()
-						&& game.getLastMoveResult() != ResultEnum.DRAW);
+						&& game.getLastMoveResult() != BattleResultsEnum.DRAW);
 	}
 
 	private void onWhoamiRecieved(Map<String, Object> responseJson, User user) {
@@ -240,7 +240,7 @@ public class WebChessGame {
 		final FigureTypesEnum defenderFigure = game.getBoard()
 				.getFigure(move.getEnd()).getType();
 
-		final ResultEnum result = game.moveTo(move);
+		final BattleResultsEnum result = game.moveTo(move);
 
 		game.setLastMove(move);
 		game.setLastMoveResult(result);
@@ -259,7 +259,7 @@ public class WebChessGame {
 		responseJson.put("invoker", invokerFigure);
 		responseJson.put("result", result);
 
-		if (result == ResultEnum.DRAW) {
+		if (result == BattleResultsEnum.DRAW) {
 			log.info("ITS DRAW INVOKED BY USER: "
 					+ game.getNextPlayer().getId());
 		}

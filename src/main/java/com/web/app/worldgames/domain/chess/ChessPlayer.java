@@ -7,10 +7,10 @@ import java.util.List;
 
 import com.web.app.worldgames.domain.User;
 
-public class Player {
+public class ChessPlayer {
 	private int id;
 	private String nick;
-	private PlayerType type;
+	private ChessPlayerTypesEnum type;
 	private Deque<GameAction> notifiers = new LinkedList<GameAction>();
 	private boolean isReady = false;
 	
@@ -33,11 +33,11 @@ public class Player {
 	}
 
 
-	public Player(User user) {
+	public ChessPlayer(User user) {
 		this(user.getId(), user.getNickname(), null);
 	}
 
-	public Player(int id, String nick, PlayerType type) {
+	public ChessPlayer(int id, String nick, ChessPlayerTypesEnum type) {
 		super();
 		this.id = id;
 		this.nick = nick;
@@ -70,11 +70,11 @@ public class Player {
 		return ownerFigures;
 	}
 	
-	public PlayerType getType() {
+	public ChessPlayerTypesEnum getType() {
 		return type;
 	}
 
-	public void setType(PlayerType type) {
+	public void setType(ChessPlayerTypesEnum type) {
 		this.type = type;
 	}
 
