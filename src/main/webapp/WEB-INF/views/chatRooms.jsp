@@ -96,10 +96,9 @@
 		</div>
 	</div>
 	<!-- modal window create room -->
-
+	<script type="text/javascript" src="resources/js/chat.js"></script>
 	<script type="text/javascript" src="resources/js/rooms/createRoom.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
-	<script type="text/javascript" src="resources/js/test.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>
