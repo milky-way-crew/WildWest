@@ -26,33 +26,38 @@
 	
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="offset1 span4 well" id="menu">
-				<div class="menu-entry well" id="before_game" align="center">
-					<h3 align="left">Before game:</h3>
-					<button id="ready" class="btn btn btn-primary">I'm Ready</button>
-					or 
-					<button id="shuffle" class="btn btn btn-success">Shuffle figures</button>
-				</div>
-				<div id="info" class="menu-entry well" align="center">
-					<h3 align="left">Notification area:</h3>
-					<h4 class="info muted">
-						Waiting for oponents
-					</h4>
-				</div>
-				<div id="chat_area" class="menu-entry well">
-					<!-- <h>Chat will be here:</h4> -->
-					<textarea id="chat" rows="5" cols="20"></textarea>
-					<form class="form-search" style="margin-bottom: 0px;">
-						<div class="input-append">
-							<input class="input-large search-query" id="message"
-							placeholder="write your message here.." type="text">
-							<button class="btn btn-info" id="send" type="button">Send</button>
-						</div>
-					</form>
+			<div class="offset1 span4 menu well ">
+				<div class="row-fluid">
+					<div id="info" class="menu-entry well" align="center">
+						<h3 align="left">Notification area:</h3>
+						<h4 class="info muted">
+							Waiting for oponents
+						</h4>
+					</div>
+					<div id="chat_area" class="menu-entry well">
+						<!-- <h>Chat will be here:</h4> -->
+						<textarea id="chat" rows="5" cols="20"></textarea>
+						<form class="form-search" style="margin-bottom: 0px;">
+							<div class="input-append">
+								<input class="input-large search-query" id="message"
+								placeholder="write your message here.." type="text">
+								<button class="btn btn-info" id="send" type="button">Send</button>
+							</div>
+						</form>
+					</div>
 				</div>
 
+				<div class="row-fluid">
+					<div class="menu-entry well" id="before_game" align="center">
+						<!-- <h3 align="left">Before game:</h3> -->
+						Are you 
+						<button id="ready" class="btn btn btn-primary">Ready</button>
+						or want 
+						<button id="shuffle" class="btn btn btn-success">Shuffle figures?</button>
+					</div>
+				</div>
 
-				<a href="./chess/exit" class="btn btn-large btn-danger btn-block" >&ltexit game&gt;</a>
+				<a href="./chess/exit" class="btn btn-large btn-danger btn-block" >leave game</a>
 			</div>
 			<div class="span6">
 				<div id="chess" class="well" align="center">

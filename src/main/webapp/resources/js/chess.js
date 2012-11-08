@@ -476,7 +476,7 @@
             if(json.started === false) {
                 $('#before_game').fadeIn(300);
             } else {
-                $('#before_game').fadeOut(300);
+                $('#before_game').fadeOut(500);
             }
         });
 
