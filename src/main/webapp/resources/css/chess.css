@@ -11,6 +11,10 @@ body {
 	border: solid 2px black; 
 }
 
+#chat {
+	width: 320px;
+}
+
 #test {
 	position: absolute; 
 	right: 5%;

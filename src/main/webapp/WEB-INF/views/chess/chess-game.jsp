@@ -41,7 +41,7 @@
 				</div>
 				<div id="chat_area" class="menu-entry well">
 					<!-- <h>Chat will be here:</h4> -->
-					<textarea id="chat" rows="5" cols="20" style="width: 320px;"></textarea>
+					<textarea id="chat" rows="5" cols="20"></textarea>
 					<form class="form-search" style="margin-bottom: 0px;">
 						<div class="input-append">
 							<input class="input-large search-query" id="message"
