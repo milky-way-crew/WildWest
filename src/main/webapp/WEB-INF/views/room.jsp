@@ -59,11 +59,17 @@
 			<div class="span4">
 				<div class="well sidebar-nav">
 					<h2>User's list</h2>
-					<div id="userList"></div>
+					<table border=2 cellspacing=3 cellpadding=3 align="center">
+						<tr>
+							<td width=175><b>Nickname</b></td>
+							<td width=75><b>Status</b></td>
+						</tr>
+					</table>
 					<form name="userAction" action="">
-						<a class="btn btn-primary btn-medium">Start</a> <a
-							class="btn btn-primary btn-medium">Ready</a> <a
-							class="btn btn-primary btn-medium">Exit</a>
+						<a class="btn btn-primary btn-medium" id="start">Start</a> <br>
+						<br> <a class="btn btn-primary btn-medium" id="ready">Ready</a>
+						<br> <br> <a class="btn btn-primary btn-medium"
+							id="exit">Exit</a>
 					</form>
 				</div>
 			</div>

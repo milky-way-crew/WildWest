@@ -21,8 +21,6 @@
 		<br> <input id="message" type="text" placeholder="Enter your message..."></input>
 		<button type="submit" class="btn btn-warn" id="sender">Send</button>
 		<button type="submit" class="btn" id="update" >Update</button>
-
-
 		<script type="text/javascript" src="resources/js/jquery.js"></script>
 		<script type="text/javascript" src="resources/js/test.js"></script>
 

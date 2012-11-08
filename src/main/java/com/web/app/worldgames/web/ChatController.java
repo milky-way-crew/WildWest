@@ -29,7 +29,7 @@ public class ChatController {
 
 	request.getSession().setAttribute("chatParticipant", chatParticipant);
 
-	return new ModelAndView("test");
+	return new ModelAndView("chatRooms");
     }
 
     @RequestMapping(value = "/ajax", method = RequestMethod.POST)

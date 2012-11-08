@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -49,8 +48,9 @@
 					<h1>Chat</h1>
 					<div id="chatBox"></div>
 					<form name="message" action="">
-						<input name="usermsg" type=text id="usermsg" size="100"> <a
-							class="btn btn-primary btn-medium">Send</a>
+						<input type="text" id="usermsg" size=100
+							placeholder="Enter your message here..."> <a
+							class="btn btn-primary btn-medium" id="send">Send</a>
 					</form>
 				</div>
 			</div>
@@ -59,17 +59,20 @@
 			<div class="span4">
 				<div class="well sidebar-nav">
 					<h2>Room's list</h2>
-					<div id="roomList"></div>
+					<select id="roomList" size="10" name="roomList" class="ListBox">
+						<option value=""></option>
+						<option value=""></option>
+					</select>
 					<form name="roomAction" action="">
 						<a data-toggle="modal" href="#createRoomModal"
-							class="btn btn-primary btn-medium">Create room</a> <a
-							data-toggle="modal" href="#createRoomModal"
+							class="btn btn-primary btn-medium">Create room</a> <br> <br>
+						<a data-toggle="modal" href="#createRoomModal"
 							class="btn btn-primary btn-medium">Join to room</a>
 					</form>
 				</div>
 			</div>
 			<!-- room list -->
-			
+
 		</div>
 	</div>
 	<!-- world chat and room list -->
@@ -87,8 +90,8 @@
 				<textarea id="message" name="message" class="input-medium" rows="1">Room</textarea>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn btn-success">Create</a> <a href="#"
-					class="btn" data-dismiss="modal">Close</a>
+				<a id="createRoom" href="#" class="btn btn-success">Create</a> <a
+					href="#" class="btn" data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>
@@ -96,6 +99,7 @@
 
 	<script type="text/javascript" src="resources/js/rooms/createRoom.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
+	<script type="text/javascript" src="resources/js/test.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>
@@ -114,5 +118,6 @@
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-typeahead.js"></script>
+	<script type="text/javascript" src="resources/js/test.js"></script>
 </body>
 </html>
