@@ -10,7 +10,7 @@
 <link href="resources/css/bootstrap-responsive.css" rel="stylesheet">
 <title>Login form</title>
 </head>
-<body>
+<body style = "background-image: url(resources/img/layer-1.png);">
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="container-fluid">

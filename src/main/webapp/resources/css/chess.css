@@ -1,8 +1,16 @@
 
 body {
-	background-image: url('../img/bg.png'); /*blockpattern*/
+	background-image: url('../img/chess/chess-bg.png'); /*blockpattern*/
 		/*background:-webkit-linear-gradient(45deg, #020031 0%, #6D3353 100%);*/
 }
+
+#menu {
+	background-color: rgba(0,0,0,0.5);
+}
+.menu-entry {
+	border: solid 2px black; 
+}
+
 #test {
 	position: absolute; 
 	right: 5%;
