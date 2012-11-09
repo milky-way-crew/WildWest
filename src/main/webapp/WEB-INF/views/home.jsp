@@ -13,19 +13,33 @@
 <link rel="stylesheet" href="resources/bootstrap-responsive.css"
 	type="text/css">
 <title>KaBoom</title>
+<style type="text/css">
+	body {
+		background-image: url(resources/img/home-bg.png);
+	}
+	.hero-unit {
+		background-color: rgba(255,255,255,0.7);
+	}
+</style>
 </head>
 <body>
+	<div class="container ">
 	<div class="hero-unit">
 		<!-- 
 		<h1>Oh, hi doggy.</h1>
 		 -->
 		<h1>
 			Oh, hi
-			<c:out value="${user.login}" />
+			<c:out value="${user.login}" /> ;)
 		</h1>
 	</div>
-	<div class="container">
-		<p><%=new Date()%></p>
+		<div class="span6 well">
+							<!-- <center> -->
+			<img src="resources/img/404.png" alt="">
+		<!-- </center> -->
+		</div>
+		<div class="span4 well">
+					<p><%=new Date()%></p>
 		<c:choose>
 			<c:when test="${user == null }">
 				<p>
@@ -48,6 +62,10 @@
 
 			</c:otherwise>
 		</c:choose>
+		</div>
+
+
+
 	</div>
 </body>
 </html>
