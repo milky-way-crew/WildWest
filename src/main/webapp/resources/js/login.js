@@ -1,9 +1,9 @@
 $(document).ready(function() {
-	$('input').hover(function() {
-		$(this).popover('show');
-	}, function() {
-		$(this).popover('hide');
-	});
+	// $('input').hover(function() {
+	// 	$(this).popover('show');
+	// }, function() {
+	// 	$(this).popover('hide');
+	// });
 
 	$("#loginHere").validate({
 		rules : {
@@ -33,8 +33,5 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#myCarousel').carousel({interval: 2000});
+	// $('#myCarousel').carousel({interval: 2000});
 });
-//$(document).ready(function(){
-    //Start carousel
-//});

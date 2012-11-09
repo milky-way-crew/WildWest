@@ -1,148 +1,187 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link href="resources/css/bootstrap.css" rel="stylesheet">
-<link href="resources/css/bootstrap-responsive.css" rel="stylesheet">
-<title>Login form</title>
-</head>
-<body style = "background-image: url(resources/img/layer-1.png);">
-	<div class="navbar">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="#" name="top">MONOPOLY</a>
-				<div class="nav-collapse collapse">
-					<ul class="nav">
-						<li><a href="#"><i class="icon-home"></i> Home</a></li>
-						<li class="divider-vertical"></li>
-						<li class="active"><a href="#"><i class="icon-user"></i>
-								Profile</a></li>
-						<li class="divider-vertical"></li>
-						<li><a href="#"><i class="icon-globe"></i>TOP-100</a></li>
-						<li class="divider-vertical"></li>
-					</ul>
-					<ul class="nav pull-right">
-						<li class="divider-vertical"></li>
-						<li class="dropdown"><a class="dropdown-toggle" href="#"
-							data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
-							<div class="dropdown-menu"
-								style="padding: 15px; padding-bottom: 0px;">
-								<form:form id="loginHere" method='post' action='login'
-									commandName="user">
-									<fieldset>
-										<h2>
-											<legend>Sign in</legend>
-										</h2>
-										<div class="control-group">
-											<label class="control-label">Login</label>
-											<div class="controls">
-												<div class="box transparent">
-													<form:input style="margin-bottom: 15px;" type="text"
-														path="login" class="input-xlarge" id="login" name="login"
-														rel="popover" data-placement='left'
-														data-content="What is your login, buddy?"
-														data-original-title="Login field" />
-													<form:errors path="login" cssClass="btn-mini btn-danger"></form:errors>
-												</div>
-											</div>
-										</div>
 
 
-										<div class="control-group">
-											<h3>
-												<label class="control-label">Password</label>
-											</h3>
-											<div class="controls">
-												<div class="box transparent">
-													<form:input style="margin-bottom: 15px;" type="password"
-														path="password" class="input-xlarge" id="password"
-														name="password" rel="popover" data-placement='left'
-														data-content="What is your password?"
-														data-original-title="Password field" />
-													<form:errors path="password" cssClass="btn-mini btn-danger"></form:errors>
-												</div>
-											</div>
-										</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Milky-way-team presents</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-										<div class="control-group">
-											<label class="control-label"></label>
-											<div class="controls">
-												<button type="submit" id="sign-in"
-													class="btn btn-primary btn-block">
-													<i class="icon-user icon-white"></i>Sign in
-												</button>
-												or <a class="btn btn-primary btn-success" href="register"><font
-													color="white"><i class="icon-heart icon-white"></i>
-														Register</font></a>
-											</div>
-										</div>
+    <!-- Le styles -->
+    <link href="resources/css/bootstrap.css" rel="stylesheet">
+    <link href="resources/css/login.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-responsive.css" rel="stylesheet">
 
-									</fieldset>
-								</form:form>
-							</div></li>
-					</ul>
-				</div>
-				<!--/.nav-collapse -->
-			</div>
-			<!--/.container-fluid -->
-		</div>
-		<!--/.navbar-inner -->
-	</div>
-	<!--/.navbar -->
-	<div class="container well">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-		<div class="row" align="center">
-			<div class="span8 offset2">
-				<div id="myCarousel" class="carousel slide">
-					<div class="carousel-inner">
-						<div class="item active">
-							<img src=resources/images/monopoly-for-ipad-02.jpg />
-							<div class="carousel-caption">
-								<h4>First label</h4>
-							</div>
-						</div>
-						<div class="item">
-							<img src="resources/images/monopoly-for-ipad-01.jpg" />
-							<div class="carousel-caption">
-								<h4>Second label</h4>
-							</div>
-						</div>
-						<div class="item">
-							<img src="resources/images/monopoly-for-ipad-03.jpg" />
-							<div class="carousel-caption">
-								<h4>Third label</h4>
-							</div>
-						</div>
-					</div>
-					<!-- Carousel nav -->
-					<a class="carousel-control left" href="#myCarousel"
-						data-slide="prev">&lsaquo;</a> <a class="carousel-control right"
-						href="#myCarousel" data-slide="next">&rsaquo;</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="resources/js/jquery-1.7.2.js"></script>
-	<script type="text/javascript" src="resources/js/jquery.js"></script>
-	<script type="text/javascript"
-		src="resources/js/bootstrap-transition.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap-modal.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap-dropdown.js"></script>
-	<script type="text/javascript"
-		src="resources/js/bootstrap-scrollspy.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap-tab.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap-tooltip.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap-popover.js"></script>
-	<script type="text/javascript" src="resources/js/jquery.validate.js"></script>
-	<script type="text/javascript" src="resources/js/login.js"></script>
-	<script src="resources/js/bootstrap-carousel.js"></script>
-</body>
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Milky-way games</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <!-- <li class="active"><a href="#">Home</a></li> -->
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+<!--             <ul class="nav pull-right">
+              <li><a href="http://wp.me/p2m9ik-j6">Back To Untame</a></li>
+            </ul> -->
+                      <ul class="nav pull-right">
+            <li class="divider-vertical"></li>
+            <li class="dropdown"><a class="dropdown-toggle" href="#"
+              data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+              <div class="dropdown-menu"
+                style="padding: 15px; padding-bottom: 0px;">
+                <form:form id="loginHere" method='post' action='login'
+                  commandName="user">
+                  <fieldset>
+                    <h2>
+                      <legend>Sign in</legend>
+                    </h2>
+                    <div class="control-group">
+                      <label class="control-label">Login</label>
+                      <div class="controls">
+                        <div class="box transparent">
+                          <form:input style="margin-bottom: 15px;" type="text"
+                            path="login" class="input-xlarge" id="login" name="login"
+                            rel="popover" data-placement='left'
+                            data-content="What is your login, buddy?"
+                            placeholder="What is your login, buddy?"
+                            data-original-title="Login field" />
+                          <form:errors path="login" cssClass="btn-mini btn-danger"></form:errors>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="control-group">
+                      <h3>
+                        <label class="control-label">Password</label>
+                      </h3>
+                      <div class="controls">
+                        <div class="box transparent">
+                          <form:input style="margin-bottom: 15px;" type="password"
+                            path="password" class="input-xlarge" id="password"
+                            name="password" rel="popover" data-placement='left'
+                            data-content="What is your password?"
+                            data-original-title="Password field" placeholder = "keep your password in safe place"/>
+                          <form:errors path="password" cssClass="btn-mini btn-danger"></form:errors>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label"></label>
+                      <div class="controls">
+                        <button type="submit" id="sign-in"
+                          class="btn btn-primary btn-block">
+                          <i class="icon-user icon-white"></i> Sign in
+                        </button>
+                        <a class="btn btn-primary btn-info" href="register"><font
+                          color="white"><i class="icon-heart icon-white"></i>
+                            Register</font></a>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form:form>
+              </div></li>
+          </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div id="content" class="container well">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+          <div id="myCarousel" class="carousel slide">
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+            <div class="active item"><img src="http://placehold.it/1200x450/0e53a7/00000&text=at first: its gorgerous" /></div>
+            <div class="item"><img src="http://placehold.it/1200x450/00af64/00000&text=second: easy to play" /></div>
+            <div class="item"><img src="http://placehold.it/1200x450/E8117F/00000&text=third: redtube.com" /></div>
+          </div>
+          <!-- Carousel nav -->
+          <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+          <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        </div>
+
+        <div class="row" id="call-to-action">
+          
+          <div class="span9">
+              <h2>Our games so sweeeeet!</h2>
+          </div><!-- end text -->
+
+          <a href="register" class="btn btn-large btn-success offset1">Wow, i wanna try!</a>
+
+        </div><!-- end cta -->
+
+      <div class="row">
+        <div class="span4">
+          <h2>So cool...</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <!-- <p><a class="btn" href="#">View details &raquo;</a></p> -->
+        </div>
+        <div class="span4">
+          <h2>So awesome...</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <!-- <p><a class="btn" href="#">View details &raquo;</a></p> -->
+       </div>
+        <div class="span4">
+          <h2>So amazing...</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <!-- <p><a class="btn" href="#">View details &raquo;</a></p> -->
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; milky-way-team 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- // <script src="resources/js/bootstrap.min.js"></script> -->
+    <script src="resources/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="resources/js/bootstrap-dropdown.js"></script>
+    <script type="text/javascript" src="resources/js/bootstrap-tooltip.js"></script>
+    <!-- // <script type="text/javascript" src="resources/js/bootstrap-popover.js"></script> -->
+    <script src="resources/js/bootstrap-carousel.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="resources/js/login.js"></script>
+
+    <script type="text/javascript">
+    $('.carousel').carousel()
+    </script>
+
+  </body>
 </html>
