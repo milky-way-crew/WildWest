@@ -58,12 +58,15 @@
 			<!-- room list -->
 			<div class="span4">
 				<div class="well sidebar-nav">
-					<h2>Room's list</h2>
-					<select id="roomList" size="10" name="roomList" class="ListBox">
-						<option value=""></option>
-						<option value=""></option>
-					</select>
+					<h2>Room list</h2>
+					<table border=2 cellspacing=3 cellpadding=3 align="center">
+						<tr>
+							<td width=175><b>Room name</b></td>
+							<td width=75><b>User's</b></td>
+						</tr>
+					</table>
 					<form name="roomAction" action="">
+					<br>
 						<a data-toggle="modal" href="#createRoomModal"
 							class="btn btn-primary btn-medium">Create room</a> <br> <br>
 						<a data-toggle="modal" href="#createRoomModal"
@@ -97,7 +100,6 @@
 	</div>
 	<!-- modal window create room -->
 	<script type="text/javascript" src="resources/js/chat.js"></script>
-	<script type="text/javascript" src="resources/js/rooms/createRoom.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>
@@ -117,6 +119,5 @@
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-typeahead.js"></script>
-	<script type="text/javascript" src="resources/js/test.js"></script>
 </body>
 </html>

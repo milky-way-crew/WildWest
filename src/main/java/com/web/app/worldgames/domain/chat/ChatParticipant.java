@@ -7,25 +7,26 @@ import java.util.List;
 import com.web.app.worldgames.domain.User;
 
 public class ChatParticipant {
-    private long id_participant;
+    private int id_participant;
     private String nickname;
-    private long id_room;
+    private int id_room;
     private LinkedList<String> deliver = new LinkedList<String>();
 
     public ChatParticipant(User user) {
 	super();
 	this.setParticipantId(user.getId());
 	this.setNickname(user.getNickname());
+	this.id_room = 0;
     }
 
     public ChatParticipant() {
     }
 
-    public long getParticipantId() {
+    public int getParticipantId() {
 	return id_participant;
     }
 
-    public void setParticipantId(long id) {
+    public void setParticipantId(int id) {
 	this.id_participant = id;
     }
 
@@ -47,11 +48,11 @@ public class ChatParticipant {
 	return messages;
     }
 
-    public long getId_room() {
+    public int getId_room() {
 	return id_room;
     }
 
-    public void setId_room(long id_room) {
+    public void setId_room(int id_room) {
 	this.id_room = id_room;
     }
 }

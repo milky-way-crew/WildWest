@@ -10,21 +10,25 @@ import com.web.app.worldgames.web.ChatController;
 public class ChatRoom {
     private static final Logger log = Logger.getLogger(ChatController.class);
 
-    private List<ChatParticipant> chatParticipants = new ArrayList<ChatParticipant>();
-    private long roomId;
+    private static List<ChatParticipant> chatParticipants = new ArrayList<ChatParticipant>();
+    private int roomId;
     private String roomName;
 
-    public ChatRoom(String roomName, long id) {
+    public ChatRoom(String roomName, int id) {
 	this.roomId = id;
 	this.roomName = roomName;
     }
 
+    public int sizeOfRoom(){
+	return chatParticipants.size();
+    }
+    
     public void addChatParticipant(ChatParticipant participant) {
 	chatParticipants.add(participant);
 	log.debug("User " + participant.getNickname() + " added to roomChat");
     }
 
-    public ChatParticipant getChatParticipantById(long id) {
+    public ChatParticipant getChatParticipantById(int id) {
 	for (ChatParticipant participant : chatParticipants) {
 	    if (id == participant.getParticipantId()) {
 		log.debug("User " + participant.getNickname()
@@ -35,21 +39,19 @@ public class ChatRoom {
 	return null;
     }
 
-    public boolean deleteChatParticipantById(long id) {
+    public void deleteChatParticipantById(int id) {
 	for (int i = 0; i < chatParticipants.size(); i++) {
 	    if (id == chatParticipants.get(i).getParticipantId()) {
 		chatParticipants.remove(i);
 		log.debug("User " + chatParticipants.get(i).getNickname()
 			+ " removed from roomChat");
-		return true;
 	    }
 	}
-	return false;
     }
 
-    public boolean isParticipantInRoom(long id) {
+    public boolean isParticipantInRoom(ChatParticipant chatParticipant) {
 	for (ChatParticipant participant : chatParticipants) {
-	    if (participant.getParticipantId() == id)
+	    if (participant.getParticipantId() == chatParticipant.getParticipantId())
 		return true;
 	}
 	return false;
@@ -59,15 +61,15 @@ public class ChatRoom {
 	return chatParticipants;
     }
 
-    public void setChatParticipants(List<ChatParticipant> chatParticipants) {
-	this.chatParticipants = chatParticipants;
+    public static void setChatParticipants(List<ChatParticipant> chatParticipants) {
+	ChatRoom.chatParticipants = chatParticipants;
     }
 
     public long getRoomId() {
 	return roomId;
     }
 
-    public void setRoomId(long roomId) {
+    public void setRoomId(int roomId) {
 	this.roomId = roomId;
     }
 
