@@ -147,7 +147,7 @@ public class UserDao implements IUserDao {
 	public User findUserById(int id) {
 
 		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userId=?";
-		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userEmail=?";
+		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userId=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { id });
 		if (num > 0) {
 
