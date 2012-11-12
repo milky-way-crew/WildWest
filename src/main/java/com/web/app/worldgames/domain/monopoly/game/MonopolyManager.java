@@ -54,7 +54,7 @@ public class MonopolyManager {
 				String msg = "Next Player " + nextPlayer.getName()
 						+ " roll dices";
 				for (Player players : game.playerList()) {
-					WebSocketTransport.sendMassage(players.getId(), msg);
+					WebSocketTransport.sendMessage(players.getId(), msg);
 				}
 			}
 		}
