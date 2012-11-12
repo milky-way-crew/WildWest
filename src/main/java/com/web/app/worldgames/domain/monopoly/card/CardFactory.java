@@ -1,12 +1,11 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class CardFactory {
-	public Cell chooseCard(Player player) {
+	public static Cell chooseCard(Player player) {
 		Cell cell = null;
 		if (StartGame.boardCities.containsKey(player.getPosition())) {
 			cell = StartGame.boardCities.get(player.getPosition());
