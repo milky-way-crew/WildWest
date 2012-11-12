@@ -1,36 +1,44 @@
 package com.web.app.worldgames.domain.monopoly;
 
 public interface CellPositions {
-	int STAR = 1;
-	int VENESIA = 2;
-	int BARI=3;
-	int SICILY=4;
+	int START = 1;
+	int GDYNIA = 2;
+	int CHANCE1 = 3;
+	int TAIPEI = 4;
 	int TAX1 = 5;
-	int PORT1 = 6;
-	int CORSICA=7;
-	int CHANCE1 = 8;
-	int SARDINIA=9;
-	int GAUL=10;
-	int COLISEUM = 11;
-	int ILIRIC=12;
-	int MACEDONIA=13;
-	int ACHAIA=14;
-	int ROULETTE1 = 15;
-	int BITHYNIA=16;
-	int ASSYRIA=17;
-	int BAETIC=18;
-	int PORT2 = 19;
-	
+	int MONOPOLY_RAIL1 = 6;
+	int TOKYO = 7;
+	int COMMUNITY_CHEST1 = 8;
+	int BARCELONA = 9;
+	int ATHENS = 10;
+	int JAIL = 11;
+	int ISTAMBUL = 12;
+	int CHANCE2 = 13;
+	int KYIV = 14;
+	int TORONTO = 15;
+	int MONOPOLY_RAIL2 = 16;
+	int ROME = 17;
+	int COMMUNITY_CHEST2 = 18;
+	int SHANGHAI = 19;
+	int VANCOVER = 20;
 	int FREE_STATION = 21;
-	
-	int TAX2 = 23;
-	
-	
-	int PORT3 = 27;
-	
-	int CHANCE2 = 30;
-	int GO_TO_COLISEUM = 31;
-	int ROULETTE2 = 33;
-	
-	int PORT4 = 37;
+	int SYDNEY = 22;
+	int CHANCE3 = 23;
+	int NEW_YORK = 24;
+	int LONDON = 25;
+	int MONOPOLY_RAIL3 = 26;
+	int BEIJING = 27;
+	int HONG_KONG = 28;
+	int COMMUNITY_CHEST3 = 29;
+	int JERUSALEM = 30;
+	int GO_TO_JAIL = 31;
+	int PARIS = 32;
+	int BELGRADE = 33;
+	int CHANCE4 = 34;
+	int CAPE_TOWN = 35;
+	int MONOPOLY_RAIL4 = 36;
+	int COMMUNITY_CHEST4 = 37;
+	int RIGA = 38;
+	int TAX2 = 39;
+	int MONTREAL = 40;
 }

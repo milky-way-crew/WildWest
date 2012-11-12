@@ -1,9 +1,12 @@
-package com.web.app.worldgames.domain.monopoly;
+package com.web.app.worldgames.domain.monopoly.card;
+
+import com.web.app.worldgames.domain.monopoly.Player;
 
 public abstract class Cell {
     private String name;
     private int position;
-    abstract void effectOnPlayer(Player player);
+    public abstract void effectOnPlayer(Player player);
+    public abstract String info();
     
     public String getName() {
         return name;
