@@ -1,6 +1,5 @@
 package com.web.app.worldgames.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +16,10 @@ import com.web.app.worldgames.service.ChatServiceManager;
 
 @Controller
 public class ChatController {
-    private static final Logger log = Logger.getLogger(ChatController.class);
+  /*  private static final Logger log = Logger.getLogger(ChatController.class);
 
-    private static ChatServiceManager manager = new ChatServiceManager();
+    private static ChatServiceManager chatManager = new ChatServiceManager(0,
+	    "World");*/
 
     /*
      * @RequestMapping(method = RequestMethod.GET) public ModelAndView
@@ -27,48 +27,53 @@ public class ChatController {
      * request.getSession().getAttribute("user"); ChatParticipant
      * chatParticipant = new ChatParticipant(user);
      * request.getSession().setAttribute("chatParticipant", chatParticipant);
-     * 
-     * chatRooms.add(new ChatRoom("", 0));
-     * chatRooms.get(0).addChatParticipant(chatParticipant); return new
-     * ModelAndView("chatRooms"); }
+     * chatManager
+     * .getChatRoomById(chatParticipant.getId_room()).addChatParticipant
+     * (chatParticipant); return new ModelAndView("chatRooms"); }
      */
 
-    @RequestMapping(value = "/ajax", method = RequestMethod.POST)
+/*    @RequestMapping(value = "/ajax", method = RequestMethod.POST)
     public @ResponseBody
     String onMessage(HttpServletRequest request,
 	    @RequestParam("type") String type, @RequestParam("data") String data) {
 	ChatParticipant participant = getChatParticipantFromRequest(request);
 
-	/*if (type.toLowerCase().trim().equals("update")) {
+	if (type.toLowerCase().trim().equals("update")) {
 	    log.debug("Update request from user: " + participant.getNickname());
 	    return updateUserMessages(participant);
-	} else*/ if (type.toLowerCase().trim().equals("message")) {
+	}
+	if (type.toLowerCase().trim().equals("message")) {
 	    log.debug("Broadcast request from user: "
 		    + participant.getNickname());
 	    broadcast(participant, data);
 	}
 
-	return manager.getChatRoomById(participant.getId_room()).getRoomName()
-		+ " / " + participant.getNickname();
+	return chatManager.getChatRoomById(participant.getId_room())
+		.getRoomName()
+		+ " / "
+		+ participant.getNickname()
+		+ chatManager.getChatRoomById(participant.getId_room())
+			.getChatParticipants().size();
     }
 
     private ChatParticipant getChatParticipantFromRequest(
 	    HttpServletRequest request) {
 	ChatParticipant chatParticipant = (ChatParticipant) request
 		.getSession().getAttribute("chatParticipant");
-	manager.getChatRoomById(chatParticipant.getId_room())
-		.addChatParticipant(chatParticipant);
 	return chatParticipant;
     }
 
     private void broadcast(ChatParticipant participant, String data) {
-	for (ChatParticipant chatParticipant : manager.getChatRoomById(
-		participant.getParticipantId()).getChatParticipants()) {
-	    if (chatParticipant.getParticipantId() != participant
-		    .getParticipantId()) {
-		chatParticipant.addMessage(manager.getChatRoomById(
-			participant.getParticipantId()).getRoomName()
-			+ " / " + participant.getNickname() + ":" + data);
+	if (chatManager.getChatRoomById(participant.getId_room())
+		.getChatParticipants().size() > 1) {
+	    for (ChatParticipant chatParticipant : chatManager.getChatRoomById(
+		    participant.getParticipantId()).getChatParticipants()) {
+		if (chatParticipant.getParticipantId() != participant
+			.getParticipantId()) {
+		    chatParticipant.addMessage(chatManager.getChatRoomById(
+			    participant.getParticipantId()).getRoomName()
+			    + " / " + participant.getNickname() + " : " + data);
+		}
 	    }
 	}
     }
@@ -88,6 +93,6 @@ public class ChatController {
 	    sb.append(delimiter);
 	}
 	return sb.toString();
-    }
+    }*/
 
 }
