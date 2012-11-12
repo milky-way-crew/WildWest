@@ -7,8 +7,8 @@ import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.Player;
 
 public class MonopolyManager {
-	public Game monopolyGame;
-	User creator;
+	private Game monopolyGame;
+	private User creator;
 
 	public User getCreator() {
 		return creator;
@@ -19,11 +19,10 @@ public class MonopolyManager {
 	}
 
 	public MonopolyManager(Game monopolyGame) {
-		super();
 		this.monopolyGame = monopolyGame;
 	}
 
-	public Map<String, Object> onMessage(int idGame, String type) {
+	public Map<String, Object> onMessage(int idPlayer, String type, String data) {
 		Game game = new Game();
 		Map<String, Object> message = new HashMap<String, Object>();
 		Map<Object, Object> result = new HashMap<Object, Object>();

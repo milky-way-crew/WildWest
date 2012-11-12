@@ -3,8 +3,19 @@ console, alert, document,
 setInterval, clearInterval,
 prompt, bootbox*/
 
+
+
+var MSG = {
+		ID : 'id',
+		GID : 'game-id',
+		UID : 'user-id'
+		
+		
+};
+
 var MONO = {
 	config : {
+		game_id : null,
 		user_id : null,
 		socketUrl : "ws://localhost:8888/",
 		ajaxUrl : "mono-ajax"
@@ -14,7 +25,11 @@ var MONO = {
 		send : function(type, json) {
 			var jsonString = JSON.stringify({
 				'type' : type,
-				'data' : json
+				MSG.ID : {
+					MSG.GID : MONO.config.game_id,
+					'user-id' : MONO.config.user_id
+				},
+				'data' : json,
 			});
 			console.log('sending message: ' + jsonString);
 
@@ -24,9 +39,15 @@ var MONO = {
 			$.ajax({
 					url : MONO.config.ajaxUrl,
 					type : 'post',
-					success : function(user_id) {
-						alert('my user_id is: ' + user_id);
-						MONO.config.user_id = user_id;
+					success : function(init_id) {
+						console.log('Inner id received');
+						alert('my user_id is: ' + init_id.user_id);
+						alert('my game_id is: ' + init_id.game_id);
+						
+						MONO.config.user_id = init_id.user_id;
+						MONO.config.game_id = init_id.game_id;
+
+						console.log('Initing web-sockets');
 						MONO.transport.socket = new WebSocket(MONO.config.socketUrl);
 						MONO.transport.socket.onopen = MONO.events.onConnectEstablished;
 						MONO.transport.socket.onclose = MONO.events.onConnectClosed;
