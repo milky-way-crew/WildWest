@@ -1,13 +1,6 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import sun.util.logging.PlatformLogger;
-
 import com.web.app.worldgames.domain.monopoly.CardPrices;
-import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.PlayGame;
 import com.web.app.worldgames.domain.monopoly.Player;
 
