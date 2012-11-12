@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.web.app.worldgames.websocket.MonoWebSocketHandler.MonoWebSocket;
+import org.apache.log4j.Logger;
 
 public class WebSocketTransport {
+	private final static Logger log = Logger.getLogger(WebSocketTransport.class);
 	private static WebSocketTransport INSTANCE = null;
 	private Map<Integer, MonoWebSocket> socketMap = new HashMap<Integer, MonoWebSocket>();
 
@@ -15,7 +17,8 @@ public class WebSocketTransport {
 		socket.sendMessage(message);
 	}
 
-	public MonoWebSocket put(Integer idUser, MonoWebSocket socket) {
+	public MonoWebSocket bind(Integer idUser, MonoWebSocket socket) {
+		log.info("Binding new web-socket to id: " + idUser);
 		return socketMap.put(idUser, socket);
 	}
 

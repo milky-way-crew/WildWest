@@ -14,10 +14,12 @@ import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.service.interfaces.IMonopolyService;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 import com.web.app.worldgames.websocket.MonoWebSocketHandler.MonoWebSocket;
+import org.apache.log4j.Logger;
+
 
 @Controller
 public class MonopolyController {
-
+	private final static Logger log = Logger.getLogger(MonopolyController.class);
 	@Autowired
 	private IUserServiceManager userService;
 	
@@ -42,11 +44,14 @@ public class MonopolyController {
 	}
 
 	@RequestMapping(value = "/mono-ajax")
-	public @ResponseBody Map<String,Object> getUserId(HttpSession session) {
+	public @ResponseBody Map<String,Object> makeHandShake(HttpSession session) {
 		Integer idGame = (Integer) session.getAttribute("idMonopolyGame");
 		HashMap<String,Object> map = new HashMap<String, Object>();
-		map.put("idUser", getUserFromSession(session).getId());
+		int idUser = getUserFromSession(session).getId();
+		map.put("idUser", idUser);
 		map.put("idGame", idGame);
+
+		log.info("[HandShake request] from user: " + idUser);
 		return map;
 	}
 

@@ -3,20 +3,10 @@ console, alert, document,
 setInterval, clearInterval,
 prompt, bootbox*/
 
-
-
-var MSG = {
-		ID : 'id',
-		GID : 'game-id',
-		UID : 'user-id'
-		
-		
-};
-
 var MONO = {
 	config : {
-		game_id : null,
-		user_id : null,
+		idGame : null,
+		idUser : null,
 		socketUrl : "ws://localhost:8888/",
 		ajaxUrl : "mono-ajax"
 	},
@@ -25,11 +15,11 @@ var MONO = {
 		send : function(type, json) {
 			var jsonString = JSON.stringify({
 				'type' : type,
-				MSG.ID : {
-					MSG.GID : MONO.config.game_id,
-					'user-id' : MONO.config.user_id
+				'id' : {
+					'game-id' : MONO.config.idGame,
+					'user-id' : MONO.config.idUser
 				},
-				'data' : json,
+				'data' : json
 			});
 			console.log('sending message: ' + jsonString);
 
@@ -41,11 +31,11 @@ var MONO = {
 					type : 'post',
 					success : function(init_id) {
 						console.log('Inner id received');
-						alert('my user_id is: ' + init_id.user_id);
-						alert('my game_id is: ' + init_id.game_id);
+						console.log('my idUser is: ' + init_id.idUser);
+						console.log('my idGame is: ' + init_id.idGame);
 						
-						MONO.config.user_id = init_id.user_id;
-						MONO.config.game_id = init_id.game_id;
+						MONO.config.idUser = init_id.idUser;
+						MONO.config.idGame = init_id.idGame;
 
 						console.log('Initing web-sockets');
 						MONO.transport.socket = new WebSocket(MONO.config.socketUrl);
@@ -60,7 +50,7 @@ var MONO = {
 		onConnectEstablished : function() {
 			console.log("Connection opened, bind-websocket request");
 			MONO.transport.send('bind-websocket', {
-				'user-id' : MONO.config.user_id
+				'user-id' : MONO.config.idUser
 			});
 		},
 		onConnectClosed : function() {
@@ -73,7 +63,7 @@ var MONO = {
 	animate : {
 		move : function(offset) {
 			// TARAS_MODULE.func.()
-			alert('Moving to: ' + offset);
+			console.log('Moving to: ' + offset);
 		}
 	}
 };
@@ -81,10 +71,13 @@ var MONO = {
 $(document).ready(function() {
 	MONO.transport.init();
 
-	$('#msg').click(function() {
-		MONO.transport.send('bind-websocket', {
-			'user-id' : MONO.config.user_id
-		});
+	$('#roll').click(function() {
+		console.log('sending **roll** message to server');
+		MONO.transport.send('roll', {});
 		MONO.transport.send('String message', $(this).val());
 	});
+
+
+
+
 });
