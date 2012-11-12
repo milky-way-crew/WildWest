@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,6 +49,8 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 		@Override
 		public void onOpen(Connection connection) {
 			log.debug("[Web-socket] opening connection");
+			// FIXME: Safe or not?
+			connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(10));
 			this.connection = connection;
 			webSockets.add(this);
 			try {
@@ -62,7 +65,7 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 			ObjectMapper jsonParser = new ObjectMapper();
 
 			try {
-				log.debug("[MESSAGE FROM CLIENT]" + json);
+				log.debug("[FULL MESSAGE]" + json);
 				JsonNode messageTree = jsonParser.readTree(json);
 				
 				String typeOfMessage = messageTree.path(TYPE_NODE).getTextValue();
@@ -80,9 +83,9 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 					// directly to player object
 					log.debug("[Bind-websocket] From user-id: " + idUser);
 					WebSocketTransport transport = WebSocketTransport.getInstance();
-					transport.put(idUser, this);
+					transport.bind(idUser, this);
 				} else {
-					log.debug("[Message] from user-id: " + idUser);
+					log.debug("[Action] from user-id: " + idUser);
 					MonopolyManager manager = monopolyService.getGameById(idGame);
 					manager.onMessage(idUser, typeOfMessage, dataBlock.asText());
 				}
