@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.web.app.worldgames.domain.Room;
-import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
@@ -30,14 +28,14 @@ public class StartGame {
 	}
 
 	public static void startTemp() {
-		permanentlyPlayerList.add(new Player("Player 1", CellPositions.START,
-				CardPrices.START_MONEY, false));
-		permanentlyPlayerList.add(new Player("Player 2", CellPositions.START,
-				CardPrices.START_MONEY, false));
-		permanentlyPlayerList.add(new Player("Player 3", CellPositions.START,
-				CardPrices.START_MONEY, false));
-		permanentlyPlayerList.add(new Player("Player 4", CellPositions.START,
-				CardPrices.START_MONEY, false));
+//		permanentlyPlayerList.add(new Player("Player 1", CellPositions.START,
+//				CardPrices.START_MONEY, false));
+//		permanentlyPlayerList.add(new Player("Player 2", CellPositions.START,
+//				CardPrices.START_MONEY, false));
+//		permanentlyPlayerList.add(new Player("Player 3", CellPositions.START,
+//				CardPrices.START_MONEY, false));
+//		permanentlyPlayerList.add(new Player("Player 4", CellPositions.START,
+//				CardPrices.START_MONEY, false));
 	}
 
 	public static void deleteLoserPlayer(List<Player> players, Player player) {

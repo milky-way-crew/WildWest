@@ -21,19 +21,18 @@ import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 import com.web.app.worldgames.domain.monopoly.card.StartCard;
 import com.web.app.worldgames.domain.monopoly.card.TaxCard;
-import com.web.app.worldgames.web.GameController;
 
 public class GameManagerService {
-	private final static Logger LOG = Logger.getLogger(GameManagerService.class);
-	//Game game = new Game();
+	private final static Logger LOG = Logger
+			.getLogger(GameManagerService.class);
+	// Game game = new Game();
 	static Map<String, Object> messageFromPlayer = new HashMap<String, Object>();
-	
 
 	// @Override
 	public Map<String, Object> sendMessageFromPlayer(String type, Player player) {
 		Map<String, Object> message = new HashMap<String, Object>();
-		Map<Object, Object> result = new HashMap<Object,Object>();
-		//ObjectMapper mapper = new ObjectMapper();
+		Map<Object, Object> result = new HashMap<Object, Object>();
+		// ObjectMapper mapper = new ObjectMapper();
 		CardFactory cardFactory = new CardFactory();
 		Cell cell = cardFactory.chooseCard(player);
 		SellableCard card = (SellableCard) cell;
@@ -75,78 +74,80 @@ public class GameManagerService {
 			((JailCard) cell).payRansom(player);
 			result.put(cell, player);
 			message.put("pay_ransom", result);
-			
+
 		}
 		return message;
 	}
 
-	public Map<String, Object> sendMessageToPlayer( Map<String, Object> response, Player player) {
+	public Map<String, Object> sendMessageToPlayer(
+			Map<String, Object> response, Player player) {
 		Game game = new Game();
 		Cell cell = null;
-		CardFactory cardFactory = new  CardFactory();
+		CardFactory cardFactory = new CardFactory();
 		if (!game.isStarted()) {
 			if (game.isReadyToStart()) {
 				game.start();
 			}
-		}else if(game.isStarted()&& !game.isEnd()){
-			if(response.containsKey("rolled")){
-				cell=cardFactory.chooseCard(player);
-				
-			}else if(response.containsKey(""))
+		} else if (game.isStarted() && !game.isEnd()) {
+			if (response.containsKey("rolled")) {
+				cell = cardFactory.chooseCard(player);
+
+			} else if (response.containsKey("")) {
+
+			}
 		}
 		return response;
 	}
-	
-	public void action(Cell cell, Player player){
-if(cell instanceof SellableCard){
-			
+
+	public void action(Cell cell, Player player) {
+		if (cell instanceof SellableCard) {
+
 		} else {
 			String message;
-			if(cell instanceof GoCard){
+			if (cell instanceof GoCard) {
 				LOG.debug("You stay at GoCard");
 				cell.effectOnPlayer(player);
-			}else if(cell instanceof TaxCard){
-				if(((TaxCard) cell).canPayTax(player)){
+			} else if (cell instanceof TaxCard) {
+				if (((TaxCard) cell).canPayTax(player)) {
 					LOG.debug("You stay TaxCard");
 					cell.effectOnPlayer(player);
-					message = player.getName()+" pay tax";
-				}else{
+					message = player.getName() + " pay tax";
+				} else {
 					LOG.debug("You havent money");
 					message = "You haven't money. Mortage your property";
 				}
-			}else if(cell instanceof JailCard){
+			} else if (cell instanceof JailCard) {
 				LOG.debug("You are in jail");
-				if(player.isHasFreeCard()){
+				if (player.isHasFreeCard()) {
 					cell.effectOnPlayer(player);
 					LOG.debug("You used a card");
 					message = "You use card. You are giong from jail";
-				}else{
+				} else {
 					cell.effectOnPlayer(player);
-					if(((JailCard) cell).canPayRansom(player)){
+					if (((JailCard) cell).canPayRansom(player)) {
 						LOG.debug("You pay ransom");
-						
-						//((JailCard) cell).payRansom(player);
+
+						// ((JailCard) cell).payRansom(player);
 						message = "You are giong from jail";
-					}else 
-					
+					} else {
+
+					}
 				}
-				
-					
-				}
-			}else if(cell instanceof FreeStation){
+			} else if (cell instanceof FreeStation) {
 				LOG.debug("You stay at FreeStation");
 				cell.effectOnPlayer(player);
 				message = "Take a rest";
-				
-			}else if(cell instanceof GoToJailCard){
+
+			} else if (cell instanceof GoToJailCard) {
 				LOG.debug("You stay at GoToGail");
 				cell.effectOnPlayer(player);
 				message = "You are in jail";
-				
-			}else if(cell instanceof ChanseCard){
-				
-			}else if(cell instanceof CommunityChestCard){
-				
+
+			} else if (cell instanceof ChanseCard) {
+
+			} else if (cell instanceof CommunityChestCard) {
+
 			}
+		}
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,14 +17,19 @@ import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
+import com.web.app.worldgames.domain.monopoly.game.WebSocketTransport;
+import com.web.app.worldgames.service.interfaces.IMonopolyService;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 
 public class MonoWebSocketHandler extends WebSocketHandler {
 	private final static Logger log = Logger.getLogger(MonoWebSocketHandler.class);
-	
+
 	@Autowired
 	private IUserServiceManager userService;
+	
+	@Autowired
+	private IMonopolyService monopolyService;
 
 	private final Set<MonoWebSocket> webSockets = new CopyOnWriteArraySet<MonoWebSocket>();
 
@@ -34,11 +40,17 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 	}
 
 	public class MonoWebSocket implements WebSocket.OnTextMessage {
+		private static final String DATA_NODE = "data";
+		private static final String ID_NODE = "id";
+		private static final String TYPE_NODE = "type";
+		private static final String BIND_WEBSOCKET = "bind-websocket";
 		private Connection connection;
-		private User user;
 
 		@Override
 		public void onOpen(Connection connection) {
+			log.debug("[Web-socket] opening connection");
+			// FIXME: Safe or not?
+			connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(10));
 			this.connection = connection;
 			webSockets.add(this);
 			try {
@@ -49,34 +61,44 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public void onMessage(String json) {
 			ObjectMapper jsonParser = new ObjectMapper();
-			
-			try {
-				log.info("MESSAGE FROM CLIENT" + json);
-				JsonNode messageTree = jsonParser.readTree(json);
-				String type = messageTree.path("type").getTextValue();
-				
-				if (type.equals("bind-websocket")) {
-					JsonNode node = messageTree.path("data");
-					int idUser = node.path("user-id").getIntValue();
-					int idGame = node.path("game-id").getIntValue();
 
-					log.debug("[Bind-websocket] From user-id " + idUser);
-					
-					// getting game from service, setting websocket
+			try {
+				log.debug("[FULL MESSAGE]" + json);
+				JsonNode messageTree = jsonParser.readTree(json);
+				
+				String typeOfMessage = messageTree.path(TYPE_NODE).getTextValue();
+
+				// getting id of user and so on
+				JsonNode idBlock = messageTree.path(ID_NODE);
+				int idUser = idBlock.path("user-id").getIntValue();
+				int idGame = idBlock.path("game-id").getIntValue();
+				JsonNode dataBlock = idBlock.path(DATA_NODE);
+				
+				
+				if (typeOfMessage.equals(BIND_WEBSOCKET)) {
+					// way #2
+					// getting game from service, setting web-socket
+					// directly to player object
+					log.debug("[Bind-websocket] From user-id: " + idUser);
+					WebSocketTransport transport = WebSocketTransport.getInstance();
+					transport.bind(idUser, this);
 				} else {
-					
+					log.debug("[Action] from user-id: " + idUser);
+					MonopolyManager manager = monopolyService.getGameById(idGame);
+					manager.onMessage(idUser, typeOfMessage, dataBlock.asText());
 				}
 			} catch (IOException e) {
-				log.error("Error in receving message fro, client", e);
+				log.error("Error while receiving message from client", e);
 				e.printStackTrace();
 			}
 		}
 
 		@Override
 		public void onClose(int closeCode, String message) {
+			log.debug("Closing web-socket connection. Close code: " + closeCode);
+			log.debug("Closing message" + message);
 			webSockets.remove(this);
 		}
 
@@ -84,18 +106,17 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 			return connection;
 		}
 
-		public User getUser() {
-			return user;
-		}
-
-		public void setUser(User user) {
-			this.user = user;
-		}
-		
-		public void sendMessage(Map<String, ? extends Object> message) {
+		/**
+		 * Sends message-map encoded as string through web-socket directly to
+		 * user browser
+		 * 
+		 * @param messageMap
+		 *            map - that represents JSON-object
+		 */
+		public void sendMessage(Map<String, ? extends Object> messageMap) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
-				String respose = mapper.writeValueAsString(message);
+				String respose = mapper.writeValueAsString(messageMap);
 				log.debug("Sending message: " + respose);
 				connection.sendMessage(respose);
 			} catch (JsonGenerationException e) {
