@@ -3,7 +3,7 @@ console, alert, document,
 setInterval, clearInterval,
 prompt, bootbox*/
 
-$(document).ready(function() {
+// $(document).ready(function() {
 	"use strict";
 	var MONO = {};
 
@@ -61,7 +61,11 @@ $(document).ready(function() {
 			onMessage: function(event) {
 				console.log("Received message: ", event.data);
 				var json = JSON.parse(event.data);
-				MONO.events.handle[json.type](json);
+				if (typeof MONO.events.handle[json.type] === 'undefined') {
+					console.error('No handlers for ' + json.type + ' defined');
+				} else {
+					MONO.events.handle[json.type](json);
+				}
 			},
 			handle: {
 				'roll': function(json) {
@@ -92,7 +96,17 @@ $(document).ready(function() {
 				console.log('sending ***done*** message to server');
 				MONO.transport.send('done', {});
 			});
+
+			$('#start').click(function() {
+				console.log('sending ***start*** message to server');
+				MONO.transport.send('start', {});
+			});
+
+			$('#ready').click(function() {
+				console.log('sending ***ready*** message to server');
+				MONO.transport.send('ready', {});
+			});
 		}
 	};
 	MONO.init();
-});
+// });
