@@ -5,8 +5,9 @@ prompt, bootbox*/
 
 $(document).ready(function() {
 	"use strict";
+	var MONO = {};
 
-	var MONO = {
+	MONO = {
 		config: {
 			idGame: null,
 			idUser: null,
