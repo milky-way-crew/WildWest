@@ -1,5 +1,7 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import java.util.Map;
+
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.PlayGame;
 import com.web.app.worldgames.domain.monopoly.Player;
@@ -23,6 +25,7 @@ public class JailCard extends Cell {
 			player.setInJail(false);
 			player.setHasFreeCard(false);
 		}
+		player.rollDicesAndMove();
 //		System.out
 //				.println("You are in the jail: you may --pay-1- a ransom or use a --card-2- or --roll dices-3: ");
 //		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -76,7 +79,7 @@ public class JailCard extends Cell {
 	}
 
 	public boolean canPayRansom(Player player) {
-		return (player.checkMoney(player, CardPrices.RANSOM_FROM_JAIL)) ? true
+		return (player.checkMoney( CardPrices.RANSOM_FROM_JAIL)) ? true
 				: false;
 	}
 
@@ -95,6 +98,13 @@ public class JailCard extends Cell {
 	}
 	@Override
 	public String info() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Map<String, ? extends Object> action(Player player, String type) {
 		// TODO Auto-generated method stub
 		return null;
 	}

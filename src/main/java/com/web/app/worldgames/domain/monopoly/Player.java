@@ -19,14 +19,17 @@ public class Player {
 	private int position;
 	private int money;
 	private String color;
-	private boolean hasFreeCard;
+	private PlayerColors colors;
+	private boolean hasFreeCard =false;
 	private static Random randDice = new Random();
-	private List<String> listRegions = new ArrayList<String>();
 	private int numberOfRailss = 0;
 	private int circleInJail = 0;
+	private int circle = 0;
 	private static int diceOne = 0;
 	private static int diceTwo = 0;
 	private boolean inJail;
+	private boolean readyToStart = false;
+	private List<String> listRegions = new ArrayList<String>();
 	private List<SellableCard> property = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 
@@ -42,20 +45,20 @@ public class Player {
 		this.rollAction = rollAction;
 	}
 
-	public Player(User user, int position, int money, boolean hasFreeCard) {
+	public Player(User user, int position, int money, String color) {
 		this.id=user.getId();
 		this.name = user.getNickname();
 		this.position = position;
 		this.money = money;
-		this.hasFreeCard = hasFreeCard;
+		this.color=color;
+		//this.hasFreeCard = hasFreeCard;
 	}
 
-	public Player(String name, int position, int money, boolean hasFreeCard, String color) {
+	public Player(String name, int position, int money, PlayerColors colors) {
 		this.name = name;
 		this.position = position;
 		this.money = money;
-		this.hasFreeCard = hasFreeCard;
-		this.color=color;
+		this.colors=colors;
 	}
 
 	public int getId() {
@@ -125,6 +128,26 @@ public class Player {
 
 	
 
+	public int getCircle() {
+		return circle;
+	}
+
+	public void setCircle(int circle) {
+		this.circle = circle;
+	}
+
+	public void setCircleInJail(int circleInJail) {
+		this.circleInJail = circleInJail;
+	}
+
+	public boolean isReadyToStart() {
+		return readyToStart;
+	}
+
+	public void setReadyToStart(boolean readyToStart) {
+		this.readyToStart = readyToStart;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -175,7 +198,10 @@ public class Player {
 
 	public int rollDicesAndMove() {
 		position = getPosition() + (rollDiceOne() + rollDiceTwo());
+		int c = this.getCircle();
 		if (position > 40) {
+			this.setCircle(c++);
+			this.setMoney(this.getMoney()+200);
 			position = position - 40;
 		}
 		setPosition(position);
@@ -284,8 +310,8 @@ public class Player {
 		return property.get(index);
 	}
 
-	public boolean checkMoney(Player player, int price) {
-		return ((player.getMoney() - price) >= 0) ? true : false;
+	public boolean checkMoney(int price) {
+		return ((this.getMoney() - price) >= 0) ? true : false;
 	}
 
 	public boolean checkProperty(Player player) {
@@ -443,7 +469,7 @@ public class Player {
 
 	public boolean canRollDices(Player player) {
 		Game game = new Game();
-		if (game.playerList().contains(player) && player.getMoney() > 0) {
+		if (game.getAllPlayers().contains(player) && player.getMoney() > 0) {
 			setRollAction(true);
 			return true;
 		} else

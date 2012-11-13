@@ -1,6 +1,6 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import org.apache.log4j.Logger;
+import java.util.Map;
 
 import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
@@ -23,7 +23,7 @@ public class CityCard extends SellableCard {
 	private int taxHotel;
 	private int position;
 
-	private final static Logger LOG = Logger.getLogger(CityCard.class);
+	//private final static Logger LOG = Logger.getLogger(CityCard.class);
 
 	Cities cities = null;
 
@@ -69,67 +69,67 @@ public class CityCard extends SellableCard {
 		return taxThreeCard;
 	}
 
-	protected int getHousePrice() {
+	public int getHousePrice() {
 		return housePrice;
 	}
 
-	protected void setHousePrice(int housePrice) {
+	public void setHousePrice(int housePrice) {
 		this.housePrice = housePrice;
 	}
 
-	protected int getNumbersOfHouses() {
+	public int getNumbersOfHouses() {
 		return numbersOfHouses;
 	}
 
-	protected void setNumbersOfHouses(int numbersOfHouses) {
+	public void setNumbersOfHouses(int numbersOfHouses) {
 		this.numbersOfHouses = numbersOfHouses;
 	}
 
-	protected int getTaxOneHouse() {
+	public int getTaxOneHouse() {
 		return taxOneHouse;
 	}
 
-	protected void setTaxOneHouse(int taxOneHouse) {
+	public void setTaxOneHouse(int taxOneHouse) {
 		this.taxOneHouse = taxOneHouse;
 	}
 
-	protected int getTaxTwoHouse() {
+	public int getTaxTwoHouse() {
 		return taxTwoHouse;
 	}
 
-	protected void setTaxTwoHouse(int taxTwoHouse) {
+	public void setTaxTwoHouse(int taxTwoHouse) {
 		this.taxTwoHouse = taxTwoHouse;
 	}
 
-	protected int getTaxThreeHouse() {
+	public int getTaxThreeHouse() {
 		return taxThreeHouse;
 	}
 
-	protected void setTaxThreeHouse(int taxThreeHouse) {
+	public void setTaxThreeHouse(int taxThreeHouse) {
 		this.taxThreeHouse = taxThreeHouse;
 	}
 
-	protected int getHotelPrice() {
+	public int getHotelPrice() {
 		return hotelPrice;
 	}
 
-	protected void setHotelPrice(int hotelPrice) {
+	public void setHotelPrice(int hotelPrice) {
 		this.hotelPrice = hotelPrice;
 	}
 
-	protected boolean isHotel() {
+	public boolean isHotel() {
 		return isHotel;
 	}
 
-	protected void setHotel(boolean isHotel) {
+	public void setHotel(boolean isHotel) {
 		this.isHotel = isHotel;
 	}
 
-	protected int getTaxHotel() {
+	public int getTaxHotel() {
 		return taxHotel;
 	}
 
-	protected void setTaxHotel(int taxHotel) {
+	public void setTaxHotel(int taxHotel) {
 		this.taxHotel = taxHotel;
 	}
 
@@ -145,7 +145,7 @@ public class CityCard extends SellableCard {
 		return position;
 	}
 
-	protected void setPosition(int position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
 
@@ -176,11 +176,11 @@ public class CityCard extends SellableCard {
 		if ((region.equals("brown") || region.equals("blue"))
 				&& player.getNumberOfRegions(player,
 						player.getRegion(player.getPosition())) == 2
-				&& !isMortage() && player.checkMoney(player, getHousePrice())) {
+				&& !isMortage() && player.checkMoney(getHousePrice())) {
 			return true;
 		} else if (player.getNumberOfRegions(player,
 				player.getRegion(player.getPosition())) == 3
-				&& !isMortage() && player.checkMoney(player, getHousePrice())) {
+				&& !isMortage() && player.checkMoney(getHousePrice())) {
 			return true;
 		} else
 			return false;
@@ -190,7 +190,7 @@ public class CityCard extends SellableCard {
 		CityCard city = (CityCard) StartGame.boardCities().get(
 				player.getPosition());
 		if (getNumbersOfHouses() == 3 && !isMortage()
-				&& player.checkMoney(player, getHousePrice())) {
+				&& player.checkMoney(getHousePrice())) {
 			System.out.println("You can build hotel");
 			player.setMoney(player.getMoney() - city.getHotelPrice());
 			setHotel(true);
@@ -242,12 +242,12 @@ public class CityCard extends SellableCard {
 	public void payOrMortage(SellableCard cell, Player player, Player owner) {
 		boolean check = true;
 		int price = getRent(cell, player, owner);
-		if (player.checkMoney(player, price)) {
+		if (player.checkMoney(price)) {
 			payRentToOwner(player, owner, price);
 		} else {
 			while (check) {
 				player.mortageAction(player);
-				if (player.checkMoney(player, price)) {
+				if (player.checkMoney(price)) {
 					payRentToOwner(player, owner, price);
 					check = false;
 				} else {
@@ -258,6 +258,9 @@ public class CityCard extends SellableCard {
 		}
 	}
 
+	// public boolean canPayRent(){
+	//
+	// }
 	@Override
 	public int getRent(SellableCard cell, Player player, Player owner) {
 		if (isMortage()) {
@@ -280,7 +283,7 @@ public class CityCard extends SellableCard {
 				} else if (getNumbersOfHouses() == 2) {
 					return getTaxThreeCard() + getTaxTwoHouse();
 				} else if (getNumbersOfHouses() == 3) {
-					return getTaxThreeCard() + getTaxTwoHouse();
+					return getTaxThreeCard() + getTaxThreeHouse();
 				}
 				if (isHotel()) {
 					return getTaxHotel();
@@ -310,7 +313,7 @@ public class CityCard extends SellableCard {
 	}
 
 	@Override
-	public void  buyCityOrRail(SellableCard cell, Player player) {
+	public void buyCityOrRail(SellableCard cell, Player player) {
 		cell.setOwner(player);
 		player.addProperty(player);
 		System.out.println("You are owner now");
@@ -322,9 +325,21 @@ public class CityCard extends SellableCard {
 	}
 
 	@Override
-	public void refuse(SellableCard cell, Player player) {
+	public boolean canMortage(Player player) {
+		return (this.numbersOfHouses == 0 && !this.isHotel && this.getOwner() == player) ? true
+				: false;
+	}
+
+	@Override
+	public boolean canUnMortage(Player player) {
+		return (this.getOwner()==player&& this.isMortage());
+	}
+
+
+	@Override
+	public Map<String, ? extends Object> action(Player player, String type) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }

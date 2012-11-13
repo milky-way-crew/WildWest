@@ -27,16 +27,16 @@ public class StartGame {
 		return playerList;
 	}
 
-	public static void startTemp() {
+//	public static void startTemp() {
 //		permanentlyPlayerList.add(new Player("Player 1", CellPositions.START,
-//				CardPrices.START_MONEY, false));
+//				CardPrices.START_MONEY,PlayerColors.PLAYER_1));
 //		permanentlyPlayerList.add(new Player("Player 2", CellPositions.START,
-//				CardPrices.START_MONEY, false));
+//				CardPrices.START_MONEY, PlayerColors.PLAYER_1));
 //		permanentlyPlayerList.add(new Player("Player 3", CellPositions.START,
-//				CardPrices.START_MONEY, false));
+//				CardPrices.START_MONEY, PlayerColors.PLAYER_1));
 //		permanentlyPlayerList.add(new Player("Player 4", CellPositions.START,
-//				CardPrices.START_MONEY, false));
-	}
+//				CardPrices.START_MONEY, PlayerColors.PLAYER_1));
+//	}
 
 	public static void deleteLoserPlayer(List<Player> players, Player player) {
 		players.remove(player);

@@ -1,24 +1,11 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import java.util.Map;
+
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Player;
 
 public class TaxCard extends Cell {
-	// private int tax;
-	//
-	// public int getPrice() {
-	// return tax;
-	// }
-	//
-	// public void setPrice(int tax) {
-	// this.tax = tax;
-	// }
-	//
-	// public TaxCard(int tax) {
-	// super();
-	// this.tax = tax;
-	// }
-
 	@Override
 	public void effectOnPlayer(Player player) {
 //		boolean check = true;
@@ -52,12 +39,19 @@ public class TaxCard extends Cell {
 	}
 
 	public boolean canPayTax(Player player) {
-		return (player.checkMoney(player, CardPrices.TAX)) ? true : false;
+		return (player.checkMoney( CardPrices.TAX)) ? true : false;
 	}
 
 	@Override
 	public String info() {
 		return "You must pay a tax: " + CardPrices.TAX;
 	}
+
+	@Override
+	public Map<String, ? extends Object> action(Player player, String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

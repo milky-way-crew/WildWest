@@ -63,7 +63,7 @@ public class PlayGame {
 		StartGame.initCities();
 		StartGame.initRails();
 		// StartGame.start(room);
-		StartGame.startTemp();
+		//StartGame.startTemp();
 		System.out.println("Players in the game: "
 				+ start.playersPermanentlyList());
 		String key = null;
@@ -125,5 +125,9 @@ public class PlayGame {
 			}
 
 		}
+	}
+	public static void main(String[] args) throws IOException {
+		PlayGame game = new PlayGame();
+		game.start();
 	}
 }

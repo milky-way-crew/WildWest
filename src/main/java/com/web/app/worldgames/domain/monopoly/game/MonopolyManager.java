@@ -4,13 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.web.app.worldgames.domain.User;
-import com.web.app.worldgames.domain.monopoly.CardPrices;
-import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.PlayerColors;
 
 public class MonopolyManager {
 	private static final String ROLL = "roll";
+	private static final String START = "start";
+	private static final String READY = "ready";
 	private Game monopolyGame;
 	private User creator;
 
@@ -20,9 +19,10 @@ public class MonopolyManager {
 
 	public void setCreator(User creator) {
 		this.creator = creator;
-		monopolyGame.setCurrentPlayer(new Player(creator.getNickname(),
-				CellPositions.START, CardPrices.START_MONEY, false,
-				PlayerColors.PLAYER_1));
+		monopolyGame.addPlayers(creator);
+		// monopolyGame.setCurrentPlayer(new Player(creator,
+		// CellPositions.START, CardPrices.START_MONEY,
+		// "RED"));
 	}
 
 	public MonopolyManager(Game monopolyGame) {
@@ -70,8 +70,21 @@ public class MonopolyManager {
 
 		Map<String, Object> response = new HashMap<String, Object>();
 		WebSocketTransport socketTransport = WebSocketTransport.getInstance();
-		
-		
+		if($(type).equals(READY)){
+			Player currentPlayer = getPlayerById(idPlayer);
+			currentPlayer.setReadyToStart(true);
+			response.put("type", READY);
+			//response.put("ready", currentPlayer.isReadyToStart()); 
+		}
+		if($(type).equals(START)){
+			//User creator = getCreator();
+			if(monopolyGame.isReadyToStart()){
+				monopolyGame.start();
+				response.put("type", START);
+				response.put("start", monopolyGame.isStarted());
+				broadcast(response);
+			}
+		}
 		if ($(type).equals(ROLL)) {
 			Player currentPlayer = monopolyGame.getCurrentPlayer();
 			currentPlayer.rollDicesAndMove();
@@ -80,18 +93,18 @@ public class MonopolyManager {
 			response.put("dice2", currentPlayer.getDiceTwo());
 		}
 		socketTransport.sendMessage(idPlayer, response);
-		
+
 		// not sure if we need this
 		return response;
 	}
 
-	
-	private void broadcast(Map<String, ? extends Object> message) {
+	public void broadcast(Map<String, ? extends Object> message) {
 		WebSocketTransport transport = WebSocketTransport.getInstance();
-		// for (Player player : monopolyGame.getAllPlayers()) {
-		// transport.sendMessage(player.getId(), message);
-		// }
+		for (Player player : monopolyGame.getAllPlayers()) {
+			transport.sendMessage(player.getId(), message);
+		}
 	}
+
 	/**
 	 * Pretify string
 	 * 
@@ -102,4 +115,16 @@ public class MonopolyManager {
 		return s.toLowerCase().trim();
 	}
 
+	public Player getPlayerById(int idPlayer) {
+		for (Player players : monopolyGame.getAllPlayers()) {
+			if (players.getId() == idPlayer) {
+				return players;
+			}
+		}
+		return null;
+	}
+
+	public void addClient(User client) {
+		monopolyGame.addPlayers(client);
+	}
 }

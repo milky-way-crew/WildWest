@@ -3,6 +3,7 @@ package com.web.app.worldgames.domain.monopoly.card;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -98,7 +99,6 @@ public class RailCard extends SellableCard {
 			System.out.println("Number of rails are: " + numberOfRails);
 			if (numberOfRails == 1) {
 				return CardPrices.TAX_ONE_RAIL_CARD;
-
 			} else if (numberOfRails == 2) {
 				return CardPrices.TAX_TWO_RAIL_CARD;
 			} else if (numberOfRails == 3) {
@@ -114,12 +114,12 @@ public class RailCard extends SellableCard {
 	public void payOrMortage(SellableCard cell, Player player, Player owner) {
 		boolean check = true;
 		int price = getRent(cell, player, owner);
-		if (player.checkMoney(player, price)) {
+		if (player.checkMoney( price)) {
 			payRentToOwner(player, owner, price);
 		} else {
 			while (check) {
 				player.mortageAction(player);
-				if (player.checkMoney(player, price)) {
+				if (player.checkMoney( price)) {
 					payRentToOwner(player, owner, price);
 					check = false;
 				} else {
@@ -143,9 +143,21 @@ public class RailCard extends SellableCard {
 	}
 
 	@Override
-	public void refuse(SellableCard cell, Player player) {
-		player.setPosition(player.getPosition());
-		player.setMoney(player.getMoney());
+	public boolean canMortage(Player player) {
+		return (this.getOwner()==player)?true:false;
 	}
+
+	@Override
+	public boolean canUnMortage(Player player) {
+		return (this.getOwner()==player&& this.isMortage());
+	}
+
+
+	@Override
+	public Map<String, ? extends Object> action(Player player, String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

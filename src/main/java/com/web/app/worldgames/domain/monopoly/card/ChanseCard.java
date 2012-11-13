@@ -10,20 +10,23 @@ import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class ChanseCard extends Cell {
-	Map<String, Chance> chanceInstance = new HashMap<String, Chance>();
+	private Map<String, Chance> chanceInstance = new HashMap<String, Chance>();
 
-	public Cell getDirectCard() {
+	public Cell getDirectCard(Player player) {
 		Map<String, Chance> chanceChoosen = getChanceInstance();
 		for (Chance chance : Chance.values()) {
 			if (chanceChoosen.containsValue(chance)) {
 				if (chance.getPosition() == CellPositions.JAIL) {
+					player.setPosition(CellPositions.JAIL);
 					return new JailCard();
 				} else if (chance.getPosition() == CellPositions.FREE_STATION) {
+					player.setPosition(CellPositions.FREE_STATION);
 					return new FreeStation();
 				} else if (StartGame.boardRails.containsKey(chance
 						.getPosition())) {
 					SellableCard cell = StartGame.boardRails.get(chance
 							.getPosition());
+					player.setPosition(cell.getPosition());
 					return cell;
 				}
 			}
@@ -79,6 +82,13 @@ public class ChanseCard extends Cell {
 				return getChanceInstance().get(chance).getMessage();
 			}
 		}
+		return null;
+	}
+
+
+	@Override
+	public Map<String, ? extends Object> action(Player player, String type) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

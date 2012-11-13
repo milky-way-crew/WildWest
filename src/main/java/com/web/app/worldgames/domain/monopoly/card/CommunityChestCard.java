@@ -1,5 +1,6 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import java.util.Map;
 import java.util.Random;
 
 import com.web.app.worldgames.domain.monopoly.CommunityChest;
@@ -13,7 +14,7 @@ public class CommunityChestCard extends Cell {
 		CommunityChest chest = getRandomChestCard();
 		int price = chest.getMoney();
 		if (!chest.isAdd()) {
-			if (player.checkMoney(player, price)) {
+			if (player.checkMoney(price)) {
 				service(player, chest);
 			} else {
 				while (check) {
@@ -21,7 +22,7 @@ public class CommunityChestCard extends Cell {
 					if (player.canMortage()) {
 
 						player.mortageAction(player);
-						if (player.checkMoney(player, price)) {
+						if (player.checkMoney( price)) {
 							service(player, chest);
 							check = false;
 						} else {
@@ -90,6 +91,13 @@ public class CommunityChestCard extends Cell {
 
 	@Override
 	public String info() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Map<String, ? extends Object> action(Player player, String type) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -31,17 +31,7 @@ public class MonopolyService implements IMonopolyService {
 	public void connect(User client, int idGame) {
 		MonopolyManager manager = serverMap.get(idGame);
 		// TODO: uncomment & add that method
-		// manager.addClient(client);
-	}
-
-	public Player getPlayerById(int idPlayer) {
-		Game game = new Game();
-		for (Player players : game.playerList) {
-			if (players.getId() == idPlayer) {
-				return players;
-			}
-		}
-		return null;
+		manager.addClient(client);
 	}
 
 	public MonopolyManager getGameById(int idGame) {
@@ -54,4 +44,6 @@ public class MonopolyService implements IMonopolyService {
 	public static MonopolyService getInstance() {
 		return _INSTANCE;
 	}
+
+	
 }

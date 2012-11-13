@@ -36,7 +36,18 @@ public class User {
 		this.role = role;
 		this.userDate = userDate;
 	}
-
+	public User(int id, String login, String password, String nickname,
+			String email, int userStat, String avatar, String role) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.password = password;
+		this.nickname = nickname;
+		this.email = email;
+		this.userStat = userStat;
+		this.avatar = avatar;
+		this.role = role;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", login=" + login + ", password=" + password
