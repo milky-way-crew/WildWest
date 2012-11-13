@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.service.MonopolyService;
 import com.web.app.worldgames.service.interfaces.IMonopolyService;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 import com.web.app.worldgames.websocket.MonoWebSocketHandler.MonoWebSocket;
@@ -22,9 +23,7 @@ public class MonopolyController {
 	private final static Logger log = Logger.getLogger(MonopolyController.class);
 	@Autowired
 	private IUserServiceManager userService;
-	
-	@Autowired
-	private IMonopolyService monopolyService;
+	private IMonopolyService monopolyService = MonopolyService.getInstance();
 	
 	public static Map<Integer, MonoWebSocket> socketMap = new HashMap<Integer, MonoWebSocket>();
 
@@ -35,9 +34,12 @@ public class MonopolyController {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		// FOR TEST 
 		if (user == null) {
-			session.setAttribute("user", userService.findUserByLogin("test"));
+			log.info("user is null -> creating new game");
+			User host = userService.findUserByLogin("test");
+			session.setAttribute("user", host);
+			monopolyService.createGame(host);
 		}
-		session.setAttribute("idMonopolyGame", 1);
+		session.setAttribute("idMonopolyGame", 0);
 		// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		
 		return "monopoly/monopoly-game";
@@ -46,13 +48,14 @@ public class MonopolyController {
 	@RequestMapping(value = "/mono-ajax")
 	public @ResponseBody Map<String,Object> makeHandShake(HttpSession session) {
 		Integer idGame = (Integer) session.getAttribute("idMonopolyGame");
-		HashMap<String,Object> map = new HashMap<String, Object>();
 		int idUser = getUserFromSession(session).getId();
-		map.put("idUser", idUser);
-		map.put("idGame", idGame);
+
+		HashMap<String,Object> response = new HashMap<String, Object>();
+		response.put("idUser", idUser);
+		response.put("idGame", idGame);
 
 		log.info("[HandShake request] from user: " + idUser);
-		return map;
+		return response;
 	}
 
 	private User getUserFromSession(HttpSession session) {

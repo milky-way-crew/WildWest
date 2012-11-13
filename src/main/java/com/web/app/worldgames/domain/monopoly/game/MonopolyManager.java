@@ -2,10 +2,12 @@ package com.web.app.worldgames.domain.monopoly.game;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.BrokenBarrierException;
 
 import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.domain.monopoly.CardPrices;
+import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
+import com.web.app.worldgames.domain.monopoly.PlayerColors;
 
 public class MonopolyManager {
 	private static final String ROLL = "roll";
@@ -18,6 +20,9 @@ public class MonopolyManager {
 
 	public void setCreator(User creator) {
 		this.creator = creator;
+		monopolyGame.setCurrentPlayer(new Player(creator.getNickname(),
+				CellPositions.START, CardPrices.START_MONEY, false,
+				PlayerColors.PLAYER_1));
 	}
 
 	public MonopolyManager(Game monopolyGame) {
@@ -64,25 +69,29 @@ public class MonopolyManager {
 		// return message;
 
 		Map<String, Object> response = new HashMap<String, Object>();
+		WebSocketTransport socketTransport = WebSocketTransport.getInstance();
+		
+		
 		if ($(type).equals(ROLL)) {
 			Player currentPlayer = monopolyGame.getCurrentPlayer();
 			currentPlayer.rollDicesAndMove();
+			response.put("type", ROLL);
 			response.put("dice1", currentPlayer.getDiceOne());
 			response.put("dice2", currentPlayer.getDiceTwo());
-
 		}
-		return null;
-
+		socketTransport.sendMessage(idPlayer, response);
+		
+		// not sure if we need this
+		return response;
 	}
 
 	
 	private void broadcast(Map<String, ? extends Object> message) {
 		WebSocketTransport transport = WebSocketTransport.getInstance();
-//		for (Player player : monopolyGame.getAllPlayers()) {
-//			transport.sendMessage(player.getId(), message);
-//		}
+		// for (Player player : monopolyGame.getAllPlayers()) {
+		// transport.sendMessage(player.getId(), message);
+		// }
 	}
-	
 	/**
 	 * Pretify string
 	 * 

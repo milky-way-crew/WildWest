@@ -1,6 +1,7 @@
 package com.web.app.worldgames.websocket;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -15,22 +16,14 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 import com.web.app.worldgames.domain.monopoly.game.WebSocketTransport;
-import com.web.app.worldgames.service.interfaces.IMonopolyService;
-import com.web.app.worldgames.service.interfaces.IUserServiceManager;
+import com.web.app.worldgames.service.MonopolyService;
 
 public class MonoWebSocketHandler extends WebSocketHandler {
-	private final static Logger log = Logger.getLogger(MonoWebSocketHandler.class);
-
-	@Autowired
-	private IUserServiceManager userService;
-	
-	@Autowired
-	private IMonopolyService monopolyService;
-
+	private final static Logger log = Logger
+			.getLogger(MonoWebSocketHandler.class);
 	private final Set<MonoWebSocket> webSockets = new CopyOnWriteArraySet<MonoWebSocket>();
 
 	@Override
@@ -52,6 +45,7 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 			// FIXME: Safe or not?
 			connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(10));
 			this.connection = connection;
+			this.connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(10));
 			webSockets.add(this);
 			try {
 				connection.sendMessage("[Server] Connected succesfully");
@@ -67,25 +61,27 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 			try {
 				log.debug("[FULL MESSAGE]" + json);
 				JsonNode messageTree = jsonParser.readTree(json);
-				
-				String typeOfMessage = messageTree.path(TYPE_NODE).getTextValue();
+
+				String typeOfMessage = messageTree.path(TYPE_NODE)
+						.getTextValue();
 
 				// getting id of user and so on
 				JsonNode idBlock = messageTree.path(ID_NODE);
 				int idUser = idBlock.path("user-id").getIntValue();
 				int idGame = idBlock.path("game-id").getIntValue();
 				JsonNode dataBlock = idBlock.path(DATA_NODE);
-				
-				
+
 				if (typeOfMessage.equals(BIND_WEBSOCKET)) {
 					// way #2
 					// getting game from service, setting web-socket
 					// directly to player object
-					log.debug("[Bind-websocket] From user-id: " + idUser);
+					log.debug($("[Bind-websocket] From user-id: ${0} ", idUser));
 					WebSocketTransport transport = WebSocketTransport.getInstance();
 					transport.bind(idUser, this);
 				} else {
-					log.debug("[Action] from user-id: " + idUser);
+					log.debug($("[message] type:{0} from id:{1}", typeOfMessage, idUser));
+					
+					MonopolyService monopolyService = MonopolyService.getInstance();
 					MonopolyManager manager = monopolyService.getGameById(idGame);
 					manager.onMessage(idUser, typeOfMessage, dataBlock.asText());
 				}
@@ -98,7 +94,7 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 		@Override
 		public void onClose(int closeCode, String message) {
 			log.debug("Closing web-socket connection. Close code: " + closeCode);
-			log.debug("Closing message" + message);
+			log.debug("Close message" + message);
 			webSockets.remove(this);
 		}
 
@@ -130,5 +126,16 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * MessageFormat clone, don't be scary
+	 * 
+	 * @param pattern
+	 * @param args
+	 * @return
+	 */
+	private String $(String pattern, Object... args) {
+		return MessageFormat.format(pattern, args);
 	}
 }
