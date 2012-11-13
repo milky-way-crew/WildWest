@@ -12,9 +12,8 @@ public class ChatServiceManager {
 	    .getLogger(ChatServiceManager.class);
     private static List<ChatRoom> chatRooms = new ArrayList<ChatRoom>();
 
-
-    public ChatServiceManager(int id, String name) {
-	chatRooms.add(new ChatRoom(name, id));
+    public ChatServiceManager() {
+	chatRooms.add(new ChatRoom("World", 0));
     }
 
     public List<ChatRoom> getChatRooms() {

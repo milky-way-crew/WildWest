@@ -12,11 +12,8 @@ function message() {
 			alert("Message not send");
 		},
 		success : function(json) {
-			var date = new Date();
 			$("#chatBox").append(
-					"<p>[" + (date.getUTCHours() + 2) + ":"
-							+ date.getUTCMinutes() + "] " + json
-							+" : "+ $("#usermsg").val() + "</p>");
+					"<p>" + json + $("#usermsg").val() + "</p>");
 			$("#usermsg").val("");
 		}
 	});
@@ -31,17 +28,12 @@ function update() {
 			data : ""
 		},
 		error : function() {
-			alert("Connection error");
 		},
 		success : function(json) {
-			$("#chatBox").append(
-					"<p>[" + date.getUTCHours() + ":" + date.getUTCMinutes()
-							+ "] " + json + "</p>");
-			alert("Update success!!!" + json);
+			$("#chatBox").append("<p>" + json + "</p>");
 		}
 	});
 };
 
 document.getElementById('send').onclick = message;
-
-var auto_refresh = setInterval(updater, 1000);
+setInterval(update, 1000);

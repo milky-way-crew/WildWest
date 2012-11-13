@@ -17,6 +17,7 @@ public class ChatRoom {
     public ChatRoom(String roomName, int id) {
 	this.roomId = id;
 	this.roomName = roomName;
+	log.debug("Room "+roomName+" added");
     }
 
     public int sizeOfRoom(){

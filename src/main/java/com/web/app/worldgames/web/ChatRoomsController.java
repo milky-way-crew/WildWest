@@ -1,5 +1,8 @@
 package com.web.app.worldgames.web;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,16 +25,17 @@ public class ChatRoomsController {
     private static final Logger log = Logger
 	    .getLogger(ChatRoomsController.class);
 
-    private static ChatServiceManager chatManager = new ChatServiceManager(0,
-	    "World");
+    private static ChatServiceManager chatManager = new ChatServiceManager();
 
     @RequestMapping(value = "/chatRooms", method = RequestMethod.GET)
     public ModelAndView showPage(HttpServletRequest request) {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
 	request.getSession().setAttribute("chatParticipant", chatParticipant);
-	log.debug("Put ChatParticipant in Session"
-		+ chatParticipant.getNickname());
+	log.debug("Put ChatParticipant in Session "
+		+ chatParticipant.getNickname()
+		+ chatParticipant.getParticipantId()
+		+ chatParticipant.getId_room());
 	chatManager.getChatRoomById(chatParticipant.getId_room())
 		.addChatParticipant(chatParticipant);
 	ModelAndView modelAndView = new ModelAndView();
@@ -54,13 +58,23 @@ public class ChatRoomsController {
 		    + participant.getNickname());
 	    broadcast(participant, data);
 	}
+	return answerOnMessage(participant, "");
+    }
 
-	return chatManager.getChatRoomById(participant.getId_room())
-		.getRoomName()
-		+ " / "
-		+ participant.getNickname()
-		+ chatManager.getChatRoomById(participant.getId_room())
-			.getChatParticipants().size();
+    private String answerOnMessage(ChatParticipant participant, String data) {
+	DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+	Date date = new Date();
+	StringBuilder sb = new StringBuilder();
+	sb.append("[");
+	sb.append(dateFormat.format(date));
+	sb.append("] ");
+	sb.append(chatManager.getChatRoomById(participant.getId_room())
+		.getRoomName());
+	sb.append(" / ");
+	sb.append(participant.getNickname());
+	sb.append(" : ");
+	sb.append(data);
+	return sb.toString();
     }
 
     private ChatParticipant getChatParticipantFromRequest(
@@ -74,12 +88,11 @@ public class ChatRoomsController {
 	if (chatManager.getChatRoomById(participant.getId_room())
 		.getChatParticipants().size() > 1) {
 	    for (ChatParticipant chatParticipant : chatManager.getChatRoomById(
-		    participant.getParticipantId()).getChatParticipants()) {
+		    participant.getId_room()).getChatParticipants()) {
 		if (chatParticipant.getParticipantId() != participant
 			.getParticipantId()) {
-		    chatParticipant.addMessage(chatManager.getChatRoomById(
-			    participant.getParticipantId()).getRoomName()
-			    + " / " + participant.getNickname() + " : " + data);
+		    chatParticipant.addMessage(answerOnMessage(participant,
+			    data));
 		}
 	    }
 	}
