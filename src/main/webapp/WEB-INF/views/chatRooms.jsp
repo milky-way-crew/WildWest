@@ -57,7 +57,7 @@
 
 			<!-- room list -->
 			<div class="span4">
-				<div class="well sidebar-nav">
+				<div id="rightBar" class="well sidebar-nav">
 					<h2>Room list</h2>
 					<table border=2 cellspacing=3 cellpadding=3 align="center">
 						<tr>
@@ -66,8 +66,7 @@
 						</tr>
 					</table>
 					<form name="roomAction" action="">
-					<br>
-						<a data-toggle="modal" href="#createRoomModal"
+						<br> <a data-toggle="modal" href="#createRoomModal"
 							class="btn btn-primary btn-medium">Create room</a> <br> <br>
 						<a data-toggle="modal" href="#createRoomModal"
 							class="btn btn-primary btn-medium">Join to room</a>
@@ -90,7 +89,8 @@
 			<div class="modal-body">
 				<h2></h2>
 				<p>Enter room name:</p>
-				<textarea id="message" name="message" class="input-medium" rows="1">Room</textarea>
+				<input type="text" id="roomName" size=100
+					placeholder="Enter room name...">
 			</div>
 			<div class="modal-footer">
 				<a id="createRoom" href="#" class="btn btn-success">Create</a> <a
@@ -99,7 +99,7 @@
 		</div>
 	</div>
 	<!-- modal window create room -->
-	<script type="text/javascript" src="resources/js/chat.js"></script>
+	<script type="text/javascript" src="resources/js/chatAndRoom.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>

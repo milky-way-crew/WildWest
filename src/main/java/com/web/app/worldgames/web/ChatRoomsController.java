@@ -57,8 +57,23 @@ public class ChatRoomsController {
 	    log.debug("Broadcast request from user: "
 		    + participant.getNickname());
 	    broadcast(participant, data);
+	    return answerOnMessage(participant, "");
 	}
-	return answerOnMessage(participant, "");
+	if (type.toLowerCase().trim().equals("create")) {
+	    log.debug("Create room by user: " + participant.getNickname());
+	    createRoom(participant, data);
+	}
+	return data;
+    }
+
+    private void createRoom(ChatParticipant participant, String roomName) {
+	chatManager.getChatRoomById(participant.getId_room())
+		.deleteChatParticipantById(participant.getParticipantId());
+	int newId = chatManager.getChatRooms().size() + 1;
+	chatManager.addChatRoom(roomName, newId);
+	participant.setId_room(newId);
+	chatManager.getChatRoomById(participant.getId_room())
+		.addChatParticipant(participant);
     }
 
     private String answerOnMessage(ChatParticipant participant, String data) {

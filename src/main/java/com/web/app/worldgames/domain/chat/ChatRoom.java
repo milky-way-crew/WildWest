@@ -5,10 +5,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.web.app.worldgames.web.ChatController;
 
 public class ChatRoom {
-    private static final Logger log = Logger.getLogger(ChatController.class);
+    private static final Logger log = Logger.getLogger(ChatRoom.class);
 
     private static List<ChatParticipant> chatParticipants = new ArrayList<ChatParticipant>();
     private int roomId;

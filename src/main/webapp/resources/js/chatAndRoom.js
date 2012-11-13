@@ -35,5 +35,23 @@ function update() {
 	});
 };
 
+function createRoom() {
+	$.ajax({
+		url : ajax_url,
+		type : "GET",
+		data : {
+			type : "create",
+			data : document.getElementById('roomName').value,
+		},
+		error : function() {
+			alert("Room not created");
+		},
+		success : function(json) {
+			alert(json);
+		}
+	});
+};
+
+document.getElementById('createRoom').onclick = createRoom;
 document.getElementById('send').onclick = message;
 setInterval(update, 1000);

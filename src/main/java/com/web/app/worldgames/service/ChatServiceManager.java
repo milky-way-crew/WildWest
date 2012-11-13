@@ -24,9 +24,9 @@ public class ChatServiceManager {
 	ChatServiceManager.chatRooms = chatRooms;
     }
 
-    public void addChatRoom(ChatRoom chatRoom) {
-	chatRooms.add(chatRoom);
-	log.debug("ChatRoom " + chatRoom.getRoomName() + " added to room list");
+    public void addChatRoom(String roomName, int id) {
+	chatRooms.add(new ChatRoom(roomName, id));
+	log.debug("ChatRoom " + roomName + " added to room list");
     }
 
     public ChatRoom getChatRoomById(int id) {
