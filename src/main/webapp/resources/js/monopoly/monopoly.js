@@ -49,38 +49,31 @@ $(document).ready(function() {
 				});
 			}
 		},
+
 		events: {
 			onConnectEstablished: function() {
 				console.log("Connection opened, bind-websocket request");
 				MONO.transport.send('bind-websocket', {});
 			},
-			events: {
-				onConnectEstablished: function() {
-					console.log("Connection opened, bind-websocket request");
-				},
-				onConnectClosed: function() {
-					console.log("Connection closed");
-				},
-				onMessage: function(event) {
-					console.log("Received message: ", event.data);
-					var json = JSON.parse(event.data);
-					MONO.events.handle[json.type](json);
-				},
-				handle: {
-					'roll': function(json) {
-						console.log('[roll] event');
-						var dice1 = json.dice1,
-							dice2 = json.dice2,
-							offset = parseInt(dice1, 10) + parseInt(dice2, 10);
-						MONO.animate.move(offset);
-					},
-					'undefined': function(json) {
-						console.log('Unknown response');
-					}
-				}
+			onConnectClosed: function() {
+				console.log("Connection closed");
 			},
 			onMessage: function(event) {
 				console.log("Received message: ", event.data);
+				var json = JSON.parse(event.data);
+				MONO.events.handle[json.type](json);
+			},
+			handle: {
+				'roll': function(json) {
+					console.log('[roll] event');
+					var dice1 = json.dice1,
+						dice2 = json.dice2,
+						offset = parseInt(dice1, 10) + parseInt(dice2, 10);
+					MONO.animate.move(offset);
+				},
+				'undefined': function(json) {
+					console.log('Unknown response');
+				}
 			}
 		},
 		animate: {
