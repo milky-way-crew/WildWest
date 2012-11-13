@@ -13,6 +13,7 @@ import com.web.app.worldgames.service.interfaces.IMonopolyService;
 
 @Service
 public class MonopolyService implements IMonopolyService {
+	private static final MonopolyService _INSTANCE = new MonopolyService();
 	public static Map<Integer, MonopolyManager> serverMap = new HashMap<Integer, MonopolyManager>();
 	private static int i = 0;
 
@@ -24,12 +25,12 @@ public class MonopolyService implements IMonopolyService {
 
 	public void removeGameById(int idGame) {
 		serverMap.remove(idGame);
-		// notify users about removing game
+		// TODO: notify users about removing game
 	}
 
 	public void connect(User client, int idGame) {
 		MonopolyManager manager = serverMap.get(idGame);
-		// TODO: add that method
+		// TODO: uncomment & add that method
 		// manager.addClient(client);
 	}
 
@@ -44,6 +45,13 @@ public class MonopolyService implements IMonopolyService {
 	}
 
 	public MonopolyManager getGameById(int idGame) {
-		return null;
+		return serverMap.get(idGame);
+	}
+	
+	private MonopolyService() {
+	}
+	
+	public static MonopolyService getInstance() {
+		return _INSTANCE;
 	}
 }
