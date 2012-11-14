@@ -1,10 +1,8 @@
 @CHARSET "UTF-8";
 
 body {
-	font: 12px arial;
-	color: #222;
 	text-align: center;
-	padding: 35px;
+	padding: 20px;
 }
 
 form,p,span {
@@ -13,7 +11,7 @@ form,p,span {
 }
 
 input {
-	font: 12px arial;
+	font: 12px;
 }
 
 a {
@@ -25,32 +23,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-#roomList {
-	text-align: left;
-	margin: 0 auto;
-	margin-bottom: 25px;
-	padding: 10px;
-	background: #fff;
-	height: 360px;
-	width: 300px;
-	border: 1px solid #ACD8F0;
-	overflow: auto;
-}
-
-
-#userList {
-	text-align: left;
-	margin: 0 auto;
-	margin-bottom: 25px;
-	padding: 10px;
-	background: #fff;
-	height: 360px;
-	width: 300px;
-	border: 1px solid #ACD8F0;
-	overflow: auto;
-}
-
-
 #chatBox {
 	text-align: left;
 	margin: 0 auto;
@@ -58,13 +30,13 @@ a:hover {
 	padding: 10px;
 	background: #fff;
 	height: 350px;
-	width: 600px;
+	width: 550px;
 	border: 1px solid #ACD8F0;
 	overflow: auto;
 }
 
 #usermsg {
-	width: 550px;
+	width: 500px;
 	border: 1px solid #ACD8F0;
 }
 

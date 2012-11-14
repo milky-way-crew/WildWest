@@ -42,13 +42,14 @@
 	<!-- world chat and room list -->
 	<div class="container">
 		<p></p>
+		<p></p>
 		<div class="row-fluid">
 			<div class="span8">
 				<div class="well">
 					<h1>Chat</h1>
 					<div id="chatBox"></div>
 					<form name="message" action="">
-						<input type="text" id="usermsg" size=100
+						<input type="text" id="usermsg"
 							placeholder="Enter your message here..."> <a
 							class="btn btn-primary btn-medium" id="send">Send</a>
 					</form>
