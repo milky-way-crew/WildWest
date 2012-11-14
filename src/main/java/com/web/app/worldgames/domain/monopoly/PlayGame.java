@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.web.app.worldgames.domain.monopoly.card.Cell;
 import com.web.app.worldgames.domain.monopoly.card.ChanseCard;
-import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.CommunityChestCard;
 import com.web.app.worldgames.domain.monopoly.card.FreeStation;
 import com.web.app.worldgames.domain.monopoly.card.GoCard;
@@ -14,6 +12,7 @@ import com.web.app.worldgames.domain.monopoly.card.GoToJailCard;
 import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 import com.web.app.worldgames.domain.monopoly.card.TaxCard;
+import com.web.app.worldgames.domain.monopoly.game.Game;
 
 public class PlayGame {
 	
@@ -62,13 +61,16 @@ public class PlayGame {
 		// Room room = new Room();
 		StartGame.initCities();
 		StartGame.initRails();
+		Game g = new Game();
+		g.addUser();
+		g.setPlayers();
 		// StartGame.start(room);
 		//StartGame.startTemp();
 		System.out.println("Players in the game: "
-				+ start.playersPermanentlyList());
+				+ g.getAllPlayers());
 		String key = null;
 		for (;;) {
-			for (Player player : start.playersPermanentlyList()) {
+			for (Player player : g.getAllPlayers()) {
 				int doublePoints = 0;
 				System.out.println();
 				System.out.println("---------------------------"

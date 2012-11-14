@@ -3,7 +3,6 @@ package com.web.app.worldgames.domain.monopoly.game;
 import java.util.Map;
 
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.card.Cell;
 
 public interface GameManager {
 	Map<String, ? extends Object> sendMessageToPlayer(

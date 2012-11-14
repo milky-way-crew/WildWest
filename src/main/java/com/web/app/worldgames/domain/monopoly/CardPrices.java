@@ -2,6 +2,7 @@ package com.web.app.worldgames.domain.monopoly;
 
 public interface CardPrices {
 	int START_MONEY = 500;
+	int CIRCLE_MONEY =200;
 	int RANSOM_FROM_JAIL = 50;
 	int GO = 200;
 	int TAX = 100;

@@ -1,7 +1,5 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import java.util.Map;
-
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
 
@@ -19,11 +17,5 @@ public class GoToJailCard extends Cell {
 		return "You are going to jail. ";
 	}
 
-
-	@Override
-	public Map<String, ? extends Object> action(Player player, String type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

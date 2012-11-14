@@ -1,6 +1,5 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import java.util.Map;
 import java.util.Random;
 
 import com.web.app.worldgames.domain.monopoly.CommunityChest;
@@ -96,9 +95,4 @@ public class CommunityChestCard extends Cell {
 	}
 
 
-	@Override
-	public Map<String, ? extends Object> action(Player player, String type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -7,16 +7,19 @@ public abstract class SellableCard extends Cell {
 	private boolean mortage;
 	private Player owner;
 
-	public abstract int getRent(SellableCard cell, Player player, Player owner);
+	public abstract int getRent(Player player, Player owner);
 
-	public abstract void payRentToOwner(Player player, Player owner, int price);
+	//public abstract void payRentToOwner(Player player, Player owner, int price);
 
 	public abstract void payOrMortage(SellableCard cell, Player player,
 			Player owner);
 
-	public abstract void buyCityOrRail(SellableCard cell, Player player);
+	public abstract void buyCityOrRail( Player player);
+
 	public abstract boolean canMortage(Player player);
+
 	public abstract boolean canUnMortage(Player player);
+	public abstract boolean canSell(Player player);
 
 	public boolean isMortage() {
 		return mortage;
@@ -68,23 +71,29 @@ public abstract class SellableCard extends Cell {
 	public boolean canRefuse(Player player) {
 		return (this.getOwner() == null) ? true : false;
 	}
+
 	public void refuse(Player player) {
 		player.setMoney(player.getMoney());
 		player.setPosition(player.getPosition());
+	}
+
+	public void payRentToOwner(Player player, Player owner, int price) {
+		player.setMoney(player.getMoney() - price);
+		owner.setMoney(owner.getMoney() + price);
 	}
 
 	public void buyOrMortage(SellableCard cell, Player player) {
 		boolean check = true;
 		int price = cell.getPrice();
 		if (player.checkMoney(price)) {
-			buyCityOrRail(cell, player);
+			buyCityOrRail( player);
 		} else {
 			while (check) {
 				player.listPropertyForMortage(player);
 				if (!player.getForMortage().isEmpty()) {
 					player.mortageAction(player);
 					if (player.checkMoney(price)) {
-						buyCityOrRail(cell, player);
+						buyCityOrRail( player);
 						check = false;
 					} else {
 						check = true;

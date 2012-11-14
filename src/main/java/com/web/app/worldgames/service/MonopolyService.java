@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.web.app.worldgames.domain.User;
-import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.game.Game;
 import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 import com.web.app.worldgames.service.interfaces.IMonopolyService;

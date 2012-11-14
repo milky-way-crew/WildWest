@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
@@ -16,24 +15,20 @@ import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class Game {
 	private int id;
-	boolean started = false;
-	boolean end = false;
-	Player currentPlayer = null;
+	private boolean started = false;
+	private boolean end = false;
+	private Player currentPlayer = null;
 
 	public List<Player> playerList = new ArrayList<Player>();
 	public List<User> userList = new ArrayList<User>();
 	public Map<Integer, SellableCard> boardCities = new HashMap<Integer, SellableCard>();
 	public Map<Integer, SellableCard> boardRails = new HashMap<Integer, SellableCard>();
 
-	// public void setPlayer(Room room) {
-	// for (User user : room.getRoomMembers()) {
-	// playerList.add(new Player(user, CellPositions.START,
-	// CardPrices.START_MONEY, false));
-	// }
-	// }
+	public Game() {
+	}
 
 	public void addUser() {
-		userList.add(new User(1, "Us1", "1234", "Player1", "User@mail.ru", 1,
+		userList.add(new User(123, "Us1", "1234", "Player1123", "User@mail.ru", 1,
 				"picture1", "role"));
 		userList.add(new User(2, "Us2", "124564", "Player2", "User2@mail.ru",
 				2, "picture2", "role2"));
@@ -46,20 +41,21 @@ public class Game {
 	}
 
 	public void addPlayers(User user) {
+		int listPlSize = playerList.size();
+		String color = null;
 		for (PlayerColors playerColors : PlayerColors.values()) {
-			int listPlSize = playerList.size();
-			String color = null;
 			if (playerColors.ordinal() == listPlSize) {
 				color = playerColors.getColor();
-				playerList.add(new Player(user, CellPositions.START,
-						CardPrices.START_MONEY, color));
 			}
 		}
+		playerList.add(new Player(user, CellPositions.START,
+				CardPrices.START_MONEY, color));
 	}
 
 	public void setPlayers() {
 		for (int i = 0; i < getUserList().size(); i++) {
-			this.addPlayers(this.getUserList().get(i));
+			User user=getUserList().get(i);
+			addPlayers(user);
 		}
 	}
 
@@ -73,10 +69,6 @@ public class Game {
 				CardPrices.START_MONEY, PlayerColors.PLAYER3)));
 		playerList.add((new Player("Player 4", CellPositions.START,
 				CardPrices.START_MONEY, PlayerColors.PLAYER4)));
-	}
-
-	public Game() {
-
 	}
 
 	public int getId() {
@@ -147,22 +139,22 @@ public class Game {
 	}
 
 	public void start() {
-		//if (this.isReadyToStart()) {
-			StartGame.initCities();
-			StartGame.initRails();
-			this.setStarted(true);
-			if (currentPlayer == null) {
-				this.setCurrentPlayer(this.getAllPlayers().get(0));
-			}
-			//return true;
-		//}
-		//return false;
+		// if (this.isReadyToStart()) {
+		StartGame.initCities();
+		StartGame.initRails();
+		this.setStarted(true);
+		if (currentPlayer == null) {
+			this.setCurrentPlayer(this.getAllPlayers().get(0));
+		}
+		// return true;
+		// }
+		// return false;
 	}
 
 	public Player getNextPlayer() {
 		if (this.isStarted()) {
-			int indexCurrentPlayer = this.getAllPlayers()
-					.indexOf(currentPlayer);
+			int indexCurrentPlayer = this.getAllPlayers().indexOf(
+					this.getCurrentPlayer());
 			if (indexCurrentPlayer == getAllPlayers().size() - 1) {
 				return this.getAllPlayers().get(0);
 			}
@@ -170,5 +162,16 @@ public class Game {
 		}
 		return null;
 	}
+//	public static void main(String[] args) {
+//		Game g = new Game();
+//		g.addUser();
+//		g.setPlayers();
+//		for(Player p:g.getAllPlayers()){
+//			System.out.println(p.getId());
+//			System.out.println(p.getName());
+//			System.out.println(p.getMoney());
+//			System.out.println(p.getColor());
+//		}
+//	}
 
 }

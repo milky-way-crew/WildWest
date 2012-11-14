@@ -36,12 +36,12 @@ public class PlayersActivity {
 			if (card instanceof CityCard) {
 				seller.listRegions(seller).remove(
 						seller.getRegion(card.getPosition()));
-				buyer.addRegionsSaleActivity(buyer, (CityCard) card);
+				buyer.addRegionsSellActivity(buyer, (CityCard) card);
 			} else if (card instanceof RailCard) {
 				seller.subNumberOfRAils();
 				buyer.addNumberOfRails();
 			}
-			buyer.addSaledProperty(card);
+			buyer.addSelledProperty(card);
 			seller.deleteProperty(seller, card);
 			System.out.println("You sale city " + card.getName() + " to "
 					+ buyer.getName());

@@ -80,21 +80,17 @@ public class RailCard extends SellableCard {
 				+ CardPrices.TAX_FOUR_RAIL_CARD;
 	}
 
-	@Override
-	public void payRentToOwner(Player player, Player owner, int price) {
-		player.setMoney(player.getMoney() - price);
-		owner.setMoney(owner.getMoney() + price);
-	}
+	
 
 	@Override
-	public int getRent(SellableCard cell, Player player, Player owner) {
+	public int getRent(Player player, Player owner) {
 		if (isMortage()) {
 			player.setMoney(player.getMoney());
 			player.setPosition(player.getPosition());
 			return 0;
 		} else {
 			System.out.println("Owner of this rail is: "
-					+ cell.getOwner().getName());
+					+ this.getOwner().getName());
 			int numberOfRails = owner.getNumberOfRails();
 			System.out.println("Number of rails are: " + numberOfRails);
 			if (numberOfRails == 1) {
@@ -113,7 +109,7 @@ public class RailCard extends SellableCard {
 	@Override
 	public void payOrMortage(SellableCard cell, Player player, Player owner) {
 		boolean check = true;
-		int price = getRent(cell, player, owner);
+		int price = getRent(player, owner);
 		if (player.checkMoney( price)) {
 			payRentToOwner(player, owner, price);
 		} else {
@@ -131,8 +127,8 @@ public class RailCard extends SellableCard {
 	}
 
 	@Override
-	public void buyCityOrRail(SellableCard cell, Player player) {
-		cell.setOwner(player);
+	public void buyCityOrRail( Player player) {
+		this.setOwner(player);
 		player.addProperty(player);
 		System.out.println("You are owner now");
 		player.setMoney(player.getMoney() - getPrice());
@@ -151,12 +147,9 @@ public class RailCard extends SellableCard {
 	public boolean canUnMortage(Player player) {
 		return (this.getOwner()==player&& this.isMortage());
 	}
-
-
 	@Override
-	public Map<String, ? extends Object> action(Player player, String type) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean canSell(Player player) {
+		return (!this.isMortage() && this.getOwner() == player) ? true : false;
 	}
 
 

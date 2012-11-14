@@ -7,6 +7,7 @@ import java.util.Random;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Chance;
 import com.web.app.worldgames.domain.monopoly.Player;
+import com.web.app.worldgames.domain.monopoly.PlayerColors;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class ChanseCard extends Cell {
@@ -85,10 +86,16 @@ public class ChanseCard extends Cell {
 		return null;
 	}
 
-
-	@Override
-	public Map<String, ? extends Object> action(Player player, String type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public static void main(String[] args) {
+	Player player = new Player("r1", 3, 1000, PlayerColors.PLAYER1);
+	ChanseCard c = new ChanseCard();
+	c.effectOnPlayer(player);
+	System.out.println(c.getChanceInstance());
+	c.getDirectCard(player);
+	c.clearChanceMap();
+	c.effectOnPlayer(player);
+	System.out.println(c.getChanceInstance());
+	c.getDirectCard(player);
+	
+}
 }

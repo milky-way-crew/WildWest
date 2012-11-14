@@ -19,7 +19,9 @@ public class Player {
 	private int position;
 	private int money;
 	private String color;
+	//for test----
 	private PlayerColors colors;
+	//-----
 	private boolean hasFreeCard =false;
 	private static Random randDice = new Random();
 	private int numberOfRailss = 0;
@@ -53,14 +55,14 @@ public class Player {
 		this.color=color;
 		//this.hasFreeCard = hasFreeCard;
 	}
-
+//----------for test
 	public Player(String name, int position, int money, PlayerColors colors) {
 		this.name = name;
 		this.position = position;
 		this.money = money;
 		this.colors=colors;
 	}
-
+//-----------
 	public int getId() {
 		return id;
 	}
@@ -148,6 +150,15 @@ public class Player {
 		this.readyToStart = readyToStart;
 	}
 
+	
+
+	public int getDiceOne() {
+		return diceOne;
+	}
+
+	public int getDiceTwo() {
+		return diceTwo;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -175,15 +186,6 @@ public class Player {
 			return false;
 		return true;
 	}
-
-	public int getDiceOne() {
-		return diceOne;
-	}
-
-	public int getDiceTwo() {
-		return diceTwo;
-	}
-
 	public static int rollDiceOne() {
 		diceOne = randDice.nextInt(6) + 1;
 		System.out.println("dice one: " + diceOne);
@@ -201,7 +203,7 @@ public class Player {
 		int c = this.getCircle();
 		if (position > 40) {
 			this.setCircle(c++);
-			this.setMoney(this.getMoney()+200);
+			this.setMoney(this.getMoney()+CardPrices.CIRCLE_MONEY);
 			position = position - 40;
 		}
 		setPosition(position);
@@ -228,7 +230,7 @@ public class Player {
 		}
 	}
 
-	public void addRegionsSaleActivity(Player player, CityCard region) {
+	public void addRegionsSellActivity(Player player, CityCard region) {
 		listRegions.add(region.getRegion());
 	}
 
@@ -294,7 +296,7 @@ public class Player {
 		}
 	}
 
-	public void addSaledProperty(SellableCard card) {
+	public void addSelledProperty(SellableCard card) {
 		property.add(card);
 	}
 
@@ -317,7 +319,7 @@ public class Player {
 	public boolean checkProperty(Player player) {
 		return (player.playerProperty().isEmpty()) ? false : true;
 	}
-//delete 
+//delete ----for test
 	public String playerAction() {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String key = null;
@@ -328,7 +330,7 @@ public class Player {
 		}
 		return key;
 	}
-
+//----------------
 	public int circleInJail() {
 		return circleInJail++;
 	}
@@ -356,12 +358,6 @@ public class Player {
 					/ 2);
 			n++;
 		}
-		// if (forMortage.isEmpty()) {
-		// System.out
-		// .println("You haven't money and haven't any property to mortage. You lost the game. Good-bye!");
-		// //StartGame.deleteLoserPlayer(game.playersPermanentlyList(), player);
-		// player.setLoss(true);
-		// }
 	}
 
 	public boolean canMortage() {
@@ -392,7 +388,6 @@ public class Player {
 				}
 			}
 		}
-		// return forMortage;
 	}
 
 	public List<SellableCard> listPropertyForUnmortage(Player player) {
@@ -468,8 +463,7 @@ public class Player {
 	}
 
 	public boolean canRollDices(Player player) {
-		Game game = new Game();
-		if (game.getAllPlayers().contains(player) && player.getMoney() > 0) {
+		if (player.getMoney() > 0 || Player.doublePoints()) {
 			setRollAction(true);
 			return true;
 		} else
