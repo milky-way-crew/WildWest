@@ -203,6 +203,12 @@ public class CityCard extends SellableCard {
 		return isHotel();
 	}
 
+	public void sellHouse(Player player) {
+		player.setMoney(player.getMoney() + this.getHousePrice());
+		int numbHouses = this.getNumbersOfHouses();
+		this.setNumbersOfHouses(numbHouses--);
+	}
+
 	@Override
 	public void effectOnPlayer(Player player) {
 		Player owner = null;
@@ -239,8 +245,8 @@ public class CityCard extends SellableCard {
 			}
 		}
 	}
-	
-//I don't know it is need
+
+	// I don't know it is need
 	@Override
 	public void payOrMortage(SellableCard cell, Player player, Player owner) {
 		boolean check = true;
@@ -293,8 +299,6 @@ public class CityCard extends SellableCard {
 		return 0;
 	}
 
-	
-
 	@Override
 	public String info() {
 		return "\t" + getName() + "\n\tregion: " + getRegion() + "\n\tprice "
@@ -336,6 +340,5 @@ public class CityCard extends SellableCard {
 		return (!this.isMortage() && this.getOwner() == player
 				&& this.numbersOfHouses == 0 && !this.isHotel) ? true : false;
 	}
-
 
 }

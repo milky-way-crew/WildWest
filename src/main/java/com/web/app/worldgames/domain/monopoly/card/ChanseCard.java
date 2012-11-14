@@ -86,16 +86,16 @@ public class ChanseCard extends Cell {
 		return null;
 	}
 
-public static void main(String[] args) {
-	Player player = new Player("r1", 3, 1000, PlayerColors.PLAYER1);
-	ChanseCard c = new ChanseCard();
-	c.effectOnPlayer(player);
-	System.out.println(c.getChanceInstance());
-	c.getDirectCard(player);
-	c.clearChanceMap();
-	c.effectOnPlayer(player);
-	System.out.println(c.getChanceInstance());
-	c.getDirectCard(player);
-	
-}
+//public static void main(String[] args) {
+//	Player player = new Player("r1", 3, 1000, PlayerColors.PLAYER1);
+//	ChanseCard c = new ChanseCard();
+//	c.effectOnPlayer(player);
+//	System.out.println(c.getChanceInstance());
+//	c.getDirectCard(player);
+//	c.clearChanceMap();
+//	c.effectOnPlayer(player);
+//	System.out.println(c.getChanceInstance());
+//	c.getDirectCard(player);
+//	
+//}
 }

@@ -1,10 +1,5 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.CardPrices;

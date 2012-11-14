@@ -31,12 +31,13 @@ public class Player {
 	private static int diceTwo = 0;
 	private boolean inJail;
 	private boolean readyToStart = false;
+	private boolean loss = false;
+	
 	private List<String> listRegions = new ArrayList<String>();
 	private List<SellableCard> property = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
-	private boolean loss = false;
 	private boolean rollAction = false;
 
 	public boolean isRollAction() {
@@ -128,8 +129,6 @@ public class Player {
 		this.loss = loss;
 	}
 
-	
-
 	public int getCircle() {
 		return circle;
 	}
@@ -149,8 +148,6 @@ public class Player {
 	public void setReadyToStart(boolean readyToStart) {
 		this.readyToStart = readyToStart;
 	}
-
-	
 
 	public int getDiceOne() {
 		return diceOne;

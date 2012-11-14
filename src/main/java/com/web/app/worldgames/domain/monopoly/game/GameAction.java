@@ -71,8 +71,10 @@ public class GameAction {
 				cell.effectOnPlayer(player);
 				result.put(ButtonsLabel.OK, true);
 			} else if (cell instanceof ChanseCard) {
+				cell.effectOnPlayer(player);
 				result.put(ButtonsLabel.OK, true);
 			} else if (cell instanceof CommunityChestCard) {
+				cell.effectOnPlayer(player);
 				result.put(ButtonsLabel.OK, true);
 			}
 		}
