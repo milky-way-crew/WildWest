@@ -1,5 +1,7 @@
 package com.web.app.worldgames.domain.monopoly;
 
+import org.apache.log4j.Logger;
+
 public class CityCard extends SellableCard {
 	private String name;
 	private final String region;
@@ -139,7 +141,7 @@ public class CityCard extends SellableCard {
 		return position;
 	}
 
-	protected void setPosition(int position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
 
