@@ -8,7 +8,7 @@ background-color: #CCE7D0;
 
 #table{
 
-background: url("images/board900x901.png") no-repeat center center ;
+background: url("../img/board/board900x901.png") no-repeat center center ;
 position:absolute;
 top:2%;
 left:2%;
