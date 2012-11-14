@@ -5,17 +5,23 @@ import javax.servlet.ServletContextEvent;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.websocket.WebSocketHandler;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.web.app.worldgames.web.SetupDatabaseManager;
+import com.web.app.worldgames.websocket.GuessWebSocketHandler;
 import com.web.app.worldgames.websocket.MonoWebSocketHandler;
 
 public class ContextLoaderHandler extends ContextLoaderListener {
 	private static final int PORT = 8888;
+	private static final int PORT_DRAW_GAME = 9999;
+	
 	private final static Logger log = Logger.getLogger(ContextLoaderHandler.class);
 	private Server jetty;
+	private Server jettyGuessGame;
+	
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
@@ -23,7 +29,8 @@ public class ContextLoaderHandler extends ContextLoaderListener {
 		log.info("RESETING DATABASE");
 		refreshDatabase(event);
 		log.info("STARTING JETTY SERVER");
-		startJettyEmbededServer();
+		startJettyEmbededServer(PORT, new MonoWebSocketHandler());
+		startGuessGameServer(PORT_DRAW_GAME, new GuessWebSocketHandler());
 	}
 
 	@Override
@@ -44,21 +51,33 @@ public class ContextLoaderHandler extends ContextLoaderListener {
 		if (jetty != null) {
 			try {
 				jetty.stop();
+				jettyGuessGame.stop();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private void startJettyEmbededServer() {
+	private void startJettyEmbededServer(int port, WebSocketHandler handler) {
 		try {
-			jetty = new Server(PORT);
-			MonoWebSocketHandler monoWebSocketHandler = new MonoWebSocketHandler();
-			monoWebSocketHandler.setHandler(new DefaultHandler());
-			jetty.setHandler(monoWebSocketHandler);
+			jetty = new Server(port);
+			handler.setHandler(new DefaultHandler());
+			jetty.setHandler(handler);
 			jetty.start();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private void startGuessGameServer(int port, WebSocketHandler handler) {
+		try {
+			jettyGuessGame = new Server(port);
+			handler.setHandler(new DefaultHandler());
+			jettyGuessGame.setHandler(handler);
+			jettyGuessGame.start();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

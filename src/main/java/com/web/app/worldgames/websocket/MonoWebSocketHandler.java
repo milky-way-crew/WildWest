@@ -35,7 +35,6 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 
 	public class MonoWebSocket implements WebSocket.OnTextMessage {
 		private Connection connection;
-		private User user;
 
 		@Override
 		public void onOpen(Connection connection) {
@@ -49,7 +48,6 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public void onMessage(String json) {
 			ObjectMapper jsonParser = new ObjectMapper();
 			
@@ -82,14 +80,6 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 
 		public Connection getConnection() {
 			return connection;
-		}
-
-		public User getUser() {
-			return user;
-		}
-
-		public void setUser(User user) {
-			this.user = user;
 		}
 		
 		public void sendMessage(Map<String, ? extends Object> message) {
