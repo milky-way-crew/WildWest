@@ -32,10 +32,14 @@ public class GameAction {
 			if (cell instanceof CityCard) {
 				CityCard card = (CityCard) cell;
 				result.put(ButtonsLabel.BUY, card.canBuy(player));
-				result.put(
-						ButtonsLabel.PAY,
-						card.canPayRent(player,
-								card.getRent(player, card.getOwner())));
+				if (card.getOwner() != null) {
+					result.put(
+							ButtonsLabel.PAY,
+							card.canPayRent(player,
+									card.getRent(player, card.getOwner())));
+				} else {
+					result.put(ButtonsLabel.PAY, false);
+				}
 				result.put(ButtonsLabel.BUILD, card.canBuildHouse(player)
 						|| card.canBuildHotel(player));
 				result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
@@ -44,10 +48,14 @@ public class GameAction {
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
 				result.put(ButtonsLabel.BUY, card.canBuy(player));
-				result.put(
-						ButtonsLabel.PAY,
-						card.canPayRent(player,
-								card.getRent(player, card.getOwner())));
+				if (card.getOwner() != null) {
+					result.put(
+							ButtonsLabel.PAY,
+							card.canPayRent(player,
+									card.getRent(player, card.getOwner())));
+				} else {
+					result.put(ButtonsLabel.PAY, false);
+				}
 				result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
 				result.put(ButtonsLabel.MORTAGE, card.canMortage(player));
 				result.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
