@@ -1,13 +1,17 @@
+body{
+background-color: #CCE7D0;
+}
+
 .hidden{
     display:none;
 }
 
-table{
+#table{
 
-background: url("../img/board/board900x901.png") no-repeat center center ;
+background: url("images/board900x901.png") no-repeat center center ;
 position:absolute;
-top:20px;
-left:20px;
+top:2%;
+left:2%;
 margin:0px;
 padding:0px;
 background-color:#CCE7D0;
@@ -16,7 +20,10 @@ background-color:#CCE7D0;
 .board{
 top:0px;
 left:0px;
+
 }
+
+
 
 .northwest, .northeast, .southwest, .southeast{
 width:145px;
@@ -26,6 +33,7 @@ height:145px;
 
 .south_north{
 width:71px;
+
 }
 .west_east{
 height:74px;
@@ -71,13 +79,119 @@ position:relative;
 #divPlayer1, #divPlayer2, #divPlayer3, #divPlayer4{
 height:20px;
 }
-/* position of cells */
+
+#playerInfo{
+position:absolute;
+left:1100px;
+top:25px;
+width: 40%;
+margin-right:30px;
+padding-right:30px;
+}
+
+/*!
+ * jQuery UI Accordion 1.9.1
+ * http://jqueryui.com
+ *
+ * Copyright 2012 jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Accordion#theming
+ */
+.ui-accordion .ui-accordion-header { display: block; cursor: pointer; position: relative; margin-top: 2px; padding: .5em .5em .5em .7em; zoom: 1; }
+.ui-accordion .ui-accordion-icons { padding-left: 2.2em; }
+.ui-accordion .ui-accordion-noicons { padding-left: .7em; }
+.ui-accordion .ui-accordion-icons .ui-accordion-icons { padding-left: 2.2em; }
+.ui-accordion .ui-accordion-header .ui-accordion-header-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
+.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; overflow: auto; zoom: 1; }
 
 
+.playerButton{
+position:absolute;
+top:1000px;
+left:50px;
+}
+
+#upChat{
+position:absolute;
+left:1100px;
+top:500px;
+}
+
+#roolDice{
+position:absolute;
+left:400px;
+top:250px;
+}
+
+ #feedback { font-size: 1.4em; }
+    #selectable .ui-selecting { background: #FECA40; }
+    #selectable .ui-selected { background: #F39814; color: white; }
+    #selectable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
+    #selectable li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px; font-size: 4em; text-align: center; }
 
 
+#firstInfoTable{
+float:left;
+margin-right: 15px;
+}
 
 
+.city{
+border-color: black;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
 
+#brownCity1, #brownCity2{
+border-color: #955438;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
 
+#azureCity1, #azureCity2, #azureCity3{
+border-color: #A9E1FA;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
 
+#violetCity1, #violetCity2, #violetCity3{
+border-color: #D83996;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
+#orangeCity1, #orangeCity2, #orangeCity3{
+border-color: orange;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
+
+#redCity1, #redCity2, #redCity3{
+border-color: red;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
+
+#yellowCity1, #yellowCity2, #yellowCity3{
+border-color: yellow;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
+
+#greenCity1, #greenCity2, #greenCity3{
+border-color: green;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
+
+#blueCity1, #blueCity2{
+border-color: blue;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
+#grayCity1, #grayCity2, #grayCity3, #grayCity4{
+border-color: gray;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
+}
