@@ -9,9 +9,15 @@
 <link rel="stylesheet" href="resources/css/bootstrap.css"
 	type="text/css">
 <link rel="stylesheet" href="resources/css/bootstrap-responsive.css">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/bootstrap-responsive.min.css">
+<link type="text/css" rel="stylesheet"
+	href="resources/css/chatroom_style.css" />
 <title>Welcome!</title>
 </head>
 <body>
+
+	<!-- top panel -->
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -31,53 +37,69 @@
 			</div>
 		</div>
 	</div>
+	<!-- top panel -->
 
+	<!-- world chat and room list -->
 	<div class="container">
-		<h1>Chat</h1>
 		<p></p>
 		<div class="row-fluid">
 			<div class="span8">
 				<div class="well">
-					<textarea id="message" name="message" class="input-xxlarge"
-						rows="20">Enter your message</textarea>
+					<h1>Chat</h1>
+					<div id="chatBox"></div>
+					<form name="message" action="">
+						<input type="text" id="usermsg" size=100
+							placeholder="Enter your message here..."> <a
+							class="btn btn-primary btn-medium" id="send">Send</a>
+					</form>
 				</div>
 			</div>
+
+			<!-- room list -->
 			<div class="span4">
-				<div class="well sidebar-nav">
-					<h2>Rooms</h2>
-					<div class="control-group select optional">
-						<label class="select optional control-label"
-							for="article_category"> Room's list</label>
-						<div class="controls">
-							<form name="roomsForm" action="chatRooms.html" method="post">
-								<select id="rooms" name="rooms">
-								</select> <br>Enter room's name <br> <input type='text'
-									value='' name='roomName' id='roomName' class="input-xlarge" />
-							</form>
-						</div>
-					</div>
-					<textarea id="listUser" name="listUser" class="input-xlarge"
-						rows="6"></textarea>
-					<button type="submit" class="btn" name="createRoom" id="createRoom"
-						onClick="createOption()">Create room</button>
-					<button type="submit" class="btn">Join to room</button>
+				<div id="rightBar" class="well sidebar-nav">
+					<h2>Room list</h2>
+					<table border=2 cellspacing=3 cellpadding=3 align="center">
+						<tr>
+							<td width=175><b>Room name</b></td>
+							<td width=75><b>User's</b></td>
+						</tr>
+					</table>
+					<form name="roomAction" action="">
+						<br> <a data-toggle="modal" href="#createRoomModal"
+							class="btn btn-primary btn-medium">Create room</a> <br> <br>
+						<a data-toggle="modal" href="#createRoomModal"
+							class="btn btn-primary btn-medium">Join to room</a>
+					</form>
 				</div>
 			</div>
-			<div class="row-fluid">
-				<div class="span16">
-					<div class="well sidebar-nav">
-						<textarea id="message" name="message" class="input-xxlarge"
-							rows="3" cols="150">Enter your message</textarea>
-						<button type="submit" class="btn">Send</button>
-					</div>
-				</div>
+			<!-- room list -->
+
+		</div>
+	</div>
+	<!-- world chat and room list -->
+
+	<!-- modal window create room -->
+	<div class="container">
+		<div id="createRoomModal" class="modal" style="display: none;">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">×</a>
+				<h1>Create room</h1>
+			</div>
+			<div class="modal-body">
+				<h2></h2>
+				<p>Enter room name:</p>
+				<input type="text" id="roomName" size=100
+					placeholder="Enter room name...">
+			</div>
+			<div class="modal-footer">
+				<a id="createRoom" href="#" class="btn btn-success">Create</a> <a
+					href="#" class="btn" data-dismiss="modal">Close</a>
 			</div>
 		</div>
-
 	</div>
-
-	<script type="text/javascript"
-		src="resources/js/rooms/createRoom.js"></script>
+	<!-- modal window create room -->
+	<script type="text/javascript" src="resources/js/chatAndRoom.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>
@@ -93,10 +115,9 @@
 	<script type="text/javascript" src="resources/js/bootstrap-button.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-collapse.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-carousel.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<script type="text/javascript"
-		src="resources/js/bootstrap-typeahead.js">
-		
-	</script>
-
+		src="resources/js/bootstrap-typeahead.js"></script>
 </body>
 </html>
