@@ -134,7 +134,7 @@ public class MonopolyManager {
 				Player currentPlayer = monopolyGame.getCurrentPlayer();
 				SellableCard card = (SellableCard) CardFactory
 						.chooseCard(currentPlayer);
-				// card
+				card.mortage(currentPlayer);
 				response.put("type", ButtonsLabel.MORTAGE);
 				response.put("player", currentPlayer.getColor());
 				response.put("player_money", currentPlayer.getMoney());

@@ -4,6 +4,7 @@ import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Player;
 
 public class TaxCard extends Cell {
+
 	@Override
 	public void effectOnPlayer(Player player) {
 //		boolean check = true;
@@ -30,9 +31,7 @@ public class TaxCard extends Cell {
 //			}
 //		}
 		
-		//if(canPayTax(player)){
 			player.setMoney(player.getMoney() - CardPrices.TAX);
-	//	}
 		
 	}
 

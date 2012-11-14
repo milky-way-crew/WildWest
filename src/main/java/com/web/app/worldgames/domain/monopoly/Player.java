@@ -336,9 +336,6 @@ public class Player {
 		return circleInJail;
 	}
 
-	// public void exitFromJail() {
-	// circleInJail = 0;
-	// }
 	public List<SellableCard> getForMortage() {
 		return forMortage;
 	}
@@ -421,11 +418,6 @@ public class Player {
 	}
 
 	public void mortageAction(Player player) {
-		//System.out.println("You haven't money. Mortage you property: ");
-		// if(forMortage.isEmpty()){
-		// System.out.println("You haven't object");
-		// player.setLoss(true);
-		// }else{
 		if(canMortage()){
 			printMortageList(forMortage, player);
 
@@ -440,7 +432,6 @@ public class Player {
 		SellableCard cityToMortage = forMortage.get(index);
 		chooseAndMortage(forMortage, cityToMortage, player);
 		}else System.out.println("no obj");
-		// }
 	}
 
 	public void unMortageAction(Player player) {
