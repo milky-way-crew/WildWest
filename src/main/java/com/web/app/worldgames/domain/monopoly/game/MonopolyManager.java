@@ -3,6 +3,8 @@ package com.web.app.worldgames.domain.monopoly.game;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.Player;
@@ -12,6 +14,7 @@ import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class MonopolyManager {
+	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	private static final String ROLL = "roll";
 	private static final String START = "start";
 	private static final String READY = "ready";
@@ -37,23 +40,26 @@ public class MonopolyManager {
 
 	public Map<String, ? extends Object> onMessage(int idPlayer, String type,
 			String data) {
+
+		log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
+
 		Map<String, Object> response = new HashMap<String, Object>();
-		// WebSocketTransport socketTransport =
-		// WebSocketTransport.getInstance();
+		//WebSocketTransport socketTransport = WebSocketTransport.getInstance();
 		if ($(type).equals(READY)) {
 			Player currentPlayer = getPlayerById(idPlayer);
 			currentPlayer.setReadyToStart(true);
 			response.put("type", READY);
 		}
+		
 		if ($(type).equals(START)) {
-			// User creator = getCreator();
 			if (monopolyGame.isReadyToStart()) {
 				monopolyGame.start();
-				response.put("type", START);
-				response.put("start", monopolyGame.isStarted());
 				broadcast(response);
 			}
+			response.put("type", START);
+			response.put("start", monopolyGame.isStarted());
 		}
+
 		if ($(type).equals(ROLL)) {
 			Player currentPlayer = monopolyGame.getCurrentPlayer();
 			currentPlayer.rollDicesAndMove();
@@ -120,6 +126,8 @@ public class MonopolyManager {
 		}
 		// socketTransport.sendMessage(idPlayer, response);
 
+		
+		//socketTransport.sendMessage(idPlayer, response);
 		// not sure if we need this
 		return response;
 	}
