@@ -16,10 +16,11 @@ public class MonopolyService implements IMonopolyService {
 	public static Map<Integer, MonopolyManager> serverMap = new HashMap<Integer, MonopolyManager>();
 	private static int i = 0;
 
-	public void createGame(User host) {
+	public int createGame(User host) {
 		MonopolyManager manager = new MonopolyManager(new Game());
 		manager.setCreator(host);
-		serverMap.put(i++, manager);
+		serverMap.put(++i, manager);
+		return i;
 	}
 
 	public void removeGameById(int idGame) {
@@ -43,6 +44,8 @@ public class MonopolyService implements IMonopolyService {
 	public static MonopolyService getInstance() {
 		return _INSTANCE;
 	}
-
 	
+	public Map<Integer, MonopolyManager> getAllGames() {
+		return serverMap;
+	}
 }

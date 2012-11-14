@@ -23,7 +23,7 @@ public class MonopolyManager {
 	private User creator;
 
 	public MonopolyManager(Game monopolyGame) {
-		this.monopolyGame = monopolyGame;
+		this.setMonopolyGame(monopolyGame);
 	}
 
 	public User getCreator() {
@@ -32,7 +32,7 @@ public class MonopolyManager {
 
 	public void setCreator(User creator) {
 		this.creator = creator;
-		monopolyGame.addPlayers(creator);
+		getMonopolyGame().addPlayers(creator);
 		// monopolyGame.setCurrentPlayer(new Player(creator,
 		// CellPositions.START, CardPrices.START_MONEY,
 		// "RED"));
@@ -56,19 +56,19 @@ public class MonopolyManager {
 		}
 
 		if ($(type).equals(START)) {
-			if (monopolyGame.isReadyToStart()) {
+			if (getMonopolyGame().isReadyToStart()) {
 				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				monopolyGame.start();
-				log.info("[GAME IS STARTED] " + monopolyGame.isStarted());
+				getMonopolyGame().start();
+				log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
 				broadcast(response);
 			}
 			response.put("type", START);
-			response.put("start", monopolyGame.isStarted());
+			response.put("start", getMonopolyGame().isStarted());
 		}
-		if (monopolyGame.isStarted()) {
+		if (getMonopolyGame().isStarted()) {
 			if ($(type).equals(ROLL)) {
 				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				Player currentPlayer = monopolyGame.getCurrentPlayer();
+				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				currentPlayer.rollDicesAndMove();
 				log.info("[Player: ]" + currentPlayer.getColor());
 				log.info("[Dice1: ]" + currentPlayer.getDiceOne());
@@ -78,13 +78,18 @@ public class MonopolyManager {
 				response.put("dice1", currentPlayer.getDiceOne());
 				response.put("dice2", currentPlayer.getDiceTwo());
 				response.put("player", currentPlayer.getColor());
-				response.putAll(GameAction.action(
-						CardFactory.chooseCard(currentPlayer), currentPlayer));
+				try {
+					response.put("buttons", GameAction.action(CardFactory.chooseCard(currentPlayer), currentPlayer));					
+				// response.putAll(GameAction.action(
+				// 		CardFactory.chooseCard(currentPlayer), currentPlayer));
+				} catch (Exception e) {
+					log.error("Exception in [ROLL] section", e);
+				}
 				broadcast(response);
 			}
 			if ($(type).equals(ButtonsLabel.BUY)) {
 				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				Player currentPlayer = monopolyGame.getCurrentPlayer();
+				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				SellableCard card = (SellableCard) CardFactory
 						.chooseCard(currentPlayer);
 				log.info("[Cell: ]" + card);
@@ -100,7 +105,7 @@ public class MonopolyManager {
 			}
 			if ($(type).equals(ButtonsLabel.REFUSE)) {
 				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				Player currentPlayer = monopolyGame.getCurrentPlayer();
+				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				SellableCard card = (SellableCard) CardFactory
 						.chooseCard(currentPlayer);
 				card.refuse(currentPlayer);
@@ -113,7 +118,7 @@ public class MonopolyManager {
 			}
 			if ($(type).equals(ButtonsLabel.PAY)) {
 				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				Player currentPlayer = monopolyGame.getCurrentPlayer();
+				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				Cell cell = CardFactory.chooseCard(currentPlayer);
 				if (cell instanceof SellableCard) {
 					SellableCard card = (SellableCard) cell;
@@ -131,7 +136,7 @@ public class MonopolyManager {
 				broadcast(response);
 			}
 			if ($(type).equals(ButtonsLabel.MORTAGE)) {
-				Player currentPlayer = monopolyGame.getCurrentPlayer();
+				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				SellableCard card = (SellableCard) CardFactory
 						.chooseCard(currentPlayer);
 				card.mortage(currentPlayer);
@@ -142,8 +147,8 @@ public class MonopolyManager {
 			}
 			if ($(type).equals(NEXT)) {
 				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				monopolyGame.setCurrentPlayer(monopolyGame.getNextPlayer());
-				Player currentPlayer = monopolyGame.getCurrentPlayer();
+				getMonopolyGame().setCurrentPlayer(getMonopolyGame().getNextPlayer());
+				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				log.info("[Player: ]" + currentPlayer.getColor()
 						+ " can roll dice");
 				response.put("type", NEXT);
@@ -160,7 +165,7 @@ public class MonopolyManager {
 
 	public void broadcast(Map<String, ? extends Object> message) {
 		WebSocketTransport transport = WebSocketTransport.getInstance();
-		for (Player player : monopolyGame.getAllPlayers()) {
+		for (Player player : getMonopolyGame().getAllPlayers()) {
 			transport.sendMessage(player.getId(), message);
 		}
 	}
@@ -176,7 +181,7 @@ public class MonopolyManager {
 	}
 
 	public Player getPlayerById(int idPlayer) {
-		for (Player players : monopolyGame.getAllPlayers()) {
+		for (Player players : getMonopolyGame().getAllPlayers()) {
 			if (players.getId() == idPlayer) {
 				return players;
 			}
@@ -185,6 +190,14 @@ public class MonopolyManager {
 	}
 
 	public void addClient(User client) {
-		monopolyGame.addPlayers(client);
+		getMonopolyGame().addPlayers(client);
+	}
+
+	public Game getMonopolyGame() {
+		return monopolyGame;
+	}
+
+	public void setMonopolyGame(Game monopolyGame) {
+		this.monopolyGame = monopolyGame;
 	}
 }
