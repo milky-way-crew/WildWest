@@ -10,7 +10,7 @@
 </head>
 <body> 
 	<div class="hero-unit">
-		<h1 class="info">Web-socket test</h1>
+		<h1 class="info">Web-socket [<c:out value="${user.login}" />]</h1>
 	</div>
 
 	<div class="container" align="center">
