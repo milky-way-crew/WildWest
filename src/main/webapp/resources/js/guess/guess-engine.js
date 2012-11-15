@@ -9,8 +9,7 @@ var timer = {
 		timer.config.timerElement = document.getElementById(id);
 	},
 	tick : function() {
-		if (timer.config.secondsLeft > 0 && !timer.config.isStopped) {
-			console.log("Seconds left: " + timer.config.secondsLeft);
+		if (timer.config.secondsLeft >= 0 && !timer.config.isStopped) {
 	        timer.config.secondsLeft -= 1;
 	        timer.update();
 	        window.setTimeout(timer.tick, timer.config.interval);		
@@ -19,7 +18,7 @@ var timer = {
 		}
 	},
 	update : function () {
-		timer.config.timerElement.innerHTML = 'left: ' + timer.config.secondsLeft + 's';
+		timer.config.timerElement.innerHTML = 'Timer: ' + timer.config.secondsLeft + 's';
 	},
 	start : function (secondsLeft) {
 		timer.config.isStopped = false;
@@ -31,8 +30,6 @@ var timer = {
 		timer.config.isStopped = true;
 	}
 };
-
-// canvas context
 var canvas = document.getElementById('drawing-pad');
 var ctx = canvas.getContext('2d');
 var guessGame = {
@@ -42,16 +39,14 @@ var guessGame = {
     GAME_LOGIC: 2,
     BIND_ME : 777,
 
-    // Constant for game logic state
+    // game state
     WAITING_TO_START: 0,
     GAME_START: 1,
     GAME_OVER: 2,
     GAME_RESTART: 3,
 
-    // indictes if it is drawing now.
     isDrawing: false,
-
-    isTurnToDraw: true,
+    isTurnToDraw: true, // FOR DEBUG -> SET TRUE
 
     // the starting point of next line drawing.
     startX: 0,
@@ -91,13 +86,30 @@ var guessGame = {
                 alert('error while binding websocket:', textStatus);
             }
         });
+    },
+    // Canvas drawing-style
+    strokeStyle : '#444',
 
-
+    tooglePencil : function() {
+        guessGame.strokeStyle = '#444';
+        guessGame.thickness = "3";
+    },
+    toogleEraser : function() {
+        guessGame.strokeStyle = "#F1F3EF";
+        guessGame.thickness = "10";
     }
 };
 
 guessGame.initHandlers = function() {
     console.log('Started initHandlers');
+
+    $('#eraser').click(function(){
+        guessGame.toogleEraser();
+    });
+
+    $('#pencil').click(function() {
+        guessGame.tooglePencil();
+    });
 
     var sendMessage = function() {
             var message = $("#chat-input").val();
@@ -151,7 +163,7 @@ guessGame.initHandlers = function() {
             var mouseY = (e.pageY - offset.top - 10) || 0;
 
             if(!(mouseX == guessGame.startX && mouseY == guessGame.startY)) {
-                drawLine(ctx, guessGame.startX, guessGame.startY, mouseX, mouseY, guessGame.thickness);
+                drawLine(ctx, guessGame.startX, guessGame.startY, mouseX, mouseY, guessGame.thickness, guessGame.strokeStyle);
 
                 var data = {};
                 data.dataType = guessGame.LINE_SEGMENT;
@@ -159,6 +171,10 @@ guessGame.initHandlers = function() {
                 data.startY = guessGame.startY;
                 data.endX = mouseX;
                 data.endY = mouseY;
+                // Experiment
+                data.thickness = guessGame.thickness;
+                data.strokeStyle = guessGame.strokeStyle;
+                
                 guessGame.send(data);
                 guessGame.startX = mouseX;
                 guessGame.startY = mouseY;
@@ -191,38 +207,43 @@ guessGame.initWebSockets = function() {
             if(data.dataType == guessGame.CHAT_MESSAGE) {
                 $("#chat-history").append("<li>" + data.sender + " said: " + data.message + "</li>");
             } else if(data.dataType == guessGame.LINE_SEGMENT) {
-                drawLine(ctx, data.startX, data.startY, data.endX, data.endY, guessGame.thickness);
+            	drawLine(ctx, data.startX, data.startY, data.endX, data.endY, data.thickness, data.strokeStyle);
+//                drawLine(ctx, data.startX, data.startY, data.endX, data.endY, guessGame.thickness);
             } else if(data.dataType == guessGame.GAME_LOGIC) {
                 if(data.gameState == guessGame.GAME_OVER) {
                     guessGame.isTurnToDraw = false;
                     $("#chat-history").append("<li>" + data.winner + " wins! The answer is '" + data.answer + "'.</li>");
                     timer.stop();
-                    $("#restart").show();
+                    $("#restart").show(100);
+                    $("#draw-palette").hide(100);
                 }
                 console.log("game state: ", data.gameState, "GAME_START: ", guessGame.GAME_START);
                 if(data.gameState == guessGame.GAME_START) {
                     // clear the canvas.
                     canvas.width = canvas.width;
                     // hide the restart button.
-                    $("#restart").hide(100);
+ 
                     // clear the chat history
                     $("#chat-history").html("");
                     if(data.isPlayerTurn) {
                         guessGame.isTurnToDraw = true;
                         $("#chat-history").append("<li>Your turn to draw. Please draw '" + data.answer + "'.</li>");
+                        $('#drawing-pallete').show(100);
                         timer.config.interval = 1000 * 2;
                         timer.start(60);
                     } else {
                         $("#chat-history").append("<li>Game Started. Get Ready. You have one minute to guess.</li>");
+                        $('#drawing-pallete').hide(100);
                         timer.config.interval = 1000;
                         timer.start(60);
                     }
+                    $("#restart").hide(100);
                 }
             }
         };
         // on close event
         guessGame.socket.onclose = function(e) {
-            $('#title').html('WebSocket connection closed. <br>Please, refresh page.');
+            $('#title').html('Oh, my.. Please, reconnect.');
             console.log('WebSocket connection closed.');
         };
     } else {
@@ -231,14 +252,13 @@ guessGame.initWebSockets = function() {
 };
 
 
-function drawLine(ctx, x1, y1, x2, y2, thickness) {
+function drawLine(ctx, x1, y1, x2, y2, thickness, strokeStyle) {
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
-    // Experimental
     ctx.lineCap = 'round';
     ctx.lineWidth = thickness;
-    ctx.strokeStyle = "#444";
+    ctx.strokeStyle = strokeStyle;
     ctx.stroke();
 }
 

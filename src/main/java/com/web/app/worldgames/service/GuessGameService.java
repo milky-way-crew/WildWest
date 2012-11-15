@@ -17,6 +17,10 @@ public enum GuessGameService {
 	private Map<Integer, GuessGame> serverMap = new HashMap<Integer, GuessGame>();
 	private static int index = 0;
 	
+	public Map<Integer, GuessGame> getAllGames() {
+		return serverMap;
+	}
+	
 	public GuessGame getGameById(int id) {
 		return serverMap.get(id);
 	}
@@ -31,7 +35,7 @@ public enum GuessGameService {
 		return idServer;
 	}
 	
-	public boolean connect(int idServer, User client) {
+	public boolean connectUserTo(int idServer, User client) {
 		GuessGame game = serverMap.get(idServer);
 		
 		if (game != null) {
@@ -47,7 +51,16 @@ public enum GuessGameService {
 		GuessGame game = serverMap.get(idGame);
 		log.info(String.format("Trying to remove game with id:%d.", idGame));
 		
-		if (game.getPlayers().size() == 0) {
+		boolean anyActive = false;
+		
+		for (GuessPlayer player : game.getPlayers()) {
+			anyActive |= player.isActive();
+			if (anyActive == true) {
+				break;
+			}
+		}
+		
+		if (anyActive == false) {
 			log.info(String.format("Removing game with id:%d. Reason: 0 players in.", idGame));
 			serverMap.remove(idGame);
 		}

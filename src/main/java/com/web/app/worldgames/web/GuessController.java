@@ -49,7 +49,7 @@ public class GuessController {
 			session.setAttribute("user", userService.findUserByLogin("test"));
 		}
 		User client = getUserFromSession(session);
-		boolean connectStatus = GuessGameService.INSTANCE.connect(id, client);
+		boolean connectStatus = GuessGameService.INSTANCE.connectUserTo(id, client);
 		
 		if (connectStatus) {
 			session.setAttribute("idGuessGame", id);

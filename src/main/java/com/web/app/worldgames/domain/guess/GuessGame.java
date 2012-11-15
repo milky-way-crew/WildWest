@@ -10,7 +10,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.catalina.tribes.util.Arrays;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
@@ -35,12 +34,16 @@ public class GuessGame {
 	private int turn = 0;
 	private String currentAnswer = "apple";
 	private Timer timer = new Timer();
-	private List<String> answers = java.util.Arrays.asList(new String[] {"apple", "dog", "cat", "dick", "mouse"});
+	// hardcode :(
+	private List<String> answers = java.util.Arrays.asList(new String[] {"apple", 
+			"dog", "cat", "dick", "mouse", "student"});
 	
 	private List<GuessPlayer> players = new ArrayList<GuessPlayer>();
 
 	public void addPlayer(GuessPlayer player) {
-		getPlayers().add(player);
+		if (this.getPlayerById(player.getId()) == null) {
+			getPlayers().add(player);
+		}
 	}
 
 	public void removePlayer(GuessPlayer player) {
@@ -52,9 +55,23 @@ public class GuessGame {
 		data.put("dataType", CHAT_MESSAGE);
 		data.put("sender", "Server");
 		data.put("message", message);
-		this.broadcast(data);
-
 		getPlayers().remove(player);
+		this.broadcast(data);
+	}
+	
+	public void deactivatePlayer(GuessPlayer player) {
+		log.debug("All players: " + players);
+		log.debug("Deactivating player: " + player);
+		String message = "Hmmm, " + player.getNick()
+				+ "disconnected. Total connection: " + (players.size() - 1);
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("dataType", CHAT_MESSAGE);
+		data.put("sender", "Server");
+		data.put("message", message);
+		player.setActive(false);
+
+		this.broadcast(data);
+//		getPlayers().remove(player);
 	}
 
 	public List<GuessPlayer> getPlayers() {
@@ -66,8 +83,11 @@ public class GuessGame {
 
 	public void startGame() {
 		log.debug("*** Starting guess-game ***");
-
-		turn = (turn + 1) % players.size();
+		log.debug("*** getting next-player ***");
+		do {
+			turn = getNextPlayer();
+		} while(!players.get(turn).isActive());		
+		log.debug("*** new player is: id=" + players.get(turn).getId());
 		
 		log.debug("*** Randomizing answers ***");
 		currentAnswer = randomizeAnswer();
@@ -79,8 +99,10 @@ public class GuessGame {
 		gameLogicData.put("isPlayerTurn", false);
 		this.broadcast(gameLogicData);
 
+		log.debug("*** Sending message to player who currently must draw ***");
 		final GuessPlayer playerWhoDraws = players.get(turn);
 		log.debug(String.format("*** Choose player with nick:[%s] to turn ***", playerWhoDraws.getNick()));
+		
 		HashMap<String, Object> gameLogicForDraw = new HashMap<String, Object>();
 		log.debug(String.format("*** Sending gameState Obj to [%s] ***", playerWhoDraws.getNick()));
 		gameLogicForDraw.put("dataType", GAME_LOGIC);
@@ -95,7 +117,7 @@ public class GuessGame {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				log.debug(String.format("*** Timer executes his task***"));
+				log.debug(String.format("*** Timer executes his task after 60s ***"));
 				log.debug(String.format("*** No one wins ***"));
 				HashMap<String, Object> gameLogicData = new HashMap<String, Object>();
 				gameLogicData.put("dataType", GAME_LOGIC);
@@ -108,6 +130,10 @@ public class GuessGame {
 		}, TimeUnit.SECONDS.toMillis(TIMER_WAIT_SECONDS));
 
 		currentState = GAME_START;
+	}
+
+	private int getNextPlayer() {
+		return (turn + 1) % players.size();
 	}
 
 	private String randomizeAnswer() {
@@ -134,11 +160,13 @@ public class GuessGame {
 		gameLogicData.put("dataType", GAME_LOGIC);
 		gameLogicData.put("gameState", WAITING_TO_START);
 		this.broadcast(gameLogicData);
-
+		player.setActive(true);
+		
 		// start the game if there are 2 or more connections
-		if (canBeStarted()) {
-			startGame();
-		}
+		// and game-state == WAITING_TO_START
+//		if (canBeStarted()) {
+//			startGame();
+//		}
 	}
 
 	private boolean canBeStarted() {
@@ -150,7 +178,7 @@ public class GuessGame {
 		ObjectMapper jackson = new ObjectMapper();
 		JsonNode messageTree = jackson.readTree(message);
 		int idUser = messageTree.path("userId").asInt();
-		int idGame = messageTree.path("gameId").asInt();
+//		int idGame = messageTree.path("gameId").asInt();
 
 		if (type == LINE_SEGMENT) {
 			broadcast(message);
@@ -170,8 +198,8 @@ public class GuessGame {
 		
 		if (type == CHAT_MESSAGE)
 		{
-			if (currentState == GAME_START && messageTree.path("message").asText().startsWith(currentAnswer))
-			{
+			if (currentState == GAME_START && isTrueAnswer(messageTree.path("message").asText())) {
+//					&& idUser != players.get(turn).getId())	{
 				log.debug(String.format("*** WE HAVE A WINNER ***"));
 				log.debug(String.format("*** Canceling timer ***"));
 				
@@ -185,32 +213,42 @@ public class GuessGame {
 				broadcast(gameLogicData);
 				
 				currentState = WAITING_TO_START;
-				
-//				log.debug(String.format("*** Trying to start new game ***"));
-//				if (canBeStarted()) {
-//					startGame();
-//				} else {
-//					log.debug(String.format("*** Cannot start new game***"));
-//				}
 			}
 		}
 		
-		
 		if (type == GAME_LOGIC && messageTree.path("gameState").asInt() == GAME_RESTART)
 		{
-			startGame();
+			log.info(String.format("Player id=[%d] want to restart game", idUser));
+			if (canBeStarted()) {
+				log.info(String.format("Starting new game", idUser));
+				startGame();
+			}
 		}
+	}
+
+	private boolean isTrueAnswer(String string) {
+		String[] strings = string.split(" ");
+		for (String maybeTrueAnswer : strings) {
+			if (maybeTrueAnswer.trim().equalsIgnoreCase(currentAnswer)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void broadcast(Map<String, ? extends Object> message) {
 		for (GuessPlayer player : players) {
-			player.sendMessage(message);
+			if (player.isActive()) {
+				player.sendMessage(message);
+			}
 		}
 	}
 
 	private void broadcast(String message) {
 		for (GuessPlayer player : players) {
-			player.getSocket().sendMessage(message);
+			if (player.isActive()) {
+				player.getSocket().sendMessage(message);
+			}
 		}
 	}
 

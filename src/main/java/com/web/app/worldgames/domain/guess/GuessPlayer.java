@@ -9,6 +9,7 @@ public class GuessPlayer {
 	private int id;
 	private String nick;
 	private GuessWebSocket socket;
+	private boolean active = false;
 	
 	public GuessPlayer() {
 	}
@@ -50,6 +51,14 @@ public class GuessPlayer {
 	public String toString() {
 		return "GuessPlayer [id=" + id + ", nick=" + nick + ", socket="
 				+ socket + "]";
+	}
+
+	public void setActive(boolean b) {
+		this.active = b;
+	}
+	
+	public boolean isActive() {
+		return active;
 	}
 	
 }

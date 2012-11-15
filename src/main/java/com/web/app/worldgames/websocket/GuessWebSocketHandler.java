@@ -1,7 +1,6 @@
 package com.web.app.worldgames.websocket;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -55,13 +54,8 @@ public class GuessWebSocketHandler extends WebSocketHandler {
 				JsonNode messageTree = jackson.readTree(json);
 				
 				int type = messageTree.path("dataType").getIntValue();
-				if (idUser == null) {
-					idUser = messageTree.path("userId").asInt();
-				}
 				
-				if (idGame == null) {
-					idGame = messageTree.path("gameId").asInt();
-				}
+				parseInnerId(messageTree);
 				
 				if (idGame != null && idUser != null) {
 					log.debug(String.format("Getting game with id:{%d} from GuessService", idGame));
@@ -70,7 +64,7 @@ public class GuessWebSocketHandler extends WebSocketHandler {
 					log.debug("Redirecting received message to onMessage() method of GuessGame"); 
 					game.onMessage(type, json);
 				} else {
-					log.info("Not enaugh info about user, missing idUser/idGame");
+					log.info("Not enough info about user, missing idUser/idGame");
 				}
 				
 			} catch (IOException e) {
@@ -79,28 +73,52 @@ public class GuessWebSocketHandler extends WebSocketHandler {
 			}
 		}
 
+		private void parseInnerId(JsonNode messageTree) {
+			if (idUser == null) {
+				idUser = messageTree.path("userId").asInt();
+			}
+			
+			if (idGame == null) {
+				idGame = messageTree.path("gameId").asInt();
+			}
+		}
+		
 		private void tryBindSocket(int idUser, GuessGame game) {
 			log.debug(String.format("Trying to update socket-connection with id-user:%d", idUser));
 			
 			GuessPlayer userFrom = game.getPlayerById(idUser);
-			GuessWebSocket socket = userFrom.getSocket();
-			if (socket == null || !socket.equals(this)) {
-				log.info("Binding ws to player with id: " + userFrom.getId());
-				userFrom.setSocket(this);
-				game.onConnect(idUser);
+			if (userFrom != null) {
+				userFrom.setActive(true);
+				GuessWebSocket socket = userFrom.getSocket();
+				if (socket == null || !socket.equals(this)) {
+					log.info("Binding ws to player with id: " + userFrom.getId());
+					userFrom.setSocket(this);
+					game.onConnect(idUser);
+				} else {
+					log.debug("No need to bind web-socket");
+				}
+			} else {
+				log.error(String.format("!! User[id=%d] not setted to game[id=%d]", idUser, idGame));
 			}
+			
 		}
 
 		@Override
 		public void onClose(int closeCode, String message) {
 			log.debug(String.format("User with id:%d disconnected", idUser));
 			GuessGame game = GuessGameService.INSTANCE.getGameById(idGame);
-			game.removePlayer(game.getPlayerById(idUser));
-			GuessGameService.INSTANCE.tryRemoveGame(idGame);
-			
-			log.info(String.format("Removing web-socket idUser:%d", idUser));
-			
-			webSockets.remove(this);
+			GuessPlayer player = game.getPlayerById(idUser);
+			if (player != null ) {
+				game.deactivatePlayer(player);
+				
+				GuessGameService.INSTANCE.tryRemoveGame(idGame);
+				
+				log.info(String.format("Removing web-socket idUser:%d", idUser));
+				
+				webSockets.remove(this);
+			} else {
+				log.error(String.format("Player object==null idUser:%d. Do nothing", idUser));
+			}
 		}
 
 		public Connection getConnection() {
@@ -128,7 +146,7 @@ public class GuessWebSocketHandler extends WebSocketHandler {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				String respose = mapper.writeValueAsString(message);
-				log.debug("Sending message: " + respose);
+				log.debug(String.format("Sending message: %s. To user=[%d]", respose, idUser));
 				connection.sendMessage(respose);
 			} catch (JsonGenerationException e) {
 				log.error("Error while generating JSON: ", e);
