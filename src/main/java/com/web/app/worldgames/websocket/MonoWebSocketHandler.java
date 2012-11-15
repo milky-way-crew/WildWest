@@ -16,7 +16,6 @@ import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 
 public class MonoWebSocketHandler extends WebSocketHandler {
