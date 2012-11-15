@@ -38,7 +38,7 @@ function update() {
 function createRoom() {
 	$.ajax({
 		url : ajax_url,
-		type : "GET",
+		type : "POST",
 		data : {
 			type : "create",
 			data : document.getElementById('roomName').value,
@@ -51,6 +51,10 @@ function createRoom() {
 		}
 	});
 };
+
+function closeModal(){
+	document.getElementById('roomName').value="";
+}
 
 document.getElementById('createRoom').onclick = createRoom;
 document.getElementById('send').onclick = message;

@@ -48,7 +48,7 @@
 					<h1>Chat</h1>
 					<div id="chatBox"></div>
 					<form name="message" action="">
-						<input type="text" id="usermsg" size=100
+						<input type="text" id="usermsg"
 							placeholder="Enter your message here..."> <a
 							class="btn btn-primary btn-medium" id="send">Send</a>
 					</form>
@@ -83,7 +83,6 @@
 	<div class="container">
 		<div id="createRoomModal" class="modal" style="display: none;">
 			<div class="modal-header">
-				<a class="close" data-dismiss="modal">×</a>
 				<h1>Create room</h1>
 			</div>
 			<div class="modal-body">
@@ -94,7 +93,8 @@
 			</div>
 			<div class="modal-footer">
 				<a id="createRoom" href="#" class="btn btn-success">Create</a> <a
-					href="#" class="btn" data-dismiss="modal">Close</a>
+					id="closeModal" href="#" onclick="closeModal()" class="btn"
+					data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>
