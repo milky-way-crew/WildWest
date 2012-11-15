@@ -22,10 +22,7 @@ canvas { /*position: relative;*/
 			<div class="span3">
 				<h1>Chat</h1>
 				<ul id="chat-history">
-					<li>Lorem Ipsum</li>
-					<li>Lorem Ipsum</li>
-					<li>Lorem Ipsum</li>
-					<li>Lorem Ipsum</li>
+					<li>No messages for now :(</li>
 				</ul>
 			</div>
 			<div class="span7" id="game-container">

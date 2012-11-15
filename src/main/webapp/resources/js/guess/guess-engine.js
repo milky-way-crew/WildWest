@@ -18,7 +18,7 @@ var timer = {
 		}
 	},
 	update : function () {
-		timer.config.timerElement.innerHTML = 'Timer: ' + timer.config.secondsLeft + 's';
+		timer.config.timerElement.innerHTML = 'Time: ' + timer.config.secondsLeft + 's';
 	},
 	start : function (secondsLeft) {
 		timer.config.isStopped = false;
@@ -118,13 +118,14 @@ guessGame.initHandlers = function() {
             data.message = message;
             guessGame.send(data);
             $("#chat-input").val("");
+            return false;
         };
 
     $("#send").click(sendMessage);
 
     $("#chat-input").keypress(function(event) {
         if(event.keyCode == '13') {
-            sendMessage();
+        	return sendMessage();
         }
     });
 
@@ -214,8 +215,9 @@ guessGame.initWebSockets = function() {
                     guessGame.isTurnToDraw = false;
                     $("#chat-history").append("<li>" + data.winner + " wins! The answer is '" + data.answer + "'.</li>");
                     timer.stop();
+                    $("#drawing-palette").show(100);
+                    $('#drawing-pallete .btn-info').hide(100);
                     $("#restart").show(100);
-                    $("#draw-palette").hide(100);
                 }
                 console.log("game state: ", data.gameState, "GAME_START: ", guessGame.GAME_START);
                 if(data.gameState == guessGame.GAME_START) {
@@ -226,18 +228,23 @@ guessGame.initWebSockets = function() {
                     // clear the chat history
                     $("#chat-history").html("");
                     if(data.isPlayerTurn) {
-                        guessGame.isTurnToDraw = true;
+                        $("#drawing-palette").show(100);
+                        $('#drawing-pallete .btn-info').show(100);
+                        $("#restart").hide(100);
+                    	
+                    	guessGame.isTurnToDraw = true;
                         $("#chat-history").append("<li>Your turn to draw. Please draw '" + data.answer + "'.</li>");
                         $('#drawing-pallete').show(100);
                         timer.config.interval = 1000 * 2;
                         timer.start(60);
+                        
+                        
                     } else {
-                        $("#chat-history").append("<li>Game Started. Get Ready. You have one minute to guess.</li>");
+                    	$("#chat-history").append("<li>Game Started. Get Ready. You have one minute to guess.</li>");
                         $('#drawing-pallete').hide(100);
                         timer.config.interval = 1000;
                         timer.start(60);
                     }
-                    $("#restart").hide(100);
                 }
             }
         };
