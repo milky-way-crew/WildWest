@@ -84,7 +84,6 @@
 	<div class="container">
 		<div id="createRoomModal" class="modal" style="display: none;">
 			<div class="modal-header">
-				<a class="close" data-dismiss="modal">×</a>
 				<h1>Create room</h1>
 			</div>
 			<div class="modal-body">
@@ -95,7 +94,8 @@
 			</div>
 			<div class="modal-footer">
 				<a id="createRoom" href="#" class="btn btn-success">Create</a> <a
-					href="#" class="btn" data-dismiss="modal">Close</a>
+					id="closeModal" href="#" onclick="closeModal()" class="btn"
+					data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>
