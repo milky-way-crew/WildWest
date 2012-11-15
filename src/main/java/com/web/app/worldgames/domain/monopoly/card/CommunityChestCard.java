@@ -2,41 +2,46 @@ package com.web.app.worldgames.domain.monopoly.card;
 
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 import com.web.app.worldgames.domain.monopoly.CommunityChest;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class CommunityChestCard extends Cell {
+	private final static Logger log = Logger.getLogger(CommunityChestCard.class);
+
 
 	public void chestActivity(Player player) {
 		boolean check = true;
 		CommunityChest chest = getRandomChestCard();
 		int price = chest.getMoney();
-		if (!chest.isAdd()) {
-			if (player.checkMoney(price)) {
-				service(player, chest);
-			} else {
-				while (check) {
-					player.listPropertyForMortage(player);
-					if (player.canMortage()) {
-
-						player.mortageAction(player);
-						if (player.checkMoney( price)) {
-							service(player, chest);
-							check = false;
-						} else {
-							check = true;
-						}
-					} else {
-						System.out.println("you haven't object");
-						player.setLoss(true);
-						System.out.println("loss: " + player.isLoss());
-						check = false;
-					}
-
-				}
-			}
-		}
+//		if (!chest.isAdd()) {
+//			if (player.checkMoney(price)) {
+//				service(player, chest);
+//			} else {
+//				while (check) {
+//					player.listPropertyForMortage(player);
+//					if (player.canMortage()) {
+//
+//						player.mortageAction(player);
+//						if (player.checkMoney( price)) {
+//							service(player, chest);
+//							check = false;
+//						} else {
+//							check = true;
+//						}
+//					} else {
+//						
+//						System.out.println("you haven't object");
+//						player.setLoss(true);
+//						System.out.println("loss: " + player.isLoss());
+//						check = false;
+//					}
+//
+//				}
+//			}
+//		}
 	}
 
 	public CommunityChest getRandomChestCard() {
@@ -44,7 +49,7 @@ public class CommunityChestCard extends Cell {
 		int chestIndex = randChest.nextInt(7);
 		for (CommunityChest chest : CommunityChest.values()) {
 			if (chest.ordinal() == chestIndex) {
-				System.out.println(chest.getMessage());
+				log.info("[MESSAGE]: " + chest.getMessage());
 				return chest;
 			}
 		}
@@ -84,14 +89,13 @@ public class CommunityChestCard extends Cell {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		System.out.println("community chest: ");
-		chestActivity(player);
+		//chestActivity(player);
+		service(player, getRandomChestCard());
 	}
 
 	@Override
 	public String info() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Community chest";
 	}
 
 

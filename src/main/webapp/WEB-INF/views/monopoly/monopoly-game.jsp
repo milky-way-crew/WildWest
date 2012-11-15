@@ -17,6 +17,7 @@
 			<div class="span6 well">
 				<button class="btn btn-primary" id="roll">roll</button>
 				<button class="btn btn-primary" id="buy">buy</button>
+				<button class="btn btn-primary" id="pay">pay</button>
 				<button class="btn btn-primary" id="mortage">mortage</button>
 				<button class="btn btn-primary" id="unmortage">unmortage</button>
 				<button class="btn btn-primary" id="build">build</button>
@@ -24,6 +25,7 @@
 			</div>
 			<div class="span4 well">
 				<button class="btn btn-primary" id="done">done</button>
+				<button class="btn btn-primary" id="ok">ok</button>
 				<button class="btn btn-primary" id="start">start</button>
 				<button class="btn btn-primary" id="ready">ready</button>
 			</div>

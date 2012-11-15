@@ -1,5 +1,7 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import org.apache.log4j.Logger;
+
 import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
@@ -21,7 +23,7 @@ public class CityCard extends SellableCard {
 	private int taxHotel;
 	private int position;
 
-	// private final static Logger LOG = Logger.getLogger(CityCard.class);
+	private final static Logger log = Logger.getLogger(CityCard.class);
 
 	Cities cities = null;
 
@@ -165,7 +167,7 @@ public class CityCard extends SellableCard {
 				numbersOfHouses++;
 				setNumbersOfHouses(numbersOfHouses);
 			}
-			System.out.println("You build castle. Number of houses are: "
+			log.info("[Message]: " + "You build castle. Number of houses are: "
 					+ getNumbersOfHouses());
 		}
 	}
@@ -193,12 +195,12 @@ public class CityCard extends SellableCard {
 		CityCard city = (CityCard) StartGame.boardCities().get(
 				player.getPosition());
 		if (canBuildHotel(player)) {
-			System.out.println("You can build hotel");
+			log.info("[Message]: " + "You can build hotel");
 			player.setMoney(player.getMoney() - city.getHotelPrice());
 			setHotel(true);
-			System.out.println("You build hotel.");
+			log.info("[Message]: " + "You can build hotel");
 		} else {
-			System.out.println("You cannot build hotel");
+			log.info("[Message]: " + "You cannot build hotel");
 		}
 		return isHotel();
 	}
@@ -273,11 +275,10 @@ public class CityCard extends SellableCard {
 			player.setMoney(player.getMoney());
 			player.setPosition(player.getPosition());
 		} else {
-			System.out.println("Owner of this city is: "
-					+ this.getOwner().getName());
+			log.info("[OWNER]: " + this.getOwner().getName());
 			int numberOfRegions = owner.getNumberOfRegions(owner,
 					owner.getRegion(player.getPosition()));
-			System.out.println(" Number of regions are: " + numberOfRegions);
+			log.info("[REGIONS]: " + numberOfRegions);
 			if (numberOfRegions == 1) {
 				return getTaxOneCard();
 			} else if (numberOfRegions == 2) {
@@ -316,11 +317,11 @@ public class CityCard extends SellableCard {
 	public void buyCityOrRail(Player player) {
 		this.setOwner(player);
 		player.addProperty(player);
-		System.out.println("You are owner now");
+		log.info("[MESSAGE]: You are owner now");
 		player.setMoney(player.getMoney() - getPrice());
-		System.out.println("Your money: " + player.getMoney());
+		log.info("[MONEY]: " + player.getMoney());
 		player.addRegions(player);
-		System.out.println("Your regions: " + player.listRegions(player));
+		log.info("[REGIONS LIST]: " + player.listRegions(player));
 
 	}
 

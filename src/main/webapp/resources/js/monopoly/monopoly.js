@@ -92,6 +92,18 @@ prompt, bootbox*/
 				console.log('sending **roll** message to server');
 				MONO.transport.send('roll', {});
 			});
+			$('#buy').click(function() {
+				console.log('sending **buy** message to server');
+				MONO.transport.send('buy', {});
+			});
+			$('#pay').click(function() {
+				console.log('sending **pay** message to server');
+				MONO.transport.send('pay', {});
+			});
+			$('#ok').click(function() {
+				console.log('sending **ok** message to server');
+				MONO.transport.send('ok', {});
+			});
 			$('#done').click(function() {
 				console.log('sending ***done*** message to server');
 				MONO.transport.send('done', {});

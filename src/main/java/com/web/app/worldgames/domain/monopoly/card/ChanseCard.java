@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Chance;
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.PlayerColors;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class ChanseCard extends Cell {
+	private static final Logger log = Logger.getLogger(ChanseCard.class);
 	private Map<String, Chance> chanceInstance = new HashMap<String, Chance>();
 
 	public Cell getDirectCard(Player player) {
@@ -45,31 +47,11 @@ public class ChanseCard extends Cell {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		// Map<String, Chance> chanceChoosen = getChanceInstance();
-		// for (Chance chance : Chance.values()) {
-		// if (chanceChoosen.containsValue(chance)) {
-		// //System.out.println(chance.getMessage());
-		// player.setPosition(chance.getPosition());
-		// if (player.getPosition() == CellPositions.JAIL) {
-		// JailCard jailCard = new JailCard();
-		// jailCard.effectOnPlayer(player);
-		// } else if (player.getPosition() == CellPositions.FREE_STATION) {
-		// FreeStation freeStation = new FreeStation();
-		// freeStation.effectOnPlayer(player);
-		// } else if (StartGame.boardRails.containsKey(player
-		// .getPosition())) {
-		// SellableCard cell = StartGame.boardRails.get(player
-		// .getPosition());
-		// cell.effectOnPlayer(player);
-		// }
-		// }
-		// }
-		// chanceChoosen.clear();
 		Random randChance = new Random();
 		int chanceIndex = randChance.nextInt(6);
 		for (Chance chance : Chance.values()) {
 			if (chance.ordinal() == chanceIndex) {
-				System.out.println(chance.getMessage());
+				log.info("[CHANCE] " + chance.getMessage());
 				chanceInstance.put(chance.getMessage(), chance);
 			}
 		}

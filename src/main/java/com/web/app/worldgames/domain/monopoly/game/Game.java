@@ -3,6 +3,8 @@ package com.web.app.worldgames.domain.monopoly.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
@@ -17,10 +19,13 @@ public class Game {
 	private Player currentPlayer = null;
 
 	public List<Player> playerList = new ArrayList<Player>();
-	//-------for test
+	// -------for test
 	public List<User> userList = new ArrayList<User>();
-//	public Map<Integer, SellableCard> boardCities = new HashMap<Integer, SellableCard>();
-//	public Map<Integer, SellableCard> boardRails = new HashMap<Integer, SellableCard>();
+	// public Map<Integer, SellableCard> boardCities = new HashMap<Integer,
+	// SellableCard>();
+	// public Map<Integer, SellableCard> boardRails = new HashMap<Integer,
+	// SellableCard>();
+	private static final Logger log = Logger.getLogger(Game.class);
 
 	public Game() {
 	}
@@ -86,6 +91,7 @@ public class Game {
 	public void addPlayers(User user) {
 		int listPlSize = playerList.size();
 		String color = null;
+		log.info("[PLAYER  LIST] " + playerList);
 		for (PlayerColors playerColors : PlayerColors.values()) {
 			if (playerColors.ordinal() == listPlSize) {
 				color = playerColors.getColor();
@@ -93,6 +99,7 @@ public class Game {
 		}
 		playerList.add(new Player(user, CellPositions.START,
 				CardPrices.START_MONEY, color));
+		log.info("[PLAYER  LIST AFTER --ADD--] " + playerList);
 	}
 
 	public boolean isReadyToStart() {
@@ -114,13 +121,16 @@ public class Game {
 	}
 
 	public Player getNextPlayer() {
+		int turn = 0;
 		if (this.isStarted()) {
-			int indexCurrentPlayer = this.getAllPlayers().indexOf(
-					this.getCurrentPlayer());
-			if (indexCurrentPlayer == getAllPlayers().size() - 1) {
-				return this.getAllPlayers().get(0);
-			}
-			return this.getAllPlayers().get(indexCurrentPlayer++);
+			turn = this.getAllPlayers().indexOf(this.getCurrentPlayer());
+			turn = (turn + 1) % getAllPlayers().size();
+			// int indexCurrentPlayer = this.getAllPlayers().indexOf(
+			// this.getCurrentPlayer());
+			// if (indexCurrentPlayer == getAllPlayers().size() - 1) {
+			// return this.getAllPlayers().get(0);
+			// }
+			return this.getAllPlayers().get(turn);
 		}
 		return null;
 	}

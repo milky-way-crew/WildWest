@@ -1,14 +1,18 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import org.apache.log4j.Logger;
+
 import com.web.app.worldgames.domain.monopoly.CardPrices;
+import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.PlayGame;
 import com.web.app.worldgames.domain.monopoly.Player;
+import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 
 public class JailCard extends Cell {
 	private boolean payMoney = false;
 	private boolean hasFreeCard = false;
 	private boolean wait = false;
-
+	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	public void entranceFromJailAndMove(Player player) {
 		PlayGame game = new PlayGame();
 		player.rollDicesAndMove();
@@ -20,6 +24,7 @@ public class JailCard extends Cell {
 	public void effectOnPlayer(Player player) {
 		player.setInJail(true);
 		if(player.isHasFreeCard()){
+			log.info("[IN JAIL: ] use card" );
 			player.setInJail(false);
 			player.setHasFreeCard(false);
 		}
@@ -77,7 +82,7 @@ public class JailCard extends Cell {
 	}
 
 	public boolean canPayRansom(Player player) {
-		return (player.checkMoney( CardPrices.RANSOM_FROM_JAIL)) ? true
+		return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL)) ? true
 				: false;
 	}
 
@@ -91,13 +96,26 @@ public class JailCard extends Cell {
 //		player.setInJail(false);
 //		player.setHasFreeCard(false);
 //	}
-	public void rollAndWait(Player player){
-		
+	public void rollAndWait(Player player, int dicePoint){
+		if (player.getCircleInJail() == 3) {
+			log.info("[CIRCLE IN JAIL] : " +player.getCircleInJail());
+			player.setPosition(dicePoint);
+			player.setCircleInJail(0);
+			player.setInJail(false);
+			log.info("[JAIL_MESSAGE] : you are going from jail" );
+		} else {
+			player.setPosition(CellPositions.JAIL);
+			player.setInJail(true);
+//			int circle = player.getCircleInJail();
+//			circle+=1;
+//			player.setCircleInJail(circle);
+			log.info("[CIRCLE IN JAIL] : " +player.getCircleInJail());
+			log.info("[JAIL] : You stay in jail" );
+		}
 	}
 	@Override
 	public String info() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Player is in jail";
 	}
 
 }

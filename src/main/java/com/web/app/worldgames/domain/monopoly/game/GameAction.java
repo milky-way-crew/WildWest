@@ -15,7 +15,6 @@ import com.web.app.worldgames.domain.monopoly.card.GoToJailCard;
 import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
-import com.web.app.worldgames.domain.monopoly.card.StartCard;
 import com.web.app.worldgames.domain.monopoly.card.TaxCard;
 
 public class GameAction {
@@ -26,8 +25,8 @@ public class GameAction {
 	 * @return map of active buttons depending on the position and players
 	 *         possibility
 	 */
-	public static Map<String, Boolean> action(Cell cell, Player player) {
-		Map<String, Boolean> result = new HashMap<String, Boolean>();
+	public static Map<String, Object> action(Cell cell, Player player) {
+		Map<String, Object> result = new HashMap<String, Object>();
 		if (cell instanceof SellableCard) {
 			if (cell instanceof CityCard) {
 				CityCard card = (CityCard) cell;
@@ -64,9 +63,18 @@ public class GameAction {
 		} else {
 			if (cell instanceof GoCard) {
 				cell.effectOnPlayer(player);
-				result.put(ButtonsLabel.OK, true);
+				// result.put(ButtonsLabel.OK, true);
+				result.put("player", player.getColor());
+				result.put("player_money", player.getMoney());
 			} else if (cell instanceof TaxCard) {
-				result.put(ButtonsLabel.PAY, ((TaxCard) cell).canPayTax(player));
+				if (((TaxCard) cell).canPayTax(player)) {
+					cell.effectOnPlayer(player);
+					result.put("player", player.getColor());
+					result.put("player_money", player.getMoney());
+				} else {
+					result.put(ButtonsLabel.PAY,
+							((TaxCard) cell).canPayTax(player));
+				}
 			} else if (cell instanceof JailCard) {
 				cell.effectOnPlayer(player);
 				result.put(ButtonsLabel.PAY,
@@ -74,16 +82,20 @@ public class GameAction {
 				result.put(ButtonsLabel.ROLL, true);
 			} else if (cell instanceof FreeStation) {
 				cell.effectOnPlayer(player);
-				result.put(ButtonsLabel.OK, true);
+				result.put("player", player.getColor());
+				// result.put(ButtonsLabel.OK, true);
 			} else if (cell instanceof GoToJailCard) {
 				cell.effectOnPlayer(player);
-				result.put(ButtonsLabel.OK, true);
+				result.put("player", player.isInJail());
+				// result.put(ButtonsLabel.OK, true);
 			} else if (cell instanceof ChanseCard) {
 				cell.effectOnPlayer(player);
+				((ChanseCard) cell).getDirectCard(player);
 				result.put(ButtonsLabel.OK, true);
+				((ChanseCard) cell).clearChanceMap();
 			} else if (cell instanceof CommunityChestCard) {
-				cell.effectOnPlayer(player);
-				result.put(ButtonsLabel.OK, true);
+				// cell.effectOnPlayer(player);
+				// result.put(ButtonsLabel.OK, true);
 			}
 		}
 		return result;

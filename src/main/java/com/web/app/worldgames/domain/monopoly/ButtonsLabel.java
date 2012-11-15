@@ -12,4 +12,6 @@ public interface ButtonsLabel {
 	String SELL = "sell";
 	String START = "start";
 	String READY = "ready";
+	String NEXT = "next";
+	String DONE = "done";
 }
