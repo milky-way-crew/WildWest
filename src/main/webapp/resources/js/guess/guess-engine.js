@@ -1,3 +1,37 @@
+var timer = {
+	config : {
+		secondsLeft : 0,
+		timerElement : document.getElementById('timer') || null,
+		isStopped : false,
+		interval : 1000 // 1s
+	},
+	attach : function (id) {
+		timer.config.timerElement = document.getElementById(id);
+	},
+	tick : function() {
+		if (timer.config.secondsLeft > 0 && !timer.config.isStopped) {
+			console.log("Seconds left: " + timer.config.secondsLeft);
+	        timer.config.secondsLeft -= 1;
+	        timer.update();
+	        window.setTimeout(timer.tick, timer.config.interval);		
+		} else {
+			timer.config.isStopped = true;
+		}
+	},
+	update : function () {
+		timer.config.timerElement.innerHTML = 'left: ' + timer.config.secondsLeft + 's';
+	},
+	start : function (secondsLeft) {
+		timer.config.isStopped = false;
+        timer.config.secondsLeft = secondsLeft;
+        timer.update();
+        window.setTimeout(timer.tick, timer.config.interval);
+	},
+	stop : function() {
+		timer.config.isStopped = true;
+	}
+};
+
 // canvas context
 var canvas = document.getElementById('drawing-pad');
 var ctx = canvas.getContext('2d');
@@ -44,7 +78,6 @@ var guessGame = {
                     guessGame.userId = data.userId;
                     guessGame.gameId = data.gameId;
 
-
                     // INIT REST
                     console.log('Started initing guessGame');
                     guessGame.initHandlers();
@@ -87,6 +120,19 @@ guessGame.initHandlers = function() {
         canvas.width = canvas.width;
     });
 
+    $('#restart').click(function() {
+		canvas.width = canvas.width;
+		$("#chat-history").html("");
+		$("#chat-history").append("<li>Restarting game.</li>");
+		
+		var data = {};
+		data.dataType = guessGame.GAME_LOGIC;
+		data.gameState = guessGame.GAME_RESTART;
+		guessGame.send(data);
+		
+		$('#restart').hide(100);
+	});
+    
     $("#drawing-pad").mousedown(function(e) {
         var offset = $(this).offset();
         var mouseX = (e.pageX - offset.left - 10) || 0;
@@ -150,6 +196,7 @@ guessGame.initWebSockets = function() {
                 if(data.gameState == guessGame.GAME_OVER) {
                     guessGame.isTurnToDraw = false;
                     $("#chat-history").append("<li>" + data.winner + " wins! The answer is '" + data.answer + "'.</li>");
+                    timer.stop();
                     $("#restart").show();
                 }
                 console.log("game state: ", data.gameState, "GAME_START: ", guessGame.GAME_START);
@@ -157,21 +204,25 @@ guessGame.initWebSockets = function() {
                     // clear the canvas.
                     canvas.width = canvas.width;
                     // hide the restart button.
-                    $("#restart").hide();
+                    $("#restart").hide(100);
                     // clear the chat history
                     $("#chat-history").html("");
                     if(data.isPlayerTurn) {
                         guessGame.isTurnToDraw = true;
                         $("#chat-history").append("<li>Your turn to draw. Please draw '" + data.answer + "'.</li>");
+                        timer.config.interval = 1000 * 2;
+                        timer.start(60);
                     } else {
                         $("#chat-history").append("<li>Game Started. Get Ready. You have one minute to guess.</li>");
+                        timer.config.interval = 1000;
+                        timer.start(60);
                     }
                 }
             }
         };
         // on close event
         guessGame.socket.onclose = function(e) {
-            $('#game h1').html('WebSocket connection closed. <br>Please, refresh page.');
+            $('#title').html('WebSocket connection closed. <br>Please, refresh page.');
             console.log('WebSocket connection closed.');
         };
     } else {

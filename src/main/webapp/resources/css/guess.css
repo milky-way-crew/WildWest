@@ -4,6 +4,14 @@
   font-weight: 700;
   src: local('CabinSketch Bold'), local('CabinSketch-Bold'), url('../font/sketch.woff') format('woff');
 }
+
+
+#wrapper {
+	text-align: center;
+	width: 520px;
+	margin: 0 auto;
+}
+
 #chat-header {
 	margin : 10px;
 	text-align : center;

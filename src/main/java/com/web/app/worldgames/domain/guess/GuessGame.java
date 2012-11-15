@@ -5,17 +5,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.catalina.tribes.util.Arrays;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class GuessGame {
-	private static final int TIMER_WAIT_SECONDS = 10;
+	private static final int TIMER_WAIT_SECONDS = 60; // 1-minute
 
 	private static final Logger log = Logger.getLogger(GuessGame.class);
 
@@ -33,6 +35,7 @@ public class GuessGame {
 	private int turn = 0;
 	private String currentAnswer = "apple";
 	private Timer timer = new Timer();
+	private List<String> answers = java.util.Arrays.asList(new String[] {"apple", "dog", "cat", "dick", "mouse"});
 	
 	private List<GuessPlayer> players = new ArrayList<GuessPlayer>();
 
@@ -41,6 +44,16 @@ public class GuessGame {
 	}
 
 	public void removePlayer(GuessPlayer player) {
+		log.debug("All players: " + players);
+		log.debug("Removing player: " + player);
+		String message = "Hmmm, " + player.getNick()
+				+ "disconnected. Total connection: " + (players.size() - 1);
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("dataType", CHAT_MESSAGE);
+		data.put("sender", "Server");
+		data.put("message", message);
+		this.broadcast(data);
+
 		getPlayers().remove(player);
 	}
 
@@ -98,8 +111,9 @@ public class GuessGame {
 	}
 
 	private String randomizeAnswer() {
-		// TODO FIXME FIXME
-		return currentAnswer;
+		Random random = new Random();
+		int answer = random.nextInt(answers.size());
+		return answers.get(answer);
 	}
 
 	public void onConnect(int idWho) {
@@ -172,12 +186,12 @@ public class GuessGame {
 				
 				currentState = WAITING_TO_START;
 				
-				log.debug(String.format("*** Trying to start new game ***"));
-				if (canBeStarted()) {
-					startGame();
-				} else {
-					log.debug(String.format("*** Cannot start new game***"));
-				}
+//				log.debug(String.format("*** Trying to start new game ***"));
+//				if (canBeStarted()) {
+//					startGame();
+//				} else {
+//					log.debug(String.format("*** Cannot start new game***"));
+//				}
 			}
 		}
 		

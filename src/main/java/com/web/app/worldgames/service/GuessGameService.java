@@ -43,4 +43,13 @@ public enum GuessGameService {
 			return false;
 		}
 	}
+	public void tryRemoveGame(int idGame) {
+		GuessGame game = serverMap.get(idGame);
+		log.info(String.format("Trying to remove game with id:%d.", idGame));
+		
+		if (game.getPlayers().size() == 0) {
+			log.info(String.format("Removing game with id:%d. Reason: 0 players in.", idGame));
+			serverMap.remove(idGame);
+		}
+	}
 }

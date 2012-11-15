@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,11 +34,15 @@ public class GuessWebSocketHandler extends WebSocketHandler {
 
 	public class GuessWebSocket implements WebSocket.OnTextMessage {
 		private Connection connection;
-
+		private Integer idUser;
+		private Integer idGame;
+		
+		
 		@Override
 		public void onOpen(final Connection connection) {
 			log.info("Websocket connection opened");
 			this.connection = connection;
+			this.connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(10));
 			webSockets.add(this);
 		}
 
@@ -50,15 +55,23 @@ public class GuessWebSocketHandler extends WebSocketHandler {
 				JsonNode messageTree = jackson.readTree(json);
 				
 				int type = messageTree.path("dataType").getIntValue();
+				if (idUser == null) {
+					idUser = messageTree.path("userId").asInt();
+				}
 				
-				int idUser = messageTree.path("userId").asInt();
-				int idGame = messageTree.path("gameId").asInt();
+				if (idGame == null) {
+					idGame = messageTree.path("gameId").asInt();
+				}
 				
-				log.debug(String.format("Getting game with id:{%d} from GuessService", idGame));
-				GuessGame game = GuessGameService.INSTANCE.getGameById(idGame);
-				tryBindSocket(idUser, game);
-				log.debug("Redirecting received message to onMessage() method of GuessGame"); 
-				game.onMessage(type, json);
+				if (idGame != null && idUser != null) {
+					log.debug(String.format("Getting game with id:{%d} from GuessService", idGame));
+					GuessGame game = GuessGameService.INSTANCE.getGameById(idGame);
+					tryBindSocket(idUser, game);
+					log.debug("Redirecting received message to onMessage() method of GuessGame"); 
+					game.onMessage(type, json);
+				} else {
+					log.info("Not enaugh info about user, missing idUser/idGame");
+				}
 				
 			} catch (IOException e) {
 				log.error("Error in receving message fro, client", e);
@@ -80,6 +93,13 @@ public class GuessWebSocketHandler extends WebSocketHandler {
 
 		@Override
 		public void onClose(int closeCode, String message) {
+			log.debug(String.format("User with id:%d disconnected", idUser));
+			GuessGame game = GuessGameService.INSTANCE.getGameById(idGame);
+			game.removePlayer(game.getPlayerById(idUser));
+			GuessGameService.INSTANCE.tryRemoveGame(idGame);
+			
+			log.info(String.format("Removing web-socket idUser:%d", idUser));
+			
 			webSockets.remove(this);
 		}
 

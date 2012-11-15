@@ -45,4 +45,11 @@ public class GuessPlayer {
 	public void setSocket(GuessWebSocket socket) {
 		this.socket = socket;
 	}
+
+	@Override
+	public String toString() {
+		return "GuessPlayer [id=" + id + ", nick=" + nick + ", socket="
+				+ socket + "]";
+	}
+	
 }
