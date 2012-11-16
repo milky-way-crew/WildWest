@@ -47,41 +47,45 @@ public class MonopolyManager {
 		log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
 
 		Map<String, Object> response = new HashMap<String, Object>();
-		// WebSocketTransport socketTransport =
-		// WebSocketTransport.getInstance();
+		if ($(type).equals("init")) {
+			WebSocketTransport transport = WebSocketTransport.getInstance();
+			response.put("type", "init");
+			response.put("color", getPlayerById(idPlayer).getColor());
+			response.put("money", getPlayerById(idPlayer).getMoney());
+			response.put("isCreator", getCreator().getId() == idPlayer);
+			transport.sendMessage(idPlayer, response);
+			Map<String, Object> welcome = new HashMap<String, Object>();
+			welcome.put("type", "chat");
+			welcome.put("message", "Welcome "
+					+ getPlayerById(idPlayer).getName());
+			broadcast(welcome);
+		}
 		if ($(type).equals(READY)) {
-//			Player currentPlayer = getMonopolyGame().getCurrentPlayer();
-//			if (currentPlayer.getId() == idPlayer) {
-				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				 Player currentPlayer = getPlayerById(idPlayer);
-				currentPlayer.setReadyToStart(true);
-				log.info("[PLAYER IS READY TO START: ]"
-						+ currentPlayer.isReadyToStart());
-				response.put("type", READY);
-				if (getMonopolyGame().isReadyToStart()) {
-					log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-					getMonopolyGame().start();
-					log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
-					broadcast(response);
-				}
-				response.put("type", START);
-				response.put("start", getMonopolyGame().isStarted());
-//			}
+			Player currentPlayer = getPlayerById(idPlayer);
+			currentPlayer.setReadyToStart(true);
+			log.info("[PLAYER IS READY TO START: ]" + currentPlayer.getColor()
+					+ " : " + currentPlayer.isReadyToStart());
+			response.put("type", READY);
+			response.put("player", currentPlayer.getColor());
+			response.put("ready", currentPlayer.isReadyToStart());
+			broadcast(response);
 		}
 
-//		if ($(type).equals(START)) {
-//			if (getMonopolyGame().isReadyToStart()) {
-//				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-//				getMonopolyGame().start();
-//				log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
-//				broadcast(response);
-//			}
-//			response.put("type", START);
-//			response.put("start", getMonopolyGame().isStarted());
-//		}
+		if ($(type).equals(START)) {
+			response.put("type", "LOGIC");
+			if (getMonopolyGame().isReadyToStart()
+					&& !getMonopolyGame().isStarted()) {
+				getMonopolyGame().start();
+				log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
+				response.put("game_status", "start");
+			} else {
+				response.put("game_status", "waiting");
+			}
+			broadcast(response);
+		}
 		if (getMonopolyGame().isStarted()) {
 			if ($(type).equals(ButtonsLabel.ROLL)) {
-				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
+				// log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
 				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				if (currentPlayer.getId() == idPlayer) {
 					if (currentPlayer.isInJail()) {
@@ -134,17 +138,17 @@ public class MonopolyManager {
 					// getMonopolyGame().getCurrentPlayer();
 					SellableCard card = (SellableCard) CardFactory
 							.chooseCard(currentPlayer);
-					if(card.canBuy(currentPlayer)){
-						
-					log.info("[Cell: ]" + card.info());
-					card.buyCityOrRail(currentPlayer);
-					log.info("[Player: ]" + currentPlayer.getColor()
-							+ " buy this cell");
-					log.info("[Player: ]" + currentPlayer.getColor()
-							+ " money: " + currentPlayer.getMoney());
-					response.put("type", ButtonsLabel.BUY);
-					response.put("player", currentPlayer.getColor());
-					response.put("player_money", currentPlayer.getMoney());
+					if (card.canBuy(currentPlayer)) {
+
+						log.info("[Cell: ]" + card.info());
+						card.buyCityOrRail(currentPlayer);
+						log.info("[Player: ]" + currentPlayer.getColor()
+								+ " buy this cell");
+						log.info("[Player: ]" + currentPlayer.getColor()
+								+ " money: " + currentPlayer.getMoney());
+						response.put("type", ButtonsLabel.BUY);
+						response.put("player", currentPlayer.getColor());
+						response.put("player_money", currentPlayer.getMoney());
 					}
 				}
 				broadcast(response);
