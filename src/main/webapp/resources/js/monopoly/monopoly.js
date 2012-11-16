@@ -5,6 +5,17 @@ prompt, bootbox*/
 
 // $(document).ready(function() {
 "use strict";
+var chat = {
+	$chat : null,
+	init : function () {
+		console.log('Initing chat');
+		chat.$chat = $('#chat');
+	},
+	append : function (what) {
+		chat.$chat.append('<li>' + what + '</li>');	
+	}
+};
+
 var MONO = {};
 
 MONO = {
@@ -33,6 +44,7 @@ MONO = {
 			MONO.transport.socket.send(jsonString);
 		},
 		init: function() {
+
 			$.ajax({
 				url: MONO.config.ajaxUrl,
 				type: 'post',
@@ -98,7 +110,11 @@ MONO = {
 							"opacity": opacityValue
 						}, 100);
 					});
+					if (buttons.message) {
+						chat.append(buttons.message);
+					}
 				}
+
 			},
 			'init': function(json) {
 				console.log('[init] event');
@@ -113,7 +129,7 @@ MONO = {
 				}
 			},
 			'chat': function(json) {
-				$('#chat').append('<li>' + json.message + '</li>');
+				chat.append(json.message);
 			},
 			'logic': function(json) {
 				alert('game-status:' + json.game_status);
@@ -124,13 +140,13 @@ MONO = {
 				}
 			},
 			'ready': function(json) {
-				$('#chat').append('<li>' + json.player + ' is ready=' + json.ready + '</li>');
+				chat.append(json.player + ' is ready=' + json.ready);
 			},
 			'undefined': function(json) {
 				console.log('Unknown response');
 			},
 			'turn': function(json) {
-				$('#chat').append('<li>' + json.player + ' turn=true</li>');
+				chat.append(json.player + ' turn=true');
 				$('.btn').animate({
 					"opacity": "0.5"
 				}, 100);
@@ -145,13 +161,13 @@ MONO = {
 	},
 	animate: {
 		move: function(offset) {
-			$('#chat').append('<li>' + 'Moving offset: ' + offset + '</li>');
+			chat.append('Moving offset: ' + offset);
 			console.log('Moving to: ' + offset);
 		}
 	},
 	init: function() {
 		MONO.transport.init();
-
+		chat.init();
 
 		$('#roll').click(function() {
 			console.log('sending **roll** message to server');
