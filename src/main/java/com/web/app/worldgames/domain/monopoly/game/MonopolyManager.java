@@ -220,7 +220,7 @@ public class MonopolyManager {
 					response.put("dice1", currentPlayer.getDiceOne());
 					response.put("dice2", currentPlayer.getDiceTwo());
 					response.put("money", currentPlayer.getMoney());
-					response.put("buttons", GameAction.action(
+					response.put("game_state", GameAction.action(
 							CardFactory.chooseCard(currentPlayer),
 							currentPlayer));
 					response.put("cell", CardFactory.chooseCard(currentPlayer));
