@@ -225,6 +225,7 @@ public class MonopolyManager {
 				broadcast(response);
 			}
 			if ($(type).equals(ButtonsLabel.DONE)) {
+				Map<String, Object> turn  = new HashMap<String, Object>();
 				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				currentPlayer.setRolled(false);
 				// if (currentPlayer.getId() == idPlayer) {
@@ -239,9 +240,11 @@ public class MonopolyManager {
 				log.info("[Player: ]" + currentPlayer.getName() + ":"
 						+ currentPlayer.getColor() + " can roll dice");
 				response.put("type", ButtonsLabel.DONE);
-				response.put("done", currentPlayer);
+				response.put("next_player", currentPlayer.getColor());
+				turn.put("type", TURN);
+				turn.put("next_player", currentPlayer.getColor());
 				// }
-				broadcast(response);
+				broadcast(turn);
 			}
 		}
 //			if ($(type).equals(ButtonsLabel.REFUSE)) {
