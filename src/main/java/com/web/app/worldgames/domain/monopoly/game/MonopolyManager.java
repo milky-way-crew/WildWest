@@ -118,6 +118,7 @@ public class MonopolyManager {
 						response.put("inJail", currentPlayer.isInJail());
 						response.put("player", currentPlayer.getColor());
 					} else {
+						response.put("was", currentPlayer.getPosition());
 						currentPlayer.rollDicesAndMove();
 						log.info("[Player: ]" + currentPlayer.getName() + " : "
 								+ currentPlayer.getColor());
@@ -129,7 +130,6 @@ public class MonopolyManager {
 								+ CardFactory.chooseCard(currentPlayer).info());
 						response.put("type", ButtonsLabel.ROLL);
 						response.put("player", currentPlayer.getColor());
-						response.put("was", currentPlayer.getPosition());
 						response.put("dice1", currentPlayer.getDiceOne());
 						response.put("dice2", currentPlayer.getDiceTwo());
 						response.put("money", currentPlayer.getMoney());
@@ -137,7 +137,7 @@ public class MonopolyManager {
 								CardFactory.chooseCard(currentPlayer),
 								currentPlayer));
 						response.put("cell",
-								CardFactory.chooseCard(currentPlayer));
+								CardFactory.chooseCard(currentPlayer).info());
 					}
 						// try {
 						// response.put("buttons", GameAction.action(
