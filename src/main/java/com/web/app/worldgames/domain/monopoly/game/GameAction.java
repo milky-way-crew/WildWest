@@ -45,6 +45,7 @@ public class GameAction {
 				result.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
 				result.put(ButtonsLabel.SELL, card.canSell(player));
 				result.put(ButtonsLabel.PAY, false);
+				result.put(ButtonsLabel.DONE, true);
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
 				result.put(ButtonsLabel.BUY, card.canBuy(player));
@@ -58,38 +59,45 @@ public class GameAction {
 				result.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
 				result.put(ButtonsLabel.SELL, card.canSell(player));
 				result.put(ButtonsLabel.PAY, false);
+				result.put(ButtonsLabel.DONE, true);
 			}
 		} else {
 			if (cell instanceof GoCard) {
 				cell.effectOnPlayer(player);
 				// result.put("player", player.getColor());
 				// result.put("player_money", player.getMoney());
+				result.put(ButtonsLabel.DONE, true);
 			} else if (cell instanceof TaxCard) {
 				if (((TaxCard) cell).canPayTax(player)) {
 					cell.effectOnPlayer(player);
+					result.put(ButtonsLabel.DONE, true);
 					// result.put("player", player.getColor());
 					// result.put("player_money", player.getMoney());
 				} else {
-					result.put("Problem", "No money");
+					//result.put("Problem", "No money");
 				}
 			} else if (cell instanceof JailCard) {
+				result.put(ButtonsLabel.DONE, true);
 				cell.effectOnPlayer(player);
 				result.put(ButtonsLabel.PAY,
 						((JailCard) cell).canPayRansom(player));
 				result.put(ButtonsLabel.ROLL, true);
 			} else if (cell instanceof FreeStation) {
 				cell.effectOnPlayer(player);
+				result.put(ButtonsLabel.DONE, true);
 				// result.put("player", player.getColor());
 			} else if (cell instanceof GoToJailCard) {
 				cell.effectOnPlayer(player);
 				// result.put("player", player.isInJail());
+				result.put(ButtonsLabel.DONE, true);
 				// result.put("Move to:", CellPositions.JAIL);
 			} else if (cell instanceof ChanseCard) {
 				cell.effectOnPlayer(player);
+				result.put(ButtonsLabel.DONE, true);
 				// result.put("Move to:", ((ChanseCard)
 				// cell).getMovePosition());
 			} else if (cell instanceof CommunityChestCard) {
-
+				result.put(ButtonsLabel.DONE, true);
 			}
 		}
 		return result;

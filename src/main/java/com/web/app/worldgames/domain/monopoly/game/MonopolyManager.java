@@ -178,19 +178,6 @@ public class MonopolyManager {
 				broadcast(response);
 			}
 			// }
-			if ($(type).equals(ButtonsLabel.REFUSE)) {
-				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				// Player currentPlayer = getMonopolyGame().getCurrentPlayer();
-				Player currentPlayer = getPlayerById(idPlayer);
-				SellableCard card = (SellableCard) CardFactory
-						.chooseCard(currentPlayer);
-				card.refuse(currentPlayer);
-				log.info("[Player: ]" + currentPlayer.getColor() + " refuse");
-				response.put("type", ButtonsLabel.REFUSE);
-				response.put("player", currentPlayer.getColor());
-				// response.put("player_money", currentPlayer.getMoney());
-				broadcast(response);
-			}
 			if ($(type).equals(ButtonsLabel.PAY)) {
 				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				if (currentPlayer.getId() == idPlayer) {
@@ -257,6 +244,19 @@ public class MonopolyManager {
 				broadcast(response);
 			}
 		}
+//			if ($(type).equals(ButtonsLabel.REFUSE)) {
+//				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
+//				// Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+//				Player currentPlayer = getPlayerById(idPlayer);
+//				SellableCard card = (SellableCard) CardFactory
+//						.chooseCard(currentPlayer);
+//				card.refuse(currentPlayer);
+//				log.info("[Player: ]" + currentPlayer.getColor() + " refuse");
+//				response.put("type", ButtonsLabel.REFUSE);
+//				response.put("player", currentPlayer.getColor());
+//				// response.put("player_money", currentPlayer.getMoney());
+//				broadcast(response);
+//			}
 
 		// socketTransport.sendMessage(idPlayer, response);
 
