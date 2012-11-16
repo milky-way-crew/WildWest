@@ -71,23 +71,26 @@ public class MonopolyManager {
 			response.put("ready", currentPlayer.isReadyToStart());
 			broadcast(response);
 		}
-		if($(type).equals(TURN)){
-			Player currentPlayer = getPlayerById(idPlayer);
-			response.put("type", TURN);
-			response.put("player", currentPlayer.getColor());
-			broadcast(response);
-		}
 		if ($(type).equals(START)) {
+			Map<String, Object> turn = null;
 			response.put("type", "logic");
 			if (getMonopolyGame().isReadyToStart()
 					&& !getMonopolyGame().isStarted()) {
 				getMonopolyGame().start();
 				log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
 				response.put("game_status", "start");
+				turn = new HashMap<String, Object>();
+				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+				turn.put("type", TURN);
+				turn.put("player", currentPlayer.getColor());
+
 			} else {
 				response.put("game_status", "waiting");
 			}
 			broadcast(response);
+			if (turn != null) {
+				broadcast(turn);
+			}
 		}
 		if (getMonopolyGame().isStarted()) {
 			if ($(type).equals(ButtonsLabel.ROLL)) {
