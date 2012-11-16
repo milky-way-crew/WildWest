@@ -32,6 +32,39 @@ var timer = {
 };
 var canvas = document.getElementById('drawing-pad');
 var ctx = canvas.getContext('2d');
+var chat = {
+	MAX_MSG : 8,
+	$chat : null,
+	init : function() {
+		chat.$chat = $('#chat-history');
+	},
+	append : function(what) {
+		var msgCount = chat.$chat.find('li').size();
+		if (msgCount + 1 > chat.MAX_MSG) {
+			chat.$chat.find('li').first().fadeOut(100, function() {
+				$(this).remove();
+				chat.$chat.append('<li> ' + what + '</li>');
+			});
+		} else {
+			chat.$chat.append('<li> ' + what + '</li>');
+		}
+	},
+	clear : function() {
+		chat.$chat.html('');
+	}
+};
+var stats = {
+		$stats : null,
+		init : function() {
+			stats.$stats = $('#stats');
+		},
+		append : function(what) {
+			stats.$stats.append('<li> ' + what + '</li>');
+		},
+		remove : function(what) {
+			console.error('#remove dont supported');
+		}
+};
 var guessGame = {
     // Contants
     LINE_SEGMENT: 0,
@@ -46,7 +79,7 @@ var guessGame = {
     GAME_RESTART: 3,
 
     isDrawing: false,
-    isTurnToDraw: true, // FOR DEBUG -> SET TRUE
+    isTurnToDraw: false, // FOR DEBUG -> SET TRUE
 
     // the starting point of next line drawing.
     startX: 0,
@@ -75,6 +108,8 @@ var guessGame = {
 
                     // INIT REST
                     console.log('Started initing guessGame');
+                    chat.init();
+                    stats.init();
                     guessGame.initHandlers();
                     guessGame.initWebSockets();
                     console.log('Finished initing guessGame');
@@ -206,14 +241,25 @@ guessGame.initWebSockets = function() {
             console.log("onmessage event:", e.data);
             var data = JSON.parse(e.data);
             if(data.dataType == guessGame.CHAT_MESSAGE) {
-                $("#chat-history").append("<li>" + data.sender + " said: " + data.message + "</li>");
+            	
+            	chat.append(data.sender + " : " + data.message);
+            	if (data.sender == "Server") {
+            		$('#chat-history li').last().css({"color":"rgb(15, 99, 30)"});
+            		var tokens = data.message.split(" ");
+            		if (tokens[0].toLowerCase() == "welcome") {
+            			stats.append(tokens[1]);
+            		}
+            		// DISCO
+            	}
+//                $("#chat-history").append("<li>" + data.sender + " said: " + data.message + "</li>");
             } else if(data.dataType == guessGame.LINE_SEGMENT) {
             	drawLine(ctx, data.startX, data.startY, data.endX, data.endY, data.thickness, data.strokeStyle);
 //                drawLine(ctx, data.startX, data.startY, data.endX, data.endY, guessGame.thickness);
             } else if(data.dataType == guessGame.GAME_LOGIC) {
                 if(data.gameState == guessGame.GAME_OVER) {
                     guessGame.isTurnToDraw = false;
-                    $("#chat-history").append("<li>" + data.winner + " wins! The answer is '" + data.answer + "'.</li>");
+                    chat.append(data.winner + " wins! The answer is '" + data.answer);
+//                    $("#chat-history").append("<li>" + data.winner + " wins! The answer is '" + data.answer + "'.</li>");
                     timer.stop();
                     $("#drawing-palette").show(100);
                     $('#drawing-pallete .btn-info').hide(100);
@@ -226,21 +272,24 @@ guessGame.initWebSockets = function() {
                     // hide the restart button.
  
                     // clear the chat history
-                    $("#chat-history").html("");
+//                    $("#chat-history").html("");
                     if(data.isPlayerTurn) {
                         $("#drawing-palette").show(100);
                         $('#drawing-pallete .btn-info').show(100);
                         $("#restart").hide(100);
                     	
                     	guessGame.isTurnToDraw = true;
-                        $("#chat-history").append("<li>Your turn to draw. Please draw '" + data.answer + "'.</li>");
+                    	//FIXME to chat.-append
+                    	chat.append("Your turn to draw. Please draw '" + data.answer + "'.");
+//                        $("#chat-history").append("<li></li>");
                         $('#drawing-pallete').show(100);
                         timer.config.interval = 1000 * 2;
                         timer.start(60);
                         
                         
                     } else {
-                    	$("#chat-history").append("<li>Game Started. Get Ready. You have one minute to guess.</li>");
+                    	chat.append("Game Started. Get Ready. You have one minute to guess.");
+//                    	$("#chat-history").append("<li>Game Started. Get Ready. You have one minute to guess.</li>");
                         $('#drawing-pallete').hide(100);
                         timer.config.interval = 1000;
                         timer.start(60);
@@ -254,7 +303,7 @@ guessGame.initWebSockets = function() {
             console.log('WebSocket connection closed.');
         };
     } else {
-        alert('Sorry, you have no websockets in your browser, so cant play this game.');
+        alert('Sorry, you dont have websockets in your browser, so cant play this game.');
     }
 };
 

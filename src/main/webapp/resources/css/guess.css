@@ -1,3 +1,8 @@
+#navbar {
+	font-family:"Helvetica", "arial";
+}
+
+
 @font-face {
   font-family: 'Cabin Sketch';
   font-style: normal;
@@ -16,12 +21,12 @@
 }
 
 #chat-header {
-//	margin : 10px;
 	text-align : center;
 }
 body {
 	background: #ccd6e1;
-	font-family: 'Cabin Sketch', arial, serif; 
+	font-family: 'Cabin Sketch', arial, serif;
+//	font-family: 'Neucha', arial, serif;
 }
 
 #game {
@@ -29,11 +34,11 @@ body {
 	margin: 0 auto;
 }
 
-#game h1 {
-	text-align: center;
-	margin-bottom: 5px;
-	text-shadow: 0px 1px 0px #fff;
-}
+	#game h1 {
+		text-align: center;
+		margin-bottom: 5px;
+		text-shadow: 0px 1px 0px #fff;
+	}
 
 #drawing-pad {
 	cursor:crosshair;
@@ -42,25 +47,29 @@ body {
 	box-shadow:0px 3px 5px #333;
 }
 
-#drawing-pallete button{
-//	font-size: 1.2em;
-	cursor : pointer;
-//	display : none;
+#drawing-pallete {
+	font-size: 20px;
 }
-/*
-#drawing-pad:hover {
-	cursor:crosshair;
-}*/
+	#drawing-pallete button{
+	//	font-size: 1.2em;
+		cursor : pointer;
+	//	display : none;
+	}
+
 
 #chat-history {
+	word-wrap:break-word;
 	list-style: none;
 	padding: 0;
 }
 
-#chat-history li {
-	font-size: 1.4em;
-	border-bottom: 1px dashed rgba(20,20,20,.2);
-	margin: 10px 0;
-	color: #000;
-}
+	#chat-history li {
+		font-size: 1.4em;
+		border-bottom: 1px dashed rgba(20,20,20,.2);
+		margin: 10px 0;
+		color: #000;
+	}
 
+#stats li {
+	font-size: 1.4em;	
+}

@@ -16,9 +16,9 @@
 		<div class="navbar-inner">
 			<a class="brand" href="./home">#home</a>
 			<ul class="nav">
-				<li class="active"><a href="#"></a></li>
 				<li><a href="./chess">Chess rooms</a></li>
 				<li><a href="#">Blablabla</a></li>
+				<li class="pull-right"><a href="./logout">Logout</a></li>
 			</ul>
 		</div>
 	</div>
