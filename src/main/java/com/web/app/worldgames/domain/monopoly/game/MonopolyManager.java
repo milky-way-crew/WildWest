@@ -20,6 +20,8 @@ public class MonopolyManager {
 	private static final String START = "start";
 	private static final String READY = "ready";
 	private static final String TURN = "turn";
+	private static final String ROLL_EVENTS = "";
+	//private static final String TURN = "turn";
 	// private static final String DONE = "done";
 	// private static final String BUY = "buy";
 	private Game monopolyGame;
@@ -190,6 +192,7 @@ public class MonopolyManager {
 							+ "in jail]" + currentPlayer.isInJail());
 					JailCard card = new JailCard();
 					response.put("type", ButtonsLabel.ROLL);
+					response.put("event", "city");
 					response.put("dice1", currentPlayer.getDiceOne());
 					response.put("dice2", currentPlayer.getDiceTwo());
 					response.put("buttons", GameAction.action(
@@ -222,16 +225,6 @@ public class MonopolyManager {
 							currentPlayer));
 					response.put("cell", CardFactory.chooseCard(currentPlayer));
 				}
-				// try {
-				// response.put("buttons", GameAction.action(
-				// CardFactory.chooseCard(currentPlayer),
-				// currentPlayer));
-				// } catch (Exception e) {
-				// log.error("Exception in [ROLL] section", e);
-				// }
-				// if (Player.doublePoints()) {
-				// response.put("doubleDice", true);
-				// }
 			}
 		}
 		broadcast(response);
