@@ -107,6 +107,14 @@ prompt, bootbox*/
 				},
 				'undefined': function(json) {
 					console.log('Unknown response');
+				}, 
+				'turn' : function (json) {
+					$('#chat').append('<li>' + json.player + ' turn=true</li>');
+					$('.btn').animate({"opacity" : "0.5"}, 100);
+
+					if (json.player === MONO.config.color) {
+						$('#roll').animate({"opacity" : "1"}, 100);
+					}
 				}
 			}
 		},
