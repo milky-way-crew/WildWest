@@ -6,13 +6,13 @@ prompt, bootbox*/
 // $(document).ready(function() {
 "use strict";
 var chat = {
-	$chat : null,
-	init : function () {
+	$chat: null,
+	init: function() {
 		console.log('Initing chat');
 		chat.$chat = $('#chat');
 	},
-	append : function (what) {
-		chat.$chat.append('<li>' + what + '</li>');	
+	append: function(what) {
+		chat.$chat.prepend('<li>' + what + '</li>');
 	}
 };
 
@@ -85,6 +85,9 @@ MONO = {
 			}
 		},
 		handle: {
+			'undefined': function(json) {
+				console.log('Unknown response');
+			},
 			'roll': function(json) {
 				console.log('[roll] event');
 				var dice1 = json.dice1,
@@ -96,23 +99,27 @@ MONO = {
 				console.log('Current money is: ' + money);
 				MONO.config.money = money;
 
-				MONO.animate.move(offset);
+				MONO.animate.move(color, dice1, dice2);
 
 				// this player moves
 				if(MONO.config.color === color) {
-					$("#controls .btn").each(function (i, btn) {
-						$(btn).animate({"opacity": "0.5"});
+					$("#controls .btn").each(function(i, btn) {
+						$(btn).animate({
+							"opacity": "0.5"
+						});
 					});
 
-					$.each(buttons, function(btnName) {
-						var opacityValue = buttons[btnName] ? "1" : "0.5";
-						$('#' + btnName).animate({
-							"opacity": opacityValue
-						}, 100);
-					});
-					if (buttons.message) {
-						chat.append(buttons.message);
+					MONO.animate.refresh_buttons(buttons);
+					// $.each(buttons, function(btnName) {
+					// var opacityValue = buttons[btnName] ? "1" : "0.5";
+					//$('#' + btnName).animate({
+					//"opacity": opacityValue
+					//}, 100);
+					//});
+					if(buttons.message) {
+						chat.append("server: " + buttons.message);
 					}
+					chat.append("player["+ color + "] on cell: " + json.cell.name);
 				}
 
 			},
@@ -142,9 +149,6 @@ MONO = {
 			'ready': function(json) {
 				chat.append(json.player + ' is ready=' + json.ready);
 			},
-			'undefined': function(json) {
-				console.log('Unknown response');
-			},
 			'turn': function(json) {
 				chat.append(json.player + ' turn=true');
 				$('.btn').animate({
@@ -160,9 +164,17 @@ MONO = {
 		}
 	},
 	animate: {
-		move: function(offset) {
-			chat.append('Moving offset: ' + offset);
-			console.log('Moving to: ' + offset);
+		refresh_buttons: function(buttons) {
+			$.each(buttons, function(btnName) {
+				var opacityValue = buttons[btnName] ? "1" : "0.5";
+				$('#' + btnName).animate({
+					"opacity": opacityValue
+				}, 100);
+			});
+		},
+		move: function(who, d1, d2) {
+			chat.append('Moving ' + who +' to offset: ' + (d1 + d2));
+			console.log('Moving to: ' + (d1 + d2));
 		}
 	},
 	init: function() {
@@ -187,7 +199,9 @@ MONO = {
 		});
 		$('#done').click(function() {
 			console.log('sending ***done*** message to server');
-			$(".btn").animate({"opacity" : "0.5"});
+			$(".btn").animate({
+				"opacity": "0.5"
+			});
 
 			MONO.transport.send('done', {});
 		});
