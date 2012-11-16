@@ -28,6 +28,7 @@ public class Player {
 	private int numberFreeCard = 0;
 	private static Random randDice = new Random();
 	private int numberOfRailss = 0;
+	private boolean rolled;
 	private int circleInJail = 0;
 	private int circle = 0;
 	private static int diceOne = 0;
@@ -43,13 +44,13 @@ public class Player {
 	private boolean rollAction = false;
 	private static final Logger log = Logger.getLogger(Player.class);
 
-	public boolean isRollAction() {
-		return rollAction;
-	}
-
-	public void setRollAction(boolean rollAction) {
-		this.rollAction = rollAction;
-	}
+//	public boolean isRollAction() {
+//		return rollAction;
+//	}
+//
+//	public void setRollAction(boolean rollAction) {
+//		this.rollAction = rollAction;
+//	}
 
 	public Player(User user, int position, int money, String color) {
 		this.id = user.getId();
@@ -182,6 +183,14 @@ public class Player {
 		return result;
 	}
 
+	public boolean isRolled() {
+		return rolled;
+	}
+
+	public void setRolled(boolean rolled) {
+		this.rolled = rolled;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -216,6 +225,7 @@ public class Player {
 	public int rollDicesAndMove() {
 		// if (this.canRollDices()) {
 		position = getPosition() + (rollDiceOne() + rollDiceTwo());
+		this.setRolled(true);
 		int c = this.getCircle();
 		if (position > 40) {
 			this.setCircle(c++);
@@ -225,7 +235,7 @@ public class Player {
 			position = position - 40;
 		}
 		setPosition(position);
-		setRollAction(false);
+		//setRollAction(false);
 		// } else {
 		// log.info("[PLAYER:] " + this.getName() + " cannot roll");
 		// }
@@ -483,8 +493,8 @@ public class Player {
 	}
 
 	public boolean canRollDices() {
-		if ((this.getMoney() > 0 || Player.doublePoints())) {
-			setRollAction(true);
+		if ((this.getMoney() > 0 || Player.doublePoints())&&!isRolled()) {
+		//	setRollAction(true);
 			return true;
 		} else
 			return false;
