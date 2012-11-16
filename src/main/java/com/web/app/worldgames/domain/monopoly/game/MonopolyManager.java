@@ -78,8 +78,12 @@ public class MonopolyManager {
 						log.info("[Player: " + currentPlayer.getColor()
 								+ "in jail]" + currentPlayer.isInJail());
 						JailCard card = new JailCard();
-						card.rollAndWait(currentPlayer, points);
 						response.put("type", ButtonsLabel.ROLL);
+						response.put("dice1", currentPlayer.getDiceOne());
+						response.put("dice2", currentPlayer.getDiceTwo());
+						if(card.rollAndWait(currentPlayer, points)){
+							response.put("Move to:",points);
+						}
 						response.put("inJail", currentPlayer.isInJail());
 						response.put("player", currentPlayer.getColor());
 					} else {
@@ -149,9 +153,6 @@ public class MonopolyManager {
 				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 				if (currentPlayer.getId() == idPlayer) {
 					log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-					// Player currentPlayer = getPlayerById(idPlayer);
-					// Player currentPlayer =
-					// getMonopolyGame().getCurrentPlayer();
 					Cell cell = CardFactory.chooseCard(currentPlayer);
 					if (cell instanceof SellableCard) {
 						SellableCard card = (SellableCard) cell;
@@ -165,14 +166,7 @@ public class MonopolyManager {
 						card.payRansom(currentPlayer);
 						log.info("[Player: ]" + " pay ransom"
 								+ currentPlayer.getMoney());
-					} else if (cell instanceof TaxCard) {
-						TaxCard card = (TaxCard) cell;
-						card.effectOnPlayer(currentPlayer);
-						log.info("[Player: ]" + currentPlayer.getColor()
-								+ " pay tax" + currentPlayer.getMoney());
-					}
-					// log.info("[Player: ]" + currentPlayer.getColor() +
-					// " pay");
+					} 
 					response.put("type", ButtonsLabel.PAY);
 					response.put("player", currentPlayer.getColor());
 					response.put("player_money", currentPlayer.getMoney());

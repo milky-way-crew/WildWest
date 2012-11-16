@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
+import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.card.Cell;
 import com.web.app.worldgames.domain.monopoly.card.ChanseCard;
@@ -30,14 +31,12 @@ public class GameAction {
 		if (cell instanceof SellableCard) {
 			if (cell instanceof CityCard) {
 				CityCard card = (CityCard) cell;
+				card.effectOnPlayer(player);
 				result.put(ButtonsLabel.BUY, card.canBuy(player));
-				if (card.getOwner() != null) {
-					result.put(
-							ButtonsLabel.PAY,
-							card.canPayRent(player,
-									card.getRent(player, card.getOwner())));
-				} else {
-					result.put(ButtonsLabel.PAY, false);
+				if (card.getOwner() != null
+						&& !card.canPayRent(player,
+								card.getRent(player, card.getOwner()))) {
+					result.put("Problem", "No money");
 				}
 				result.put(ButtonsLabel.BUILD, card.canBuildHouse(player)
 						|| card.canBuildHotel(player));
@@ -47,13 +46,10 @@ public class GameAction {
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
 				result.put(ButtonsLabel.BUY, card.canBuy(player));
-				if (card.getOwner() != null) {
-					result.put(
-							ButtonsLabel.PAY,
-							card.canPayRent(player,
-									card.getRent(player, card.getOwner())));
-				} else {
-					result.put(ButtonsLabel.PAY, false);
+				if (card.getOwner() != null
+						&& !card.canPayRent(player,
+								card.getRent(player, card.getOwner()))) {
+					result.put("Problem", "No money");
 				}
 				result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
 				result.put(ButtonsLabel.MORTAGE, card.canMortage(player));
@@ -72,8 +68,7 @@ public class GameAction {
 					result.put("player", player.getColor());
 					result.put("player_money", player.getMoney());
 				} else {
-					result.put(ButtonsLabel.PAY,
-							((TaxCard) cell).canPayTax(player));
+					result.put("Problem", "No money");
 				}
 			} else if (cell instanceof JailCard) {
 				cell.effectOnPlayer(player);
@@ -83,19 +78,14 @@ public class GameAction {
 			} else if (cell instanceof FreeStation) {
 				cell.effectOnPlayer(player);
 				result.put("player", player.getColor());
-				// result.put(ButtonsLabel.OK, true);
 			} else if (cell instanceof GoToJailCard) {
 				cell.effectOnPlayer(player);
 				result.put("player", player.isInJail());
-				// result.put(ButtonsLabel.OK, true);
+				result.put("Move to:", CellPositions.JAIL);
 			} else if (cell instanceof ChanseCard) {
 				cell.effectOnPlayer(player);
-				((ChanseCard) cell).getDirectCard(player);
-				result.put(ButtonsLabel.OK, true);
-				((ChanseCard) cell).clearChanceMap();
+				result.put("Move to:", ((ChanseCard) cell).getMovePosition());
 			} else if (cell instanceof CommunityChestCard) {
-				// cell.effectOnPlayer(player);
-				// result.put(ButtonsLabel.OK, true);
 			}
 		}
 		return result;

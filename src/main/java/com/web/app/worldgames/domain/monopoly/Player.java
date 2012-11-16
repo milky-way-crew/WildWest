@@ -27,14 +27,13 @@ public class Player {
 	private boolean hasFreeCard = false;
 	private static Random randDice = new Random();
 	private int numberOfRailss = 0;
-	private int circleInJail = 2;
+	private int circleInJail = 0;
 	private int circle = 0;
 	private static int diceOne = 0;
 	private static int diceTwo = 0;
 	private boolean inJail;
 	private boolean readyToStart = false;
 	private boolean loss = false;
-	private boolean canNextProggress = false;
 	private List<String> listRegions = new ArrayList<String>();
 	private List<SellableCard> property = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
@@ -121,9 +120,12 @@ public class Player {
 		return inJail;
 	}
 
+	public void addCircleInJail() {
+		circleInJail++;
+	}
+
 	public void setInJail(boolean inJail) {
 		this.inJail = inJail;
-		circleInJail = 0;
 	}
 
 	public boolean isLoss() {
@@ -142,7 +144,6 @@ public class Player {
 		this.circle = circle;
 	}
 
-	
 	public boolean isReadyToStart() {
 		return readyToStart;
 	}
@@ -157,14 +158,6 @@ public class Player {
 
 	public int getDiceTwo() {
 		return diceTwo;
-	}
-
-	public boolean isCanNextProggress() {
-		return canNextProggress;
-	}
-
-	public void setCanNextProggress(boolean canNextProggress) {
-		this.canNextProggress = canNextProggress;
 	}
 
 	@Override
@@ -208,20 +201,21 @@ public class Player {
 	}
 
 	public int rollDicesAndMove() {
-		//if (this.canRollDices()) {
-			position = getPosition() + (rollDiceOne() + rollDiceTwo());
-			int c = this.getCircle();
-			if (position > 40) {
-				this.setCircle(c++);
-				this.setMoney(this.getMoney() + CardPrices.CIRCLE_MONEY);
-				log.info("[-----PLAYER:-------] " + this.getName() + " GET CIRCLE MONEQ +$200");
-				position = position - 40;
-			}
-			setPosition(position);
-			setRollAction(false);
-//		} else {
-//			log.info("[PLAYER:] " + this.getName() + " cannot roll");
-//		}
+		// if (this.canRollDices()) {
+		position = getPosition() + (rollDiceOne() + rollDiceTwo());
+		int c = this.getCircle();
+		if (position > 40) {
+			this.setCircle(c++);
+			this.setMoney(this.getMoney() + CardPrices.CIRCLE_MONEY);
+			log.info("[-----PLAYER:-------] " + this.getName()
+					+ " GET CIRCLE MONEQ +$200");
+			position = position - 40;
+		}
+		setPosition(position);
+		setRollAction(false);
+		// } else {
+		// log.info("[PLAYER:] " + this.getName() + " cannot roll");
+		// }
 		return position;
 
 	}
@@ -347,12 +341,12 @@ public class Player {
 	}
 
 	// ----------------
-//	public int circleInJail() {
-//		circleInJail = getCircleInJail();
-//		return circleInJail++;
-//	}
+	// public int circleInJail() {
+	// circleInJail = getCircleInJail();
+	// return circleInJail++;
+	// }
 	public void setCircleInJail(int circleInJail) {
-		this.circleInJail=circleInJail;
+		this.circleInJail = circleInJail;
 	}
 
 	public int getCircleInJail() {
@@ -476,8 +470,7 @@ public class Player {
 	}
 
 	public boolean canRollDices() {
-		if ((this.getMoney() > 0 || Player.doublePoints())
-				&& this.isCanNextProggress()) {
+		if ((this.getMoney() > 0 || Player.doublePoints())) {
 			setRollAction(true);
 			return true;
 		} else

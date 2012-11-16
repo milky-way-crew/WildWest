@@ -2,6 +2,7 @@ package com.web.app.worldgames.domain.monopoly.card;
 
 import org.apache.log4j.Logger;
 
+import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
@@ -213,38 +214,16 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		Player owner = null;
-		CityCard cell = (CityCard) StartGame.boardCities().get(
-				player.getPosition());
-		System.out.println(info());
-		String action = null;
-		// if city haven't owner player may buy this city or not
-		if (cell.getOwner() == null) {
-			System.out.println("You can buy it. Press 1 if you agree");
-			action = player.playerAction();
-			if (action.equals("1")) {
-				cell.buyOrMortage(cell, player);
+		if (this.getOwner() != null) {
+			if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
+				log.info("[OWNER]: " + this.getOwner().getColor());
+				this.payRentToOwner(player, this.getOwner(),
+						this.getRent(player, this.getOwner()));
+				log.info("[OWNER]: money" + this.getOwner().getMoney());
+				log.info("[PLAYER]: money" + player.getMoney());
 			}
-		} else {
-			owner = cell.getOwner();
-			// if owner isn't player
-			if (!owner.equals(player)) {
-				// if this city isn't mortage player pay rent to owner else no
-				// action
-				payOrMortage(cell, player, owner);
-			} else if (owner.equals(player)) {
-				if (canBuildHouse(player)) {
-					System.out
-							.println("You can build house. Press: 1 - build house. 2 -  build hotel)");
-					action = player.playerAction();
-					if (action.equals("1")) {
-						buildHouse(player);
-
-					} else if (action.equals("2")) {
-						buildHotel(player);
-					}
-				}
-			}
+		} else if (player == this.getOwner()) {
+			log.info("[OWNER]: You are owner");
 		}
 	}
 
