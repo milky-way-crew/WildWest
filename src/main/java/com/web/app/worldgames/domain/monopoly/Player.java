@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
@@ -19,50 +21,55 @@ public class Player {
 	private int position;
 	private int money;
 	private String color;
-	//for test----
+	// for test----
 	private PlayerColors colors;
-	//-----
-	private boolean hasFreeCard =false;
+	// -----
+	// private boolean hasFreeCard = false;
+	private int numberFreeCard = 0;
 	private static Random randDice = new Random();
 	private int numberOfRailss = 0;
+	private boolean rolled;
 	private int circleInJail = 0;
 	private int circle = 0;
 	private static int diceOne = 0;
 	private static int diceTwo = 0;
 	private boolean inJail;
 	private boolean readyToStart = false;
+	private boolean loss = false;
 	private List<String> listRegions = new ArrayList<String>();
 	private List<SellableCard> property = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
-	private boolean loss = false;
 	private boolean rollAction = false;
+	private static final Logger log = Logger.getLogger(Player.class);
 
-	public boolean isRollAction() {
-		return rollAction;
-	}
-
-	public void setRollAction(boolean rollAction) {
-		this.rollAction = rollAction;
-	}
+//	public boolean isRollAction() {
+//		return rollAction;
+//	}
+//
+//	public void setRollAction(boolean rollAction) {
+//		this.rollAction = rollAction;
+//	}
 
 	public Player(User user, int position, int money, String color) {
-		this.id=user.getId();
+		this.id = user.getId();
 		this.name = user.getNickname();
 		this.position = position;
 		this.money = money;
-		this.color=color;
-		//this.hasFreeCard = hasFreeCard;
+		this.color = color;
+		// this.hasFreeCard = hasFreeCard;
 	}
-//----------for test
+
+	// ----------for test
 	public Player(String name, int position, int money, PlayerColors colors) {
 		this.name = name;
 		this.position = position;
 		this.money = money;
-		this.colors=colors;
+		this.colors = colors;
 	}
-//-----------
+
+	// -----------
 	public int getId() {
 		return id;
 	}
@@ -95,13 +102,13 @@ public class Player {
 		this.money = money;
 	}
 
-	public boolean isHasFreeCard() {
-		return hasFreeCard;
-	}
-
-	public void setHasFreeCard(boolean hasFreeCard) {
-		this.hasFreeCard = hasFreeCard;
-	}
+	// public boolean isHasFreeCard() {
+	// return hasFreeCard;
+	// }
+	//
+	// public void setHasFreeCard(boolean hasFreeCard) {
+	// this.hasFreeCard = hasFreeCard;
+	// }
 
 	public String getColor() {
 		return color;
@@ -115,9 +122,12 @@ public class Player {
 		return inJail;
 	}
 
+	public void addCircleInJail() {
+		circleInJail++;
+	}
+
 	public void setInJail(boolean inJail) {
 		this.inJail = inJail;
-		circleInJail = 0;
 	}
 
 	public boolean isLoss() {
@@ -128,18 +138,12 @@ public class Player {
 		this.loss = loss;
 	}
 
-	
-
 	public int getCircle() {
 		return circle;
 	}
 
 	public void setCircle(int circle) {
 		this.circle = circle;
-	}
-
-	public void setCircleInJail(int circleInJail) {
-		this.circleInJail = circleInJail;
 	}
 
 	public boolean isReadyToStart() {
@@ -150,8 +154,6 @@ public class Player {
 		this.readyToStart = readyToStart;
 	}
 
-	
-
 	public int getDiceOne() {
 		return diceOne;
 	}
@@ -159,6 +161,19 @@ public class Player {
 	public int getDiceTwo() {
 		return diceTwo;
 	}
+
+	public int getNumberFreeCard() {
+		return numberFreeCard;
+	}
+
+	public void setNumberFreeCard(int numberFreeCard) {
+		this.numberFreeCard = numberFreeCard;
+	}
+
+//	public void addFreeCard() {
+//		numberFreeCard++;
+//	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -166,6 +181,14 @@ public class Player {
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
+	}
+
+	public boolean isRolled() {
+		return rolled;
+	}
+
+	public void setRolled(boolean rolled) {
+		this.rolled = rolled;
 	}
 
 	@Override
@@ -186,28 +209,36 @@ public class Player {
 			return false;
 		return true;
 	}
+
 	public static int rollDiceOne() {
 		diceOne = randDice.nextInt(6) + 1;
-		System.out.println("dice one: " + diceOne);
+		log.info("[DICE 1:] " + diceOne);
 		return diceOne;
 	}
 
 	public static int rollDiceTwo() {
 		diceTwo = randDice.nextInt(6) + 1;
-		System.out.println("dice two: " + diceTwo);
+		log.info("[DICE 2:] " + diceTwo);
 		return diceTwo;
 	}
 
 	public int rollDicesAndMove() {
+		// if (this.canRollDices()) {
 		position = getPosition() + (rollDiceOne() + rollDiceTwo());
+		this.setRolled(true);
 		int c = this.getCircle();
 		if (position > 40) {
 			this.setCircle(c++);
-			this.setMoney(this.getMoney()+CardPrices.CIRCLE_MONEY);
+			this.setMoney(this.getMoney() + CardPrices.CIRCLE_MONEY);
+			log.info("[-----PLAYER:-------] " + this.getName()
+					+ " GET CIRCLE MONEQ +$200");
 			position = position - 40;
 		}
 		setPosition(position);
-		setRollAction(false);
+		//setRollAction(false);
+		// } else {
+		// log.info("[PLAYER:] " + this.getName() + " cannot roll");
+		// }
 		return position;
 
 	}
@@ -319,7 +350,8 @@ public class Player {
 	public boolean checkProperty(Player player) {
 		return (player.playerProperty().isEmpty()) ? false : true;
 	}
-//delete ----for test
+
+	// delete ----for test
 	public String playerAction() {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String key = null;
@@ -330,18 +362,20 @@ public class Player {
 		}
 		return key;
 	}
-//----------------
-	public int circleInJail() {
-		return circleInJail++;
+
+	// ----------------
+	// public int circleInJail() {
+	// circleInJail = getCircleInJail();
+	// return circleInJail++;
+	// }
+	public void setCircleInJail(int circleInJail) {
+		this.circleInJail = circleInJail;
 	}
 
 	public int getCircleInJail() {
 		return circleInJail;
 	}
 
-	// public void exitFromJail() {
-	// circleInJail = 0;
-	// }
 	public List<SellableCard> getForMortage() {
 		return forMortage;
 	}
@@ -424,26 +458,22 @@ public class Player {
 	}
 
 	public void mortageAction(Player player) {
-		//System.out.println("You haven't money. Mortage you property: ");
-		// if(forMortage.isEmpty()){
-		// System.out.println("You haven't object");
-		// player.setLoss(true);
-		// }else{
-		if(canMortage()){
+		if (canMortage()) {
 			printMortageList(forMortage, player);
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		String key = null;
-		try {
-			key = in.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		int index = Integer.valueOf(key);
-		SellableCard cityToMortage = forMortage.get(index);
-		chooseAndMortage(forMortage, cityToMortage, player);
-		}else System.out.println("no obj");
-		// }
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					System.in));
+			String key = null;
+			try {
+				key = in.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			int index = Integer.valueOf(key);
+			SellableCard cityToMortage = forMortage.get(index);
+			chooseAndMortage(forMortage, cityToMortage, player);
+		} else
+			System.out.println("no obj");
 	}
 
 	public void unMortageAction(Player player) {
@@ -462,9 +492,9 @@ public class Player {
 		chooseAndUnMortage(forUnMortage, cityToUnMortage, player);
 	}
 
-	public boolean canRollDices(Player player) {
-		if (player.getMoney() > 0 || Player.doublePoints()) {
-			setRollAction(true);
+	public boolean canRollDices() {
+		if ((this.getMoney() > 0 || Player.doublePoints())&&!isRolled()) {
+		//	setRollAction(true);
 			return true;
 		} else
 			return false;

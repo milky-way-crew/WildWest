@@ -1,5 +1,8 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import org.apache.log4j.Logger;
+
+import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
@@ -21,7 +24,7 @@ public class CityCard extends SellableCard {
 	private int taxHotel;
 	private int position;
 
-	// private final static Logger LOG = Logger.getLogger(CityCard.class);
+	private final static Logger log = Logger.getLogger(CityCard.class);
 
 	Cities cities = null;
 
@@ -165,7 +168,7 @@ public class CityCard extends SellableCard {
 				numbersOfHouses++;
 				setNumbersOfHouses(numbersOfHouses);
 			}
-			System.out.println("You build castle. Number of houses are: "
+			log.info("[Message]: " + "You build castle. Number of houses are: "
 					+ getNumbersOfHouses());
 		}
 	}
@@ -193,54 +196,38 @@ public class CityCard extends SellableCard {
 		CityCard city = (CityCard) StartGame.boardCities().get(
 				player.getPosition());
 		if (canBuildHotel(player)) {
-			System.out.println("You can build hotel");
+			log.info("[Message]: " + "You can build hotel");
 			player.setMoney(player.getMoney() - city.getHotelPrice());
 			setHotel(true);
-			System.out.println("You build hotel.");
+			log.info("[Message]: " + "You can build hotel");
 		} else {
-			System.out.println("You cannot build hotel");
+			log.info("[Message]: " + "You cannot build hotel");
 		}
 		return isHotel();
 	}
 
+	public void sellHouse(Player player) {
+		player.setMoney(player.getMoney() + this.getHousePrice());
+		int numbHouses = this.getNumbersOfHouses();
+		this.setNumbersOfHouses(numbHouses--);
+	}
+
 	@Override
 	public void effectOnPlayer(Player player) {
-		Player owner = null;
-		CityCard cell = (CityCard) StartGame.boardCities().get(
-				player.getPosition());
-		System.out.println(info());
-		String action = null;
-		// if city haven't owner player may buy this city or not
-		if (cell.getOwner() == null) {
-			System.out.println("You can buy it. Press 1 if you agree");
-			action = player.playerAction();
-			if (action.equals("1")) {
-				cell.buyOrMortage(cell, player);
+		if (this.getOwner() != null) {
+			if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
+				log.info("[OWNER]: " + this.getOwner().getColor());
+				this.payRentToOwner(player, this.getOwner(),
+						this.getRent(player, this.getOwner()));
+				log.info("[OWNER]: money" + this.getOwner().getMoney());
+				log.info("[PLAYER]: money" + player.getMoney());
 			}
-		} else {
-			owner = cell.getOwner();
-			// if owner isn't player
-			if (!owner.equals(player)) {
-				// if this city isn't mortage player pay rent to owner else no
-				// action
-				payOrMortage(cell, player, owner);
-			} else if (owner.equals(player)) {
-				if (canBuildHouse(player)) {
-					System.out
-							.println("You can build house. Press: 1 - build house. 2 -  build hotel)");
-					action = player.playerAction();
-					if (action.equals("1")) {
-						buildHouse(player);
-
-					} else if (action.equals("2")) {
-						buildHotel(player);
-					}
-				}
-			}
+		} else if (player == this.getOwner()) {
+			log.info("[OWNER]: You are owner");
 		}
 	}
-	
-//I don't know it is need
+
+	// I don't know it is need
 	@Override
 	public void payOrMortage(SellableCard cell, Player player, Player owner) {
 		boolean check = true;
@@ -267,11 +254,10 @@ public class CityCard extends SellableCard {
 			player.setMoney(player.getMoney());
 			player.setPosition(player.getPosition());
 		} else {
-			System.out.println("Owner of this city is: "
-					+ this.getOwner().getName());
+			log.info("[OWNER]: " + this.getOwner().getName());
 			int numberOfRegions = owner.getNumberOfRegions(owner,
 					owner.getRegion(player.getPosition()));
-			System.out.println(" Number of regions are: " + numberOfRegions);
+			log.info("[REGIONS]: " + numberOfRegions);
 			if (numberOfRegions == 1) {
 				return getTaxOneCard();
 			} else if (numberOfRegions == 2) {
@@ -293,8 +279,6 @@ public class CityCard extends SellableCard {
 		return 0;
 	}
 
-	
-
 	@Override
 	public String info() {
 		return "\t" + getName() + "\n\tregion: " + getRegion() + "\n\tprice "
@@ -312,11 +296,11 @@ public class CityCard extends SellableCard {
 	public void buyCityOrRail(Player player) {
 		this.setOwner(player);
 		player.addProperty(player);
-		System.out.println("You are owner now");
+		log.info("[MESSAGE]: You are owner now");
 		player.setMoney(player.getMoney() - getPrice());
-		System.out.println("Your money: " + player.getMoney());
+		log.info("[MONEY]: " + player.getMoney());
 		player.addRegions(player);
-		System.out.println("Your regions: " + player.listRegions(player));
+		log.info("[REGIONS LIST]: " + player.listRegions(player));
 
 	}
 
@@ -336,6 +320,5 @@ public class CityCard extends SellableCard {
 		return (!this.isMortage() && this.getOwner() == player
 				&& this.numbersOfHouses == 0 && !this.isHotel) ? true : false;
 	}
-
 
 }

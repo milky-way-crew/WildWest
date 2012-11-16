@@ -1,10 +1,5 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.CardPrices;
@@ -15,7 +10,7 @@ import com.web.app.worldgames.domain.monopoly.StartGame;
 public class RailCard extends SellableCard {
 	private String name;
 	private int price;
-	private final static Logger LOG = Logger.getLogger(RailCard.class);
+	private final static Logger log = Logger.getLogger(RailCard.class);
 	Rails rails = null;
 
 	public RailCard(Rails rails) {
@@ -41,33 +36,16 @@ public class RailCard extends SellableCard {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		Player owner = null;
-		SellableCard cell = StartGame.boardRails().get(player.getPosition());
-		System.out.println(info());
-		String action = null;
-		// if rail hasn't owner player may buy this rail or not
-		if (cell.getOwner() == null) {
-			System.out.println("You can buy it. Press 1 if you agree");
-			action = player.playerAction();
-			if (action.equals("1")) {
-				cell.buyOrMortage(cell, player);
-			} else {
-				System.out.println("You refuse.");
-				player.setPosition(player.getPosition());
-				player.setMoney(player.getMoney());
+		if (this.getOwner() != null) {
+			if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
+				log.info("[OWNER]: " + this.getOwner().getColor());
+				this.payRentToOwner(player, this.getOwner(),
+						this.getRent(player, this.getOwner()));
+				log.info("[OWNER]:  money"+this.getOwner().getMoney());
+				log.info("[PLAYER]: money" + player.getMoney());
 			}
-		} else {
-			owner = cell.getOwner();
-			// if owner isn't player
-			if (!owner.equals(player)) {
-				// if this rail isn't mortage player pay rent
-				payOrMortage(cell, player, owner);
-			} else if (owner.equals(player)) {
-				// if player is owner of thia rail he can mortage it
-				System.out.println("You are owner of this rail.");
-				player.setMoney(player.getMoney());
-				player.setPosition(player.getPosition());
-			}
+		} else if (player == this.getOwner()) {
+			log.info("[OWNER]: You are owner");
 		}
 	}
 

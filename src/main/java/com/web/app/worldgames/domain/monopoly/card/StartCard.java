@@ -11,7 +11,7 @@ public class StartCard extends Cell {
 	public void effectOnPlayer(Player player) {
 		player.setMoney(START_MONEY);
 		player.setPosition(START_POSITION);
-		player.setHasFreeCard(false);
+		//player.setHasFreeCard(false);
 	}
 
 
