@@ -36,7 +36,7 @@ public class GameAction {
 				if (card.getOwner() != null
 						&& !card.canPayRent(player,
 								card.getRent(player, card.getOwner()))) {
-					// result.put("Problem", "No money");
+					 result.put("message", "You haven't money. You may mortage or sell your property.");
 				}
 				result.put(ButtonsLabel.BUILD, card.canBuildHouse(player)
 						|| card.canBuildHotel(player));
@@ -52,7 +52,7 @@ public class GameAction {
 				if (card.getOwner() != null
 						&& !card.canPayRent(player,
 								card.getRent(player, card.getOwner()))) {
-					result.put("Problem", "No money");
+					result.put("message", "You haven't money. You may mortage or sell your property.");
 				}
 				// result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
 				result.put(ButtonsLabel.MORTAGE, card.canMortage(player));
@@ -67,37 +67,43 @@ public class GameAction {
 				// result.put("player", player.getColor());
 				// result.put("player_money", player.getMoney());
 				result.put(ButtonsLabel.DONE, true);
+				result.put("message", "You got $200");
 			} else if (cell instanceof TaxCard) {
 				if (((TaxCard) cell).canPayTax(player)) {
 					cell.effectOnPlayer(player);
 					result.put(ButtonsLabel.DONE, true);
+					result.put("message", "You payed tax");
 					// result.put("player", player.getColor());
 					// result.put("player_money", player.getMoney());
 				} else {
-					//result.put("Problem", "No money");
+					result.put("message", "You haven't money. You may mortage or sell your property.");
 				}
 			} else if (cell instanceof JailCard) {
-				result.put(ButtonsLabel.DONE, true);
 				cell.effectOnPlayer(player);
+				result.put(ButtonsLabel.DONE, true);
 				result.put(ButtonsLabel.PAY,
 						((JailCard) cell).canPayRansom(player));
 				result.put(ButtonsLabel.ROLL, true);
 			} else if (cell instanceof FreeStation) {
 				cell.effectOnPlayer(player);
+				result.put("message", "You stay at Free Station");
 				result.put(ButtonsLabel.DONE, true);
 				// result.put("player", player.getColor());
 			} else if (cell instanceof GoToJailCard) {
 				cell.effectOnPlayer(player);
 				// result.put("player", player.isInJail());
 				result.put(ButtonsLabel.DONE, true);
+				result.put("message", "You are going to jail");
 				// result.put("Move to:", CellPositions.JAIL);
 			} else if (cell instanceof ChanseCard) {
 				cell.effectOnPlayer(player);
 				result.put(ButtonsLabel.DONE, true);
+				result.put("message", "You have a chance");
 				// result.put("Move to:", ((ChanseCard)
 				// cell).getMovePosition());
 			} else if (cell instanceof CommunityChestCard) {
 				result.put(ButtonsLabel.DONE, true);
+				result.put("message", "You have a community chest");
 			}
 		}
 		return result;
