@@ -83,6 +83,7 @@ MONO = {
 					money = json.money;
 				console.log('Current money is: ' + money);
 				MONO.config.money = money;
+
 				MONO.animate.move(offset);
 
 				// this player moves
@@ -170,6 +171,8 @@ MONO = {
 		});
 		$('#done').click(function() {
 			console.log('sending ***done*** message to server');
+			$(".btn").animate({"opacity" : "0.5"});
+
 			MONO.transport.send('done', {});
 		});
 
