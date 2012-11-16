@@ -96,6 +96,8 @@ public class MonopolyManager {
 			if ($(type).equals(ButtonsLabel.ROLL)) {
 				// log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
 				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+				if(currentPlayer.canRollDices()){
+					
 				if (currentPlayer.getId() == idPlayer) {
 					if (currentPlayer.isInJail()) {
 						int points = currentPlayer.rollDicesAndWait();
@@ -105,6 +107,11 @@ public class MonopolyManager {
 						response.put("type", ButtonsLabel.ROLL);
 						response.put("dice1", currentPlayer.getDiceOne());
 						response.put("dice2", currentPlayer.getDiceTwo());
+						response.put("buttons", GameAction.action(
+								CardFactory.chooseCard(currentPlayer),
+								currentPlayer));
+						response.put("cell",
+								CardFactory.chooseCard(currentPlayer));
 						if (card.rollAndWait(currentPlayer, points)) {
 							response.put("Move to:", points);
 						}
@@ -121,19 +128,27 @@ public class MonopolyManager {
 						log.info("[Cell: ]"
 								+ CardFactory.chooseCard(currentPlayer).info());
 						response.put("type", ButtonsLabel.ROLL);
+						response.put("player", currentPlayer.getColor());
+						response.put("was", currentPlayer.getPosition());
 						response.put("dice1", currentPlayer.getDiceOne());
 						response.put("dice2", currentPlayer.getDiceTwo());
-						response.put("player", currentPlayer.getColor());
-						try {
-							response.put("buttons", GameAction.action(
-									CardFactory.chooseCard(currentPlayer),
-									currentPlayer));
-						} catch (Exception e) {
-							log.error("Exception in [ROLL] section", e);
-						}
-						if (Player.doublePoints()) {
-							response.put("doubleDice", true);
-						}
+						response.put("money", currentPlayer.getMoney());
+						response.put("buttons", GameAction.action(
+								CardFactory.chooseCard(currentPlayer),
+								currentPlayer));
+						response.put("cell",
+								CardFactory.chooseCard(currentPlayer));
+					}
+						// try {
+						// response.put("buttons", GameAction.action(
+						// CardFactory.chooseCard(currentPlayer),
+						// currentPlayer));
+						// } catch (Exception e) {
+						// log.error("Exception in [ROLL] section", e);
+						// }
+//						if (Player.doublePoints()) {
+//							response.put("doubleDice", true);
+//						}
 					}
 				}
 				broadcast(response);
@@ -224,6 +239,7 @@ public class MonopolyManager {
 			}
 			if ($(type).equals(ButtonsLabel.DONE)) {
 				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+				currentPlayer.setRolled(false);
 				// if (currentPlayer.getId() == idPlayer) {
 				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
 				log.info("[CURRENT PLAYER] : "

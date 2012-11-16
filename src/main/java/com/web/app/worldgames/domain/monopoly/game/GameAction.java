@@ -36,13 +36,15 @@ public class GameAction {
 				if (card.getOwner() != null
 						&& !card.canPayRent(player,
 								card.getRent(player, card.getOwner()))) {
-					result.put("Problem", "No money");
+					// result.put("Problem", "No money");
 				}
 				result.put(ButtonsLabel.BUILD, card.canBuildHouse(player)
 						|| card.canBuildHotel(player));
-				result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
+				// result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
 				result.put(ButtonsLabel.MORTAGE, card.canMortage(player));
 				result.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
+				result.put(ButtonsLabel.SELL, card.canSell(player));
+				result.put(ButtonsLabel.PAY, false);
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
 				result.put(ButtonsLabel.BUY, card.canBuy(player));
@@ -51,22 +53,22 @@ public class GameAction {
 								card.getRent(player, card.getOwner()))) {
 					result.put("Problem", "No money");
 				}
-				result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
+				// result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
 				result.put(ButtonsLabel.MORTAGE, card.canMortage(player));
 				result.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
-
+				result.put(ButtonsLabel.SELL, card.canSell(player));
+				result.put(ButtonsLabel.PAY, false);
 			}
 		} else {
 			if (cell instanceof GoCard) {
 				cell.effectOnPlayer(player);
-				// result.put(ButtonsLabel.OK, true);
-				result.put("player", player.getColor());
-				result.put("player_money", player.getMoney());
+				// result.put("player", player.getColor());
+				// result.put("player_money", player.getMoney());
 			} else if (cell instanceof TaxCard) {
 				if (((TaxCard) cell).canPayTax(player)) {
 					cell.effectOnPlayer(player);
-					result.put("player", player.getColor());
-					result.put("player_money", player.getMoney());
+					// result.put("player", player.getColor());
+					// result.put("player_money", player.getMoney());
 				} else {
 					result.put("Problem", "No money");
 				}
@@ -77,15 +79,17 @@ public class GameAction {
 				result.put(ButtonsLabel.ROLL, true);
 			} else if (cell instanceof FreeStation) {
 				cell.effectOnPlayer(player);
-				result.put("player", player.getColor());
+				// result.put("player", player.getColor());
 			} else if (cell instanceof GoToJailCard) {
 				cell.effectOnPlayer(player);
-				result.put("player", player.isInJail());
-				result.put("Move to:", CellPositions.JAIL);
+				// result.put("player", player.isInJail());
+				// result.put("Move to:", CellPositions.JAIL);
 			} else if (cell instanceof ChanseCard) {
 				cell.effectOnPlayer(player);
-				result.put("Move to:", ((ChanseCard) cell).getMovePosition());
+				// result.put("Move to:", ((ChanseCard)
+				// cell).getMovePosition());
 			} else if (cell instanceof CommunityChestCard) {
+
 			}
 		}
 		return result;
