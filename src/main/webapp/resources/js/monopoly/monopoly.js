@@ -86,7 +86,7 @@ MONO = {
 
 				// this player moves
 				if(MONO.config.color === color) {
-					$.each($("#controls .btn"), function (btn) {
+					$("#controls .btn").each(function (i, btn) {
 						$(btn).animate({"opacity": "0.5"});
 					});
 
