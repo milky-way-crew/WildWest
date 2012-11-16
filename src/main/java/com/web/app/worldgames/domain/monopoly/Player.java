@@ -24,7 +24,8 @@ public class Player {
 	// for test----
 	private PlayerColors colors;
 	// -----
-	private boolean hasFreeCard = false;
+	// private boolean hasFreeCard = false;
+	private int numberFreeCard = 0;
 	private static Random randDice = new Random();
 	private int numberOfRailss = 0;
 	private int circleInJail = 0;
@@ -100,13 +101,13 @@ public class Player {
 		this.money = money;
 	}
 
-	public boolean isHasFreeCard() {
-		return hasFreeCard;
-	}
-
-	public void setHasFreeCard(boolean hasFreeCard) {
-		this.hasFreeCard = hasFreeCard;
-	}
+	// public boolean isHasFreeCard() {
+	// return hasFreeCard;
+	// }
+	//
+	// public void setHasFreeCard(boolean hasFreeCard) {
+	// this.hasFreeCard = hasFreeCard;
+	// }
 
 	public String getColor() {
 		return color;
@@ -159,6 +160,18 @@ public class Player {
 	public int getDiceTwo() {
 		return diceTwo;
 	}
+
+	public int getNumberFreeCard() {
+		return numberFreeCard;
+	}
+
+	public void setNumberFreeCard(int numberFreeCard) {
+		this.numberFreeCard = numberFreeCard;
+	}
+
+//	public void addFreeCard() {
+//		numberFreeCard++;
+//	}
 
 	@Override
 	public int hashCode() {

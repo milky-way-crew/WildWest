@@ -83,7 +83,9 @@ public class CommunityChestCard extends Cell {
 				}
 			}
 		} else if (chest.getWhoIsGet().equals("coliseum")) {
-			player.setHasFreeCard(true);
+			//player.setHasFreeCard(true);
+			//player.addFreeCard();
+			player.setNumberFreeCard((player.getNumberFreeCard())+1);
 		}
 	}
 

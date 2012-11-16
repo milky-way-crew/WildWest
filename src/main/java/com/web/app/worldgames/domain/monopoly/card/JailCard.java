@@ -28,10 +28,12 @@ public class JailCard extends Cell {
 	@Override
 	public void effectOnPlayer(Player player) {
 		player.setInJail(true);
-		if (player.isHasFreeCard()) {
+		//if (player.isHasFreeCard()) {
+		if (player.getNumberFreeCard()>0) {
 			log.info("[IN JAIL: ] use card");
 			player.setInJail(false);
-			player.setHasFreeCard(false);
+			//player.setHasFreeCard(false);
+			player.setNumberFreeCard((player.getNumberFreeCard())-1);
 		}
 	}
 

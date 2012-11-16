@@ -16,7 +16,7 @@ import com.web.app.worldgames.domain.monopoly.card.TaxCard;
 
 public class MonopolyManager {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
-	//private static final String ROLL = "roll";
+	// private static final String ROLL = "roll";
 	private static final String START = "start";
 	private static final String READY = "ready";
 	// private static final String DONE = "done";
@@ -50,24 +50,35 @@ public class MonopolyManager {
 		// WebSocketTransport socketTransport =
 		// WebSocketTransport.getInstance();
 		if ($(type).equals(READY)) {
-			log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-			Player currentPlayer = getPlayerById(idPlayer);
-			currentPlayer.setReadyToStart(true);
-			log.info("[PLAYER IS READY TO START: ]"
-					+ currentPlayer.isReadyToStart());
-			response.put("type", READY);
+//			Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+//			if (currentPlayer.getId() == idPlayer) {
+				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
+				 Player currentPlayer = getPlayerById(idPlayer);
+				currentPlayer.setReadyToStart(true);
+				log.info("[PLAYER IS READY TO START: ]"
+						+ currentPlayer.isReadyToStart());
+				response.put("type", READY);
+				if (getMonopolyGame().isReadyToStart()) {
+					log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
+					getMonopolyGame().start();
+					log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
+					broadcast(response);
+				}
+				response.put("type", START);
+				response.put("start", getMonopolyGame().isStarted());
+//			}
 		}
 
-		if ($(type).equals(START)) {
-			if (getMonopolyGame().isReadyToStart()) {
-				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-				getMonopolyGame().start();
-				log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
-				broadcast(response);
-			}
-			response.put("type", START);
-			response.put("start", getMonopolyGame().isStarted());
-		}
+//		if ($(type).equals(START)) {
+//			if (getMonopolyGame().isReadyToStart()) {
+//				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
+//				getMonopolyGame().start();
+//				log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
+//				broadcast(response);
+//			}
+//			response.put("type", START);
+//			response.put("start", getMonopolyGame().isStarted());
+//		}
 		if (getMonopolyGame().isStarted()) {
 			if ($(type).equals(ButtonsLabel.ROLL)) {
 				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
@@ -81,8 +92,8 @@ public class MonopolyManager {
 						response.put("type", ButtonsLabel.ROLL);
 						response.put("dice1", currentPlayer.getDiceOne());
 						response.put("dice2", currentPlayer.getDiceTwo());
-						if(card.rollAndWait(currentPlayer, points)){
-							response.put("Move to:",points);
+						if (card.rollAndWait(currentPlayer, points)) {
+							response.put("Move to:", points);
 						}
 						response.put("inJail", currentPlayer.isInJail());
 						response.put("player", currentPlayer.getColor());
@@ -123,6 +134,8 @@ public class MonopolyManager {
 					// getMonopolyGame().getCurrentPlayer();
 					SellableCard card = (SellableCard) CardFactory
 							.chooseCard(currentPlayer);
+					if(card.canBuy(currentPlayer)){
+						
 					log.info("[Cell: ]" + card.info());
 					card.buyCityOrRail(currentPlayer);
 					log.info("[Player: ]" + currentPlayer.getColor()
@@ -132,6 +145,7 @@ public class MonopolyManager {
 					response.put("type", ButtonsLabel.BUY);
 					response.put("player", currentPlayer.getColor());
 					response.put("player_money", currentPlayer.getMoney());
+					}
 				}
 				broadcast(response);
 			}
@@ -166,7 +180,7 @@ public class MonopolyManager {
 						card.payRansom(currentPlayer);
 						log.info("[Player: ]" + " pay ransom"
 								+ currentPlayer.getMoney());
-					} 
+					}
 					response.put("type", ButtonsLabel.PAY);
 					response.put("player", currentPlayer.getColor());
 					response.put("player_money", currentPlayer.getMoney());
@@ -197,20 +211,20 @@ public class MonopolyManager {
 			}
 			if ($(type).equals(ButtonsLabel.DONE)) {
 				Player currentPlayer = getMonopolyGame().getCurrentPlayer();
-//				if (currentPlayer.getId() == idPlayer) {
-					log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
-					log.info("[CURRENT PLAYER] : "
-							+ getMonopolyGame().getCurrentPlayer());
-					getMonopolyGame().setCurrentPlayer(
-							getMonopolyGame().getNextPlayer());
-					log.info("[NEXT PLAYER] : "
-							+ getMonopolyGame().getCurrentPlayer());
-					currentPlayer = getMonopolyGame().getCurrentPlayer();
-					log.info("[Player: ]" + currentPlayer.getName() + ":"
-							+ currentPlayer.getColor() + " can roll dice");
-					response.put("type", ButtonsLabel.DONE);
-					response.put("done", currentPlayer);
-//				}
+				// if (currentPlayer.getId() == idPlayer) {
+				log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
+				log.info("[CURRENT PLAYER] : "
+						+ getMonopolyGame().getCurrentPlayer());
+				getMonopolyGame().setCurrentPlayer(
+						getMonopolyGame().getNextPlayer());
+				log.info("[NEXT PLAYER] : "
+						+ getMonopolyGame().getCurrentPlayer());
+				currentPlayer = getMonopolyGame().getCurrentPlayer();
+				log.info("[Player: ]" + currentPlayer.getName() + ":"
+						+ currentPlayer.getColor() + " can roll dice");
+				response.put("type", ButtonsLabel.DONE);
+				response.put("done", currentPlayer);
+				// }
 				broadcast(response);
 			}
 		}
