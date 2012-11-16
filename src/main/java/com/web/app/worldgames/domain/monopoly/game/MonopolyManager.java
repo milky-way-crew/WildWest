@@ -19,6 +19,7 @@ public class MonopolyManager {
 	// private static final String ROLL = "roll";
 	private static final String START = "start";
 	private static final String READY = "ready";
+	private static final String TURN = "turn";
 	// private static final String DONE = "done";
 	// private static final String BUY = "buy";
 	private Game monopolyGame;
@@ -70,7 +71,12 @@ public class MonopolyManager {
 			response.put("ready", currentPlayer.isReadyToStart());
 			broadcast(response);
 		}
-
+		if($(type).equals(TURN)){
+			Player currentPlayer = getPlayerById(idPlayer);
+			response.put("type", TURN);
+			response.put("player", currentPlayer.getColor());
+			broadcast(response);
+		}
 		if ($(type).equals(START)) {
 			response.put("type", "logic");
 			if (getMonopolyGame().isReadyToStart()
