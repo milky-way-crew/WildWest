@@ -12,7 +12,11 @@ prompt, bootbox*/
 			idGame: null,
 			idUser: null,
 			socketUrl: "ws://localhost:8888/",
-			ajaxUrl: "mono-ajax"
+			ajaxUrl: "mono-ajax",
+			isCreator : false,
+			money : 0,
+			color : '',
+			game_status : ""
 		},
 		transport: {
 			socket: null,
@@ -54,6 +58,7 @@ prompt, bootbox*/
 			onConnectEstablished: function() {
 				console.log("Connection opened, bind-websocket request");
 				MONO.transport.send('bind-websocket', {});
+				MONO.transport.send('init', {});
 			},
 			onConnectClosed: function() {
 				console.log("Connection closed");
@@ -75,6 +80,31 @@ prompt, bootbox*/
 						offset = parseInt(dice1, 10) + parseInt(dice2, 10);
 					MONO.animate.move(offset);
 				},
+				'init' : function(json) {
+					console.log('[init] event');
+					MONO.config.color = json.color;
+					MONO.config.money = json.money;
+					MONO.config.isCreator = json.isCreator;
+
+					if (MONO.config.isCreator) {
+						$('#start').show(100);
+					} else {
+						$('#start').hide(100);
+					}
+				},
+				'chat' : function (json) {
+					$('#chat').append('<li>' + json.message + '</li>');
+				},
+				'logic' : function (json) {
+					alert('game-status:' + json.game_status);
+					MONO.config.game_status = json.game_status;
+					if (json.game_status === "start") {
+						$('#ready').hide(100);
+					}	
+				},
+				'ready' : function (json) {
+					$('#chat').append('<li>' + json.player + ' is ready=' + json.ready + '</li>');
+				},
 				'undefined': function(json) {
 					console.log('Unknown response');
 				}
@@ -87,6 +117,7 @@ prompt, bootbox*/
 		},
 		init: function() {
 			MONO.transport.init();
+			
 
 			$('#roll').click(function() {
 				console.log('sending **roll** message to server');

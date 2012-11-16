@@ -72,7 +72,7 @@ public class MonopolyManager {
 		}
 
 		if ($(type).equals(START)) {
-			response.put("type", "LOGIC");
+			response.put("type", "logic");
 			if (getMonopolyGame().isReadyToStart()
 					&& !getMonopolyGame().isStarted()) {
 				getMonopolyGame().start();

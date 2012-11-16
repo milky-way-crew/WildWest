@@ -30,6 +30,8 @@
 				<button class="btn btn-primary" id="ready">ready</button>
 			</div>
 		</div>
+	<ul id="chat">
+	</ul>
 </body>
 <script src="resources/js/jquery.js" type="text/javascript"></script>
 <script src="resources/js/monopoly/monopoly.js" type="text/javascript"></script>
