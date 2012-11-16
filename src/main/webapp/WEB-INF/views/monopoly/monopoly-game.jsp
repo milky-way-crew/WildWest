@@ -14,7 +14,7 @@
 	</div>
 
 	<div class="container" align="center">
-			<div class="span6 well">
+			<div class="span6 well" id="controls">
 				<button class="btn btn-primary" id="roll">roll</button>
 				<button class="btn btn-primary" id="buy">buy</button>
 				<button class="btn btn-primary" id="pay">pay</button>
