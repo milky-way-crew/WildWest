@@ -79,9 +79,10 @@ MONO = {
 					dice2 = json.dice2,
 					offset = parseInt(dice1, 10) + parseInt(dice2, 10),
 					buttons = json.buttons,
-					color = json.color,
+					color = json.player,
 					money = json.money;
 				console.log('Current money is: ' + money);
+				MONO.config.money = money;
 				MONO.animate.move(offset);
 
 				// this player moves
