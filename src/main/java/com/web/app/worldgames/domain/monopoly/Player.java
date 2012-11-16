@@ -41,16 +41,7 @@ public class Player {
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
-	private boolean rollAction = false;
 	private static final Logger log = Logger.getLogger(Player.class);
-
-//	public boolean isRollAction() {
-//		return rollAction;
-//	}
-//
-//	public void setRollAction(boolean rollAction) {
-//		this.rollAction = rollAction;
-//	}
 
 	public Player(User user, int position, int money, String color) {
 		this.id = user.getId();
@@ -394,12 +385,12 @@ public class Player {
 		}
 	}
 
-	public boolean canMortage() {
-		if (getForMortage().isEmpty()) {
-			return false;
-		} else
-			return true;
-	}
+//	public boolean canMortage() {
+//		if (getForMortage().isEmpty()) {
+//			return false;
+//		} else
+//			return true;
+//	}
 
 	public void printUnmortageList(List<SellableCard> list, Player player) {
 		int n = 0;
@@ -421,6 +412,8 @@ public class Player {
 					forMortage.add(card);
 				}
 			}
+		}else {
+			log.info("[MESSAGE]: property list is empty");
 		}
 	}
 
@@ -490,6 +483,9 @@ public class Player {
 		SellableCard cityToUnMortage = listPropertyForUnmortage(player).get(
 				index);
 		chooseAndUnMortage(forUnMortage, cityToUnMortage, player);
+	}
+	public boolean canMortage(){
+		return(!this.getForMortage().isEmpty())?true:false;
 	}
 
 	public boolean canRollDices() {

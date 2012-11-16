@@ -135,16 +135,16 @@ public class GameAction {
 		state.put("player_money", player.getMoney());
 		return state;
 	}
-	// public static void main(String[] args) {
-	// Cell cell = new ChanseCard();
-	// Cell cell1 = new GoCard();
-	// Cell cell3 = new RailCard(Rails.RAIL1);
-	// Player p1 = new Player("sdf", 23, 1200, PlayerColors.PLAYER1);
-	// //cell.setOwner(p1);
-	// Player p = new Player("sdf", 23, 0, PlayerColors.PLAYER1);
-	// //cell.effectOnPlayer(p);
-	// System.out.println("chanse: "+GameAction.action(cell, p));
-	// System.out.println("Go: "+GameAction.action(cell1, p));
-	// System.out.println("Rail: "+GameAction.action(cell3, p));
-	// }
+//	 public static void main(String[] args) {
+//	 Cell cell = new ChanseCard();
+//	 Cell cell1 = new GoCard();
+//	 Cell cell3 = new RailCard(Rails.RAIL1);
+//	 Player p1 = new Player("sdf", 23, 1200, PlayerColors.PLAYER1);
+//	 //cell.setOwner(p1);
+//	 Player p = new Player("sdf", 23, 0, PlayerColors.PLAYER1);
+//	 //cell.effectOnPlayer(p);
+//	 System.out.println("chanse: "+GameAction.action(cell, p));
+//	 System.out.println("Go: "+GameAction.action(cell1, p));
+//	 System.out.println("Rail: "+GameAction.action(cell3, p));
+//	 }
 }

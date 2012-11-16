@@ -21,7 +21,7 @@ public class MonopolyManager {
 	private static final String READY = "ready";
 	private static final String TURN = "turn";
 	private static final String ROLL_EVENTS = "";
-	//private static final String TURN = "turn";
+	// private static final String TURN = "turn";
 	// private static final String DONE = "done";
 	// private static final String BUY = "buy";
 	private Game monopolyGame;
@@ -121,12 +121,15 @@ public class MonopolyManager {
 
 	private void onMortage(Map<String, Object> response) {
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
-		SellableCard card = (SellableCard) CardFactory
-				.chooseCard(currentPlayer);
-		card.mortage(currentPlayer);
-		response.put("type", ButtonsLabel.MORTAGE);
-		response.put("player", currentPlayer.getColor());
-		response.put("player_money", currentPlayer.getMoney());
+//		SellableCard card = (SellableCard) CardFactory
+//				.chooseCard(currentPlayer);
+		if (currentPlayer.canMortage()) {
+			//card.mortage(currentPlayer);
+			response.put("type", ButtonsLabel.MORTAGE);
+			response.put("mortage_list", currentPlayer.getForMortage());
+			response.put("player", currentPlayer.getColor());
+			response.put("player_money", currentPlayer.getMoney());
+		}
 		broadcast(response);
 	}
 
@@ -216,7 +219,7 @@ public class MonopolyManager {
 					log.info("[Cell: ]"
 							+ CardFactory.chooseCard(currentPlayer).info());
 					response.put("type", ButtonsLabel.ROLL);
-					response.put("player", currentPlayer.getColor());
+					// response.put("player", currentPlayer.getColor());
 					response.put("dice1", currentPlayer.getDiceOne());
 					response.put("dice2", currentPlayer.getDiceTwo());
 					response.put("money", currentPlayer.getMoney());

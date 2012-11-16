@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.CommunityChest;
 import com.web.app.worldgames.domain.monopoly.Player;
+import com.web.app.worldgames.domain.monopoly.PlayerColors;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class CommunityChestCard extends Cell {
@@ -100,5 +101,10 @@ public class CommunityChestCard extends Cell {
 		return "Community chest";
 	}
 
-
+public static void main(String[] args) {
+	Player p1 = new Player("sdf", 23, 1200, PlayerColors.PLAYER1);
+	CommunityChestCard c = new CommunityChestCard();
+	c.effectOnPlayer(p1);
+	System.out.println(p1.getMoney());
+}
 }
