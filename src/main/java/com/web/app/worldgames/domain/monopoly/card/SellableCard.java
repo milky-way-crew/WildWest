@@ -12,8 +12,8 @@ public abstract class SellableCard extends Cell {
 	// public abstract void payRentToOwner(Player player, Player owner, int
 	// price);
 
-	public abstract void payOrMortage(SellableCard cell, Player player,
-			Player owner);
+	// public abstract void payOrMortage(SellableCard cell, Player player,
+	// Player owner);
 
 	public abstract void buyCityOrRail(Player player);
 
@@ -61,8 +61,8 @@ public abstract class SellableCard extends Cell {
 
 	public boolean canPayRent(Player player, int rent) {
 		return (player.checkMoney(rent) && this.getOwner() != player
-				&& this.getOwner() != null && this instanceof SellableCard && this.getOwner()!=null) ? true
-				: false;
+				&& this.getOwner() != null && this instanceof SellableCard && this
+					.getOwner() != null) ? true : false;
 	}
 
 	public boolean canBuy(Player player) {
@@ -70,9 +70,9 @@ public abstract class SellableCard extends Cell {
 				: false;
 	}
 
-	public boolean canRefuse(Player player) {
-		return (this.getOwner() == null) ? true : false;
-	}
+//	public boolean canRefuse(Player player) {
+//		return (this.getOwner() == null) ? true : false;
+//	}
 
 	public void refuse(Player player) {
 		// player.setMoney(player.getMoney());
@@ -84,31 +84,54 @@ public abstract class SellableCard extends Cell {
 		owner.setMoney(owner.getMoney() + price);
 	}
 
-	public void buyOrMortage(SellableCard cell, Player player) {
-		boolean check = true;
-		int price = cell.getPrice();
-		if (player.checkMoney(price)) {
-			buyCityOrRail(player);
+	public void sellCityOrRail(Player seller, Player buyer) {
+		if (this.isMortage()) {
+			// System.out.println("unMortage this city: ");
 		} else {
-			while (check) {
-				player.listPropertyForMortage(player);
-				if (!player.getForMortage().isEmpty()) {
-					player.mortageAction(player);
-					if (player.checkMoney(price)) {
-						buyCityOrRail(player);
-						check = false;
-					} else {
-						check = true;
-					}
-				} else {
-					System.out.println("you haven't object");
-					player.setLoss(true);
-					System.out.println("loss: " + player.isLoss());
-					check = false;
-				}
-
+			seller.setMoney(seller.getMoney() + this.getPrice());
+			buyer.setMoney(buyer.getMoney() - this.getPrice());
+			this.setOwner(buyer);
+			if (this instanceof CityCard) {
+				seller.listRegions(seller).remove(
+						seller.getRegion(this.getPosition()));
+				buyer.addRegionsSellActivity(buyer, (CityCard) this);
+			} else if (this instanceof RailCard) {
+				seller.subNumberOfRAils();
+				buyer.addNumberOfRails();
 			}
+			buyer.addSelledProperty(this);
+			seller.deleteProperty(seller, this);
+			// System.out.println("You sale city " + this.getName() + " to "
+			// + buyer.getName());
 		}
+
 	}
+
+	// public void buyOrMortage(SellableCard cell, Player player) {
+	// boolean check = true;
+	// int price = cell.getPrice();
+	// if (player.checkMoney(price)) {
+	// buyCityOrRail(player);
+	// } else {
+	// while (check) {
+	// player.listPropertyForMortage(player);
+	// if (!player.getForMortage().isEmpty()) {
+	// player.mortageAction(player);
+	// if (player.checkMoney(price)) {
+	// buyCityOrRail(player);
+	// check = false;
+	// } else {
+	// check = true;
+	// }
+	// } else {
+	// System.out.println("you haven't object");
+	// player.setLoss(true);
+	// System.out.println("loss: " + player.isLoss());
+	// check = false;
+	// }
+	//
+	// }
+	// }
+	// }
 
 }

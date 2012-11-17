@@ -1,10 +1,7 @@
 package com.web.app.worldgames.domain.monopoly;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
@@ -13,39 +10,7 @@ import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 public class StartGame {
 	public static Map<Integer, SellableCard> boardCities = new HashMap<Integer, SellableCard>();
 	public static Map<Integer, SellableCard> boardRails = new HashMap<Integer, SellableCard>();
-	static private List<Player> playerList = new ArrayList<Player>();
-	static private List<Player> permanentlyPlayerList = new CopyOnWriteArrayList<Player>();
-
-//	public static void start(Room room) {
-//		for (User user : room.getRoomMembers()) {
-//			playerList.add(new Player(user, CellPositions.START,
-//					CardPrices.START_MONEY, false));
-//		}
-//	}
-
-	public List<Player> playersList() {
-		return playerList;
-	}
-
-//	public static void startTemp() {
-//		permanentlyPlayerList.add(new Player("Player 1", CellPositions.START,
-//				CardPrices.START_MONEY,PlayerColors.PLAYER_1));
-//		permanentlyPlayerList.add(new Player("Player 2", CellPositions.START,
-//				CardPrices.START_MONEY, PlayerColors.PLAYER_1));
-//		permanentlyPlayerList.add(new Player("Player 3", CellPositions.START,
-//				CardPrices.START_MONEY, PlayerColors.PLAYER_1));
-//		permanentlyPlayerList.add(new Player("Player 4", CellPositions.START,
-//				CardPrices.START_MONEY, PlayerColors.PLAYER_1));
-//	}
-
-	public static void deleteLoserPlayer(List<Player> players, Player player) {
-		players.remove(player);
-	}
-
-	public List<Player> playersPermanentlyList() {
-		return permanentlyPlayerList;
-	}
-
+	
 	public static void initRails() {
 		boardRails.put(6, new RailCard(Rails.RAIL1));
 		boardRails.put(16, new RailCard(Rails.RAIL2));
@@ -85,9 +50,5 @@ public class StartGame {
 
 	public static Map<Integer, SellableCard> boardRails() {
 		return boardRails;
-	}
-
-	public static void exit() {
-		System.exit(0);
 	}
 }

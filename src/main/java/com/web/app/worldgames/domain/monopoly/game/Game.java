@@ -125,24 +125,20 @@ public class Game {
 		if (this.isStarted()) {
 			turn = this.getAllPlayers().indexOf(this.getCurrentPlayer());
 			turn = (turn + 1) % getAllPlayers().size();
-			// int indexCurrentPlayer = this.getAllPlayers().indexOf(
-			// this.getCurrentPlayer());
-			// if (indexCurrentPlayer == getAllPlayers().size() - 1) {
-			// return this.getAllPlayers().get(0);
-			// }
 			return this.getAllPlayers().get(turn);
 		}
 		return null;
 	}
 
-	public void setPlayers() {
-		for (int i = 0; i < getUserList().size(); i++) {
-			User user = getUserList().get(i);
-			addPlayers(user);
-		}
-	}
-
 	// ------------for test
+
+	// public void setPlayers() {
+	// for (int i = 0; i < getUserList().size(); i++) {
+	// User user = getUserList().get(i);
+	// addPlayers(user);
+	// }
+	// }
+
 	public void setPlayer() {
 		playerList.add((new Player("Player 1", CellPositions.START,
 				CardPrices.START_MONEY, PlayerColors.PLAYER1)));

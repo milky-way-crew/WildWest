@@ -4,7 +4,6 @@ public interface ButtonsLabel {
 	String ROLL = "roll";
 	String BUY = "buy";
 	String BUILD = "build";
-	String OK = "ok";
 	String REFUSE = "refuse";
 	String PAY = "pay";
 	String MORTAGE = "mortage";

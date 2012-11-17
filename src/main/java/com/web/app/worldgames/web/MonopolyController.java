@@ -34,21 +34,10 @@ public class MonopolyController {
 
 	@RequestMapping(value = "/mono-server")
 	public String showPage(HttpSession session, Model model) {
-//		User user = getUserFromSession(session);
-
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		// FOR TEST
-//		if (user == null) {
-//			log.info("user is null -> creating new game");
-//			User host = userService.findUserByLogin("test");
-//			session.setAttribute("user", host);
-//			monopolyService.createGame(host);
-//		}
-//		session.setAttribute("idMonopolyGame", 0);
-		// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 		model.addAttribute("user", getUserFromSession(session));
-
+		
+//		return "monopoly/monopoly-board";
 		return "monopoly/monopoly-game";
 	}
 
