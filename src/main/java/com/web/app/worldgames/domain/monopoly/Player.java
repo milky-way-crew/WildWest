@@ -319,6 +319,9 @@ public class Player {
 		}
 	}
 
+	public void addForMortage() {
+	}
+
 	public void addSelledProperty(SellableCard card) {
 		property.add(card);
 	}
@@ -406,9 +409,9 @@ public class Player {
 	// }
 	// }
 
-	public void listPropertyForMortage(Player player) {
-		if (player.checkProperty()) {
-			for (SellableCard card : player.playerProperty()) {
+	public void listPropertyForMortage() {
+		if (this.checkProperty()) {
+			for (SellableCard card : this.playerProperty()) {
 				if (!card.isMortage() && !forMortage.contains(card)) {
 					forMortage.add(card);
 				}
@@ -418,9 +421,9 @@ public class Player {
 		}
 	}
 
-	public void listPropertyForSell(Player player) {
-		if (player.checkProperty()) {
-			for (SellableCard card : player.playerProperty()) {
+	public void listPropertyForSell() {
+		if (this.checkProperty()) {
+			for (SellableCard card : this.playerProperty()) {
 				if (!card.isMortage() && !forSell.contains(card)) {
 					forSell.add(card);
 				}
@@ -430,9 +433,9 @@ public class Player {
 		}
 	}
 
-	public List<SellableCard> listPropertyForUnmortage(Player player) {
-		if (player.checkProperty()) {
-			for (SellableCard card : player.playerProperty()) {
+	public List<SellableCard> listPropertyForUnmortage() {
+		if (this.checkProperty()) {
+			for (SellableCard card : this.playerProperty()) {
 				if (card.isMortage() && !forUnMortage.contains(card)) {
 					forUnMortage.add(card);
 				}
@@ -511,13 +514,14 @@ public class Player {
 	}
 
 	public boolean canRollDices() {
-		if ((this.getMoney() > 0 || this.doublePoints()) && !isRolled()) {
+		if ((this.getMoney() >= 0 || this.doublePoints()) && !isRolled()) {
 			return true;
 		} else
 			return false;
 	}
+
 	public boolean canContinueGame() {
-		return ((this.canMortage() &&this.canSell()) || this.getMoney() > 0) ? true
+		return ((this.canMortage() && this.canSell()) || this.getMoney() > 0) ? true
 				: false;
 	}
 }

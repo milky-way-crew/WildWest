@@ -296,6 +296,8 @@ public class CityCard extends SellableCard {
 	public void buyCityOrRail(Player player) {
 		this.setOwner(player);
 		player.addProperty(player);
+		player.listPropertyForMortage();
+		player.listPropertyForSell();
 		log.info("[MESSAGE]: You are owner now");
 		player.setMoney(player.getMoney() - getPrice());
 		log.info("[MONEY]: " + player.getMoney());

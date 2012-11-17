@@ -59,10 +59,10 @@ public class JailCard extends Cell {
 			message = "You saty in jail";
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
 			log.info("[JAIL] : You stay in jail");
-			buttons.put(ButtonsLabel.DONE, player.canContinueGame());
+			buttons.put(ButtonsLabel.DONE, true);
 			buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
 			buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
-			buttons.put(ButtonsLabel.SELL, false);
+			buttons.put(ButtonsLabel.SELL, player.canSell());
 		}
 		result.put("buttons", buttons);
 		result.put("messages", message);
