@@ -1,106 +1,171 @@
-
+/* Css for chess-game */
 body {
-    background-image: url('../img/chess/chess-bg.png'); /*blockpattern*/
-    /*background:-webkit-linear-gradient(45deg, #020031 0%, #6D3353 100%);*/
+    background-image: url('../img/chess/chess-bg.png');
+    background-color: rgb(39,144,176);
+}
+.navbar {
+    margin-bottom: 7px;
+}
+#main-container {
+    margin: 0;
+    padding: 0;
 }
 
+/* Chat */
+#chat {
+    margin: 10px 20px 0px 20px;
+    background: none;
+}
+    #chat>.row.well {
+        margin: 0px;
+    }
+    #chat a {
+        margin-bottom: 10px;
+    }
+#chat-header h3 {
+    text-align: center;
+    font-family: 'Lobster Two', Helvetica;
+    font-size: 28px;
+}
+#chat-history {
+    height: 330px;
+}
+    #chat-history ul {
+        list-style: none;
+        margin: 0;
+    }
+    #chat-history  li  h4 {
+        font-family: 'Anaheim', Helvetica;
+        word-wrap:break-word;
+        border-bottom: 1px dashed rgba(20,20,20,.2);
+    }
+#chat-input {
+    width : 160px;
+}
+form {
+    margin: 0;
+}
+/***********/
+
+/* Sidebar */
+#sidebar {
+    margin: 10px 20px 10px 40px;
+    background: none;
+}
+    #sidebar>.row.well {
+        margin: 0px;
+    }
+    #sidebar a {
+        margin-bottom: 10px;
+    }
 .menu {
     border : none;
     background-color: rgba(0,0,0,0.5);
-    -moz-box-shadow:    0px 0px 20px #000;
-    -webkit-box-shadow: 0px 0px 20px #000;
-    box-shadow:         0px 0px 20px #000;
-}
-.menu-entry {
-    /*border: solid 2px black; */
-    -moz-box-shadow:    0px 0px 20px #888;
-    -webkit-box-shadow: 0px 0px 20px #888;
-    box-shadow:         0px 0px 20px #888;
-}
-
-#chat {
-    width: 320px;
-}
-
-#test {
-    position: absolute; 
-    right: 5%;
-    top:200px;
-    width: 200px;
-    height: 200px;
+    -moz-box-shadow:    0px 0px 5px #000;
+    -webkit-box-shadow: 0px 0px 5px #000;
+    box-shadow:         0px 0px 5px #000;
 }
 
 #info {
-    /*border: solid 2px black; */
     margin-top: 0px; 
     margin-bottom: 10px; 
     padding:5px 5px;
 }
+    #info h3 {
+        text-align: center;
+        font-family: 'Lobster Two', Helvetica;
+        font-size: 28px;
+    }
+    #info h4 {
+        font-family: 'Anaheim', Helvetica;
+    }
 
 #before_game {
     border : none;
     color: #FFF;
     background : rgba(8,8,8,0.5);
-    display : none;
+    /*display : none;*/
+    margin-top: 10px !important; 
+    margin-bottom: 0px !important;
 }
 
 #chess {
-    padding-top: 0px;
-    border: solid 1px black;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    width : 700px;
-    background-color:transparent; 
-    border:none;
-    margin-right: auto;
+    border-radius: 5px;
+    width: 570px;
+
+    border: solid 1px;
+    -webkit-box-shadow: rgba(0, 36, 62, 0.2) 2px 2px 0;
+    box-shadow: rgba(0, 36, 62, 0.2) 2px 2px 0;
+    background-color: #eee;
+    padding: 10px 10px 10px 10px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
+
+#container {
+    width: 984px;
+    border: solid 1px;
+    -webkit-box-shadow: rgba(0, 36, 62, 0.2) 2px 2px 0;
+    box-shadow: rgba(0, 36, 62, 0.2) 2px 2px 0;
+    background-color: #eee;
+    padding: 10px 10px 10px 10px;
+    margin: 0 auto;
+}
+
+#chess_board { 
+    border:2px solid #333; 
+    -moz-box-shadow:    0px 0px 5px #000;
+    -webkit-box-shadow: 0px 0px 5px #000;
+    box-shadow:         0px 0px 5px #000;
+}
+    #chess_board td { 
+        background:#fff; 
+        background:-moz-linear-gradient(top, #fff, #eee); 
+        background:-webkit-gradient(linear,0 0, 0 100%, from(#fff), to(#eee)); 
+/*        box-shadow:inset 0 0 0 1px #fff; */
+/*        -moz-box-shadow:inset 0 0 0 1px #fff; */
+/*        -webkit-box-shadow:inset 0 0 0 1px #fff;  */
+        height:80px; 
+        width:80px; 
+        text-align:center; 
+        vertical-align:middle; 
+    }
+    #chess_board tr:nth-child(odd) td:nth-child(even),
+    #chess_board tr:nth-child(even) td:nth-child(odd) { 
+        background:#ccc;
+        /*Ta xz */
+/*        background:-moz-linear-gradient(top, #ccc, #eee); */
+/*        background:-webkit-gradient(linear,0 0, 0 100%, from(#ccc), to(#eee)); */
+/*        box-shadow:inset 0 0 10px rgba(0,0,0,.4); */
+/*        -moz-box-shadow:inset 0 0 10px rgba(0,0,0,.4); */
+/*        -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,.4); */
+    }
+
 
 .figure {
-    color: black;
     cursor: pointer;
-}
+    border-radius: 15px;
 
-/*.figure:hover {
-    box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
-}*/
+}
+    .figure .selected {
+    }
 
-.mine {
-}
-
-
-#chess_board td.selected {
-    background: #00FF00 !important;
-}
-
-.hoverIn {
-    background: green;
-}
-#chess_board { 
-    border:3px solid #333; 
-    -moz-box-shadow:    0px 0px 20px #000;
-    -webkit-box-shadow: 0px 0px 20px #000;
-    box-shadow:         0px 0px 20px #000;
-}
-#chess_board td { 
-    background:#fff; 
-    background:-moz-linear-gradient(top, #fff, #eee); 
-    background:-webkit-gradient(linear,0 0, 0 100%, from(#fff), to(#eee)); 
-    box-shadow:inset 0 0 0 1px #fff; 
-    -moz-box-shadow:inset 0 0 0 1px #fff; 
-    -webkit-box-shadow:inset 0 0 0 1px #fff;  
-    height:90px; 
-    text-align:center; 
-    vertical-align:middle; 
-    width:90px; 
-}
-#chess_board tr:nth-child(odd) td:nth-child(even),
-#chess_board tr:nth-child(even) td:nth-child(odd) { 
-    background:#ccc; 
-    background:-moz-linear-gradient(top, #ccc, #eee); 
-    background:-webkit-gradient(linear,0 0, 0 100%, from(#ccc), to(#eee)); 
-    box-shadow:inset 0 0 10px rgba(0,0,0,.4); 
-    -moz-box-shadow:inset 0 0 10px rgba(0,0,0,.4); 
-    -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,.4); 
-}
-#chess_board td.valid { background: #00FF00 !important; }
-#chess_board td.invalid { background: #FF0000 !important; }
+/*    .figure:hover {
+        border-radius: 15px;
+        -webkit-transition: all 0.5s ease;
+           -moz-transition: all 0.5s ease;
+             -o-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+                transition: all 0.5s ease;
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }      
+*/
+#chess_board td > .selected {
+    background-color: green;
+    border-radius: 5px;
+} 
