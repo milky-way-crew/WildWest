@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jdt.internal.compiler.ast.ForStatement;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
@@ -39,8 +40,8 @@ public class Player {
 	private List<String> listRegions = new ArrayList<String>();
 	private List<SellableCard> property = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
-
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
+	private List<SellableCard> forSell = new ArrayList<SellableCard>();
 	private static final Logger log = Logger.getLogger(Player.class);
 
 	public Player(User user, int position, int money, String color) {
@@ -161,9 +162,9 @@ public class Player {
 		this.numberFreeCard = numberFreeCard;
 	}
 
-//	public void addFreeCard() {
-//		numberFreeCard++;
-//	}
+	// public void addFreeCard() {
+	// numberFreeCard++;
+	// }
 
 	@Override
 	public int hashCode() {
@@ -226,7 +227,7 @@ public class Player {
 			position = position - 40;
 		}
 		setPosition(position);
-		//setRollAction(false);
+		// setRollAction(false);
 		// } else {
 		// log.info("[PLAYER:] " + this.getName() + " cannot roll");
 		// }
@@ -240,7 +241,7 @@ public class Player {
 
 	}
 
-	public static boolean doublePoints() {
+	public boolean doublePoints() {
 		return (diceOne == diceTwo) ? true : false;
 	}
 
@@ -293,17 +294,17 @@ public class Player {
 		return numberOfRailss;
 	}
 
-	public void exitPlayer(Player player) {
-		StartGame game = new StartGame();
-		for (SellableCard card : player.playerProperty()) {
-			card.setOwner(null);
-			if (card.isMortage()) {
-				card.setMortage(false);
-			}
-		}
-		StartGame.deleteLoserPlayer(game.playersPermanentlyList(), player);
-
-	}
+	// public void exitPlayer(Player player) {
+	// StartGame game = new StartGame();
+	// for (SellableCard card : player.playerProperty()) {
+	// card.setOwner(null);
+	// if (card.isMortage()) {
+	// card.setMortage(false);
+	// }
+	// }
+	// StartGame.deleteLoserPlayer(game.playersPermanentlyList(), player);
+	//
+	// }
 
 	public void addProperty(Player player) {
 		for (Cities cities : Cities.values()) {
@@ -338,8 +339,8 @@ public class Player {
 		return ((this.getMoney() - price) >= 0) ? true : false;
 	}
 
-	public boolean checkProperty(Player player) {
-		return (player.playerProperty().isEmpty()) ? false : true;
+	public boolean checkProperty() {
+		return (playerProperty().isEmpty()) ? false : true;
 	}
 
 	// delete ----for test
@@ -375,50 +376,62 @@ public class Player {
 		return forUnMortage;
 	}
 
-	public void printMortageList(List<SellableCard> list, Player player) {
-		int n = 0;
-		for (SellableCard c : list) {
-			System.out.println(n + ": " + c.getName() + " index: "
-					+ forMortage.indexOf(c) + " you will get: " + c.getPrice()
-					/ 2);
-			n++;
-		}
-	}
+	// public void printMortageList(List<SellableCard> list, Player player) {
+	// int n = 0;
+	// for (SellableCard c : list) {
+	// System.out.println(n + ": " + c.getName() + " index: "
+	// + forMortage.indexOf(c) + " you will get: " + c.getPrice()
+	// / 2);
+	// n++;
+	// }
+	// }
 
-//	public boolean canMortage() {
-//		if (getForMortage().isEmpty()) {
-//			return false;
-//		} else
-//			return true;
-//	}
+	// public boolean canMortage() {
+	// if (getForMortage().isEmpty()) {
+	// return false;
+	// } else
+	// return true;
+	// }
 
-	public void printUnmortageList(List<SellableCard> list, Player player) {
-		int n = 0;
-		for (SellableCard c : list) {
-			System.out.println(n + ": " + c.getName() + " index: "
-					+ forUnMortage.indexOf(c) + " you must pay: "
-					+ c.getPrice() / 2);
-			n++;
-		}
-		if (forUnMortage.isEmpty()) {
-			System.out.println("You haven't mortage objects");
-		}
-	}
+	// public void printUnmortageList(List<SellableCard> list, Player player) {
+	// int n = 0;
+	// for (SellableCard c : list) {
+	// System.out.println(n + ": " + c.getName() + " index: "
+	// + forUnMortage.indexOf(c) + " you must pay: "
+	// + c.getPrice() / 2);
+	// n++;
+	// }
+	// if (forUnMortage.isEmpty()) {
+	// System.out.println("You haven't mortage objects");
+	// }
+	// }
 
 	public void listPropertyForMortage(Player player) {
-		if (player.checkProperty(player)) {
+		if (player.checkProperty()) {
 			for (SellableCard card : player.playerProperty()) {
 				if (!card.isMortage() && !forMortage.contains(card)) {
 					forMortage.add(card);
 				}
 			}
-		}else {
+		} else {
+			log.info("[MESSAGE]: property list is empty");
+		}
+	}
+
+	public void listPropertyForSell(Player player) {
+		if (player.checkProperty()) {
+			for (SellableCard card : player.playerProperty()) {
+				if (!card.isMortage() && !forSell.contains(card)) {
+					forSell.add(card);
+				}
+			}
+		} else {
 			log.info("[MESSAGE]: property list is empty");
 		}
 	}
 
 	public List<SellableCard> listPropertyForUnmortage(Player player) {
-		if (player.checkProperty(player)) {
+		if (player.checkProperty()) {
 			for (SellableCard card : player.playerProperty()) {
 				if (card.isMortage() && !forUnMortage.contains(card)) {
 					forUnMortage.add(card);
@@ -428,71 +441,83 @@ public class Player {
 		return forUnMortage;
 	}
 
-	public void chooseAndMortage(List<SellableCard> mortageList,
-			SellableCard card, Player player) {
-		if (mortageList.contains(card)) {
-			card.mortage(player);
-			forUnMortage.add(card);
-			forMortage.remove(card);
-			System.out.println("You mortage: " + card.getName() + " you get: "
-					+ card.getPrice() / 2);
-		}
+	// public void chooseAndMortage(List<SellableCard> mortageList,
+	// SellableCard card, Player player) {
+	// if (mortageList.contains(card)) {
+	// card.mortage(player);
+	// forUnMortage.add(card);
+	// forMortage.remove(card);
+	// System.out.println("You mortage: " + card.getName() + " you get: "
+	// + card.getPrice() / 2);
+	// }
+	// }
+	//
+	// public void chooseAndUnMortage(List<SellableCard> unmortageList,
+	// SellableCard card, Player player) {
+	// if (unmortageList.contains(card) && card.isMortage()) {
+	// card.unMortage(player);
+	// forMortage.add(card);
+	// forUnMortage.remove(card);
+	// System.out.println("You unmortage: " + card.getName()
+	// + " you pay: " + card.getPrice() / 2);
+	// }
+	// }
+
+	// public void mortageAction(Player player) {
+	// if (canMortage()) {
+	// printMortageList(forMortage, player);
+	//
+	// BufferedReader in = new BufferedReader(new InputStreamReader(
+	// System.in));
+	// String key = null;
+	// try {
+	// key = in.readLine();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// int index = Integer.valueOf(key);
+	// SellableCard cityToMortage = forMortage.get(index);
+	// chooseAndMortage(forMortage, cityToMortage, player);
+	// } else
+	// System.out.println("no obj");
+	// }
+	//
+	// public void unMortageAction(Player player) {
+	// System.out.println("Choose object to unmortage: ");
+	// printUnmortageList(forUnMortage, player);
+	// BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	// String key = null;
+	// try {
+	// key = in.readLine();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// int index = Integer.valueOf(key);
+	// SellableCard cityToUnMortage = listPropertyForUnmortage(player).get(
+	// index);
+	// chooseAndUnMortage(forUnMortage, cityToUnMortage, player);
+	// }
+
+	public boolean canMortage() {
+		return (!this.getForMortage().isEmpty()) ? true : false;
 	}
 
-	public void chooseAndUnMortage(List<SellableCard> unmortageList,
-			SellableCard card, Player player) {
-		if (unmortageList.contains(card) && card.isMortage()) {
-			card.unMortage(player);
-			forMortage.add(card);
-			forUnMortage.remove(card);
-			System.out.println("You unmortage: " + card.getName()
-					+ " you pay: " + card.getPrice() / 2);
-		}
+	public boolean canUnmortage() {
+		return (!this.getForUnMortage().isEmpty()) ? true : false;
 	}
 
-	public void mortageAction(Player player) {
-		if (canMortage()) {
-			printMortageList(forMortage, player);
-
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					System.in));
-			String key = null;
-			try {
-				key = in.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			int index = Integer.valueOf(key);
-			SellableCard cityToMortage = forMortage.get(index);
-			chooseAndMortage(forMortage, cityToMortage, player);
-		} else
-			System.out.println("no obj");
-	}
-
-	public void unMortageAction(Player player) {
-		System.out.println("Choose object to unmortage: ");
-		printUnmortageList(forUnMortage, player);
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		String key = null;
-		try {
-			key = in.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		int index = Integer.valueOf(key);
-		SellableCard cityToUnMortage = listPropertyForUnmortage(player).get(
-				index);
-		chooseAndUnMortage(forUnMortage, cityToUnMortage, player);
-	}
-	public boolean canMortage(){
-		return(!this.getForMortage().isEmpty())?true:false;
+	public boolean canSell() {
+		return (!this.forSell.isEmpty() ? true : false);
 	}
 
 	public boolean canRollDices() {
-		if ((this.getMoney() > 0 || Player.doublePoints())&&!isRolled()) {
-		//	setRollAction(true);
+		if ((this.getMoney() > 0 || this.doublePoints()) && !isRolled()) {
 			return true;
 		} else
 			return false;
+	}
+	public boolean canContinueGame() {
+		return ((this.canMortage() &&this.canSell()) || this.getMoney() > 0) ? true
+				: false;
 	}
 }

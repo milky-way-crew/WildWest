@@ -228,25 +228,25 @@ public class CityCard extends SellableCard {
 	}
 
 	// I don't know it is need
-	@Override
-	public void payOrMortage(SellableCard cell, Player player, Player owner) {
-		boolean check = true;
-		int price = getRent(player, owner);
-		if (player.checkMoney(price)) {
-			payRentToOwner(player, owner, price);
-		} else {
-			while (check) {
-				player.mortageAction(player);
-				if (player.checkMoney(price)) {
-					payRentToOwner(player, owner, price);
-					check = false;
-				} else {
-					check = true;
-				}
-
-			}
-		}
-	}
+//	@Override
+//	public void payOrMortage(SellableCard cell, Player player, Player owner) {
+//		boolean check = true;
+//		int price = getRent(player, owner);
+//		if (player.checkMoney(price)) {
+//			payRentToOwner(player, owner, price);
+//		} else {
+//			while (check) {
+//			//	player.mortageAction(player);
+//				if (player.checkMoney(price)) {
+//					payRentToOwner(player, owner, price);
+//					check = false;
+//				} else {
+//					check = true;
+//				}
+//
+//			}
+//		}
+//	}
 
 	@Override
 	public int getRent(Player player, Player owner) {

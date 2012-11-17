@@ -50,16 +50,10 @@ public class GameAction {
 				}
 				buttons.put(ButtonsLabel.BUILD, card.canBuildHouse(player)
 						|| card.canBuildHotel(player));
-				// result.put(ButtonsLabel.REFUSE, card.canRefuse(player));
-				buttons.put(ButtonsLabel.MORTAGE, card.canMortage(player));
-				buttons.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
-				buttons.put(ButtonsLabel.SELL, card.canSell(player));
+				//buttons.put(ButtonsLabel.MORTAGE, card.canMortage(player));
+				//buttons.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
+				//buttons.put(ButtonsLabel.SELL, card.canSell(player));
 				buttons.put(ButtonsLabel.PAY, false);
-				// buttons.put(ButtonsLabel.DONE, true);
-//				state.put("messages", messages);
-//				state.put("buttons", buttons);
-//				state.put("player", player.getColor());
-//				state.put("player_money", player.getMoney());
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
 				buttons.put(ButtonsLabel.BUY, card.canBuy(player));
@@ -68,33 +62,27 @@ public class GameAction {
 								card.getRent(player, card.getOwner()))) {
 					messages="You haven't money. You may mortage or sell your property.";
 				}
-				buttons.put(ButtonsLabel.MORTAGE, card.canMortage(player));
-				buttons.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
-				buttons.put(ButtonsLabel.SELL, card.canSell(player));
+				//buttons.put(ButtonsLabel.MORTAGE, card.canMortage(player));
+				//buttons.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
+			//buttons.put(ButtonsLabel.SELL, card.canSell(player));
 				buttons.put(ButtonsLabel.PAY, false);
-				// buttons.put(ButtonsLabel.DONE, true);
-//				state.put("messages", messages);
-//				state.put("buttons", buttons);
 			}
 		} else {
 			if (cell instanceof GoCard) {
 				cell.effectOnPlayer(player);
-				buttons.put(ButtonsLabel.DONE, true);
+				//buttons.put(ButtonsLabel.DONE, true);
 				messages="You got $200";
-//				state.put("messages", messages);
-//				state.put("buttons", buttons);
 			} else if (cell instanceof TaxCard) {
 				if (((TaxCard) cell).canPayTax(player)) {
 					cell.effectOnPlayer(player);
-					buttons.put(ButtonsLabel.DONE, true);
+					//buttons.put(ButtonsLabel.DONE, true);
 					messages="You payed tax";
 				} else {
-					buttons.put(ButtonsLabel.DONE, true);
+					//buttons.put(ButtonsLabel.DONE, true);
 					messages="You haven't money. You may mortage or sell your property.";
 				}
 			} else if (cell instanceof JailCard) {
 				cell.effectOnPlayer(player);
-				// buttons.put(ButtonsLabel.DONE, true);
 				buttons.put(ButtonsLabel.PAY,
 						((JailCard) cell).canPayRansom(player));
 				buttons.put(ButtonsLabel.ROLL, true);
@@ -102,32 +90,23 @@ public class GameAction {
 			} else if (cell instanceof FreeStation) {
 				cell.effectOnPlayer(player);
 				messages="You stay at Free Station";
-				// buttons.put(ButtonsLabel.DONE, true);
-				// result.put("player", player.getColor());
 			} else if (cell instanceof GoToJailCard) {
 				cell.effectOnPlayer(player);
-				// result.put("player", player.isInJail());
-				// buttons.put(ButtonsLabel.DONE, true);
 				messages="You are going to jail";
 				go=CellPositions.JAIL;
-				// result.put("Move to:", CellPositions.JAIL);
 			} else if (cell instanceof ChanseCard) {
 				cell.effectOnPlayer(player);
-				// buttons.put(ButtonsLabel.DONE, true);
 				messages="You have a chance";
 				go=((ChanseCard) cell).getMovePosition();
-				// result.put("Move to:", ((ChanseCard)
-				// cell).getMovePosition());
 			} else if (cell instanceof CommunityChestCard) {
-				// buttons.put(ButtonsLabel.DONE, true);
-				// bonuce.put("bonuce", value);
+				cell.effectOnPlayer(player);
 				messages="You have a community chest";
 			}
-			buttons.put(ButtonsLabel.MORTAGE, true);
-			buttons.put(ButtonsLabel.UNMORTAGE, true);
-			buttons.put(ButtonsLabel.SELL, true);
 		}
-		buttons.put(ButtonsLabel.DONE, true);
+		buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
+		buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
+		buttons.put(ButtonsLabel.SELL, player.canSell());
+		buttons.put(ButtonsLabel.DONE, player.canContinueGame());
 		state.put("buttons", buttons);
 		state.put("go", go);
 		state.put("messages", messages);
