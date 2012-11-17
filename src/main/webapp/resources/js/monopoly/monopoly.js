@@ -28,7 +28,8 @@ $(document).ready(function() {
 			isCreator: false,
 			money: 0,
 			color: '',
-			game_status: ""
+			game_status: "",
+			// position : 0
 		},
 		transport: {
 			socket: null,
@@ -101,8 +102,9 @@ $(document).ready(function() {
 					console.log('Current money is: ' + money);
 					MONO.config.money = money;
 
-					MONO.animate.move(color, dice1, dice2);
+					MONO.animate.move(color, dice1, dice2, json.was);
 
+					MONO.config.position += (dice1 + dice2); // WRONG
 					// this player moves
 					if(MONO.config.color === color) {
 						$("#controls .btn").each(function(i, btn) {
@@ -167,12 +169,10 @@ $(document).ready(function() {
 					}, 100);
 				});
 			},
-			move: function(who, d1, d2) {
+			move: function(who, d1, d2, was) {
 				chat.append('Moving ' + who + ' to offset: ' + (d1 + d2));
-				// DICE = d1 + d2;
 
-				// stepOnBoard(who === "RED" ? '#player1' : '#player2');
-
+				BOARD.animate.stepOnBoard(who, d1, d2, was);
 
 				console.log('Moving to: ' + (d1 + d2));
 			}

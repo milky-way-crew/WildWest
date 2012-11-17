@@ -37,8 +37,8 @@ public class MonopolyController {
 
 		model.addAttribute("user", getUserFromSession(session));
 		
-//		return "monopoly/monopoly-board";
-		return "monopoly/monopoly-game";
+		return "monopoly/monopoly-board";
+//		return "monopoly/monopoly-game";
 	}
 
 	@RequestMapping(value = "/mono-create")
