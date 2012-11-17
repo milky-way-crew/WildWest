@@ -28,17 +28,11 @@
 			DURATION : 500,
 			
 			COLOR_PLAYER:{
-				COLOR_PLAYER_1 : "BROWN",
-				COLOR_PLAYER_2 : "GREEN",
-				COLOR_PLAYER_3 : "RED",
-				COLOR_PLAYER_4 : "VIOLET"
+				"BROWN" : '#player1',
+				"GREEN" : '#player2',
+				"RED" 	: '#player3',
+				"VIOLET" : '#player4'
 			
-			},
-			PLAYER:{
-				PLAYER_1 : '#player1',
-				PLAYER_2 : '#player2',
-				PLAYER_3 : '#player3',
-				PLAYER_4 : '#player4'
 			}
 			
 		},
@@ -59,52 +53,53 @@
 				playerTopJump: function (player, shift){
 								$(player).css({top : shift});
 							},
-				/* Move the player */
-				stepOnBoard:function (playerColor, dice1, dice2, startCell){
-						var start=startCell;
-						var DICE=dice1+dice2;
-						var player = BOARD.choosePlayer(playerColor);
-						for (var i = 0; i<DICE; i++){
-							if(start>=1 && start<11){
-								if(start==1){
-									BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_BIG_SHIFT);
-								}else if(start==10){
-									BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_BIG_SHIFT);
-								}else{
-									BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_SMALL_SHIFT);
-								}
-							}else if(start>=11 && start<21){
-								if(start==11){
-									BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_BIG_SHIFT);
-								}else if(start==20){
-									BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_BIG_SHIFT);
-								}else{
-									BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_SMALL_SHIFT);
-								}
+							/* Move the player */
+							stepOnBoard:function (playerColor, dice1, dice2, startCell){
+									var start=startCell;
+									var DICE=dice1+dice2;
+									var player = BOARD.CONSTANT.COLOR_PLAYER[playerColor];
+									
+									for (var i = 0; i<DICE; i++){
+										if(start>=1 && start<11){
+											if(start==1){
+												BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_BIG_SHIFT);
+											}else if(start==10){
+												BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_BIG_SHIFT);
+											}else{
+												BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_SMALL_SHIFT);
+											}
+										}else if(start>=11 && start<21){
+											if(start==11){
+												BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_BIG_SHIFT);
+											}else if(start==20){
+												BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_BIG_SHIFT);
+											}else{
+												BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_SMALL_SHIFT);
+											}
 
-							}else if(start>=21 && start<31){
-								if(start==21){
-									BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_BIG_SHIFT);
-								}else if(start==30){
-									BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_BIG_SHIFT);
-								}else{
-									BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_SMALL_SHIFT);
-								}
-							}else{
-								if(start==31){
-									BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_BIG_SHIFT);
-								}else if(start==40){
-									BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_BIG_SHIFT);
-								}else{
-									BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_SMALL_SHIFT);
-								}
-							}
+										}else if(start>=21 && start<31){
+											if(start==21){
+												BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_BIG_SHIFT);
+											}else if(start==30){
+												BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_BIG_SHIFT);
+											}else{
+												BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_SMALL_SHIFT);
+											}
+										}else{
+											if(start==31){
+												BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_BIG_SHIFT);
+											}else if(start==40){
+												BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_BIG_SHIFT);
+											}else{
+												BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_SMALL_SHIFT);
+											}
+										}
 
-							start++;
-							if(start>40)
-							start-=40;
-						}
-					},
+										start++;
+										if(start>40)
+										start-=40;
+									}
+								},
 				
 				/* JUMP the player */
 				jumpOnBoard:	function (player, dice1, dice2, startCell, endCell){
@@ -286,17 +281,6 @@
 					});
 				}				
 		
-		},
-		choosePlayer: function(playerColor){
-				if(playerColor==BOARD.CONSTATN.COLOR_PLAYER_1){
-					return PLAYER_1;
-				}else if(playerColor==BOARD.CONSTATN.COLOR_PLAYER_2){
-					return PLAYER_2;
-				}else if(playerColor==BOARD.CONSTATN.COLOR_PLAYER_3){
-					return PLAYER_3;
-				}else{
-					return PLAYER_4;
-				}
 			}
 	};
 	BOARD.init();
