@@ -291,11 +291,10 @@
 		<!-- Create buttons -->
 		<div class="playerButton">
 			<input id="buyButton" type="submit" value="BUY"> <input
-				type="submit" value="MORTAGE" onClick="alert('Mortage this city!')">
-			<input type="submit" value="UNMORTAGE"
-				onClick="alert('Unmortage this city!')"> <input
-				type="submit" value="BUILD" onClick="alert('Build!')"> <input
-				type="submit" value="Sell" onClick="alert('Sell')"> <input
+				type="submit" value="MORTAGE">
+			<input type="submit" value="UNMORTAGE"> <input
+				type="submit" value="BUILD"> <input
+				type="submit" value="Sell"> <input
 				id="diceButton" type="submit" value="RollDice">
 		</div>
 
