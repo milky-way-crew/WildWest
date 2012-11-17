@@ -35,10 +35,10 @@
 			</div>
 			<div class="span7" id="game-container">
 				<div id="wrapper">
-					<div style="float: left; width: 30%">
+					<div style="float: left; width: 40%">
 						<h1 id="timer">Time: 0</h1>
 					</div>
-					<div style="float: right; width: 70%;">
+					<div style="float: right; width: 60%;">
 						<h1 id="title">Draw &amp; Guess</h1>
 					</div>
 
@@ -64,13 +64,13 @@
 
 						<div id="chat-header">
 							<form class="form-inline">
-								<h2>
+								<h3>
 									Chat or Guess: <input type="text" id="chat-input"
 										placeholder="I guess it..">
 									<button class="btn btn-primary" type="button" id="send">
 										<i class="icon-envelope icon-white"></i> Send
 									</button>
-								</h2>
+								</h3>
 							</form>
 
 						</div>

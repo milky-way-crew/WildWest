@@ -16,7 +16,7 @@
 
 #wrapper {
 	text-align: center;
-	width: 520px;
+	/*width: 520px;*/
 	margin: 0 auto;
 }
 
@@ -30,8 +30,8 @@ body {
 }
 
 #game {
-	width: 500px;
-	margin: 0 auto;
+	/*width: 500px;*/
+	/*margin: 0 auto;*/
 }
 
 	#game h1 {
