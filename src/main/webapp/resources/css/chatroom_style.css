@@ -42,6 +42,13 @@ a:hover {
 	border: 1px solid #ACD8F0;
 }
 
+#list {
+	border: 2;
+	cellspacing: 3; 
+	cellpadding: 3;
+	align: center;
+}
+
 .error {
 	color: #ff0000;
 }

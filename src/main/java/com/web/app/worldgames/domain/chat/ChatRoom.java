@@ -12,6 +12,7 @@ public class ChatRoom {
     private static List<ChatParticipant> chatParticipants = new ArrayList<ChatParticipant>();
     private int roomId;
     private String roomName;
+    private int size;
 
     public ChatRoom(String roomName, int id) {
 	this.roomId = id;
@@ -19,10 +20,6 @@ public class ChatRoom {
 	log.debug("Room "+roomName+" added");
     }
 
-    public int sizeOfRoom(){
-	return chatParticipants.size();
-    }
-    
     public void addChatParticipant(ChatParticipant participant) {
 	chatParticipants.add(participant);
 	log.debug("User " + participant.getNickname() + " added to roomChat");
@@ -79,5 +76,13 @@ public class ChatRoom {
 
     public void setRoomName(String roomName) {
 	this.roomName = roomName;
+    }
+
+    public int getSize() {
+	return size;
+    }
+
+    public void setSize(int size) {
+	this.size = size;
     }
 }

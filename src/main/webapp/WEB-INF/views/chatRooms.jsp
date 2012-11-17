@@ -58,12 +58,8 @@
 			<!-- room list -->
 			<div class="span4">
 				<div id="rightBar" class="well sidebar-nav">
-					<h2>Room list</h2>
-					<table border=2 cellspacing=3 cellpadding=3 align="center">
-						<tr>
-							<td width=175><b>Room name</b></td>
-							<td width=75><b>User's</b></td>
-						</tr>
+					<h2>Room List</h2>
+					<table id="list" class="table table-hover">
 					</table>
 					<form name="roomAction" action="">
 						<br> <a data-toggle="modal" href="#createRoomModal"

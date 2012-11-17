@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.chat.ChatParticipant;
+import com.web.app.worldgames.domain.chat.ChatRoom;
 import com.web.app.worldgames.service.ChatServiceManager;
 
 @Controller
@@ -31,13 +33,17 @@ public class ChatRoomsController {
     public ModelAndView showPage(HttpServletRequest request) {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
-	request.getSession().setAttribute("chatParticipant", chatParticipant);
-	log.debug("Put ChatParticipant in Session "
-		+ chatParticipant.getNickname()
-		+ chatParticipant.getParticipantId()
-		+ chatParticipant.getId_room());
-	chatManager.getChatRoomById(chatParticipant.getId_room())
-		.addChatParticipant(chatParticipant);
+	if (!chatManager.getChatRoomById(chatParticipant.getId_room())
+		.isParticipantInRoom(chatParticipant)) {
+	    request.getSession().setAttribute("chatParticipant",
+		    chatParticipant);
+	    log.debug("Put ChatParticipant in Session "
+		    + chatParticipant.getNickname()
+		    + chatParticipant.getParticipantId()
+		    + chatParticipant.getId_room());
+	    chatManager.getChatRoomById(chatParticipant.getId_room())
+		    .addChatParticipant(chatParticipant);
+	}
 	ModelAndView modelAndView = new ModelAndView();
 	modelAndView.setViewName("chatRooms");
 	return modelAndView;
@@ -45,25 +51,49 @@ public class ChatRoomsController {
 
     @RequestMapping(value = "/ajax", method = RequestMethod.POST)
     public @ResponseBody
-    String onMessage(HttpServletRequest request,
+    JSONObject onMessage(HttpServletRequest request,
 	    @RequestParam("type") String type, @RequestParam("data") String data) {
 	ChatParticipant participant = getChatParticipantFromRequest(request);
+	JSONObject json = new JSONObject();
 
-	if (type.toLowerCase().trim().equals("update")) {
-	    log.debug("Update request from user: " + participant.getNickname());
-	    return updateUserMessages(participant);
-	}
 	if (type.toLowerCase().trim().equals("message")) {
+	    json.clear();
 	    log.debug("Broadcast request from user: "
 		    + participant.getNickname());
 	    broadcast(participant, data);
-	    return answerOnMessage(participant, "");
+	    json.put("message", answerOnMessage(participant, data));
+	    return json;
 	}
-	if (type.toLowerCase().trim().equals("create")) {
-	    log.debug("Create room by user: " + participant.getNickname());
-	    createRoom(participant, data);
+	if (type.toLowerCase().trim().equals("update")) {
+	    json.clear();
+	    log.debug("Update request from user: " + participant.getNickname());
+	    json.put("update", updateUserMessages(participant));
+	    if (participant.getId_room() == 0)
+		json.put("roomList", updateRoomList(participant));
+	    else
+		json.put("userList", updateUserList(participant));
+	    return json;
 	}
-	return data;
+	/*
+	 * if (type.toLowerCase().trim().equals("create")) {
+	 * log.debug("Create room by user: " + participant.getNickname());
+	 * createRoom(participant, data); return data; } if
+	 * (type.toLowerCase().trim().equals("join")) {
+	 * log.debug("Create room by user: " + participant.getNickname());
+	 * joinToRoom(participant, Integer.parseInt(data)); return data; }
+	 */
+	return null;
+    }
+
+    private List<ChatRoom> updateRoomList(ChatParticipant participant) {
+	chatManager.calculateRoomsSize();
+	List<ChatRoom> listRoom = chatManager.getChatRooms();
+	return listRoom;
+    }
+
+    private List<ChatParticipant> updateUserList(ChatParticipant participant) {
+	return chatManager.getChatRoomById(participant.getId_room())
+		.getChatParticipants();
     }
 
     private void createRoom(ChatParticipant participant, String roomName) {
@@ -74,6 +104,13 @@ public class ChatRoomsController {
 	participant.setId_room(newId);
 	chatManager.getChatRoomById(participant.getId_room())
 		.addChatParticipant(participant);
+    }
+
+    private void joinToRoom(ChatParticipant participant, int id) {
+	chatManager.getChatRoomById(participant.getId_room())
+		.deleteChatParticipantById(participant.getParticipantId());
+	chatManager.getChatRoomById(id).addChatParticipant(participant);
+	participant.setId_room(id);
     }
 
     private String answerOnMessage(ChatParticipant participant, String data) {
