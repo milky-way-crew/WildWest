@@ -179,7 +179,6 @@ public class MonopolyManager {
 			SellableCard card = (SellableCard) CardFactory
 					.chooseCard(currentPlayer);
 			if (card.canBuy(currentPlayer)) {
-
 				log.info("[Cell: ]" + card.info());
 				card.buyCityOrRail(currentPlayer);
 				log.info("[Player: ]" + currentPlayer.getColor()
@@ -196,7 +195,7 @@ public class MonopolyManager {
 
 	private void onRoll(int idPlayer, Map<String, Object> response) {
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
-		if (currentPlayer.canRollDices()) {
+	//	if (currentPlayer.canRollDices()) {
 			if (currentPlayer.getId() == idPlayer) {
 				if (currentPlayer.isInJail()) {
 					// int points = currentPlayer.rollDicesAndWait();
@@ -239,7 +238,7 @@ public class MonopolyManager {
 					response.put("cell", CardFactory.chooseCard(currentPlayer));
 				}
 			}
-		}
+		//}
 		broadcast(response);
 	}
 

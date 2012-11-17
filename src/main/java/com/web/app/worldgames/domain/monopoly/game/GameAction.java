@@ -53,6 +53,9 @@ public class GameAction {
 				//buttons.put(ButtonsLabel.MORTAGE, card.canMortage(player));
 				//buttons.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
 				//buttons.put(ButtonsLabel.SELL, card.canSell(player));
+//				buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
+//				buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
+//				buttons.put(ButtonsLabel.SELL, player.canSell());
 				buttons.put(ButtonsLabel.PAY, false);
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
@@ -102,11 +105,13 @@ public class GameAction {
 				cell.effectOnPlayer(player);
 				messages="You have a community chest";
 			}
+			
 		}
 		buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
 		buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
 		buttons.put(ButtonsLabel.SELL, player.canSell());
-		buttons.put(ButtonsLabel.DONE, player.canContinueGame());
+		buttons.put(ButtonsLabel.DONE, true);
+		buttons.put(ButtonsLabel.ROLL, player.doublePoints());
 		state.put("buttons", buttons);
 		state.put("go", go);
 		state.put("messages", messages);
