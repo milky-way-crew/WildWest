@@ -50,7 +50,6 @@ $(document).ready(function() {
 				MONO.transport.socket.send(jsonString);
 			},
 			init: function() {
-
 				$.ajax({
 					url: MONO.config.ajaxUrl,
 					type: 'post',
@@ -71,7 +70,6 @@ $(document).ready(function() {
 				});
 			}
 		},
-
 		events: {
 			onConnectEstablished: function() {
 				console.log("Connection opened, bind-websocket request");
@@ -103,18 +101,18 @@ $(document).ready(function() {
 						color = json.game_state.player,
 						money = json.game_state.player_money,
 						message = json.game_state.messages;
-					
+					// Think about go-card
 					log('Was money=' + MONO.config.money);
 					log('After move money=' + money);
 					MONO.config.money = money;
-
-					log('Starting animation of roll event');
-					MONO.animate.move(color, dice1, dice2, json.was);
-					
+					MONO.animate.money(money);					
 
 					MONO.config.position = json.was + offset; 
 					log('position on board [was] -> ' + json.was);
 					log('position on board [now] -> ' + MONO.config.position);
+
+					log('Starting animation of roll event');
+					MONO.animate.move(color, dice1, dice2, json.was);
 
 					// this player moves
 					if(MONO.config.color === color) {
@@ -138,7 +136,13 @@ $(document).ready(function() {
 					chat.append(msg);
 					log(msg);
 					MONO.animate.buy(json.player, MONO.config.position);
+					MONO.animate.money(json.player, json.player_money);
+
 					// MONO.animate.money(json.player_money, {type : 'up' || 'down'});
+				},
+				'pay' : function(json) {
+					log('Player=' + json.player + ' payed money for go out from jail');
+					MONO.animate.pay(json.Player, json.player_money);
 				},
 				'init': function(json) {
 					console.log('[init] event');
@@ -188,6 +192,10 @@ $(document).ready(function() {
 					}, 100);
 				});
 			},
+			money : function (who, money) {
+				log('Animating [money] change');
+				log('~not supported~');
+			},
 			move: function(who, d1, d2, was) {
 				chat.append('Moving ' + who + ' to offset: ' + (d1 + d2));
 
@@ -198,6 +206,9 @@ $(document).ready(function() {
 			buy : function(who, position) {
 				log('Animating [buy]');
 				log('~not supported~');
+			},
+			pay : function (player, money) {
+				MONO.animate.money(player, money);
 			}
 		},
 		init: function() {

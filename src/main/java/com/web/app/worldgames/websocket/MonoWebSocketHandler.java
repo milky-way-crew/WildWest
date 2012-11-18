@@ -83,7 +83,7 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 					
 					MonopolyService monopolyService = MonopolyService.getInstance();
 					MonopolyManager manager = monopolyService.getGameById(idGame);
-					manager.onMessage(idUser, typeOfMessage, dataBlock.asText());
+					manager.onMessage(idUser, typeOfMessage, dataBlock.getTextValue());
 				}
 			} catch (IOException e) {
 				log.error("Error while receiving message from client", e);
