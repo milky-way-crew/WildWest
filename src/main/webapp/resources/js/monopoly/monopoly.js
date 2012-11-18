@@ -148,9 +148,11 @@ $(document).ready(function() {
 					// parse list
 					// highlight obj
 					MONO.animate.mortage(json.mortage_list);
-					var pos = parseInt(prompt('Enter position to mortage. List=' + JSON.stringify(json.mortage_list)), 10);
-					if (pos && json.player === MONO.config.color) {
-						MONO.transport.send('mortage', {position : pos});						
+					if (json.player === MONO.config.color) {
+						var pos = parseInt(prompt('Enter position to mortage. List=' + JSON.stringify(json.mortage_list)), 10);						
+						if (pos) {
+ 							MONO.transport.send('mortage', {position : pos});						
+						}
 					}
 				},
 				'init': function(json) {

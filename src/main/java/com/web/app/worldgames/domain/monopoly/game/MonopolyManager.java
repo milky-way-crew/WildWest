@@ -344,6 +344,7 @@ public class MonopolyManager {
 	public void broadcast(Map<String, ? extends Object> message) {
 		WebSocketTransport transport = WebSocketTransport.getInstance();
 		for (Player player : getMonopolyGame().getAllPlayers()) {
+			log.info("Sending message to user with id=" + player.getId());
 			transport.sendMessage(player.getId(), message);
 		}
 //		for (Player player : monopolyGame.getAllLosers()) {
