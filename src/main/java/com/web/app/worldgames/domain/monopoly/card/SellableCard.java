@@ -69,7 +69,7 @@ public abstract class SellableCard extends Cell {
 	}
 
 	public boolean canBuy(Player player) {
-		return (player.checkMoney(this.price) && this.getOwner() == null && this instanceof SellableCard) ? true
+		return (player.checkMoney(this.getPrice()) && this.getOwner() == null && this instanceof SellableCard) ? true
 				: false;
 	}
 

@@ -23,7 +23,7 @@ public class CommunityChestCard extends Cell {
 		int chestIndex = randChest.nextInt(7);
 		for (CommunityChest chest : CommunityChest.values()) {
 			if (chest.ordinal() == chestIndex) {
-				log.info("[MESSAGE]: " + chest.getMessage());
+				log.info("[MESSAGE (from community chest)]: " + chest.getMessage());
 				return chest;
 			}
 		}

@@ -36,7 +36,8 @@ public class Player {
 	private static int diceTwo = 0;
 	private boolean inJail;
 	private boolean readyToStart = false;
-	private boolean loss = false;
+	private boolean isLosser = false;
+	private boolean isWinner = false;
 	private List<String> listRegions = new ArrayList<String>();
 	private List<SellableCard> property = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
@@ -124,12 +125,13 @@ public class Player {
 		this.inJail = inJail;
 	}
 
-	public boolean isLoss() {
-		return loss;
+
+	public boolean isLosser() {
+		return isLosser;
 	}
 
-	public void setLoss(boolean loss) {
-		this.loss = loss;
+	public void setLosser(boolean isLosser) {
+		this.isLosser = isLosser;
 	}
 
 	public int getCircle() {
@@ -201,6 +203,14 @@ public class Player {
 		this.rolled = rolled;
 	}
 
+	public boolean isWinner() {
+		return isWinner;
+	}
+
+	public void setWinner(boolean isWinner) {
+		this.isWinner = isWinner;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -222,13 +232,11 @@ public class Player {
 
 	public static int rollDiceOne() {
 		diceOne = randDice.nextInt(6) + 1;
-		log.info("[DICE 1:] " + diceOne);
 		return diceOne;
 	}
 
 	public static int rollDiceTwo() {
 		diceTwo = randDice.nextInt(6) + 1;
-		log.info("[DICE 2:] " + diceTwo);
 		return diceTwo;
 	}
 
@@ -241,7 +249,7 @@ public class Player {
 			this.setCircle(c++);
 			this.setMoney(this.getMoney() + CardPrices.CIRCLE_MONEY);
 			log.info("[-----PLAYER:-------] " + this.getName()
-					+ " GET CIRCLE MONEY+$200");
+					+ " GET CIRCLE MONEY +$200");
 			position = position - 40;
 		}
 		setPosition(position);
@@ -542,7 +550,7 @@ public class Player {
 	}
 
 	public boolean canRollDices() {
-		if ((this.getMoney() >= 0 || this.doublePoints()) && !isRolled()) {
+		if ((this.getMoney() > 0 || this.doublePoints()) && !isRolled()) {
 			return true;
 		} else
 			return false;

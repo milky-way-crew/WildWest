@@ -97,7 +97,7 @@ public class GameAction {
 				go=((ChanceCard) cell).getMovePosition();
 			} else if (cell instanceof CommunityChestCard) {
 				cell.effectOnPlayer(player);
-				messages="You have a community chest";
+				messages="You have a community chest"+cell.info();
 			}
 			
 		}

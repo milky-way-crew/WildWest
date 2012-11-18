@@ -19,6 +19,7 @@ public class Game {
 	private Player currentPlayer = null;
 
 	public List<Player> playerList = new ArrayList<Player>();
+	public List<Player> loserList = new ArrayList<Player>();
 	// -------for test
 	public List<User> userList = new ArrayList<User>();
 	// public Map<Integer, SellableCard> boardCities = new HashMap<Integer,
@@ -56,6 +57,10 @@ public class Game {
 
 	public List<Player> getAllPlayers() {
 		return playerList;
+	}
+
+	public List<Player> getAllLosers() {
+		return loserList;
 	}
 
 	public Player getCurrentPlayer() {
@@ -109,6 +114,10 @@ public class Game {
 			}
 		}
 		return false;
+	}
+
+	public void addLoser(Player player) {
+		loserList.add(player);
 	}
 
 	public void start() {
