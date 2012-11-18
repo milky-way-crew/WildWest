@@ -417,6 +417,13 @@ public class Player {
 		}
 		return mortageAvaliable;
 	}
+	public Map<Integer, Integer> getUnMortageAvaliable() {
+		Map<Integer, Integer> unMortageAvaliable = new HashMap<Integer, Integer>();
+		for (SellableCard p : getForUnMortage()) {
+			unMortageAvaliable.put(p.getPosition(), p.getPrice() / 2);
+		}
+		return unMortageAvaliable;
+	}
 
 	public List<SellableCard> getForUnMortage() {
 		return forUnMortage;

@@ -149,7 +149,9 @@ $(document).ready(function() {
 					// highlight obj
 					MONO.animate.mortage(json.mortage_list);
 					var pos = parseInt(prompt('Enter position to mortage. List=' + JSON.stringify(json.mortage_list)), 10);
-					MONO.transport.send('mortage', {position : pos});
+					if (pos) {
+						MONO.transport.send('mortage', {position : pos});						
+					}
 				},
 				'init': function(json) {
 					console.log('[init] event');

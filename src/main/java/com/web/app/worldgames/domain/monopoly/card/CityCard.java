@@ -208,18 +208,11 @@ public class CityCard extends SellableCard {
 			player.setNumberOfBuildings(player.getNumberOfBuildings() + 1);
 			buildings.put(city.getName(), city.getNumbersOfHouses());
 			player.setBuildings(buildings);
-			log.info("[Message]: " + "You can build hotel");
 		} else {
 			log.info("[Message]: " + "You cannot build hotel");
 		}
 		return isHotel();
 	}
-
-	// public void sellHouse(Player player) {
-	// player.setMoney(player.getMoney() + this.getHousePrice());
-	// int numbHouses = this.getNumbersOfHouses();
-	// this.setNumbersOfHouses(numbHouses--);
-	// }
 
 	@Override
 	public void effectOnPlayer(Player player) {
@@ -278,6 +271,34 @@ public class CityCard extends SellableCard {
 				+ " tax2 house: " + getTaxTwoHouse() + " tax3 house: "
 				+ getTaxThreeHouse() + "\n\thoutel price: " + getHotelPrice()
 				+ " is hotel: " + isHotel() + " tax hotel: " + getTaxHotel();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cities == null) ? 0 : cities.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CityCard other = (CityCard) obj;
+		if (cities != other.cities)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 
 	@Override

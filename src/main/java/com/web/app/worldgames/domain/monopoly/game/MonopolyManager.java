@@ -151,38 +151,38 @@ public class MonopolyManager {
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (currentPlayer.canMortage()) {
 			response.put("type", ButtonsLabel.MORTAGE);
-			response.put("mortage_list",
-					currentPlayer.getMortageAvaliable());
+			response.put("mortage_list", currentPlayer.getMortageAvaliable());
 			response.put("player", currentPlayer.getColor());
 			response.put("player_money", currentPlayer.getMoney());
-		}
-		JsonNode tree = null;
-		try {
-			tree = objectMapper.readTree(data);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JsonNode dataBlock = tree.path("data");
+			JsonNode tree = null;
+			try {
+				tree = objectMapper.readTree(data);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			JsonNode dataBlock = tree.path("data");
 
-		if (dataBlock.has("position")) {
-			SellableCard city = null;
-			int pos = dataBlock.path("position").getIntValue();
-			log.info("received position: " + pos);
-			log.info("player money: " + currentPlayer.getMoney());
-			city = currentPlayer.cardByPosition(pos);
-			city.mortage(currentPlayer);
-			log.info("mortage city: " + city.getName());
-			currentPlayer.getForMortage().remove(city);
-			currentPlayer.getForUnMortage().add(city);
-			log.info("player money after mortage: " + currentPlayer.getMoney());
-		}else {
-			log.info("no position: ");
-			log.info("List: ");
-			
+			if (dataBlock.has("position")) {
+				SellableCard city = null;
+				int pos = dataBlock.path("position").getIntValue();
+				log.info("received position: " + pos);
+				log.info("player money: " + currentPlayer.getMoney());
+				city = currentPlayer.cardByPosition(pos);
+				city.mortage(currentPlayer);
+				log.info("mortage city: " + city.getName());
+				log.info("remove city: " + city.getName());
+				currentPlayer.getForMortage().remove(city);
+				currentPlayer.getForUnMortage().add(city);
+				log.info("player money after mortage: "
+						+ currentPlayer.getMoney());
+			} else {
+				log.info("no position: ");
+				log.info("List: ");
+			}
 		}
 
 		// if (response.get("position") != null) {

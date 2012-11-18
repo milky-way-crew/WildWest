@@ -11,7 +11,7 @@ import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class CommunityChestCard extends Cell {
 	private final static Logger log = Logger.getLogger(CommunityChestCard.class);
-
+private String msg;
 //	public void chestActivity(Player player) {
 //		boolean check = true;
 //		CommunityChest chest = getRandomChestCard();
@@ -23,7 +23,7 @@ public class CommunityChestCard extends Cell {
 		int chestIndex = randChest.nextInt(7);
 		for (CommunityChest chest : CommunityChest.values()) {
 			if (chest.ordinal() == chestIndex) {
-				log.info("[MESSAGE (from community chest)]: " + chest.getMessage());
+				//log.info("[MESSAGE (from community chest)]: " + chest.getMessage());
 				return chest;
 			}
 		}
@@ -59,6 +59,7 @@ public class CommunityChestCard extends Cell {
 		else if (chest.getWhoIsGet().equals("coliseum")) {
 			player.setNumberFreeCard((player.getNumberFreeCard())+1);
 		}
+		msg =chest.getMessage();
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class CommunityChestCard extends Cell {
 
 	@Override
 	public String info() {
-		return "Community chest: "+getRandomChestCard().getMessage();
+		return "Community chest: "+msg;
 	}
 
 	// public static void main(String[] args) {
