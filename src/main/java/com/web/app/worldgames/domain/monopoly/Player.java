@@ -8,13 +8,11 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jdt.internal.compiler.ast.ForStatement;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
-import com.web.app.worldgames.domain.monopoly.game.Game;
 
 public class Player {
 	private int id;
