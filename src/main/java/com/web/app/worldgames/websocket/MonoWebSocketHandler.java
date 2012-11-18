@@ -33,7 +33,7 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 	}
 
 	public class MonoWebSocket implements WebSocket.OnTextMessage {
-		private static final String DATA_NODE = "data";
+//		private static final String DATA_NODE = "data";
 		private static final String ID_NODE = "id";
 		private static final String TYPE_NODE = "type";
 		private static final String BIND_WEBSOCKET = "bind-websocket";
@@ -69,7 +69,7 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 				JsonNode idBlock = messageTree.path(ID_NODE);
 				int idUser = idBlock.path("user-id").getIntValue();
 				int idGame = idBlock.path("game-id").getIntValue();
-				JsonNode dataBlock = idBlock.path(DATA_NODE);
+//				JsonNode dataBlock = messageTree.path(DATA_NODE);
 
 				if (typeOfMessage.equals(BIND_WEBSOCKET)) {
 					// way #2
@@ -83,7 +83,8 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 					
 					MonopolyService monopolyService = MonopolyService.getInstance();
 					MonopolyManager manager = monopolyService.getGameById(idGame);
-					manager.onMessage(idUser, typeOfMessage, dataBlock.getTextValue());
+					
+					manager.onMessage(idUser, typeOfMessage, json);
 				}
 			} catch (IOException e) {
 				log.error("Error while receiving message from client", e);
