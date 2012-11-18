@@ -144,6 +144,13 @@ $(document).ready(function() {
 					log('Player=' + json.player + ' payed money for go out from jail');
 					MONO.animate.pay(json.Player, json.player_money);
 				},
+				'mortage' : function (json) {
+					// parse list
+					// highlight obj
+					MONO.animate.mortage(json.mortage_list);
+					var pos = parseInt(prompt('Enter position to mortage. List=' + JSON.stringify(json.mortage_list)), 10);
+					MONO.transport.send('mortage', {position : pos});
+				},
 				'init': function(json) {
 					console.log('[init] event');
 					MONO.config.color = json.color;
@@ -212,6 +219,10 @@ $(document).ready(function() {
 			},
 			pay : function (player, money) {
 				MONO.animate.money(player, money);
+			}, 
+			mortage : function (argument) {
+				log('Animating [mortage]');
+				log('~not supported~');
 			}
 		},
 		init: function() {
@@ -232,7 +243,6 @@ $(document).ready(function() {
 				console.log('sending **pay** message to server');
 				MONO.transport.send('pay', {});
 			});
-
 			$('#done').click(function() {
 				console.log('sending ***done*** message to server');
 				$(".btn").animate({
@@ -241,15 +251,10 @@ $(document).ready(function() {
 
 				MONO.transport.send('done', {});
 			});
-
 			$('#mortage').click(function() {
-				var pos = parseInt(prompt('Enter position to mortage'), 10);
 				console.log('sending ***mortage*** message to server');
-				MONO.transport.send('mortage', {
-					position: pos
-				});
+				MONO.transport.send('mortage', {});
 			});
-
 			$('#unmortage').click(function() {
 				var pos = parseInt(prompt('Enter position to unmortage'), 10);
 				console.log('sending ***unmortage*** message to server');
@@ -257,12 +262,11 @@ $(document).ready(function() {
 					position: pos
 				});
 			});
-
 			$('#start').click(function() {
 				console.log('sending ***start*** message to server');
 				MONO.transport.send('start', {});
+				$(this).hide(100);
 			});
-
 			$('#ready').click(function() {
 				console.log('sending ***ready*** message to server');
 				MONO.transport.send('ready', {});
