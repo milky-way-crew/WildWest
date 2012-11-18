@@ -314,7 +314,6 @@
 			</div>
 			<div class="span4 well">
 				<button class="btn btn-primary" id="done">done</button>
-				<button class="btn btn-primary" id="ok">ok</button>
 				<button class="btn btn-primary" id="start">start</button>
 				<button class="btn btn-primary" id="ready">ready</button>
 			</div>
