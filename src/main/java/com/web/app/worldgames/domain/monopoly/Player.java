@@ -459,7 +459,7 @@ public class Player {
 	// }
 	// }
 
-	public void listPropertyForMortage() {
+	public List<SellableCard> listPropertyForMortage() {
 		if (this.checkProperty()) {
 			for (SellableCard card : this.playerProperty()) {
 				if (!card.isMortage() && !forMortage.contains(card)) {
@@ -469,6 +469,7 @@ public class Player {
 		} else {
 			log.info("[MESSAGE]: property list is empty");
 		}
+		return forMortage;
 	}
 
 	public void listPropertyForSell() {

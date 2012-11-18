@@ -175,7 +175,8 @@ public class MonopolyManager {
 				city.mortage(currentPlayer);
 				log.info("mortage city: " + city.getName());
 				log.info("remove city: " + city.getName());
-				currentPlayer.getForMortage().remove(city);
+//				currentPlayer.getForMortage().remove(city);
+				currentPlayer.listPropertyForMortage().remove(city);
 				currentPlayer.getForUnMortage().add(city);
 				log.info("player money after mortage: "
 						+ currentPlayer.getMoney());
@@ -184,14 +185,6 @@ public class MonopolyManager {
 				log.info("List: ");
 			}
 		}
-
-		// if (response.get("position") != null) {
-		// SellableCard card = (SellableCard) currentPlayer
-		// .cardByPosition((Integer) response.get("position"));
-		// card.mortage(currentPlayer);
-		// currentPlayer.getForMortage().remove(card);
-		// currentPlayer.getForUnMortage().add(card);
-		// }
 		broadcast(response);
 	}
 
@@ -353,9 +346,9 @@ public class MonopolyManager {
 		for (Player player : getMonopolyGame().getAllPlayers()) {
 			transport.sendMessage(player.getId(), message);
 		}
-		for (Player player : monopolyGame.getAllLosers()) {
-
-		}
+//		for (Player player : monopolyGame.getAllLosers()) {
+//
+//		}
 	}
 
 	/**
