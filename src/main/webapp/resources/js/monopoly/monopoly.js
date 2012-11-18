@@ -190,6 +190,9 @@ $(document).ready(function() {
 					$('#' + btnName).animate({
 						"opacity": opacityValue
 					}, 100);
+					if (btnName === "buy" && buttons[btnName]) {
+						$('#buy').show(100);
+					}
 				});
 			},
 			money : function (who, money) {
@@ -222,6 +225,8 @@ $(document).ready(function() {
 			$('#buy').click(function() {
 				console.log('sending **buy** message to server');
 				MONO.transport.send('buy', {});
+				// hide button after action
+				$(this).hide(100);
 			});
 			$('#pay').click(function() {
 				console.log('sending **pay** message to server');
