@@ -1,8 +1,10 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
-import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
@@ -23,7 +25,6 @@ public class CityCard extends SellableCard {
 	private boolean isHotel;
 	private int taxHotel;
 	private int position;
-
 	private final static Logger log = Logger.getLogger(CityCard.class);
 
 	Cities cities = null;
@@ -159,6 +160,7 @@ public class CityCard extends SellableCard {
 	}
 
 	public void buildHouse(Player player) {
+		Map<String, Integer> buildings = new HashMap<String, Integer>();
 		CityCard city = (CityCard) StartGame.boardCities().get(
 				player.getPosition());
 		if (getNumbersOfHouses() < 3) {
@@ -167,6 +169,9 @@ public class CityCard extends SellableCard {
 				player.setMoney(player.getMoney() - city.getHousePrice());
 				numbersOfHouses++;
 				setNumbersOfHouses(numbersOfHouses);
+				player.setNumberOfBuildings(player.getNumberOfBuildings() + 1);
+				buildings.put(city.getName(), city.getNumbersOfHouses());
+				player.setBuildings(buildings);
 			}
 			log.info("[Message]: " + "You build castle. Number of houses are: "
 					+ getNumbersOfHouses());
@@ -193,12 +198,16 @@ public class CityCard extends SellableCard {
 	}
 
 	public boolean buildHotel(Player player) {
+		Map<String, Integer> buildings = new HashMap<String, Integer>();
 		CityCard city = (CityCard) StartGame.boardCities().get(
 				player.getPosition());
 		if (canBuildHotel(player)) {
 			log.info("[Message]: " + "You can build hotel");
 			player.setMoney(player.getMoney() - city.getHotelPrice());
 			setHotel(true);
+			player.setNumberOfBuildings(player.getNumberOfBuildings() + 1);
+			buildings.put(city.getName(), city.getNumbersOfHouses());
+			player.setBuildings(buildings);
 			log.info("[Message]: " + "You can build hotel");
 		} else {
 			log.info("[Message]: " + "You cannot build hotel");
@@ -206,11 +215,11 @@ public class CityCard extends SellableCard {
 		return isHotel();
 	}
 
-	public void sellHouse(Player player) {
-		player.setMoney(player.getMoney() + this.getHousePrice());
-		int numbHouses = this.getNumbersOfHouses();
-		this.setNumbersOfHouses(numbHouses--);
-	}
+//	public void sellHouse(Player player) {
+//		player.setMoney(player.getMoney() + this.getHousePrice());
+//		int numbHouses = this.getNumbersOfHouses();
+//		this.setNumbersOfHouses(numbHouses--);
+//	}
 
 	@Override
 	public void effectOnPlayer(Player player) {
@@ -228,25 +237,26 @@ public class CityCard extends SellableCard {
 	}
 
 	// I don't know it is need
-//	@Override
-//	public void payOrMortage(SellableCard cell, Player player, Player owner) {
-//		boolean check = true;
-//		int price = getRent(player, owner);
-//		if (player.checkMoney(price)) {
-//			payRentToOwner(player, owner, price);
-//		} else {
-//			while (check) {
-//			//	player.mortageAction(player);
-//				if (player.checkMoney(price)) {
-//					payRentToOwner(player, owner, price);
-//					check = false;
-//				} else {
-//					check = true;
-//				}
-//
-//			}
-//		}
-//	}
+	// @Override
+	// public void payOrMortage(SellableCard cell, Player player, Player owner)
+	// {
+	// boolean check = true;
+	// int price = getRent(player, owner);
+	// if (player.checkMoney(price)) {
+	// payRentToOwner(player, owner, price);
+	// } else {
+	// while (check) {
+	// // player.mortageAction(player);
+	// if (player.checkMoney(price)) {
+	// payRentToOwner(player, owner, price);
+	// check = false;
+	// } else {
+	// check = true;
+	// }
+	//
+	// }
+	// }
+	// }
 
 	@Override
 	public int getRent(Player player, Player owner) {

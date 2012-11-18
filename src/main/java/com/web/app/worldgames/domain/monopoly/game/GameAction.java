@@ -13,7 +13,7 @@ import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.PlayerColors;
 import com.web.app.worldgames.domain.monopoly.Rails;
 import com.web.app.worldgames.domain.monopoly.card.Cell;
-import com.web.app.worldgames.domain.monopoly.card.ChanseCard;
+import com.web.app.worldgames.domain.monopoly.card.ChanñeCard;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.CommunityChestCard;
 import com.web.app.worldgames.domain.monopoly.card.FreeStation;
@@ -97,10 +97,10 @@ public class GameAction {
 				cell.effectOnPlayer(player);
 				messages="You are going to jail";
 				go=CellPositions.JAIL;
-			} else if (cell instanceof ChanseCard) {
+			} else if (cell instanceof ChanñeCard) {
 				cell.effectOnPlayer(player);
 				messages="You have a chance";
-				go=((ChanseCard) cell).getMovePosition();
+				go=((ChanñeCard) cell).getMovePosition();
 			} else if (cell instanceof CommunityChestCard) {
 				cell.effectOnPlayer(player);
 				messages="You have a community chest";

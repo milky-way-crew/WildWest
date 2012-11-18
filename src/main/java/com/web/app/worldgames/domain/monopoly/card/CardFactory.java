@@ -9,7 +9,7 @@ public class CardFactory {
 		Cell cell = null;
 		if (StartGame.boardCities.containsKey(player.getPosition())) {
 			cell = StartGame.boardCities.get(player.getPosition());
-			cell.setName("City Card"); 
+			//cell.setName("City Card");
 			return cell;
 		} else if ((player.getPosition() == CellPositions.TAX2)
 				|| (player.getPosition() == CellPositions.TAX1)) {
@@ -18,13 +18,12 @@ public class CardFactory {
 			return cell;
 		} else if (StartGame.boardRails.containsKey(player.getPosition())) {
 			cell = StartGame.boardRails.get(player.getPosition());
-			cell.setName("Rail Card"); 
+			cell.setName("Rail Card");
 			return cell;
 		} else if ((player.getPosition() == CellPositions.CHANCE1)
 				|| (player.getPosition() == CellPositions.CHANCE2)
-				|| (player.getPosition() == CellPositions.CHANCE3)
-				|| (player.getPosition() == CellPositions.CHANCE4)) {
-			cell = new ChanseCard();
+				|| (player.getPosition() == CellPositions.CHANCE3)) {
+			cell = new ChanñeCard();
 			cell.setName("Chance Card");
 			return cell;
 		} else if (player.getPosition() == CellPositions.GO_TO_JAIL) {
@@ -34,7 +33,8 @@ public class CardFactory {
 		} else if ((player.getPosition() == CellPositions.COMMUNITY_CHEST1)
 				|| (player.getPosition() == CellPositions.COMMUNITY_CHEST2)
 				|| (player.getPosition() == CellPositions.COMMUNITY_CHEST3)
-				|| (player.getPosition() == CellPositions.COMMUNITY_CHEST4)) {
+				|| (player.getPosition() == CellPositions.COMMUNITY_CHEST4)
+				|| (player.getPosition() == CellPositions.COMMUNITY_CHEST5)) {
 			cell = new CommunityChestCard();
 			cell.setName("Community Chest");
 			return cell;
@@ -53,5 +53,4 @@ public class CardFactory {
 		}
 		return null;
 	}
-	
 }

@@ -1,6 +1,9 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import org.apache.log4j.Logger;
+
 import com.web.app.worldgames.domain.monopoly.Player;
+import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 
 public abstract class SellableCard extends Cell {
 	private int price;
@@ -22,7 +25,7 @@ public abstract class SellableCard extends Cell {
 	public abstract boolean canUnMortage(Player player);
 
 	public abstract boolean canSell(Player player);
-
+	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	public boolean isMortage() {
 		return mortage;
 	}
@@ -33,13 +36,13 @@ public abstract class SellableCard extends Cell {
 
 	public void mortage(Player player) {
 		this.mortage = true;
-		System.out.println("You mortage this object. ");
+		log.info("[MORTAGE MESSAGE]: You mortage this object");
 		player.setMoney(player.getMoney() + getPrice() / 2);
 	}
 
 	public void unMortage(Player player) {
 		this.mortage = false;
-		System.out.println("You unMortage this object. ");
+		log.info("[UNMORTAGE MESSAGE]: You unmortage this object");
 		player.setMoney(player.getMoney() - getPrice() / 2);
 	}
 
@@ -70,14 +73,10 @@ public abstract class SellableCard extends Cell {
 				: false;
 	}
 
-//	public boolean canRefuse(Player player) {
-//		return (this.getOwner() == null) ? true : false;
+//	public void refuse(Player player) {
+//		// player.setMoney(player.getMoney());
+//		player.setPosition(player.getPosition());
 //	}
-
-	public void refuse(Player player) {
-		// player.setMoney(player.getMoney());
-		player.setPosition(player.getPosition());
-	}
 
 	public void payRentToOwner(Player player, Player owner, int price) {
 		player.setMoney(player.getMoney() - price);
@@ -86,7 +85,7 @@ public abstract class SellableCard extends Cell {
 
 	public void sellCityOrRail(Player seller, Player buyer) {
 		if (this.isMortage()) {
-			// System.out.println("unMortage this city: ");
+			log.info("[MESSAGE]: Unmortage this object");
 		} else {
 			seller.setMoney(seller.getMoney() + this.getPrice());
 			buyer.setMoney(buyer.getMoney() - this.getPrice());
@@ -101,12 +100,17 @@ public abstract class SellableCard extends Cell {
 			}
 			buyer.addSelledProperty(this);
 			seller.deleteProperty(seller, this);
-			// System.out.println("You sale city " + this.getName() + " to "
-			// + buyer.getName());
 		}
 
 	}
 
+//	public void mortageAction(int playerId, int position) {
+//		Player player = 
+//		SellableCard card = player.cardByIndex(position);
+//		card.mortage(player);
+//		player.getForMortage().remove(card);
+//		player.getForUnMortage().add(card);
+//	}
 	// public void buyOrMortage(SellableCard cell, Player player) {
 	// boolean check = true;
 	// int price = cell.getPrice();

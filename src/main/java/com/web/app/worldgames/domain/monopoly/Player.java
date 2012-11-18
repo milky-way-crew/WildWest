@@ -4,17 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jdt.internal.compiler.ast.ForStatement;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
-import com.web.app.worldgames.domain.monopoly.game.Game;
 
 public class Player {
 	private int id;
@@ -42,6 +42,8 @@ public class Player {
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
 	private List<SellableCard> forSell = new ArrayList<SellableCard>();
+	Map<String, Integer> buildings = new HashMap<String, Integer>();
+	private int numberOfBuildings = 0;
 	private static final Logger log = Logger.getLogger(Player.class);
 
 	public Player(User user, int position, int money, String color) {
@@ -166,6 +168,22 @@ public class Player {
 	// numberFreeCard++;
 	// }
 
+	public int getNumberOfBuildings() {
+		return numberOfBuildings;
+	}
+
+	public void setNumberOfBuildings(int numberOfBuildings) {
+		this.numberOfBuildings = numberOfBuildings;
+	}
+
+	public Map<String, Integer> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(Map<String, Integer> buildings) {
+		this.buildings = buildings;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -223,7 +241,7 @@ public class Player {
 			this.setCircle(c++);
 			this.setMoney(this.getMoney() + CardPrices.CIRCLE_MONEY);
 			log.info("[-----PLAYER:-------] " + this.getName()
-					+ " GET CIRCLE MONEQ +$200");
+					+ " GET CIRCLE MONEY+$200");
 			position = position - 40;
 		}
 		setPosition(position);
@@ -332,6 +350,16 @@ public class Player {
 
 	public List<SellableCard> playerProperty() {
 		return property;
+	}
+
+	public SellableCard cardByPosition(int position) {
+		SellableCard card = null;
+		for (SellableCard cards : playerProperty()) {
+			if (cards.getPosition() == position) {
+				card = cards;
+			}
+		}
+		return card;
 	}
 
 	public SellableCard cardByIndex(int index) {
@@ -523,5 +551,19 @@ public class Player {
 	public boolean canContinueGame() {
 		return ((this.canMortage() && this.canSell()) || this.getMoney() > 0) ? true
 				: false;
+	}
+
+	public boolean canHandOverBuilding() {
+		return (this.getNumberOfBuildings() > 0) ? true : false;
+	}
+
+	public void handOverBuilding(CityCard city) {
+		if (city.isHotel()) {
+			city.setHotel(false);
+			this.setMoney(this.getMoney() + city.getHotelPrice());
+		} else {
+			city.setNumbersOfHouses(city.getNumbersOfHouses() - 1);
+			this.setMoney(this.getMoney() + city.getHousePrice());
+		}
 	}
 }

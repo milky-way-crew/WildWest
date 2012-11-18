@@ -2,6 +2,7 @@ package com.web.app.worldgames.domain.monopoly;
 
 public interface ButtonsLabel {
 	String ROLL = "roll";
+	String OK = "ok";
 	String BUY = "buy";
 	String BUILD = "build";
 	String REFUSE = "refuse";
