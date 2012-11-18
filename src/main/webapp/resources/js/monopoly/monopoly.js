@@ -17,7 +17,6 @@ var MONO = {
 				'data' : json
 			});
 			console.log('sending message: ' + jsonString);
-
 			MONO.transport.socket.send(jsonString);
 		},
 		init : function() {
