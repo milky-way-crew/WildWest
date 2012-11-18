@@ -1,19 +1,13 @@
 package com.web.app.worldgames.domain.monopoly.game;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
-import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
-import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.PlayerColors;
-import com.web.app.worldgames.domain.monopoly.Rails;
 import com.web.app.worldgames.domain.monopoly.card.Cell;
-import com.web.app.worldgames.domain.monopoly.card.ChanñeCard;
+import com.web.app.worldgames.domain.monopoly.card.ChanceCard;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.CommunityChestCard;
 import com.web.app.worldgames.domain.monopoly.card.FreeStation;
@@ -97,10 +91,10 @@ public class GameAction {
 				cell.effectOnPlayer(player);
 				messages="You are going to jail";
 				go=CellPositions.JAIL;
-			} else if (cell instanceof ChanñeCard) {
+			} else if (cell instanceof ChanceCard) {
 				cell.effectOnPlayer(player);
 				messages="You have a chance";
-				go=((ChanñeCard) cell).getMovePosition();
+				go=((ChanceCard) cell).getMovePosition();
 			} else if (cell instanceof CommunityChestCard) {
 				cell.effectOnPlayer(player);
 				messages="You have a community chest";

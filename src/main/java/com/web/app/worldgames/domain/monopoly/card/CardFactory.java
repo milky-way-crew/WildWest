@@ -23,7 +23,7 @@ public class CardFactory {
 		} else if ((player.getPosition() == CellPositions.CHANCE1)
 				|| (player.getPosition() == CellPositions.CHANCE2)
 				|| (player.getPosition() == CellPositions.CHANCE3)) {
-			cell = new ChanñeCard();
+			cell = new ChanceCard();
 			cell.setName("Chance Card");
 			return cell;
 		} else if (player.getPosition() == CellPositions.GO_TO_JAIL) {

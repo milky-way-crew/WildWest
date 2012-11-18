@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 import com.web.app.worldgames.domain.monopoly.Chance;
 import com.web.app.worldgames.domain.monopoly.Player;
 
-public class ChanñeCard extends Cell {
-	private static final Logger log = Logger.getLogger(ChanñeCard.class);
+public class ChanceCard extends Cell {
+	private static final Logger log = Logger.getLogger(ChanceCard.class);
 	String information;
 	private int movePosition;
 
