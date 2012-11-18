@@ -125,7 +125,6 @@ public class Player {
 		this.inJail = inJail;
 	}
 
-
 	public boolean isLosser() {
 		return isLosser;
 	}
@@ -409,6 +408,14 @@ public class Player {
 
 	public List<SellableCard> getForMortage() {
 		return forMortage;
+	}
+
+	public Map<Integer, Integer> getMortageAvaliable() {
+		Map<Integer, Integer> mortageAvaliable = new HashMap<Integer, Integer>();
+		for (SellableCard p : getForMortage()) {
+			mortageAvaliable.put(p.getPosition(), p.getPrice() / 2);
+		}
+		return mortageAvaliable;
 	}
 
 	public List<SellableCard> getForUnMortage() {

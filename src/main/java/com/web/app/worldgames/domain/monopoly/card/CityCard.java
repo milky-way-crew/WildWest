@@ -215,11 +215,11 @@ public class CityCard extends SellableCard {
 		return isHotel();
 	}
 
-//	public void sellHouse(Player player) {
-//		player.setMoney(player.getMoney() + this.getHousePrice());
-//		int numbHouses = this.getNumbersOfHouses();
-//		this.setNumbersOfHouses(numbHouses--);
-//	}
+	// public void sellHouse(Player player) {
+	// player.setMoney(player.getMoney() + this.getHousePrice());
+	// int numbHouses = this.getNumbersOfHouses();
+	// this.setNumbersOfHouses(numbHouses--);
+	// }
 
 	@Override
 	public void effectOnPlayer(Player player) {
@@ -235,28 +235,6 @@ public class CityCard extends SellableCard {
 			log.info("[OWNER]: You are owner");
 		}
 	}
-
-	// I don't know it is need
-	// @Override
-	// public void payOrMortage(SellableCard cell, Player player, Player owner)
-	// {
-	// boolean check = true;
-	// int price = getRent(player, owner);
-	// if (player.checkMoney(price)) {
-	// payRentToOwner(player, owner, price);
-	// } else {
-	// while (check) {
-	// // player.mortageAction(player);
-	// if (player.checkMoney(price)) {
-	// payRentToOwner(player, owner, price);
-	// check = false;
-	// } else {
-	// check = true;
-	// }
-	//
-	// }
-	// }
-	// }
 
 	@Override
 	public int getRent(Player player, Player owner) {
@@ -329,8 +307,7 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public boolean canSell(Player player) {
-		return (!this.isMortage() && this.getOwner() == player
-				&& this.numbersOfHouses == 0 && !this.isHotel) ? true : false;
+		return (!this.isMortage() && this.getOwner() == player) ? true : false;
 	}
 
 }

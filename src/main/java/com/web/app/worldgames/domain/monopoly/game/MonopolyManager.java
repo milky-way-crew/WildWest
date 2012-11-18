@@ -149,6 +149,13 @@ public class MonopolyManager {
 	private void onMortage(Map<String, Object> response, String data) {
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 		ObjectMapper objectMapper = new ObjectMapper();
+		if (currentPlayer.canMortage()) {
+			response.put("type", ButtonsLabel.MORTAGE);
+			response.put("mortage_list",
+					currentPlayer.getMortageAvaliable());
+			response.put("player", currentPlayer.getColor());
+			response.put("player_money", currentPlayer.getMoney());
+		}
 		JsonNode tree = null;
 		try {
 			tree = objectMapper.readTree(data);
@@ -172,15 +179,10 @@ public class MonopolyManager {
 			currentPlayer.getForMortage().remove(city);
 			currentPlayer.getForUnMortage().add(city);
 			log.info("player money after mortage: " + currentPlayer.getMoney());
-		} else {
+		}else {
 			log.info("no position: ");
 			log.info("List: ");
-			if (currentPlayer.canMortage()) {
-				response.put("type", ButtonsLabel.MORTAGE);
-				response.put("mortage_list", currentPlayer.getForMortage());
-				response.put("player", currentPlayer.getColor());
-				response.put("player_money", currentPlayer.getMoney());
-			}
+			
 		}
 
 		// if (response.get("position") != null) {
