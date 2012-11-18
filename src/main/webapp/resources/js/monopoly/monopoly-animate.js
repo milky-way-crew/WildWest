@@ -220,7 +220,7 @@
 						event.preventDefault();
 					});
 			});
-			alert("Hello");
+			// alert("Hello");
 			
 			BOARD.button.mortageButton;
 			BOARD.button.unmortageButton;
