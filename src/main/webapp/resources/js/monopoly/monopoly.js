@@ -169,7 +169,7 @@ $(document).ready(function() {
 					chat.append(json.message);
 				},
 				'logic': function(json) {
-					alert('game-status:' + json.game_status);
+					log('game-status:' + json.game_status);
 					MONO.config.game_status = json.game_status;
 					if(json.game_status === "start") {
 						$('#ready').hide(100);
