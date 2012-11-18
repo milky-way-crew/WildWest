@@ -5,7 +5,11 @@ prompt, bootbox*/
 
 $(document).ready(function() {
 	"use strict";
-	var chat = {},
+
+	var log = function(message) {
+			console.log('[DEBUG] ' + message);
+		},
+		chat = {},
 		MONO = {};
 
 	chat = {
@@ -29,7 +33,7 @@ $(document).ready(function() {
 			money: 0,
 			color: '',
 			game_status: "",
-			// position : 0
+			position: 0
 		},
 		transport: {
 			socket: null,
@@ -99,12 +103,19 @@ $(document).ready(function() {
 						color = json.game_state.player,
 						money = json.game_state.player_money,
 						message = json.game_state.messages;
-					console.log('Current money is: ' + money);
+					
+					log('Was money=' + MONO.config.money);
+					log('After move money=' + money);
 					MONO.config.money = money;
 
+					log('Starting animation of roll event');
 					MONO.animate.move(color, dice1, dice2, json.was);
+					
 
-					MONO.config.position += (dice1 + dice2); // WRONG
+					MONO.config.position = json.was + offset; 
+					log('position on board [was] -> ' + json.was);
+					log('position on board [now] -> ' + MONO.config.position);
+
 					// this player moves
 					if(MONO.config.color === color) {
 						$("#controls .btn").each(function(i, btn) {
@@ -120,6 +131,14 @@ $(document).ready(function() {
 					}
 					chat.append("player[" + color + "] is on cell: " + json.cell.name);
 
+				},
+				'buy': function(json) {
+					var msg = 'player=' + json.player + ' bought cell with position=' 
+						+ MONO.config.position + ' now player money=' + json.player_money;
+					chat.append(msg);
+					log(msg);
+					MONO.animate.buy(json.player, MONO.config.position);
+					// MONO.animate.money(json.player_money, {type : 'up' || 'down'});
 				},
 				'init': function(json) {
 					console.log('[init] event');
@@ -175,6 +194,10 @@ $(document).ready(function() {
 				BOARD.animate.stepOnBoard(who, d1, d2, was);
 
 				console.log('Moving to: ' + (d1 + d2));
+			}, 
+			buy : function(who, position) {
+				log('Animating [buy]');
+				log('~not supported~');
 			}
 		},
 		init: function() {
