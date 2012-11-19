@@ -50,6 +50,8 @@ public class ChatServiceManager {
     public void calculateRoomsSize() {
 	for (ChatRoom room : chatRooms){
 	    room.setSize(room.getChatParticipants().size());
+	    log.debug(room.getRoomName()+" Size="+room.getSize());
 	}
+	
     }
 }

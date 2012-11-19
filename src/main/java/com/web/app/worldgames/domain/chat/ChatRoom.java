@@ -62,7 +62,7 @@ public class ChatRoom {
 	ChatRoom.chatParticipants = chatParticipants;
     }
 
-    public long getRoomId() {
+    public int getRoomId() {
 	return roomId;
     }
 

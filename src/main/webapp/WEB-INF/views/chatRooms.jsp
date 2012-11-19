@@ -59,12 +59,12 @@
 			<div class="span4">
 				<div id="rightBar" class="well sidebar-nav">
 					<h2>Room List</h2>
-					<table id="list" class="table table-hover">
+					<table id="list" border=2 class="table table-hover">
 					</table>
 					<form name="roomAction" action="">
 						<br> <a data-toggle="modal" href="#createRoomModal"
 							class="btn btn-primary btn-medium">Create room</a> <br> <br>
-						<a data-toggle="modal" href="#createRoomModal"
+						<a id="joinToRoom" data-toggle="modal" href="#createRoomModal"
 							class="btn btn-primary btn-medium">Join to room</a>
 					</form>
 				</div>

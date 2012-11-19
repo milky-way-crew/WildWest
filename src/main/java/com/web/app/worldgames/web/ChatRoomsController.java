@@ -33,7 +33,7 @@ public class ChatRoomsController {
     public ModelAndView showPage(HttpServletRequest request) {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
-	if (!chatManager.getChatRoomById(chatParticipant.getId_room())
+	if (!getChatManager().getChatRoomById(chatParticipant.getId_room())
 		.isParticipantInRoom(chatParticipant)) {
 	    request.getSession().setAttribute("chatParticipant",
 		    chatParticipant);
@@ -41,7 +41,7 @@ public class ChatRoomsController {
 		    + chatParticipant.getNickname()
 		    + chatParticipant.getParticipantId()
 		    + chatParticipant.getId_room());
-	    chatManager.getChatRoomById(chatParticipant.getId_room())
+	    getChatManager().getChatRoomById(chatParticipant.getId_room())
 		    .addChatParticipant(chatParticipant);
 	}
 	ModelAndView modelAndView = new ModelAndView();
@@ -55,13 +55,13 @@ public class ChatRoomsController {
 	    @RequestParam("type") String type, @RequestParam("data") String data) {
 	ChatParticipant participant = getChatParticipantFromRequest(request);
 	JSONObject json = new JSONObject();
-
 	if (type.toLowerCase().trim().equals("message")) {
 	    json.clear();
 	    log.debug("Broadcast request from user: "
 		    + participant.getNickname());
 	    broadcast(participant, data);
-	    json.put("message", answerOnMessage(participant, data));
+	    json.put("sender", answerOnMessage(participant, ""));
+	    json.put("message", data);
 	    return json;
 	}
 	if (type.toLowerCase().trim().equals("update")) {
@@ -74,42 +74,56 @@ public class ChatRoomsController {
 		json.put("userList", updateUserList(participant));
 	    return json;
 	}
-	/*
-	 * if (type.toLowerCase().trim().equals("create")) {
-	 * log.debug("Create room by user: " + participant.getNickname());
-	 * createRoom(participant, data); return data; } if
-	 * (type.toLowerCase().trim().equals("join")) {
-	 * log.debug("Create room by user: " + participant.getNickname());
-	 * joinToRoom(participant, Integer.parseInt(data)); return data; }
-	 */
-	return null;
+	if (type.toLowerCase().trim().equals("create")) {
+	    json.clear();
+	    log.debug("Create room " + data + " by user: "
+		    + participant.getNickname());
+	    createRoom(participant, data);
+	    json.put("newRoom",
+		    getChatManager().getChatRoomById(participant.getId_room()));
+	    json.put("roomCreator", participant);
+	    return json;
+	}
+	if (type.toLowerCase().trim().equals("join")) {
+	    json.clear();
+	    log.debug("User: " + participant.getNickname() + " joined to room");
+	    joinToRoom(participant, Integer.parseInt(data));
+	    json.put("roomParticipant", participant);
+	    return json;
+	}
+	return json;
     }
 
     private List<ChatRoom> updateRoomList(ChatParticipant participant) {
-	chatManager.calculateRoomsSize();
-	List<ChatRoom> listRoom = chatManager.getChatRooms();
-	return listRoom;
+	getChatManager().calculateRoomsSize();
+	for (ChatRoom chatRoom : chatManager.getChatRooms()) {
+	    if (chatRoom.getSize() == 0)
+		chatManager.deleteRoomById(chatRoom.getRoomId());
+	}
+	return getChatManager().getChatRooms();
     }
 
     private List<ChatParticipant> updateUserList(ChatParticipant participant) {
-	return chatManager.getChatRoomById(participant.getId_room())
+	return getChatManager().getChatRoomById(participant.getId_room())
 		.getChatParticipants();
     }
 
     private void createRoom(ChatParticipant participant, String roomName) {
-	chatManager.getChatRoomById(participant.getId_room())
+	getChatManager().getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
-	int newId = chatManager.getChatRooms().size() + 1;
-	chatManager.addChatRoom(roomName, newId);
+	int lastRoom = getChatManager().getChatRooms().size() - 1;
+	int newId = getChatManager().getChatRoomById(lastRoom).getRoomId() + 1;
+	getChatManager().addChatRoom(roomName, newId);
 	participant.setId_room(newId);
-	chatManager.getChatRoomById(participant.getId_room())
+	participant.setStatus("creator");
+	getChatManager().getChatRoomById(participant.getId_room())
 		.addChatParticipant(participant);
     }
 
     private void joinToRoom(ChatParticipant participant, int id) {
-	chatManager.getChatRoomById(participant.getId_room())
+	getChatManager().getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
-	chatManager.getChatRoomById(id).addChatParticipant(participant);
+	getChatManager().getChatRoomById(id).addChatParticipant(participant);
 	participant.setId_room(id);
     }
 
@@ -120,7 +134,7 @@ public class ChatRoomsController {
 	sb.append("[");
 	sb.append(dateFormat.format(date));
 	sb.append("] ");
-	sb.append(chatManager.getChatRoomById(participant.getId_room())
+	sb.append(getChatManager().getChatRoomById(participant.getId_room())
 		.getRoomName());
 	sb.append(" / ");
 	sb.append(participant.getNickname());
@@ -137,10 +151,10 @@ public class ChatRoomsController {
     }
 
     private void broadcast(ChatParticipant participant, String data) {
-	if (chatManager.getChatRoomById(participant.getId_room())
-		.getChatParticipants().size() > 1) {
-	    for (ChatParticipant chatParticipant : chatManager.getChatRoomById(
-		    participant.getId_room()).getChatParticipants()) {
+	if (data != "") {
+	    for (ChatParticipant chatParticipant : getChatManager()
+		    .getChatRoomById(participant.getId_room())
+		    .getChatParticipants()) {
 		if (chatParticipant.getParticipantId() != participant
 			.getParticipantId()) {
 		    chatParticipant.addMessage(answerOnMessage(participant,
@@ -165,5 +179,13 @@ public class ChatRoomsController {
 	    sb.append(delimiter);
 	}
 	return sb.toString();
+    }
+
+    public static ChatServiceManager getChatManager() {
+	return chatManager;
+    }
+
+    public static void setChatManager(ChatServiceManager chatManager) {
+	ChatRoomsController.chatManager = chatManager;
     }
 }

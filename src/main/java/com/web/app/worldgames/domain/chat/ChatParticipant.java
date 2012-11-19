@@ -10,6 +10,7 @@ public class ChatParticipant {
     private int id_participant;
     private String nickname;
     private int id_room;
+    private String status;
     private LinkedList<String> deliver = new LinkedList<String>();
 
     public ChatParticipant(User user) {
@@ -54,5 +55,13 @@ public class ChatParticipant {
 
     public void setId_room(int id_room) {
 	this.id_room = id_room;
+    }
+
+    public String getStatus() {
+	return status;
+    }
+
+    public void setStatus(String status) {
+	this.status = status;
     }
 }
