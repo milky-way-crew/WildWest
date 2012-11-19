@@ -33,9 +33,11 @@ body {
     font-size: 28px;
 }
 #chat-history {
+    overflow-x: scroll; 
     height: 330px;
 }
     #chat-history ul {
+    	word-wrap: break-word;
         list-style: none;
         margin: 0;
     }

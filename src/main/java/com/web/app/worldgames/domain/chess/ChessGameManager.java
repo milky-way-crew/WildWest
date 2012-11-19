@@ -76,7 +76,17 @@ public class ChessGameManager {
 		if (params.containsKey("ready")) {
 			onReadyReceived(responseJson, user);
 		}
-
+		
+		if (params.containsKey("chat")) {
+			onChatReceived(responseJson, user, params.get("chat"));
+		}
+		
+		// TESTTTT
+		// TODO FIXME
+		if (params.containsKey("changes")) {
+			onChanges(responseJson, user);
+		}
+		
 		if (game.isStarted() && !game.isEnded()) {
 			if (game.isStarted()) {
 				if (params.containsKey("draw_choice")) {
@@ -100,6 +110,19 @@ public class ChessGameManager {
 			// }
 		}
 		return responseJson;
+	}
+
+	private void onChatReceived(Map<String, Object> responseJson, User user, final Object message) {
+		log.info("Received chat message");
+		final ChessPlayer chessPlayer = game.getPlayerById(user.getId());
+		ChessPlayer opponent = game.getOpponentOf(chessPlayer);
+		opponent.notifyAbout(new GameAction() {
+			@Override
+			public void process(ChessGame game, Map<String, Object> json) {
+				log.info("Notify about chat message");
+				json.put("chat", chessPlayer.getNick() + " : " + message);
+			}
+		});
 	}
 
 	private void onReadyReceived(Map<String, Object> responseJson, User user) {

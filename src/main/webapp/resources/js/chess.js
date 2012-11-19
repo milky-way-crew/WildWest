@@ -77,7 +77,6 @@
 
             GAME.sendMove(idFrom, idTo, function(json) {
                 // GAME.inform('Result of move:' + json.result);
-
                 if(typeof GAME.handleEvent[json.result] !== 'undefined') {
                     console.log('Result of move from server: ' + json.result);
                     GAME.handleEvent[json.result](idFrom, idTo, json);
@@ -232,7 +231,6 @@
             },
             "END": function(json) {
                 bootbox.alert('End of game, redirecting to home in 4 seconds');
-
                 // window.location.href = "../chess/exit";
             }
             //***************************************//
@@ -241,8 +239,14 @@
         },
         updaterService: function() {
             GAME.sendMessage('changes', function(json) {
+                if(json.chat) {
+                    chat.prepend('<h4>' + json.chat + '</h4>');
+                    return;
+                }
+
+
                 GAME.config.canMove = json.move;
-                var message = typeof json.move === 'undefined' ? 'Waiting for opponent' : (json.move ? 'Its your turn' : 'Opponent turn'); 
+                var message = typeof json.move === 'undefined' ? 'Waiting for opponent' : (json.move ? 'Its your turn' : 'Opponent turn');
                 GAME.inform(message);
 
                 if(typeof json.result !== 'undefined') {
@@ -266,7 +270,6 @@
                 }
             });
         },
-
         isOwnerOf: function(id) {
             console.log("OWNER OF " + id + " is " + GAME.config.board[id].owner);
             console.log("PLAYER OWNER ID: " + GAME.config.owner);
@@ -416,16 +419,14 @@
             $(this).click(function() {
                 var $this = $(this),
                     $clicked = $this.parent().attr('id'),
-                    clickedType = GAME.config.board[$clicked].type;//.toLowerCase()[0];
-
-                if(clickedType !== 'TRAP' && clickedType !== 'FLAG' 
-                    && GAME.isOwnerOf($clicked) && GAME.config.canMove) {
-                        $('.selected').removeClass('selected');
-                        $this.addClass('selected');
-                        $this.effect("bounce", {
-                            times: 3
-                        }, 300);
-                        return false;
+                    clickedType = GAME.config.board[$clicked].type; //.toLowerCase()[0];
+                if(clickedType !== 'TRAP' && clickedType !== 'FLAG' && GAME.isOwnerOf($clicked) && GAME.config.canMove) {
+                    $('.selected').removeClass('selected');
+                    $this.addClass('selected');
+                    $this.effect("bounce", {
+                        times: 3
+                    }, 300);
+                    return false;
                 }
             });
         });
@@ -459,6 +460,30 @@
         });
 
         GAME.initBoard();
+        // ********************
+        chat.init($('#chat-history ul'));
+        chat.MAX_MSG = 100;
+        var send = function() {
+                var msg = $('#chat-input').val();
+                $('#chat-input').val('');
+                if(msg.length > 0) {
+                    chat.prepend('<h4>me : ' + msg + '</h4>');
+                    GAME.sendMessage({
+                        'chat': msg
+                    }, function(argument) {
+
+                    });
+                }
+                return false;
+            };
+
+        $('#send').click(send);
+        $('#chat-input').keypress(function(event) {
+            if(event.keyCode == '13') {
+                return send();
+            }
+        });
+        // ********************
         setInterval(GAME.updaterService, 5000);
     });
 })(jQuery);

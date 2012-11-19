@@ -96,6 +96,7 @@
 	<script type="text/javascript" src="./resources/js/jquery-ui.js"></script>
 	<script type="text/javascript" src="./resources/js/bootstrap-modal.js"></script>
 	<script type="text/javascript" src="./resources/js/bootbox.min.js"></script>
+	<script type="text/javascript" src="./resources/js/chat.js"></script>
 	<script type="text/javascript" src="./resources/js/chess.js"></script>
 </body>
 </html>
