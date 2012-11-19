@@ -8,12 +8,14 @@ import org.apache.log4j.Logger;
 import com.web.app.worldgames.domain.chat.ChatRoom;
 
 public class ChatServiceManager {
+
+    private static final int ID_WORLD_ROOM = 0;
     private static final Logger log = Logger
 	    .getLogger(ChatServiceManager.class);
     private static List<ChatRoom> chatRooms = new ArrayList<ChatRoom>();
 
     public ChatServiceManager() {
-	chatRooms.add(new ChatRoom("World", 0));
+	chatRooms.add(new ChatRoom("World", ID_WORLD_ROOM));
     }
 
     public List<ChatRoom> getChatRooms() {
@@ -46,12 +48,16 @@ public class ChatServiceManager {
 	    }
 	}
     }
-    
+
     public void calculateRoomsSize() {
-	for (ChatRoom room : chatRooms){
+	for (ChatRoom room : chatRooms) {
 	    room.setSize(room.getChatParticipants().size());
-	    log.debug(room.getRoomName()+" Size="+room.getSize());
+	    log.debug(room.getRoomName() + " Size=" + room.getSize());
 	}
-	
+
+    }
+
+    public int getIdWorldRoom() {
+	return ID_WORLD_ROOM;
     }
 }

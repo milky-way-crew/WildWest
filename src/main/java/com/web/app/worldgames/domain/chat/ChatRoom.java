@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 public class ChatRoom {
     private static final Logger log = Logger.getLogger(ChatRoom.class);
 
-    private static List<ChatParticipant> chatParticipants = new ArrayList<ChatParticipant>();
+    private List<ChatParticipant> chatParticipants = new ArrayList<ChatParticipant>();
     private int roomId;
     private String roomName;
     private int size;
@@ -58,8 +58,8 @@ public class ChatRoom {
 	return chatParticipants;
     }
 
-    public static void setChatParticipants(List<ChatParticipant> chatParticipants) {
-	ChatRoom.chatParticipants = chatParticipants;
+    public void setChatParticipants(List<ChatParticipant> chatParticipants) {
+	this.chatParticipants = chatParticipants;
     }
 
     public int getRoomId() {

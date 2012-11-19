@@ -33,15 +33,13 @@ public class ChatRoomsController {
     public ModelAndView showPage(HttpServletRequest request) {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
-	if (!getChatManager().getChatRoomById(chatParticipant.getId_room())
+	if (!chatManager.getChatRoomById(chatParticipant.getId_room())
 		.isParticipantInRoom(chatParticipant)) {
 	    request.getSession().setAttribute("chatParticipant",
 		    chatParticipant);
 	    log.debug("Put ChatParticipant in Session "
-		    + chatParticipant.getNickname()
-		    + chatParticipant.getParticipantId()
-		    + chatParticipant.getId_room());
-	    getChatManager().getChatRoomById(chatParticipant.getId_room())
+		    + chatParticipant.getNickname());
+	    chatManager.getChatRoomById(chatParticipant.getId_room())
 		    .addChatParticipant(chatParticipant);
 	}
 	ModelAndView modelAndView = new ModelAndView();
@@ -56,7 +54,6 @@ public class ChatRoomsController {
 	ChatParticipant participant = getChatParticipantFromRequest(request);
 	JSONObject json = new JSONObject();
 	if (type.toLowerCase().trim().equals("message")) {
-	    json.clear();
 	    log.debug("Broadcast request from user: "
 		    + participant.getNickname());
 	    broadcast(participant, data);
@@ -65,27 +62,34 @@ public class ChatRoomsController {
 	    return json;
 	}
 	if (type.toLowerCase().trim().equals("update")) {
-	    json.clear();
 	    log.debug("Update request from user: " + participant.getNickname());
 	    json.put("update", updateUserMessages(participant));
-	    if (participant.getId_room() == 0)
+	    return json;
+	}
+	if (type.toLowerCase().trim().equals("lists")) {
+	    log.debug("Update lists from user: " + participant.getNickname());
+	    if (participant.getId_room() == chatManager.getIdWorldRoom()) {
 		json.put("roomList", updateRoomList(participant));
-	    else
+	    } else {
 		json.put("userList", updateUserList(participant));
+	    }
 	    return json;
 	}
 	if (type.toLowerCase().trim().equals("create")) {
 	    json.clear();
 	    log.debug("Create room " + data + " by user: "
 		    + participant.getNickname());
-	    createRoom(participant, data);
-	    json.put("newRoom",
-		    getChatManager().getChatRoomById(participant.getId_room()));
-	    json.put("roomCreator", participant);
-	    return json;
+	    if (data.equals("")) {
+		return json;
+	    } else {
+		createRoom(participant, data);
+		json.put("newRoom",
+			chatManager.getChatRoomById(participant.getId_room()));
+		json.put("roomCreator", participant);
+		return json;
+	    }
 	}
 	if (type.toLowerCase().trim().equals("join")) {
-	    json.clear();
 	    log.debug("User: " + participant.getNickname() + " joined to room");
 	    joinToRoom(participant, Integer.parseInt(data));
 	    json.put("roomParticipant", participant);
@@ -95,36 +99,39 @@ public class ChatRoomsController {
     }
 
     private List<ChatRoom> updateRoomList(ChatParticipant participant) {
-	getChatManager().calculateRoomsSize();
+	chatManager.calculateRoomsSize();
 	for (ChatRoom chatRoom : chatManager.getChatRooms()) {
-	    if (chatRoom.getSize() == 0)
+	    if (chatRoom.getSize() == 0
+		    && chatRoom.getRoomId() != chatManager.getIdWorldRoom()) {
 		chatManager.deleteRoomById(chatRoom.getRoomId());
+	    }
 	}
-	return getChatManager().getChatRooms();
+	return chatManager.getChatRooms();
     }
 
     private List<ChatParticipant> updateUserList(ChatParticipant participant) {
-	return getChatManager().getChatRoomById(participant.getId_room())
+	return chatManager.getChatRoomById(participant.getId_room())
 		.getChatParticipants();
     }
 
     private void createRoom(ChatParticipant participant, String roomName) {
-	getChatManager().getChatRoomById(participant.getId_room())
+	chatManager.getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
-	int lastRoom = getChatManager().getChatRooms().size() - 1;
-	int newId = getChatManager().getChatRoomById(lastRoom).getRoomId() + 1;
-	getChatManager().addChatRoom(roomName, newId);
+	int lastRoom = chatManager.getChatRooms().size() - 1;
+	int newId = chatManager.getChatRoomById(lastRoom).getRoomId() + 1;
+	chatManager.addChatRoom(roomName, newId);
 	participant.setId_room(newId);
 	participant.setStatus("creator");
-	getChatManager().getChatRoomById(participant.getId_room())
+	chatManager.getChatRoomById(participant.getId_room())
 		.addChatParticipant(participant);
     }
 
     private void joinToRoom(ChatParticipant participant, int id) {
-	getChatManager().getChatRoomById(participant.getId_room())
+	chatManager.getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
-	getChatManager().getChatRoomById(id).addChatParticipant(participant);
+	chatManager.getChatRoomById(id).addChatParticipant(participant);
 	participant.setId_room(id);
+	participant.setStatus("");
     }
 
     private String answerOnMessage(ChatParticipant participant, String data) {
@@ -134,7 +141,7 @@ public class ChatRoomsController {
 	sb.append("[");
 	sb.append(dateFormat.format(date));
 	sb.append("] ");
-	sb.append(getChatManager().getChatRoomById(participant.getId_room())
+	sb.append(chatManager.getChatRoomById(participant.getId_room())
 		.getRoomName());
 	sb.append(" / ");
 	sb.append(participant.getNickname());
@@ -152,9 +159,8 @@ public class ChatRoomsController {
 
     private void broadcast(ChatParticipant participant, String data) {
 	if (data != "") {
-	    for (ChatParticipant chatParticipant : getChatManager()
-		    .getChatRoomById(participant.getId_room())
-		    .getChatParticipants()) {
+	    for (ChatParticipant chatParticipant : chatManager.getChatRoomById(
+		    participant.getId_room()).getChatParticipants()) {
 		if (chatParticipant.getParticipantId() != participant
 			.getParticipantId()) {
 		    chatParticipant.addMessage(answerOnMessage(participant,
@@ -181,11 +187,4 @@ public class ChatRoomsController {
 	return sb.toString();
     }
 
-    public static ChatServiceManager getChatManager() {
-	return chatManager;
-    }
-
-    public static void setChatManager(ChatServiceManager chatManager) {
-	ChatRoomsController.chatManager = chatManager;
-    }
 }
