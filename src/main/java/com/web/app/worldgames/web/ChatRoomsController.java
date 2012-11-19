@@ -1,24 +1,15 @@
 package com.web.app.worldgames.web;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.chat.ChatParticipant;
-import com.web.app.worldgames.domain.chat.ChatRoom;
 import com.web.app.worldgames.service.ChatServiceManager;
 
 @Controller
@@ -41,150 +32,24 @@ public class ChatRoomsController {
 		    + chatParticipant.getNickname());
 	    chatManager.getChatRoomById(chatParticipant.getId_room())
 		    .addChatParticipant(chatParticipant);
+	} else {
+	    request.getSession().setAttribute("chatParticipant",
+		    chatParticipant);
 	}
 	ModelAndView modelAndView = new ModelAndView();
 	modelAndView.setViewName("chatRooms");
 	return modelAndView;
+
     }
 
-    @RequestMapping(value = "/ajax", method = RequestMethod.POST)
-    public @ResponseBody
-    JSONObject onMessage(HttpServletRequest request,
-	    @RequestParam("type") String type, @RequestParam("data") String data) {
-	ChatParticipant participant = getChatParticipantFromRequest(request);
-	JSONObject json = new JSONObject();
-	if (type.toLowerCase().trim().equals("message")) {
-	    log.debug("Broadcast request from user: "
-		    + participant.getNickname());
-	    broadcast(participant, data);
-	    json.put("sender", answerOnMessage(participant, ""));
-	    json.put("message", data);
-	    return json;
-	}
-	if (type.toLowerCase().trim().equals("update")) {
-	    log.debug("Update request from user: " + participant.getNickname());
-	    json.put("update", updateUserMessages(participant));
-	    return json;
-	}
-	if (type.toLowerCase().trim().equals("lists")) {
-	    log.debug("Update lists from user: " + participant.getNickname());
-	    if (participant.getId_room() == chatManager.getIdWorldRoom()) {
-		json.put("roomList", updateRoomList(participant));
-	    } else {
-		json.put("userList", updateUserList(participant));
-	    }
-	    return json;
-	}
-	if (type.toLowerCase().trim().equals("create")) {
-	    json.clear();
-	    log.debug("Create room " + data + " by user: "
-		    + participant.getNickname());
-	    if (data.equals("")) {
-		return json;
-	    } else {
-		createRoom(participant, data);
-		json.put("newRoom",
-			chatManager.getChatRoomById(participant.getId_room()));
-		json.put("roomCreator", participant);
-		return json;
-	    }
-	}
-	if (type.toLowerCase().trim().equals("join")) {
-	    log.debug("User: " + participant.getNickname() + " joined to room");
-	    joinToRoom(participant, Integer.parseInt(data));
-	    json.put("roomParticipant", participant);
-	    return json;
-	}
-	return json;
+    public static ChatServiceManager getChatManager() {
+	return chatManager;
     }
 
-    private List<ChatRoom> updateRoomList(ChatParticipant participant) {
-	chatManager.calculateRoomsSize();
-	for (ChatRoom chatRoom : chatManager.getChatRooms()) {
-	    if (chatRoom.getSize() == 0
-		    && chatRoom.getRoomId() != chatManager.getIdWorldRoom()) {
-		chatManager.deleteRoomById(chatRoom.getRoomId());
-	    }
-	}
-	return chatManager.getChatRooms();
-    }
-
-    private List<ChatParticipant> updateUserList(ChatParticipant participant) {
-	return chatManager.getChatRoomById(participant.getId_room())
-		.getChatParticipants();
-    }
-
-    private void createRoom(ChatParticipant participant, String roomName) {
-	chatManager.getChatRoomById(participant.getId_room())
-		.deleteChatParticipantById(participant.getParticipantId());
-	int lastRoom = chatManager.getChatRooms().size() - 1;
-	int newId = chatManager.getChatRoomById(lastRoom).getRoomId() + 1;
-	chatManager.addChatRoom(roomName, newId);
-	participant.setId_room(newId);
-	participant.setStatus("creator");
-	chatManager.getChatRoomById(participant.getId_room())
-		.addChatParticipant(participant);
-    }
-
-    private void joinToRoom(ChatParticipant participant, int id) {
-	chatManager.getChatRoomById(participant.getId_room())
-		.deleteChatParticipantById(participant.getParticipantId());
-	chatManager.getChatRoomById(id).addChatParticipant(participant);
-	participant.setId_room(id);
-	participant.setStatus("");
-    }
-
-    private String answerOnMessage(ChatParticipant participant, String data) {
-	DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-	Date date = new Date();
-	StringBuilder sb = new StringBuilder();
-	sb.append("[");
-	sb.append(dateFormat.format(date));
-	sb.append("] ");
-	sb.append(chatManager.getChatRoomById(participant.getId_room())
-		.getRoomName());
-	sb.append(" / ");
-	sb.append(participant.getNickname());
-	sb.append(" : ");
-	sb.append(data);
-	return sb.toString();
-    }
-
-    private ChatParticipant getChatParticipantFromRequest(
+    protected ChatParticipant getChatParticipantFromRequest(
 	    HttpServletRequest request) {
 	ChatParticipant chatParticipant = (ChatParticipant) request
 		.getSession().getAttribute("chatParticipant");
 	return chatParticipant;
     }
-
-    private void broadcast(ChatParticipant participant, String data) {
-	if (data != "") {
-	    for (ChatParticipant chatParticipant : chatManager.getChatRoomById(
-		    participant.getId_room()).getChatParticipants()) {
-		if (chatParticipant.getParticipantId() != participant
-			.getParticipantId()) {
-		    chatParticipant.addMessage(answerOnMessage(participant,
-			    data));
-		}
-	    }
-	}
-    }
-
-    private String updateUserMessages(ChatParticipant participant) {
-	List<String> messages = participant.getMessages();
-	return join(messages, "\n");
-    }
-
-    private String join(List<String> messages, String delimiter) {
-	if (messages.size() < 1) {
-	    return "";
-	}
-	StringBuilder sb = new StringBuilder();
-	for (String message : messages) {
-	    sb.append(message);
-	    sb.append(delimiter);
-	}
-	return sb.toString();
-    }
-
 }

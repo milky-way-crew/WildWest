@@ -54,7 +54,6 @@ public class ChatServiceManager {
 	    room.setSize(room.getChatParticipants().size());
 	    log.debug(room.getRoomName() + " Size=" + room.getSize());
 	}
-
     }
 
     public int getIdWorldRoom() {
