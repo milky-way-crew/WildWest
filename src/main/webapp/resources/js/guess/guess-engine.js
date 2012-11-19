@@ -44,7 +44,7 @@ $(function() {
             },
             append: function(what) {
                 var msgCount = chat.$chat.find('li').size();
-                if(msgCount + 1 > chat.MAX_MSG) {
+                if(msgCount > chat.MAX_MSG) {
                     chat.$chat.find('li').first().fadeOut(100, function() {
                         $(this).remove();
                         chat.$chat.append('<li> ' + what + '</li>');
@@ -63,10 +63,21 @@ $(function() {
             stats.$stats = $('#stats');
         },
         append: function(what) {
-            stats.$stats.append('<li> ' + what + '</li>');
+            stats.$stats.append('<li>' + what + '</li>');
         },
         remove: function(what) {
             console.error('#remove dont supported');
+        },
+        update: function(who, count) {
+            var user = stats.$stats.find('li').filter(function(i, e) {
+                return $(e).html().indexOf(who) != -1;
+            }),
+                message = who + " : " + count;
+            if(user.size() > 0) {
+                user.html(message);
+            } else {
+                stats.append(message);
+            }
         }
     };
     var guessGame = {
@@ -174,8 +185,7 @@ $(function() {
 
         $('#restart').click(function() {
             canvas.width = canvas.width;
-            $("#chat-history").html("");
-            $("#chat-history").append("<li>Restarting game.</li>");
+            // chat.append("Restarting game.")
 
             var data = {};
             data.dataType = guessGame.GAME_LOGIC;
@@ -242,7 +252,7 @@ $(function() {
             // on message event
             guessGame.socket.onmessage = function(e) {
                 // check if the received data is chat message or line segment
-                console.log("onmessage event:", e.data);
+                // console.log("onmessage event:", e.data);
                 var data = JSON.parse(e.data);
                 if(data.dataType === guessGame.CHAT_MESSAGE) {
 
@@ -253,7 +263,8 @@ $(function() {
                         });
                         var tokens = data.message.split(" ");
                         if(tokens[0].toLowerCase() == "welcome") {
-                            stats.append(tokens[1]);
+                            // stats.append(tokens[1]);
+                            stats.update(data.player, data.wins);
                         }
                         // DISCO
                     }
@@ -262,7 +273,11 @@ $(function() {
                 } else if(data.dataType == guessGame.GAME_LOGIC) {
                     if(data.gameState == guessGame.GAME_OVER) {
                         guessGame.isTurnToDraw = false;
+                        // Chat message who wins
                         chat.append(data.winner + " wins! The answer was '" + data.answer + "'");
+                        // Stats update too
+                        stats.update(data.winner, data.wins);
+
                         timer.stop();
                         $("#drawing-pallete").show(100);
                         $('#drawing-pallete .btn-info').hide(100);
@@ -272,20 +287,20 @@ $(function() {
                     if(data.gameState === guessGame.GAME_START) {
                         // clear the canvas.
                         canvas.width = canvas.width;
-                        // clear the chat history
-                        //                    $("#chat-history").html("");
+                        chat.clear();
+
                         if(data.isPlayerTurn) {
+                            // alert('this player draw');
                             $("#drawing-pallete").show(100);
                             $('#drawing-pallete .btn-info').show(100);
                             $("#restart").hide(100);
 
                             guessGame.isTurnToDraw = true;
+                            // console.log('append answer to chat');
                             chat.append("Your turn to draw. Please draw '" + data.answer + "'.");
                             $('#drawing-pallete').show(100);
                             timer.config.interval = 1000 * 2;
                             timer.start(60);
-
-
                         } else {
                             chat.append("Game Started. Get Ready. You have one minute to guess.");
                             $('#drawing-pallete').hide(100);
@@ -316,6 +331,5 @@ $(function() {
         ctx.stroke();
     }
 
-
-    $(guessGame.init());
+    guessGame.init();
 });

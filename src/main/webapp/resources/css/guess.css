@@ -26,7 +26,6 @@
 body {
 	background: #ccd6e1;
 	font-family: 'Cabin Sketch', arial, serif;
-//	font-family: 'Neucha', arial, serif;
 }
 
 #game {
@@ -68,7 +67,7 @@ body {
 }
 
 	#chat-history li {
-		/*font-family: 'Lobster', Helvetica;*/
+		font-family: 'Neucha', Helvetica;
 		font-size: 1.4em;
 		border-bottom: 1px dashed rgba(20,20,20,.2);
 		margin: 10px 0;
@@ -76,5 +75,6 @@ body {
 	}
 
 #stats li {
+	font-family: 'Neucha', Helvetica;
 	font-size: 1.4em;	
 }

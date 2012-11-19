@@ -10,6 +10,7 @@ public class GuessPlayer {
 	private String nick;
 	private GuessWebSocket socket;
 	private boolean active = false;
+	private int winCount = 0;
 	
 	public GuessPlayer() {
 	}
@@ -60,5 +61,16 @@ public class GuessPlayer {
 	public boolean isActive() {
 		return active;
 	}
+
+	public int getWinCount() {
+		return winCount;
+	}
+
+	public void setWinCount(int winCount) {
+		this.winCount = winCount;
+	}
 	
+	public int incWinCount() {
+		return ++winCount;
+	}
 }

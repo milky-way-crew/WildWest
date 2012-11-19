@@ -81,7 +81,7 @@
 			<div class="span3">
 				<h1>Anybody there?</h1>
 				<ul id="stats">
-					<li>Only you :)</li>
+					<h3>Player - Total wins</h3>
 				</ul>
 			</div>
 		</div>

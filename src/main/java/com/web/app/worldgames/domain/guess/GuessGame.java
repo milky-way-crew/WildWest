@@ -36,7 +36,7 @@ public class GuessGame {
 	private Timer timer = new Timer();
 	// hardcode :(
 	private List<String> answers = java.util.Arrays.asList(new String[] {
-			"apple", "dog", "cat", "dick", "mouse", "student" });
+			"apple", "dog", "cat", "mouse", "student", "anger", "sadness" });
 
 	private List<GuessPlayer> players = new ArrayList<GuessPlayer>();
 
@@ -50,7 +50,7 @@ public class GuessGame {
 		log.debug("All players: " + players);
 		log.debug("Removing player: " + player);
 		String message = "Hmmm, " + player.getNick()
-				+ "disconnected. Total connection: " + (players.size() - 1);
+				+ " disconnected. Total connection: " + (players.size() - 1);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("dataType", CHAT_MESSAGE);
 		data.put("sender", "Server");
@@ -71,7 +71,6 @@ public class GuessGame {
 		player.setActive(false);
 
 		this.broadcast(data);
-		// getPlayers().remove(player);
 	}
 
 	public List<GuessPlayer> getPlayers() {
@@ -156,6 +155,10 @@ public class GuessGame {
 		data.put("sender", "Server");
 		data.put("message", message);
 
+		// for stats
+		data.put("player", player.getNick());
+		data.put("wins", player.getWinCount());
+		
 		this.broadcast(data);
 
 		// send the game state to all players.
@@ -194,6 +197,14 @@ public class GuessGame {
 			map.put("message", chatMessage);
 
 			broadcast(map);
+		} else if (type == GAME_LOGIC
+				&& messageTree.path("gameState").asInt() == GAME_RESTART) {
+			log.info(String.format("Player id=[%d] want to restart game",
+					idUser));
+			if (canBeStarted()) {
+				log.info(String.format("Starting new game", idUser));
+				startGame();
+			}
 		} else {
 			log.info(String.format("Uknown requested type of [%d]", type));
 		}
@@ -202,16 +213,18 @@ public class GuessGame {
 			if (currentState == GAME_START
 					&& isTrueAnswer(messageTree.path("message").asText())
 					&& idUser != players.get(turn).getId()) {
-				// && idUser != players.get(turn).getId()) {
 				log.debug(String.format("*** WE HAVE A WINNER ***"));
 				log.debug(String.format("*** Canceling timer ***"));
 
 				timer.cancel();
 
+				GuessPlayer winner = getPlayerById(idUser);
+
 				HashMap<String, Object> gameLogicData = new HashMap<String, Object>();
 				gameLogicData.put("dataType", GAME_LOGIC);
 				gameLogicData.put("gameState", GAME_OVER);
-				gameLogicData.put("winner", getPlayerById(idUser).getNick());
+				gameLogicData.put("winner", winner.getNick());
+				gameLogicData.put("wins", winner.incWinCount());
 				gameLogicData.put("answer", currentAnswer);
 				broadcast(gameLogicData);
 
@@ -219,15 +232,6 @@ public class GuessGame {
 			}
 		}
 
-		if (type == GAME_LOGIC
-				&& messageTree.path("gameState").asInt() == GAME_RESTART) {
-			log.info(String.format("Player id=[%d] want to restart game",
-					idUser));
-			if (canBeStarted()) {
-				log.info(String.format("Starting new game", idUser));
-				startGame();
-			}
-		}
 	}
 
 	private boolean isTrueAnswer(String string) {
