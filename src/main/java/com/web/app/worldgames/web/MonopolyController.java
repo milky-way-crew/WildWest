@@ -25,11 +25,9 @@ public class MonopolyController {
 	@RequestMapping(value = "/mono")
 	public String showPage(HttpSession session) {
 		User user = getUserFromSession(session);
-
 		if (user == null) {
 			session.setAttribute("user", userService.findUserByLogin("test"));
 		}
-
 		return "monopoly/monopoly-game";
 	}
 
