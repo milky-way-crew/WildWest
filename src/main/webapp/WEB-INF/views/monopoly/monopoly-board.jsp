@@ -298,7 +298,7 @@
 				id="diceButton" type="submit" value="RollDice">
 		</div>
 
-
+		
 		<div id="upChat">
 		
 		<!-- TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST -->

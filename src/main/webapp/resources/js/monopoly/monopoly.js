@@ -62,8 +62,46 @@ $(document)
 												console.log('my idGame is: '
 														+ init_id.idGame);
 
-												MONO.config.idUser = init_id.idUser;
-												MONO.config.idGame = init_id.idGame;
+												// MONO.config.idUser =
+												// init_id.idUser;
+												// MONO.config.idGame =
+												// init_id.idGame;
+												// MONO.animate.money(json.player_money,
+												// {type : 'up' || 'down'});
+											},
+											'pay' : function(json) {
+												log('Player='
+														+ json.player
+														+ ' payed money for go out from jail');
+												MONO.animate.pay(json.Player,
+														json.player_money);
+											},
+											'mortage' : function(json) {
+												// parse list
+												// highlight obj
+												MONO.animate
+														.mortage(json.mortage_list);
+												if (json.player === MONO.config.color) {
+													var pos = parseInt(
+															prompt('Enter position to mortage. List='
+																	+ JSON
+																			.stringify(json.mortage_list)),
+															10);
+													if (pos) {
+														MONO.transport
+																.send(
+																		'mortage',
+																		{
+																			position : pos
+																		});
+													}
+												}
+											},
+											'init' : function(json) {
+												console.log('[init] event');
+												MONO.config.color = json.color;
+												MONO.config.money = json.money;
+												MONO.config.isCreator = json.isCreator;
 
 												console
 														.log('Initing web-sockets');

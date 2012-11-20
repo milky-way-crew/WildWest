@@ -43,9 +43,8 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 		public void onOpen(Connection connection) {
 			log.debug("[Web-socket] opening connection");
 			// FIXME: Safe or not?
-			connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(10));
 			this.connection = connection;
-			this.connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(10));
+			this.connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(60));
 			webSockets.add(this);
 			try {
 				connection.sendMessage("[Server] Connected succesfully");
