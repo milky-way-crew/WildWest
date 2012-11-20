@@ -314,6 +314,25 @@ public class CityCard extends SellableCard {
 		return (!this.isMortage() && this.getOwner() == player) ? true : false;
 	}
 
+	@Override
+	public void sell(Player player) {
+		if (this.getNumbersOfHouses() > 0) {
+			this.setNumbersOfHouses(this.getNumbersOfHouses() - 1);
+			player.setMoney(player.getMoney() + this.getHousePrice()
+					/ 2);
+			if (this.isHotel()) {
+				this.setHotel(false);
+				player.setMoney(player.getMoney()
+						+ this.getHotelPrice() / 2);
+			}
+		} else {
+			this.setOwner(null);
+			player.setMoney(player.getMoney() + this.getPrice() / 2);
+			player.listRegions(player).remove(this.getRegion());
+			// player.addBuildAvailable();
+		}
+	}
+
 //	public static void main(String[] args) {
 //		Player owner = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
 //		Player p = new Player("ajsdhefdc", 15, 1000, PlayerColors.PLAYER2);

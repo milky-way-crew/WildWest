@@ -173,12 +173,35 @@ public class MonopolyManager {
 					log.info("player money before sell: "
 							+ currentPlayer.getMoney());
 					card = currentPlayer.cardByPosition(pos);
-					card.sellCityOrRail(currentPlayer);
+					log.info("owner before sell: " + card.getOwner()+" card "+card);
+					//card.sellCityOrRail(currentPlayer);
+					card.sell(currentPlayer);
+					log.info("owner after sell: " + card.getOwner()+" card "+card);
+					currentPlayer.removeObj(currentPlayer.getProperty(), card);
+					if (currentPlayer.getForMortage().contains(card)) {
+						currentPlayer.removeObj(currentPlayer.getForMortage(), card);
+					}
+					if (currentPlayer.getForSell().contains(card)) {
+						currentPlayer.removeObj(currentPlayer.getForSell(), card);
+					}
 					log.info("sell city: " + card.getName());
 					log.info("list after sell: " + currentPlayer.getForSell());
 					log.info("player money after sell: "
 							+ currentPlayer.getMoney());
 					response.put("sell_list", currentPlayer.getSellAvailable());
+					Cell cell = CardFactory.chooseCard(currentPlayer);
+					log.info("CHECK card" + cell.getName());
+					if (cell instanceof SellableCard) {
+						if (((SellableCard) cell).getOwner() == null) {
+							log.info("CHECK BUY TRUE/FALSE "
+									+ ((SellableCard) cell)
+											.canBuy(currentPlayer));
+							buttons.put(ButtonsLabel.BUY,
+									((SellableCard) cell).canBuy(currentPlayer));
+						} else {
+							buttons.put(ButtonsLabel.BUY, false);
+						}
+					}
 				} else {
 					log.info("no position: ");
 				}
@@ -256,6 +279,19 @@ public class MonopolyManager {
 						currentPlayer.removeObj(
 								currentPlayer.listPropertyForSell(), city);
 					}
+					Cell card = CardFactory.chooseCard(currentPlayer);
+					log.info("CHECK card" + card.getName());
+					if (card instanceof SellableCard) {
+						if (((SellableCard) card).getOwner() == null) {
+							log.info("CHECK BUY TRUE/FALSE"
+									+ ((SellableCard) card)
+											.canBuy(currentPlayer));
+							buttons.put(ButtonsLabel.BUY,
+									((SellableCard) card).canBuy(currentPlayer));
+						} else {
+							buttons.put(ButtonsLabel.BUY, false);
+						}
+					}
 					log.info("list property for sell after mortage: "
 							+ currentPlayer.listPropertyForSell());
 					// currentPlayer.listPropertyForSell();
@@ -267,17 +303,7 @@ public class MonopolyManager {
 			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
 			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
 			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
-			// SellableCard card = currentPlayer.cardByPosition(currentPlayer
-			// .getPosition());
-			// log.info("CHECK card"+card.getName());
-			// if (card instanceof SellableCard) {
-			// if (card.getOwner() == null) {
-			// log.info("CHECK BUY TRUE/FALSE"+card.canBuy(currentPlayer));
-			// buttons.put(ButtonsLabel.BUY, card.canBuy(currentPlayer));
-			// } else {
-			// buttons.put(ButtonsLabel.BUY, false);
-			// }
-			// }
+
 			state.put("buttons", buttons);
 			response.put("game_state", state);
 		}
@@ -388,13 +414,13 @@ public class MonopolyManager {
 				response.put("player", currentPlayer.getColor());
 				response.put("player_money", currentPlayer.getMoney());
 			}
+			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+			state.put("buttons", buttons);
+			response.put("game_state", state);
 		}
-		buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
-		buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
-		buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
-		buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
-		state.put("buttons", buttons);
-		response.put("game_state", state);
 		broadcast(response);
 	}
 

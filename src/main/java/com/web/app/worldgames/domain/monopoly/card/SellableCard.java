@@ -24,6 +24,7 @@ public abstract class SellableCard extends Cell {
 	// Player owner);
 
 	public abstract void buyCityOrRail(Player player);
+	public abstract void sell(Player player);
 
 	public abstract boolean canMortage(Player player);
 
@@ -90,22 +91,9 @@ public abstract class SellableCard extends Cell {
 		CityCard city = null;
 		for (SellableCard cards : player.getForSell()) {
 			log.info("[-----------------SELL ACTION------------------------------]: ");
-			log.info("[lists for sell]: ");
-			log.info("[lists for mortage]: " + player.getForMortage());
-			log.info("[lists for sell]: " + player.getForSell());
-			log.info("[lists for property]: " + player.getProperty());
 			if (this instanceof RailCard) {
 				rail = (RailCard) cards;
 				rail.setOwner(null);
-				player.removeObj(player.getProperty(), rail);
-				if (player.getForMortage().contains(rail)) {
-					player.removeObj(player.getForMortage(), rail);
-				}
-				if (player.getForSell().contains(rail)) {
-					player.removeObj(player.getForSell(), rail);
-				}
-				player.listPropertyForMortage();
-				player.listPropertyForSell();
 				player.setNumberOfRails(player.getNumberOfRails() - 1);
 				player.setMoney(player.getMoney() + rail.getPrice() / 2);
 			} else if (this instanceof CityCard) {
@@ -121,26 +109,12 @@ public abstract class SellableCard extends Cell {
 					}
 				} else {
 					city.setOwner(null);
-					player.removeObj(player.getProperty(), city);
-					if (player.getForMortage().contains(city)) {
-						player.removeObj(player.getForMortage(), city);
-					}
-					if (player.getForSell().contains(city)) {
-						player.removeObj(player.getForSell(), city);
-					}
-					player.listPropertyForMortage();
-					player.listPropertyForSell();
 					player.setMoney(player.getMoney() + city.getPrice() / 2);
 					player.listRegions(player).remove(city.getRegion());
 					// player.addBuildAvailable();
 				}
 			}
-			log.info("[lists after sell]: ");
-			log.info("[lists for mortage]: " + player.getForMortage());
-			log.info("[lists for sell]: " + player.getForSell());
-			log.info("[lists for property]: " + player.getProperty());
 		}
-
 	}
 
 	// public void sellCityOrRail(Player seller, Player buyer) {

@@ -16,7 +16,7 @@ public class RailCard extends SellableCard {
 	public RailCard(Rails rails) {
 		this.name = rails.getName();
 		this.price = rails.getPrice();
-		this.position=rails.getPosition();
+		this.position = rails.getPosition();
 	}
 
 	public String getName() {
@@ -50,7 +50,7 @@ public class RailCard extends SellableCard {
 				log.info("[OWNER]: " + this.getOwner().getColor());
 				this.payRentToOwner(player, this.getOwner(),
 						this.getRent(player, this.getOwner()));
-				log.info("[OWNER]:  money"+this.getOwner().getMoney());
+				log.info("[OWNER]:  money" + this.getOwner().getMoney());
 				log.info("[PLAYER]: money" + player.getMoney());
 			}
 		} else if (player == this.getOwner()) {
@@ -66,8 +66,6 @@ public class RailCard extends SellableCard {
 				+ CardPrices.TAX_THREE_RAIL_CARD + " tax4: "
 				+ CardPrices.TAX_FOUR_RAIL_CARD;
 	}
-
-	
 
 	@Override
 	public int getRent(Player player, Player owner) {
@@ -94,7 +92,7 @@ public class RailCard extends SellableCard {
 	}
 
 	@Override
-	public void buyCityOrRail( Player player) {
+	public void buyCityOrRail(Player player) {
 		System.out.println("buyyyy");
 		this.setOwner(player);
 		player.addProperty(player);
@@ -110,17 +108,24 @@ public class RailCard extends SellableCard {
 
 	@Override
 	public boolean canMortage(Player player) {
-		return (this.getOwner()==player)?true:false;
+		return (this.getOwner() == player) ? true : false;
 	}
 
 	@Override
 	public boolean canUnMortage(Player player) {
-		return (this.getOwner()==player&& this.isMortage());
+		return (this.getOwner() == player && this.isMortage());
 	}
+
 	@Override
 	public boolean canSell(Player player) {
 		return (!this.isMortage() && this.getOwner() == player) ? true : false;
 	}
 
+	@Override
+	public void sell(Player player) {
+		this.setOwner(null);
+		player.setNumberOfRails(player.getNumberOfRails() - 1);
+		player.setMoney(player.getMoney() + this.getPrice() / 2);
+	}
 
 }
