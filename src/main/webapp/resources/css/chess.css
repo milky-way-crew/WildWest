@@ -33,7 +33,7 @@ body {
     font-size: 28px;
 }
 #chat-history {
-    overflow-x: scroll; 
+    overflow-y: scroll; 
     height: 330px;
 }
     #chat-history ul {
@@ -81,11 +81,11 @@ form {
 }
     #info h3 {
         text-align: center;
-        font-family: 'Lobster Two', Helvetica;
+        font-family: 'Lobster Two', Helvetica, Arial;
         font-size: 28px;
     }
     #info h4 {
-        font-family: 'Anaheim', Helvetica;
+        font-family: 'Anaheim', Helvetica, Arial;
     }
 
 #before_game {
@@ -96,6 +96,9 @@ form {
     margin-top: 10px !important; 
     margin-bottom: 0px !important;
 }
+    #before_game h3 {
+        font-family: 'Lobster Two', Helvetica, Arial;
+    }
 
 #chess {
     border-radius: 5px;

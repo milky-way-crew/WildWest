@@ -1,5 +1,6 @@
 package com.web.app.worldgames.domain.chess;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class ChessGameManager {
 			Map<String, ? extends Object> params, User user) {
 
 		Map<String, Object> responseJson = new HashMap<String, Object>();
-		
+
 		if (params.containsKey("is-started")) {
 			responseJson.put("started", game.isStarted());
 		}
@@ -72,57 +73,50 @@ public class ChessGameManager {
 		if (params.containsKey("shuffle") && !game.isStarted()) {
 			onShuffleReceived(responseJson, user);
 		}
-		
+
 		if (params.containsKey("ready")) {
 			onReadyReceived(responseJson, user);
 		}
-		
+
 		if (params.containsKey("chat")) {
 			onChatReceived(responseJson, user, params.get("chat"));
 		}
-		
+
 		// TESTTTT
 		// TODO FIXME
 		if (params.containsKey("changes")) {
 			onChanges(responseJson, user);
 		}
-		
+
 		if (game.isStarted() && !game.isEnded()) {
-			if (game.isStarted()) {
-				if (params.containsKey("draw_choice")) {
-					onDrawChoice(params, user);
-				}
-				if (params.containsKey("changes")) {
-					onChanges(responseJson, user);
-				}
-				if (params.containsKey("move")) {
-					onMoveRecieved(params, responseJson);
-				}
+			if (params.containsKey("draw_choice")) {
+				onDrawChoice(params, user);
 			}
-		} 
-		if (game.isEnded()) {
-			if (params.containsKey("changes")) {
-				onChanges(responseJson, user);
-			}
-			// Player player = game.getPlayerById(user.getId());
-			// if (responseJson.get("result") != null) {
-			// 	responseJson.put("result", "END");
+			// if (params.containsKey("changes")) {
+			// onChanges(responseJson, user);
 			// }
+			if (params.containsKey("move")) {
+				onMoveRecieved(params, responseJson);
+			}
 		}
 		return responseJson;
 	}
 
-	private void onChatReceived(Map<String, Object> responseJson, User user, final Object message) {
-		log.info("Received chat message");
-		final ChessPlayer chessPlayer = game.getPlayerById(user.getId());
-		ChessPlayer opponent = game.getOpponentOf(chessPlayer);
-		opponent.notifyAbout(new GameAction() {
-			@Override
-			public void process(ChessGame game, Map<String, Object> json) {
-				log.info("Notify about chat message");
-				json.put("chat", chessPlayer.getNick() + " : " + message);
-			}
-		});
+	private void onChatReceived(Map<String, Object> responseJson, User user,
+			Object message) {
+		log.info("Received chat message from id=" + user.getId());
+		ChessPlayer opponent = game.getOpponentOf(game.getPlayerById(user
+				.getId()));
+		opponent.getMail().add(
+				game.getPlayerById(user.getId()).getNick() + " : " + message);
+
+		// opponent.notifyAbout(new GameAction() {
+		// @Override
+		// public void process(ChessGame game, Map<String, Object> json) {
+		// log.info("Notify about chat message");
+		// json.put("chat", chessPlayer.getNick() + " : " + message);
+		// }
+		// });
 	}
 
 	private void onReadyReceived(Map<String, Object> responseJson, User user) {
@@ -134,9 +128,10 @@ public class ChessGameManager {
 	}
 
 	private void onShuffleReceived(Map<String, Object> responseJson, User user) {
-		log.debug("[Shuffle request] From user: " + user.getId() + ":" + user.getNickname());
+		log.debug("[Shuffle request] From user: " + user.getId() + ":"
+				+ user.getNickname());
 		log.debug("Game isStarted: " + game.isStarted());
-		
+
 		if (!game.isStarted()) {
 			log.debug("So, game is started, radomizing figures");
 			BoardRandomizer randomizer = new BoardRandomizer();
@@ -145,17 +140,19 @@ public class ChessGameManager {
 				log.debug("Board before randomizing");
 				Utils.printBoard(board);
 			}
-			
+
 			ChessPlayer player = game.getPlayerById(user.getId());
 			if (player != null) {
 				randomizer.randomizeArea(board, player.getType());
 			} else {
-				log.error("User with id:" + user.getId() + " isn't player of game");
+				log.error("User with id:" + user.getId()
+						+ " isn't player of game");
 			}
 
-			// randomizer.randomizeArea(board, game.getWhite().getId() == user.getId() ? PlayerType.WHITE
-			// 				: PlayerType.BLACK);
-			
+			// randomizer.randomizeArea(board, game.getWhite().getId() ==
+			// user.getId() ? PlayerType.WHITE
+			// : PlayerType.BLACK);
+
 			if (log.isDebugEnabled()) {
 				log.debug("Board after randomizing");
 				Utils.printBoard(board);
@@ -164,7 +161,7 @@ public class ChessGameManager {
 		} else {
 			responseJson.put("shuffle", null);
 		}
-		
+
 	}
 
 	private void onDrawChoice(Map<String, ? extends Object> params, User user) {
@@ -221,27 +218,43 @@ public class ChessGameManager {
 	}
 
 	private void onChanges(Map<String, Object> responseJson, User user) {
-		boolean isCurrentPlayerMove = false;
-		responseJson.put("move", isCurrentPlayerMove);
 		ChessPlayer player = game.getPlayerById(user.getId());
-		GameAction action = player.popAction();
+		putMail(responseJson, player);
 
-		if (action != null) {
-			log.info("*** Sending instructions to player via GameAction object. To"
-					+ "*** Player id = [" + player.getId() + "]");
-			action.process(game, responseJson);
+		if (game.isStarted()) {
+			boolean isCurrentPlayerMove = false;
+			responseJson.put("move", isCurrentPlayerMove);
+			GameAction action = player.popAction();
+
+			if (action != null) {
+				log.info("*** Sending instructions to player via GameAction object. To"
+						+ "*** Player id = [" + player.getId() + "]");
+				action.process(game, responseJson);
+			}
+
+			responseJson
+					.put("move",
+							game.getCurrentPlayer().getId() == user.getId()
+									&& game.getLastMoveResult() != BattleResultsEnum.DRAW);
 		}
+	}
 
-		responseJson.put(
-				"move",
-				game.getCurrentPlayer().getId() == user.getId()
-						&& game.getLastMoveResult() != BattleResultsEnum.DRAW);
+	private void putMail(Map<String, Object> responseJson, ChessPlayer player) {
+		if (player.getMail().size() > 0) {
+			log.info("Sending chat message to id=" + player.getId());
+			responseJson.put("mail", new ArrayList<String>(player.getMail()));
+			player.getMail().clear();
+		}
 	}
 
 	private void onWhoamiRecieved(Map<String, Object> responseJson, User user) {
 		log.info("REQUEST TYPE: Who am i");
 		responseJson.put("whoami",
 				game.getWhite().getId() == user.getId() ? "WHITE" : "BLACK");
+		ChessPlayer player = game.getOpponentOf(game.getPlayerById(user.getId()));
+		if (player != null) {
+			player.getMail().add("Server: " + user.getNickname() + " connected.");
+		}
 	}
 
 	private void onInitRecieved(Map<String, Object> responseJson) {

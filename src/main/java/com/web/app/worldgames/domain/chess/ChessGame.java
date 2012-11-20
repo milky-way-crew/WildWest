@@ -1,6 +1,5 @@
 package com.web.app.worldgames.domain.chess;
 
-import com.web.app.worldgames.domain.chess.Move;
 import org.apache.log4j.Logger;
 
 public class ChessGame {

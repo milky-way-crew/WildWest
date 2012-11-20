@@ -239,9 +239,10 @@
         },
         updaterService: function() {
             GAME.sendMessage('changes', function(json) {
-                if(json.chat) {
-                    chat.prepend('<h4>' + json.chat + '</h4>');
-                    return;
+                if(json.mail) {
+                    $.each(json.mail, function(i, mail) {
+                        chat.prepend('<h4>' + mail + '</h4>');
+                    });
                 }
 
 
@@ -439,12 +440,21 @@
             });
         });
 
+        var bfFadeIn = function () {
+            $('#bf').fadeIn(300);
+            $('#before_game img').attr('src', './resources/img/chess/dazz2.gif');
+            $('#before_game img').animate({'margin-top' : '20px'}, 200);
+        }, bfFadeOut = function () {
+            $('#bf').fadeOut(500);
+            $('#before_game img').attr('src', './resources/img/chess/cats.gif');
+            $('#before_game img').animate({'margin-top' : '0px'}, 200);
+        };
+
         $('#ready').click(function() {
-            $('#before_game').fadeOut(500);
+            bfFadeOut();
             GAME.sendMessage({
                 'ready': true
             }, function(json) {
-
             });
         });
 
@@ -453,14 +463,15 @@
             'is-started': null
         }, function(json) {
             if(json.started === false) {
-                $('#before_game').fadeIn(300);
+                // $('#before_game').fadeIn(300);
+                bfFadeIn();
             } else {
-                $('#before_game').fadeOut(500);
+                bfFadeOut();
+                // $('#before_game').fadeOut(500);
             }
         });
 
         GAME.initBoard();
-        // ********************
         chat.init($('#chat-history ul'));
         chat.MAX_MSG = 100;
         var send = function() {
@@ -484,6 +495,6 @@
             }
         });
         // ********************
-        setInterval(GAME.updaterService, 5000);
+        setInterval(GAME.updaterService, 3000);
     });
 })(jQuery);

@@ -16,7 +16,7 @@
 <link href="./resources/css/chess.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div class="navbar">
+	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="brand" href="./home">#home</a>
@@ -44,10 +44,13 @@
 				<a href="./chess/exit" class="btn btn-large btn-danger btn-block">leave
 					game</a>
 				<div class="menu-entry well" id="before_game" align="center">
-					<button id="ready" class="btn btn btn-primary">Ready</button>
+					<div id="bf">
+						<button id="ready" class="btn btn btn-primary">Ready</button>
 					or
-					<button id="shuffle" class="btn btn btn-success">Shuffle
-						figures?</button>
+					<button id="shuffle" class="btn btn btn-success">Shuffle figures?</button>
+					</div>
+					<img src="./resources/img/chess/dazz2.gif" alt="Omg, failed to load image :(" style="margin-top:20px">
+
 				</div>
 			</div>
 		</div>
