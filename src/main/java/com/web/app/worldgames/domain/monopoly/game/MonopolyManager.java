@@ -311,7 +311,7 @@ public class MonopolyManager {
 					currentPlayer.removeObj(currentPlayer.getForUnMortage(),
 							city);
 					currentPlayer.getForMortage().add(city);
-					response.put("mortage_list",
+					response.put("unmortage_list",
 							currentPlayer.getUnMortageAvailable());
 
 					currentPlayer.listPropertyForSell();

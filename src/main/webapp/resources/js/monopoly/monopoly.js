@@ -62,46 +62,8 @@ $(document)
 												console.log('my idGame is: '
 														+ init_id.idGame);
 
-												// MONO.config.idUser =
-												// init_id.idUser;
-												// MONO.config.idGame =
-												// init_id.idGame;
-												// MONO.animate.money(json.player_money,
-												// {type : 'up' || 'down'});
-											},
-											'pay' : function(json) {
-												log('Player='
-														+ json.player
-														+ ' payed money for go out from jail');
-												MONO.animate.pay(json.Player,
-														json.player_money);
-											},
-											'mortage' : function(json) {
-												// parse list
-												// highlight obj
-												MONO.animate
-														.mortage(json.mortage_list);
-												if (json.player === MONO.config.color) {
-													var pos = parseInt(
-															prompt('Enter position to mortage. List='
-																	+ JSON
-																			.stringify(json.mortage_list)),
-															10);
-													if (pos) {
-														MONO.transport
-																.send(
-																		'mortage',
-																		{
-																			position : pos
-																		});
-													}
-												}
-											},
-											'init' : function(json) {
-												console.log('[init] event');
-												MONO.config.color = json.color;
-												MONO.config.money = json.money;
-												MONO.config.isCreator = json.isCreator;
+												MONO.config.idUser = init_id.idUser;
+												MONO.config.idGame = init_id.idGame;
 
 												console
 														.log('Initing web-sockets');
@@ -191,6 +153,7 @@ $(document)
 											MONO.config.position);
 									MONO.animate.money(json.player,
 											json.player_money);
+
 									// MONO.animate.money(json.player_money,
 									// {type : 'up' || 'down'});
 								},
@@ -235,7 +198,7 @@ $(document)
 									console.log('[unmortage] event');
 									MONO.animate.unmortage(json.unmortage_list);
 									var pos = parseInt(
-											prompt('Enter position to mortage. List='
+											prompt('Enter position to unmortage. List='
 													+ JSON
 															.stringify(json.unmortage_list)),
 											10);
@@ -378,18 +341,6 @@ $(document)
 							mortage : function(argument) {
 								log('Animating [mortage]');
 								log('~not supported~');
-							},
-							unmortage : function(argument) {
-								log('Animating [unmortage]');
-								log('~not supported~');
-							},
-							build : function(argument) {
-								log('Animating [build]');
-								log('~not supported~');
-							},
-							sell : function(argument) {
-								log('Animating [sell]');
-								log('~not supported~');
 							}
 						},
 						init : function() {
@@ -441,26 +392,15 @@ $(document)
 							$('#unmortage')
 									.click(
 											function() {
+												var pos = parseInt(
+														prompt('Enter position to unmortage'),
+														10);
 												console
 														.log('sending ***unmortage*** message to server');
 												MONO.transport.send(
-														'unmortage', {});
-												// });
-											});
-							$('#build')
-									.click(
-											function() {
-												console
-														.log('sending ***build*** message to server');
-												MONO.transport
-														.send('build', {});
-											});
-							$('#sell')
-									.click(
-											function() {
-												console
-														.log('sending ***sell*** message to server');
-												MONO.transport.send('sell', {});
+														'unmortage', {
+															position : pos
+														});
 											});
 							$('#start')
 									.click(
