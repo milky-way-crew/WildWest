@@ -1,44 +1,4 @@
-ajax_chat = "ajax_chat";
 ajax_room = "ajax_room";
-
-function message() {
-	$.ajax({
-		url : ajax_chat,
-		type : "POST",
-		data : {
-			type : "message",
-			data : document.getElementById('usermsg').value
-		},
-		error : function() {
-			alert("Message not send");
-		},
-		success : function(json) {
-			if (!$.isEmptyObject(json.message)) {
-				$("#chatBox").append(
-						"<p>" + json.sender + json.message + "</p>");
-				$("#usermsg").val("");
-			}
-		}
-	});
-};
-
-function updateMessages() {
-	$.ajax({
-		url : ajax_chat,
-		type : "POST",
-		data : {
-			type : "update",
-			data : ""
-		},
-		error : function() {
-		},
-		success : function(json) {
-			if (!$.isEmptyObject(json.update)) {
-				$("#chatBox").append("<p>" + json.update + "</p>");
-			}
-		}
-	});
-};
 
 function updateList() {
 	$.ajax({
@@ -52,6 +12,7 @@ function updateList() {
 		},
 		success : function(json) {
 			if (!$.isEmptyObject(json.userList)) {
+				
 				$("#list").html("");
 				$("#list").append(
 						"<tr><td width=175><b>User name</b></td>"
@@ -79,7 +40,6 @@ function updateList() {
 		}
 	});
 }
-
 
 function createRoom() {
 	$.ajax({
@@ -118,8 +78,8 @@ function joinToRoom() {
 function closeModal() {
 	document.getElementById('roomName').value = "";
 }
+
 document.getElementById('joinToRoom').onclick = joinToRoom;
 document.getElementById('createRoom').onclick = createRoom;
-document.getElementById('send').onclick = message;
-setInterval(updateMessages, 1000);
-setInterval(updateList, 3000);
+document.getElementById('closeModal').onclick = closeModal;
+setInterval(updateList, 4000);

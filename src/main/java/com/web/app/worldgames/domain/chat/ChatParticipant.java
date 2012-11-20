@@ -1,6 +1,5 @@
 package com.web.app.worldgames.domain.chat;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +10,8 @@ public class ChatParticipant {
     private String nickname;
     private int id_room;
     private String status;
-    private LinkedList<String> deliver = new LinkedList<String>();
+    private String textColor;
+    public LinkedList<String> deliver = new LinkedList<String>();
 
     public ChatParticipant(User user) {
 	super();
@@ -44,9 +44,7 @@ public class ChatParticipant {
     }
 
     public List<String> getMessages() {
-	ArrayList<String> messages = new ArrayList<String>(deliver);
-	deliver.clear();
-	return messages;
+	return deliver;
     }
 
     public int getId_room() {
@@ -63,5 +61,13 @@ public class ChatParticipant {
 
     public void setStatus(String status) {
 	this.status = status;
+    }
+
+    public String getTextColor() {
+	return textColor;
+    }
+
+    public void setTextColor(String textColor) {
+	this.textColor = textColor;
     }
 }

@@ -44,8 +44,7 @@
 		<p></p>
 		<div class="row-fluid">
 			<div class="span8">
-				<div class="well">
-					<h1>Chat</h1>
+				<div id="title" class="well">
 					<div id="chatBox"></div>
 					<form name="message" action="">
 						<input type="text" id="usermsg"
@@ -89,13 +88,14 @@
 			</div>
 			<div class="modal-footer">
 				<a id="createRoom" href="#" class="btn btn-success">Create</a> <a
-					id="closeModal" href="#" onclick="closeModal()" class="btn"
+					id="closeModal" href="#" class="btn"
 					data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>
 	<!-- modal window create room -->
-	<script type="text/javascript" src="resources/js/chatAndRoom.js"></script>
+	<script type="text/javascript" src="resources/js/chat.js"></script>
+	<script type="text/javascript" src="resources/js/room.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>

@@ -1,5 +1,10 @@
 package com.web.app.worldgames.web;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -18,23 +23,26 @@ public class ChatRoomsController {
     private static final Logger log = Logger
 	    .getLogger(ChatRoomsController.class);
 
-    private static ChatServiceManager chatManager = new ChatServiceManager();
+    private static ChatServiceManager manager = new ChatServiceManager();
 
     @RequestMapping(value = "/chatRooms", method = RequestMethod.GET)
     public ModelAndView showPage(HttpServletRequest request) {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
-	if (!chatManager.getChatRoomById(chatParticipant.getId_room())
+	if (!manager.getChatRoomById(chatParticipant.getId_room())
 		.isParticipantInRoom(chatParticipant)) {
+	    generateTextColorForParticipant(chatParticipant);
 	    request.getSession().setAttribute("chatParticipant",
 		    chatParticipant);
-	    log.debug("Put ChatParticipant in Session "
+	    log.debug("Put ChatParticipant in session and in world particicipant list: "
 		    + chatParticipant.getNickname());
-	    chatManager.getChatRoomById(chatParticipant.getId_room())
+	    manager.getChatRoomById(chatParticipant.getId_room())
 		    .addChatParticipant(chatParticipant);
 	} else {
 	    request.getSession().setAttribute("chatParticipant",
 		    chatParticipant);
+	    log.debug("ChatParticipant put in session "
+		    + chatParticipant.getNickname());
 	}
 	ModelAndView modelAndView = new ModelAndView();
 	modelAndView.setViewName("chatRooms");
@@ -42,14 +50,24 @@ public class ChatRoomsController {
 
     }
 
-    public static ChatServiceManager getChatManager() {
-	return chatManager;
+    public static ChatServiceManager getManager() {
+	return manager;
     }
 
-    protected ChatParticipant getChatParticipantFromRequest(
+    private void generateTextColorForParticipant(ChatParticipant participant) {
+	List<String> colorList = new ArrayList<String>(Arrays.asList("red",
+		"green", "blue", "yellow", "violet", "brown", "black", "azure"));
+	Random rand = new Random();
+	participant
+		.setTextColor(colorList.get(rand.nextInt(colorList.size() - 1)));
+    }
+
+    public static ChatParticipant getChatParticipantFromRequest(
 	    HttpServletRequest request) {
 	ChatParticipant chatParticipant = (ChatParticipant) request
 		.getSession().getAttribute("chatParticipant");
+	log.debug("getChatParticipant from Request: "
+		+ chatParticipant.getNickname());
 	return chatParticipant;
     }
 }

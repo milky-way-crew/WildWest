@@ -13,29 +13,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.app.worldgames.domain.chat.ChatParticipant;
-
+import com.web.app.worldgames.domain.chat.ChatRoom;
+import com.web.app.worldgames.service.ChatServiceManager;
 
 @Controller
-public class RoomController extends ChatRoomsController {
+public class RoomController {
+
+    static final String CREATOR = "creator";
+    static final String READY_STATUS = "ready";
+    static final String NOT_READY_STATUS = "";
     private static final Logger log = Logger.getLogger(RoomController.class);
+    private static ChatServiceManager manager = ChatRoomsController
+	    .getManager();
 
     @RequestMapping(value = "/ajax_room", method = RequestMethod.POST)
     public @ResponseBody
     JSONObject onMessage(HttpServletRequest request,
 	    @RequestParam("type") String type, @RequestParam("data") String data) {
-	ChatParticipant participant = getChatParticipantFromRequest(request);
+	ChatParticipant participant = ChatRoomsController
+		.getChatParticipantFromRequest(request);
 	JSONObject json = new JSONObject();
 
 	if (type.toLowerCase().trim().equals("lists")) {
 	    log.debug("Update lists from user: " + participant.getNickname());
-	    if (participant.getId_room() == getChatManager().getIdWorldRoom()) {
+	    if (participant.getId_room() == manager.getIdWorldRoom()) {
 		json.put("roomList", updateRoomList(participant));
 	    } else {
 		json.put("userList", updateUserList(participant));
 	    }
 	    return json;
 	}
-	/*if (type.toLowerCase().trim().equals("create")) {
+	if (type.toLowerCase().trim().equals("create")) {
 	    json.clear();
 	    log.debug("Create room " + data + " by user: "
 		    + participant.getNickname());
@@ -43,10 +51,8 @@ public class RoomController extends ChatRoomsController {
 		return json;
 	    } else {
 		createRoom(participant, data);
-		json.put(
-			"newRoom",
-			getChatManager().getChatRoomById(
-				participant.getId_room()));
+		json.put("newRoom",
+			manager.getChatRoomById(participant.getId_room()));
 		json.put("roomCreator", participant);
 		return json;
 	    }
@@ -57,43 +63,80 @@ public class RoomController extends ChatRoomsController {
 	    json.put("roomParticipant", participant);
 	    return json;
 	}
-	*/return json;
+	return json;
     }
 
     private List<ChatRoom> updateRoomList(ChatParticipant participant) {
-	getChatManager().calculateRoomsSize();
-	for (ChatRoom chatRoom : getChatManager().getChatRooms()) {
+	ChatRoomsController.getManager().calculateRoomsSize();
+	for (ChatRoom chatRoom : ChatRoomsController.getManager()
+		.getChatRooms()) {
 	    if (chatRoom.getSize() == 0
-		    && chatRoom.getRoomId() != getChatManager()
+		    && chatRoom.getRoomId() != ChatRoomsController.getManager()
 			    .getIdWorldRoom()) {
-		getChatManager().deleteRoomById(chatRoom.getRoomId());
+		ChatRoomsController.getManager().deleteRoomById(
+			chatRoom.getRoomId());
 	    }
 	}
-	return getChatManager().getChatRooms();
+	return ChatRoomsController.getManager().getChatRooms();
     }
 
     private List<ChatParticipant> updateUserList(ChatParticipant participant) {
-	return getChatManager().getChatRoomById(participant.getId_room())
+	return ChatRoomsController.getManager()
+		.getChatRoomById(participant.getId_room())
 		.getChatParticipants();
     }
 
-/*    private void createRoom(ChatParticipant participant, String roomName) {
-	getChatManager().getChatRoomById(participant.getId_room())
+    private void exitFromRoom(ChatParticipant participant) {
+	manager.getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
-	int lastRoom = getChatManager().getChatRooms().size() - 1;
-	int newId = getChatManager().getChatRoomById(lastRoom).getRoomId() + 1;
-	getChatManager().addChatRoom(roomName, newId);
+	manager.getChatRoomById(manager.getIdWorldRoom()).addChatParticipant(
+		participant);
+	participant.setId_room(manager.getIdWorldRoom());
+    }
+
+    private void setReadyStatus(ChatParticipant participant) {
+	if (participant.getStatus().toLowerCase().trim()
+		.equals(NOT_READY_STATUS)) {
+	    participant.setStatus(READY_STATUS);
+	} else {
+	    participant.setStatus(NOT_READY_STATUS);
+	}
+    }
+
+    private boolean activateStartButton(ChatParticipant participant) {
+	if (participant.getStatus().toLowerCase().trim().equals(CREATOR)) {
+	    boolean flag = true;
+	    for (ChatParticipant player : manager.getChatRoomById(
+		    participant.getId_room()).getChatParticipants()) {
+		if (participant.getParticipantId() != player.getParticipantId()) {
+		    if (player.getStatus().toLowerCase().trim()
+			    .equals(NOT_READY_STATUS)) {
+			flag = false;
+		    }
+		}
+	    }
+	    return flag;
+	}
+	return false;
+    }
+
+    private void createRoom(ChatParticipant participant, String roomName) {
+	manager.getChatRoomById(participant.getId_room())
+		.deleteChatParticipantById(participant.getParticipantId());
+	int lastRoom = manager.getChatRooms().size() - 1;
+	int newId = manager.getChatRoomById(lastRoom).getRoomId() + 1;
+	manager.addChatRoom(roomName, newId);
 	participant.setId_room(newId);
-	participant.setStatus("creator");
-	getChatManager().getChatRoomById(participant.getId_room())
-		.addChatParticipant(participant);
+	participant.setStatus(CREATOR);
+	manager.getChatRoomById(participant.getId_room()).addChatParticipant(
+		participant);
     }
 
     private void joinToRoom(ChatParticipant participant, int id) {
-	getChatManager().getChatRoomById(participant.getId_room())
+	manager.getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
-	getChatManager().getChatRoomById(id).addChatParticipant(participant);
+	manager.getChatRoomById(id).addChatParticipant(participant);
 	participant.setId_room(id);
-	participant.setStatus("");
-    }*/
+	participant.setStatus(NOT_READY_STATUS);
+    }
 }

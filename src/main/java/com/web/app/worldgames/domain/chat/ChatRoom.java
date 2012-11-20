@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-
 public class ChatRoom {
     private static final Logger log = Logger.getLogger(ChatRoom.class);
 
@@ -17,7 +16,7 @@ public class ChatRoom {
     public ChatRoom(String roomName, int id) {
 	this.roomId = id;
 	this.roomName = roomName;
-	log.debug("Room "+roomName+" added");
+	log.debug("Room " + roomName + " added");
     }
 
     public void addChatParticipant(ChatParticipant participant) {
@@ -48,7 +47,8 @@ public class ChatRoom {
 
     public boolean isParticipantInRoom(ChatParticipant chatParticipant) {
 	for (ChatParticipant participant : chatParticipants) {
-	    if (participant.getParticipantId() == chatParticipant.getParticipantId())
+	    if (participant.getParticipantId() == chatParticipant
+		    .getParticipantId())
 		return true;
 	}
 	return false;
