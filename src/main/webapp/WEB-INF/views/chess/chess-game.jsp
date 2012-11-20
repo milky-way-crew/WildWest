@@ -7,12 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Chess, the game</title>
-<link rel="stylesheet" type="text/css"
+<!-- <link rel="stylesheet" type="text/css"
 	href="http://fonts.googleapis.com/css?family=Anaheim">
 <link rel="stylesheet" type="text/css"
 	href="http://fonts.googleapis.com/css?family=Lobster+Two&effect=shadow-multiple">
+	-->
 <link href="./resources/css/bootstrap.css" rel="stylesheet"
-	type="text/css">
+	type="text/css"> 
 <link href="./resources/css/chess.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -95,6 +96,24 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="fin" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="fin-label">Congradulations, you win!</h3>
+		</div>
+		<div class="modal-body">
+			<center>
+				<!-- <p>Congradulations, you win!</p> -->
+				<img src="" alt="win">
+				<p>Redirecting to home in 7seconds</p>
+			</center>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+		</div>
+	</div>
+	
 	<script type="text/javascript" src="./resources/js/jquery.js"></script>
 	<script type="text/javascript" src="./resources/js/jquery-ui.js"></script>
 	<script type="text/javascript" src="./resources/js/bootstrap-modal.js"></script>

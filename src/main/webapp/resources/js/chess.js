@@ -216,15 +216,19 @@
                 }]);
             },
             "ABSOLUTE_WIN": function(idFrom, idTo, json) {
-                alert('abs win');
+                // alert('abs win');
                 GAME.view.animateWin(idFrom, idTo, json);
 
-                if(GAME.isOwnerOf(idFrom) === true) {
-                    bootbox.alert('<h1>Congradulations!</h1> <p>you win the game</p>');
+                if(GAME.isOwnerOf(idFrom) === true || typeof idFrom === 'undefined') {
+                	$('#fin-label').html('Congradulations! You win the game.');
+                	$('#fin img').attr("src", "./resources/img/chess/win.png");
                 } else {
-                    bootbox.alert('<h1>You loose the game.</h1> <p>better luck next time</p>');
+                	$('#fin img').attr("src", "./resources/img/chess/loose.png");
+                	$('#fin-label').html('You loose the game, better luck next time.');
                 }
 
+                $('#fin').modal();
+                
                 clearInterval(GAME.updaterService);
                 GAME.inform('redirecting in 5 seconds');
                 setTimeout("window.location='./chess/exit'", 7000);
@@ -472,6 +476,8 @@
         });
 
         GAME.initBoard();
+                
+        // ***********************
         chat.init($('#chat-history ul'));
         chat.MAX_MSG = 100;
         var send = function() {
@@ -495,6 +501,18 @@
             }
         });
         // ********************
+        
+        var bu = function(e) { 
+        	e.preventDefault();
+       		GAME.sendMessage({
+       			'chat': 'disconnected.'
+       		}, function(a) {});
+       		GAME.sendMessage({
+       			'disco' : true
+       		}, function(a) {});
+        };
+        $(window).on("beforeunload", bu);
+        
         setInterval(GAME.updaterService, 3000);
     });
 })(jQuery);

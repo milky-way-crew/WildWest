@@ -23,7 +23,8 @@ public class ChessPlayer {
 		return notifiers.pollFirst();
 	}
 
-	private FigureTypesEnum drawChoice = null;	
+	private FigureTypesEnum drawChoice = null;
+	private boolean active;	
 	
 	public void setDrawChoice(FigureTypesEnum drawChoice) {
 		this.drawChoice = drawChoice;
@@ -93,5 +94,13 @@ public class ChessPlayer {
 
 	public void setMail(List<String> mail) {
 		this.mail = mail;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

@@ -3,13 +3,22 @@ package com.web.app.worldgames.domain.chess;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.service.ChessGameService;
 
 public class ChessGameManager {
+	@Autowired
+	private ChessGameService chessService;
+	
 	private static final Logger log = Logger.getLogger(ChessGameManager.class);
+	private Timer timer;
 
 	private ChessGame game;
 
@@ -92,14 +101,42 @@ public class ChessGameManager {
 			if (params.containsKey("draw_choice")) {
 				onDrawChoice(params, user);
 			}
-			// if (params.containsKey("changes")) {
-			// onChanges(responseJson, user);
-			// }
 			if (params.containsKey("move")) {
 				onMoveRecieved(params, responseJson);
 			}
+			if (params.containsKey("disco")) {
+				onDisconnect(params, user);
+			}
 		}
 		return responseJson;
+	}
+
+	private void onDisconnect(Map<String, ? extends Object> params, final User user) {
+		// experimental feature
+		ChessPlayer chessPlayer = game.getPlayerById(user.getId());
+		chessPlayer.setActive(false);
+		log.info("Player id=%d disconnected setting active=" + chessPlayer.isActive());
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if (!game.getPlayerById(user.getId()).isActive()) {
+					log.info("Plyer disconencted");
+					log.info("trying to remove game");
+//					chessService.removeGameById()
+					game.getOpponentOf(game.getPlayerById(user.getId())).notifyAbout(new GameAction() {
+						@Override
+						public void process(ChessGame game, Map<String, Object> json) {
+							json.put("result", BattleResultsEnum.ABSOLUTE_WIN);
+						}
+					});
+				} else {
+					log.debug("player is active now, so do nothing.");
+					this.cancel();
+				}
+			}
+		}, TimeUnit.SECONDS.toMillis(10));
+		
 	}
 
 	private void onChatReceived(Map<String, Object> responseJson, User user,
@@ -249,8 +286,9 @@ public class ChessGameManager {
 
 	private void onWhoamiRecieved(Map<String, Object> responseJson, User user) {
 		log.info("REQUEST TYPE: Who am i");
-		responseJson.put("whoami",
-				game.getWhite().getId() == user.getId() ? "WHITE" : "BLACK");
+		ChessPlayer chessPlayer = game.getPlayerById(user.getId());
+		chessPlayer.setActive(true);
+		responseJson.put("whoami", chessPlayer.getType());
 		ChessPlayer player = game.getOpponentOf(game.getPlayerById(user.getId()));
 		if (player != null) {
 			player.getMail().add("Server: " + user.getNickname() + " connected.");
