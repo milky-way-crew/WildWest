@@ -189,9 +189,6 @@ $(document)
 												});
 
 										MONO.animate.refresh_buttons(buttons);
-										if (message) {
-											chat.append("server: " + message);
-										}
 									}
 								},
 								'unmortage' : function(json) {
@@ -218,9 +215,6 @@ $(document)
 												});
 
 										MONO.animate.refresh_buttons(buttons);
-										if (message) {
-											chat.append("server: " + message);
-										}
 									}
 								},
 								'build' : function(json) {
@@ -261,9 +255,6 @@ $(document)
 												});
 
 										MONO.animate.refresh_buttons(buttons);
-										if (message) {
-											chat.append("server: " + message);
-										}
 									}
 								},
 								'init' : function(json) {
