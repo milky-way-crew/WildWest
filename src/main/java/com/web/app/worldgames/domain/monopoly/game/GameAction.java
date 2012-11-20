@@ -36,46 +36,40 @@ public class GameAction {
 			if (cell instanceof CityCard) {
 				CityCard card = (CityCard) cell;
 				card.effectOnPlayer(player);
-				buttons.put(ButtonsLabel.BUY, card.canBuy(player));
+				if(player==card.getOwner()|| card.getOwner()!=null){
+					buttons.put(ButtonsLabel.BUY, false);
+				}else{
+					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
+				}
 				if (card.getOwner() != null
 						&& !card.canPayRent(player,
 								card.getRent(player, card.getOwner()))) {
 					messages="You haven't money. You may mortage or sell your property.";
 				}
-				buttons.put(ButtonsLabel.BUILD, card.canBuildHouse(player)
-						|| card.canBuildHotel(player));
-				//buttons.put(ButtonsLabel.MORTAGE, card.canMortage(player));
-				//buttons.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
-				//buttons.put(ButtonsLabel.SELL, card.canSell(player));
-//				buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
-//				buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
-//				buttons.put(ButtonsLabel.SELL, player.canSell());
 				buttons.put(ButtonsLabel.PAY, false);
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
-				buttons.put(ButtonsLabel.BUY, card.canBuy(player));
+				if(player==card.getOwner()|| card.getOwner()!=null){
+					buttons.put(ButtonsLabel.BUY, false);
+				}else{
+					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
+				}
 				if (card.getOwner() != null
 						&& !card.canPayRent(player,
 								card.getRent(player, card.getOwner()))) {
 					messages="You haven't money. You may mortage or sell your property.";
 				}
-				//buttons.put(ButtonsLabel.MORTAGE, card.canMortage(player));
-				//buttons.put(ButtonsLabel.UNMORTAGE, card.canUnMortage(player));
-			//buttons.put(ButtonsLabel.SELL, card.canSell(player));
 				buttons.put(ButtonsLabel.PAY, false);
 			}
 		} else {
 			if (cell instanceof GoCard) {
 				cell.effectOnPlayer(player);
-				//buttons.put(ButtonsLabel.DONE, true);
 				messages="You got $200";
 			} else if (cell instanceof TaxCard) {
 				if (((TaxCard) cell).canPayTax(player)) {
 					cell.effectOnPlayer(player);
-					//buttons.put(ButtonsLabel.DONE, true);
 					messages="You payed tax";
 				} else {
-					//buttons.put(ButtonsLabel.DONE, true);
 					messages="You haven't money. You may mortage or sell your property.";
 				}
 			} else if (cell instanceof JailCard) {
@@ -103,6 +97,7 @@ public class GameAction {
 		}
 		buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
 		buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
+		buttons.put(ButtonsLabel.BUILD, player.canBuild());
 		buttons.put(ButtonsLabel.SELL, player.canSell());
 		buttons.put(ButtonsLabel.DONE, true);
 		buttons.put(ButtonsLabel.ROLL, player.doublePoints());
@@ -113,16 +108,4 @@ public class GameAction {
 		state.put("player_money", player.getMoney());
 		return state;
 	}
-//	 public static void main(String[] args) {
-//	 Cell cell = new ChanseCard();
-//	 Cell cell1 = new GoCard();
-//	 Cell cell3 = new RailCard(Rails.RAIL1);
-//	 Player p1 = new Player("sdf", 23, 1200, PlayerColors.PLAYER1);
-//	 //cell.setOwner(p1);
-//	 Player p = new Player("sdf", 23, 0, PlayerColors.PLAYER1);
-//	 //cell.effectOnPlayer(p);
-//	 System.out.println("chanse: "+GameAction.action(cell, p));
-//	 System.out.println("Go: "+GameAction.action(cell1, p));
-//	 System.out.println("Rail: "+GameAction.action(cell3, p));
-//	 }
 }

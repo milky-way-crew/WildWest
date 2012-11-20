@@ -5,17 +5,18 @@ import org.apache.log4j.Logger;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.Rails;
-import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class RailCard extends SellableCard {
 	private String name;
 	private int price;
+	private int position;
 	private final static Logger log = Logger.getLogger(RailCard.class);
 	Rails rails = null;
 
 	public RailCard(Rails rails) {
 		this.name = rails.getName();
 		this.price = rails.getPrice();
+		this.position=rails.getPosition();
 	}
 
 	public String getName() {
@@ -32,6 +33,14 @@ public class RailCard extends SellableCard {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	@Override
@@ -84,30 +93,13 @@ public class RailCard extends SellableCard {
 		return 0;
 	}
 
-//	@Override
-//	public void payOrMortage(SellableCard cell, Player player, Player owner) {
-//		boolean check = true;
-//		int price = getRent(player, owner);
-//		if (player.checkMoney( price)) {
-//			payRentToOwner(player, owner, price);
-//		} else {
-//			while (check) {
-//				player.mortageAction(player);
-//				if (player.checkMoney( price)) {
-//					payRentToOwner(player, owner, price);
-//					check = false;
-//				} else {
-//					check = true;
-//				}
-//
-//			}
-//		}
-//	}
-
 	@Override
 	public void buyCityOrRail( Player player) {
+		System.out.println("buyyyy");
 		this.setOwner(player);
 		player.addProperty(player);
+		player.listPropertyForMortage();
+		player.listPropertyForSell();
 		System.out.println("You are owner now");
 		player.setMoney(player.getMoney() - getPrice());
 		System.out.println("Your money: " + player.getMoney());

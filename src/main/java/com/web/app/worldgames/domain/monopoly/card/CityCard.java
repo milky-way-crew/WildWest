@@ -2,11 +2,13 @@ package com.web.app.worldgames.domain.monopoly.card;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
+import com.web.app.worldgames.domain.monopoly.PlayerColors;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class CityCard extends SellableCard {
@@ -159,59 +161,34 @@ public class CityCard extends SellableCard {
 		this.cities = cities;
 	}
 
-	public void buildHouse(Player player) {
-		Map<String, Integer> buildings = new HashMap<String, Integer>();
-		CityCard city = (CityCard) StartGame.boardCities().get(
-				player.getPosition());
-		if (getNumbersOfHouses() < 3) {
-
-			if (canBuildHouse(player)) {
-				player.setMoney(player.getMoney() - city.getHousePrice());
+	public Map<Integer, Integer> build(Player player) {
+		Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
+		if (player.canBuild()) {
+			// build house
+			if (this.getNumbersOfHouses() < 3) {
+				player.setMoney(player.getMoney() - this.getHousePrice());
 				numbersOfHouses++;
 				setNumbersOfHouses(numbersOfHouses);
 				player.setNumberOfBuildings(player.getNumberOfBuildings() + 1);
-				buildings.put(city.getName(), city.getNumbersOfHouses());
+				buildings.put(this.getPosition(), this.getNumbersOfHouses());
 				player.setBuildings(buildings);
+				log.info("[Message]: "
+						+ "You build house. Number of houses are: "
+						+ getNumbersOfHouses());
+			} else if (this.getNumbersOfHouses() == 3) {
+				// build hotel
+				player.setMoney(player.getMoney() - this.getHotelPrice());
+				setHotel(true);
+				player.setNumberOfBuildings(player.getNumberOfBuildings() + 1);
+				buildings
+						.put(this.getPosition(), this.getNumbersOfHouses() + 1);
+				player.setBuildings(buildings);
+				log.info("[Message]: " + "You build houtel. Number of  are: "
+						+ getNumbersOfHouses());
 			}
-			log.info("[Message]: " + "You build castle. Number of houses are: "
-					+ getNumbersOfHouses());
+
 		}
-	}
-
-	public boolean canBuildHouse(Player player) {
-		if ((region.equals("brown") || region.equals("blue"))
-				&& player.getNumberOfRegions(player,
-						player.getRegion(player.getPosition())) == 2
-				&& !isMortage() && player.checkMoney(getHousePrice())) {
-			return true;
-		} else if (player.getNumberOfRegions(player,
-				player.getRegion(player.getPosition())) == 3
-				&& !isMortage() && player.checkMoney(getHousePrice())) {
-			return true;
-		} else
-			return false;
-	}
-
-	public boolean canBuildHotel(Player player) {
-		return (getNumbersOfHouses() == 3 && !isMortage() && player
-				.checkMoney(getHousePrice())) ? true : false;
-	}
-
-	public boolean buildHotel(Player player) {
-		Map<String, Integer> buildings = new HashMap<String, Integer>();
-		CityCard city = (CityCard) StartGame.boardCities().get(
-				player.getPosition());
-		if (canBuildHotel(player)) {
-			log.info("[Message]: " + "You can build hotel");
-			player.setMoney(player.getMoney() - city.getHotelPrice());
-			setHotel(true);
-			player.setNumberOfBuildings(player.getNumberOfBuildings() + 1);
-			buildings.put(city.getName(), city.getNumbersOfHouses());
-			player.setBuildings(buildings);
-		} else {
-			log.info("[Message]: " + "You cannot build hotel");
-		}
-		return isHotel();
+		return buildings;
 	}
 
 	@Override
@@ -236,8 +213,10 @@ public class CityCard extends SellableCard {
 			player.setPosition(player.getPosition());
 		} else {
 			log.info("[OWNER]: " + this.getOwner().getName());
+			// int numberOfRegions = owner.getRegions().get(this.getRegion());
 			int numberOfRegions = owner.getNumberOfRegions(owner,
 					owner.getRegion(player.getPosition()));
+			log.info("[NUMBER OF REGIONS NEW]: " + numberOfRegions);
 			log.info("[REGIONS]: " + numberOfRegions);
 			if (numberOfRegions == 1) {
 				return getTaxOneCard();
@@ -303,6 +282,7 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public void buyCityOrRail(Player player) {
+		System.out.println("buyyy cityyy");
 		this.setOwner(player);
 		player.addProperty(player);
 		player.listPropertyForMortage();
@@ -310,7 +290,10 @@ public class CityCard extends SellableCard {
 		log.info("[MESSAGE]: You are owner now");
 		player.setMoney(player.getMoney() - getPrice());
 		log.info("[MONEY]: " + player.getMoney());
+		//player.addRegion();
 		player.addRegions(player);
+		player.addBuildAvailable();
+		log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
 		log.info("[REGIONS LIST]: " + player.listRegions(player));
 
 	}
@@ -331,4 +314,14 @@ public class CityCard extends SellableCard {
 		return (!this.isMortage() && this.getOwner() == player) ? true : false;
 	}
 
+//	public static void main(String[] args) {
+//		Player owner = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
+//		Player p = new Player("ajsdhefdc", 15, 1000, PlayerColors.PLAYER2);
+//		CityCard c = new CityCard(Cities.ATHENS);
+//		CityCard c1 = new CityCard(Cities.TOKYO);
+//		c.buyCityOrRail(owner);
+//		c1.buyCityOrRail(owner);
+//		c.effectOnPlayer(p);
+//		c1.effectOnPlayer(p);
+//	}
 }

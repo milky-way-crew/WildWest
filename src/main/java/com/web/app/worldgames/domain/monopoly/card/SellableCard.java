@@ -1,8 +1,13 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
+import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
+import com.web.app.worldgames.domain.monopoly.PlayerColors;
+import com.web.app.worldgames.domain.monopoly.Rails;
 import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 
 public abstract class SellableCard extends Cell {
@@ -25,7 +30,9 @@ public abstract class SellableCard extends Cell {
 	public abstract boolean canUnMortage(Player player);
 
 	public abstract boolean canSell(Player player);
+
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
+
 	public boolean isMortage() {
 		return mortage;
 	}
@@ -73,69 +80,103 @@ public abstract class SellableCard extends Cell {
 				: false;
 	}
 
-//	public void refuse(Player player) {
-//		// player.setMoney(player.getMoney());
-//		player.setPosition(player.getPosition());
-//	}
-
 	public void payRentToOwner(Player player, Player owner, int price) {
 		player.setMoney(player.getMoney() - price);
 		owner.setMoney(owner.getMoney() + price);
 	}
 
-	public void sellCityOrRail(Player seller, Player buyer) {
-		if (this.isMortage()) {
-			log.info("[MESSAGE]: Unmortage this object");
-		} else {
-			seller.setMoney(seller.getMoney() + this.getPrice());
-			buyer.setMoney(buyer.getMoney() - this.getPrice());
-			this.setOwner(buyer);
-			if (this instanceof CityCard) {
-				seller.listRegions(seller).remove(
-						seller.getRegion(this.getPosition()));
-				buyer.addRegionsSellActivity(buyer, (CityCard) this);
-			} else if (this instanceof RailCard) {
-				seller.subNumberOfRAils();
-				buyer.addNumberOfRails();
+	public void sellCityOrRail(Player player) {
+		RailCard rail = null;
+		CityCard city = null;
+		for (SellableCard cards : player.getForSell()) {
+			log.info("[-----------------SELL ACTION------------------------------]: ");
+			log.info("[lists for sell]: ");
+			log.info("[lists for mortage]: " + player.getForMortage());
+			log.info("[lists for sell]: " + player.getForSell());
+			log.info("[lists for property]: " + player.getProperty());
+			if (this instanceof RailCard) {
+				rail = (RailCard) cards;
+				rail.setOwner(null);
+				player.removeObj(player.getProperty(), rail);
+				if (player.getForMortage().contains(rail)) {
+					player.removeObj(player.getForMortage(), rail);
+				}
+				if (player.getForSell().contains(rail)) {
+					player.removeObj(player.getForSell(), rail);
+				}
+				player.listPropertyForMortage();
+				player.listPropertyForSell();
+				player.setNumberOfRails(player.getNumberOfRails() - 1);
+				player.setMoney(player.getMoney() + rail.getPrice() / 2);
+			} else if (this instanceof CityCard) {
+				city = (CityCard) cards;
+				if (city.getNumbersOfHouses() > 0) {
+					city.setNumbersOfHouses(city.getNumbersOfHouses() - 1);
+					player.setMoney(player.getMoney() + city.getHousePrice()
+							/ 2);
+					if (city.isHotel()) {
+						city.setHotel(false);
+						player.setMoney(player.getMoney()
+								+ city.getHotelPrice() / 2);
+					}
+				} else {
+					city.setOwner(null);
+					player.removeObj(player.getProperty(), city);
+					if (player.getForMortage().contains(city)) {
+						player.removeObj(player.getForMortage(), city);
+					}
+					if (player.getForSell().contains(city)) {
+						player.removeObj(player.getForSell(), city);
+					}
+					player.listPropertyForMortage();
+					player.listPropertyForSell();
+					player.setMoney(player.getMoney() + city.getPrice() / 2);
+					player.listRegions(player).remove(city.getRegion());
+					// player.addBuildAvailable();
+				}
 			}
-			buyer.addSelledProperty(this);
-			seller.deleteProperty(seller, this);
+			log.info("[lists after sell]: ");
+			log.info("[lists for mortage]: " + player.getForMortage());
+			log.info("[lists for sell]: " + player.getForSell());
+			log.info("[lists for property]: " + player.getProperty());
 		}
 
 	}
 
-//	public void mortageAction(int playerId, int position) {
-//		Player player = 
-//		SellableCard card = player.cardByIndex(position);
-//		card.mortage(player);
-//		player.getForMortage().remove(card);
-//		player.getForUnMortage().add(card);
-//	}
-	// public void buyOrMortage(SellableCard cell, Player player) {
-	// boolean check = true;
-	// int price = cell.getPrice();
-	// if (player.checkMoney(price)) {
-	// buyCityOrRail(player);
+	// public void sellCityOrRail(Player seller, Player buyer) {
+	// if (this.isMortage()) {
+	// log.info("[MESSAGE]: Unmortage this object");
 	// } else {
-	// while (check) {
-	// player.listPropertyForMortage(player);
-	// if (!player.getForMortage().isEmpty()) {
-	// player.mortageAction(player);
-	// if (player.checkMoney(price)) {
-	// buyCityOrRail(player);
-	// check = false;
-	// } else {
-	// check = true;
+	// seller.setMoney(seller.getMoney() + this.getPrice());
+	// buyer.setMoney(buyer.getMoney() - this.getPrice());
+	// this.setOwner(buyer);
+	// if (this instanceof CityCard) {
+	// seller.listRegions(seller).remove(
+	// seller.getRegion(this.getPosition()));
+	// buyer.addRegionsSellActivity(buyer, (CityCard) this);
+	// } else if (this instanceof RailCard) {
+	// seller.subNumberOfRAils();
+	// buyer.addNumberOfRails();
 	// }
-	// } else {
-	// System.out.println("you haven't object");
-	// player.setLoss(true);
-	// System.out.println("loss: " + player.isLoss());
-	// check = false;
+	// buyer.addSelledProperty(this);
+	// seller.deleteProperty(seller, this);
 	// }
 	//
 	// }
+	// public static void main(String[] args) {
+	// Player p = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
+	// CityCard c1 = new CityCard(Cities.ATHENS);
+	// //RailCard c = new RailCard(Rails.RAIL1);
+	// //System.out.println(c.info()+" pos "+c.getPosition());
+	// c1.buyCityOrRail(p);
+	// // c.buyCityOrRail(p);
+	// p.playerProperty().clear();
+	// System.out.println(p.playerProperty());
+	// for(SellableCard pp:p.playerProperty()){
+	//
+	// pp.sellCityOrRail(p);
 	// }
+	//
+	// // c.sellCityOrRail(p);
 	// }
-
 }
