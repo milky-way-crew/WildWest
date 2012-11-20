@@ -123,10 +123,11 @@
           <div id="myCarousel" class="carousel slide">
           <!-- Carousel items -->
           <div class="carousel-inner">
+          <!-- 
             <div class="active item"><img src="http://placehold.it/1200x450/0e53a7/00000&text=at first: its gorgerous" /></div>
             <div class="item"><img src="http://placehold.it/1200x450/00af64/00000&text=second: easy to play" /></div>
             <div class="item"><img src="http://placehold.it/1200x450/E8117F/00000&text=third: redtube.com" /></div>
-          
+           -->
             <div class="item"><img src="resources/img/slide-1.png" alt=""></div>
             <div class="item"><img src="resources/img/slide-2.png" alt=""></div>
             <div class="item"><img src="resources/img/slide-3.png" alt=""></div>
