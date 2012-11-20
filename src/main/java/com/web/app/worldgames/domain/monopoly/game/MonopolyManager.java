@@ -267,17 +267,17 @@ public class MonopolyManager {
 			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
 			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
 			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
-			SellableCard card = currentPlayer.cardByPosition(currentPlayer
-					.getPosition());
-			log.info("CHECK card"+card.getName());
-			if (card instanceof SellableCard) {
-				if (card.getOwner() == null) {
-					log.info("CHECK BUY TRUE/FALSE"+card.canBuy(currentPlayer));
-					buttons.put(ButtonsLabel.BUY, card.canBuy(currentPlayer));
-				} else {
-					buttons.put(ButtonsLabel.BUY, false);
-				}
-			}
+			// SellableCard card = currentPlayer.cardByPosition(currentPlayer
+			// .getPosition());
+			// log.info("CHECK card"+card.getName());
+			// if (card instanceof SellableCard) {
+			// if (card.getOwner() == null) {
+			// log.info("CHECK BUY TRUE/FALSE"+card.canBuy(currentPlayer));
+			// buttons.put(ButtonsLabel.BUY, card.canBuy(currentPlayer));
+			// } else {
+			// buttons.put(ButtonsLabel.BUY, false);
+			// }
+			// }
 			state.put("buttons", buttons);
 			response.put("game_state", state);
 		}
@@ -433,16 +433,19 @@ public class MonopolyManager {
 							currentPlayer));
 					response.put("cell", CardFactory.chooseCard(currentPlayer));
 				}
-			}
-		} else {
-			response.put("type", ButtonsLabel.ROLL);
-			buttons.put(ButtonsLabel.DONE, true);
-			response.put("game_state", buttons);
-			currentPlayer.setLosser(true);
-			leaveGame(currentPlayer);
-			if (hasWinner()) {
-				currentPlayer.setWinner(true);
-				log.info("[WINNER ]:" + currentPlayer.getColor());
+			} else {
+				if (currentPlayer.canContinueGame()) {
+					response.put("type", ButtonsLabel.ROLL);
+					buttons.put(ButtonsLabel.DONE, true);
+					response.put("game_state", buttons);
+					currentPlayer.setLosser(true);
+					leaveGame(currentPlayer);
+					if (hasWinner()) {
+						// currentPlayer.setWinner(true);
+						Player winner = monopolyGame.getAllPlayers().get(0);
+						log.info("[WINNER ]:" + winner.getColor());
+					}
+				}
 			}
 		}
 		broadcast(response);

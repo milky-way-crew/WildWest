@@ -41,15 +41,17 @@ public class Player {
 	private boolean isLosser = false;
 	private boolean isWinner = false;
 	private List<String> listRegions = new ArrayList<String>();
-	private List<SellableCard> property = new CopyOnWriteArrayList<SellableCard>();
-//	private List<SellableCard> property = new ArrayList<SellableCard>();
-	
+	private List<SellableCard> property = new ArrayList<SellableCard>();
+	private List<SellableCard> forSell = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
-	private List<SellableCard> forSell = new CopyOnWriteArrayList<SellableCard>();
-//	private List<SellableCard> forSell = new ArrayList<SellableCard>();
+	
+//	private List<SellableCard> property = new CopyOnWriteArrayList<SellableCard>();
+//	private List<SellableCard> forMortage = new CopyOnWriteArrayList<SellableCard>();
+//	private List<SellableCard> forUnMortage = new CopyOnWriteArrayList<SellableCard>();
+//	private List<SellableCard> forSell = new CopyOnWriteArrayList<SellableCard>();
 	private Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
-	private Map<String, Integer> regions = new HashMap<String, Integer>();
+	//private Map<String, Integer> regions = new HashMap<String, Integer>();
 	private int numberOfBuildings = 0;
 	private static final Logger log = Logger.getLogger(Player.class);
 
@@ -588,9 +590,9 @@ public class Player {
 
 	public boolean canRollDices() {
 		boolean roll = false;
-		if (this.getMoney() > 0 && this.doublePoints() && isRolled()) {
+		if (this.getMoney() >= 0 && this.doublePoints() && isRolled()) {
 			roll = true;
-		} else if (this.getMoney() > 0 && !isRolled()) {
+		} else if (this.getMoney() >= 0 && !isRolled()) {
 			roll = true;
 		}
 		return roll;

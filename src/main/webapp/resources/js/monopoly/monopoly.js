@@ -180,7 +180,7 @@ $(document)
 											position : pos
 										});
 									}
-									if (MONO.config.color === json.player) {
+									if (MONO.config.color === json.playerr) {
 										$("#controls .btn").each(
 												function(i, btn) {
 													$(btn).animate({
@@ -189,6 +189,9 @@ $(document)
 												});
 
 										MONO.animate.refresh_buttons(buttons);
+										if (message) {
+											chat.append("server: " + message);
+										}
 									}
 								},
 								'unmortage' : function(json) {
@@ -399,17 +402,10 @@ $(document)
 							$('#unmortage')
 									.click(
 											function() {
-//												var pos = parseInt(
-//														prompt('Enter position to unmortage'),
-//														10);
 												console
 														.log('sending ***unmortage*** message to server');
 												MONO.transport.send('unmortage',
 														{});
-//												MONO.transport.send(
-//														'unmortage', {
-//															position : pos
-//														});
 											});
 							$('#start')
 									.click(
