@@ -275,6 +275,62 @@ public class MonopolyManager {
 
 	private void onUnMortage(int idPlayer, String type,
 			Map<String, Object> response, String data) {
+//		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+//		Map<String, Object> state = new HashMap<String, Object>();
+//		Map<String, Object> buttons = new HashMap<String, Object>();
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		if (currentPlayer.getId() == idPlayer) {
+//			if (currentPlayer.canUnmortage()) {
+//				response.put("type", ButtonsLabel.UNMORTAGE);
+//				response.put("unmortage_list",
+//						currentPlayer.getUnMortageAvailable());
+//				response.put("player", currentPlayer.getColor());
+//				response.put("player_money", currentPlayer.getMoney());
+//				JsonNode tree = null;
+//				try {
+//					tree = objectMapper.readTree(data);
+//				} catch (JsonProcessingException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				JsonNode dataBlock = tree.path("data");
+//
+//				if (dataBlock.has("position")) {
+//					SellableCard city = null;
+//					int pos = dataBlock.path("position").getIntValue();
+//					log.info("received position: " + pos);
+//					log.info("player money: " + currentPlayer.getMoney());
+//					city = currentPlayer.cardByPosition(pos);
+//					city.unMortage(currentPlayer);
+//					log.info("unmortage city: " + city.getName());
+//					log.info("list after unmortage: "
+//							+ currentPlayer.getForUnMortage());
+//					currentPlayer.removeObj(currentPlayer.getForUnMortage(),
+//							city);
+//					currentPlayer.getForMortage().add(city);
+//					currentPlayer.listPropertyForSell();
+//					response.put("unmortage_list",
+//							currentPlayer.getUnMortageAvailable());
+//					log.info("list unmortage: "
+//							+ currentPlayer.getForUnMortage());
+//					log.info("list mortage: " + currentPlayer.getForMortage());
+//					log.info("player money after mortage: "
+//							+ currentPlayer.getMoney());
+//				} else {
+//					log.info("no position: ");
+//				}
+//			}
+//			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+//			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+//			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+//			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+//			state.put("buttons", buttons);
+//			response.put("game_state", state);
+//		}
+//		broadcast(response);
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 		Map<String, Object> state = new HashMap<String, Object>();
 		Map<String, Object> buttons = new HashMap<String, Object>();
@@ -302,24 +358,23 @@ public class MonopolyManager {
 					SellableCard city = null;
 					int pos = dataBlock.path("position").getIntValue();
 					log.info("received position: " + pos);
-					log.info("player money: " + currentPlayer.getMoney());
+					log.info("player money before: " + currentPlayer.getMoney());
 					city = currentPlayer.cardByPosition(pos);
 					city.unMortage(currentPlayer);
 					log.info("unmortage city: " + city.getName());
+					currentPlayer
+							.removeObj(currentPlayer.getForUnMortage(), city);
 					log.info("list after unmortage: "
 							+ currentPlayer.getForUnMortage());
-					currentPlayer.removeObj(currentPlayer.getForUnMortage(),
-							city);
 					currentPlayer.getForMortage().add(city);
+					log.info("player money after unmortage: "
+							+ currentPlayer.getMoney());
 					response.put("unmortage_list",
 							currentPlayer.getUnMortageAvailable());
-
-					currentPlayer.listPropertyForSell();
-					log.info("list unmortage: "
-							+ currentPlayer.getForUnMortage());
-					log.info("list mortage: " + currentPlayer.getForMortage());
-					log.info("player money after mortage: "
-							+ currentPlayer.getMoney());
+								currentPlayer.listPropertyForSell();
+					log.info("list property for sell after mortage: "
+							+ currentPlayer.listPropertyForSell());
+					// currentPlayer.listPropertyForSell();
 				} else {
 					log.info("no position: ");
 				}

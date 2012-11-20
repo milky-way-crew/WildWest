@@ -36,13 +36,14 @@ public class CommunityChestCard extends Cell {
 			player.setNumberFreeCard((player.getNumberFreeCard()) + 1);
 		}
 		msg = chest.getMessage();
+		log.info("[CHANCE:] "+msg);
 	}
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		log.info("Player money before chest");
+		log.info("Player money before chest"+player.getMoney());
 		service(player, getRandomChestCard());
-		log.info("Player money after chest");
+		log.info("Player money after chest"+player.getMoney());
 	}
 
 	@Override

@@ -435,7 +435,7 @@ public class Player {
 
 	public Map<Integer, Integer> getUnMortageAvailable() {
 		Map<Integer, Integer> unMortageAvailable = new HashMap<Integer, Integer>();
-		for (SellableCard p : getForUnMortage()) {
+		for (SellableCard p : this.getForUnMortage()) {
 			unMortageAvailable.put(p.getPosition(), p.getPrice() / 2);
 		}
 		return unMortageAvailable;

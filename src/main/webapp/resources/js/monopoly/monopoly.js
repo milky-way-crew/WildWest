@@ -341,6 +341,14 @@ $(document)
 							mortage : function(argument) {
 								log('Animating [mortage]');
 								log('~not supported~');
+							},
+							unmortage : function(argument) {
+								log('Animating [unmortage]');
+								log('~not supported~');
+							},
+							sell : function(argument) {
+								log('Animating [sell]');
+								log('~not supported~');
 							}
 						},
 						init : function() {
@@ -389,18 +397,28 @@ $(document)
 												MONO.transport.send('mortage',
 														{});
 											});
+							$('#sell')
+							.click(
+									function() {
+										console
+										.log('sending ***sell*** message to server');
+										MONO.transport.send('sell',
+												{});
+									});
 							$('#unmortage')
 									.click(
 											function() {
-												var pos = parseInt(
-														prompt('Enter position to unmortage'),
-														10);
+//												var pos = parseInt(
+//														prompt('Enter position to unmortage'),
+//														10);
 												console
 														.log('sending ***unmortage*** message to server');
-												MONO.transport.send(
-														'unmortage', {
-															position : pos
-														});
+												MONO.transport.send('unmortage',
+														{});
+//												MONO.transport.send(
+//														'unmortage', {
+//															position : pos
+//														});
 											});
 							$('#start')
 									.click(
