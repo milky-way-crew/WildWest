@@ -161,14 +161,15 @@ function() {
 					console.log('[mortage] event');
 					var pos, buttons;
 					MONO.animate.mortage(json.mortage_list);
-					pos = parseInt(
-					prompt('Enter position to mortage. List=' + JSON.stringify(json.mortage_list)), 10);
 					buttons = json.game_state.buttons;
 
-					if(pos && json.player === MONO.config.color) {
-						MONO.transport.send('mortage', {
-							position: pos
-						});
+					if(json.player === MONO.config.color) {
+						pos = parseInt(prompt('-mortage>>choose=' + JSON.stringify(json.mortage_list)), 10);
+						if (pos) {
+							MONO.transport.send('mortage', {
+								position: pos
+							});
+						}
 					}
 					if(MONO.config.color === json.player) {
 						ui.refreshButtons(buttons);
@@ -181,13 +182,14 @@ function() {
 					console.log('[unmortage] event');
 					var pos, buttons;
 					MONO.animate.unmortage(json.unmortage_list);
-					pos = parseInt(
-					prompt('Enter position to unmortage. List=' + JSON.stringify(json.unmortage_list)), 10);
 					buttons = json.game_state.buttons;
-					if(pos && json.player === MONO.config.color) {
-						MONO.transport.send('unmortage', {
-							position: pos
-						});
+					if(json.player === MONO.config.color) {
+						pos = parseInt(prompt('-unmortage>>choose=' + JSON.stringify(json.unmortage_list)), 10);
+						if (pos) {
+							MONO.transport.send('unmortage', {
+								position: pos
+							});
+						}
 					}
 					if(MONO.config.color === json.player) {
 						ui.refreshButtons(buttons);
@@ -195,25 +197,27 @@ function() {
 				},
 				'build': function(json) {
 					MONO.animate.build(json.build_list);
-					var pos = parseInt(
-					prompt('Enter position to build. List=' + JSON.stringify(json.build_list)), 10);
-					if(pos && json.player === MONO.config.color) {
-						MONO.transport.send('build', {
-							position: pos
-						});
+					if(json.player === MONO.config.color) {
+						var pos = parseInt(prompt('-build>>choose=' + JSON.stringify(json.build_list)), 10);
+						if (pos) {
+							MONO.transport.send('build', {
+								position: pos
+							});							
+						}
 					}
 				},
 				'sell': function(json) {
 					console.log('[sell] event');
 					var pos, buttons;
 					MONO.animate.sell(json.sell_list);
-					pos = parseInt(
-					prompt('Enter position to sell. List=' + JSON.stringify(json.sell_list)), 10);
 					buttons = json.game_state.buttons;
-					if(pos && json.player === MONO.config.color) {
-						MONO.transport.send('sell', {
-							position: pos
-						});
+					if(json.player === MONO.config.color) {
+						pos = parseInt(prompt('-sell>>choose=' + JSON.stringify(json.sell_list)), 10);
+						if (pos) {
+							MONO.transport.send('sell', {
+								position: pos
+							});							
+						}
 					}
 					if(MONO.config.color === json.player) {
 						ui.refreshButtons(buttons);
