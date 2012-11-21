@@ -312,7 +312,7 @@
 				<button class="btn btn-primary" id="build">build</button>
 				<button class="btn btn-primary" id="sell">sell</button>
 			</div>
-			<div class="span4 well">
+			<div class="span4 well" id="menu">
 				<button class="btn btn-primary" id="done">done</button>
 				<button class="btn btn-primary" id="start">start</button>
 				<button class="btn btn-primary" id="ready">ready</button>
