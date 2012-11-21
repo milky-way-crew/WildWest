@@ -19,6 +19,11 @@ public class RailCard extends SellableCard {
 		this.position = rails.getPosition();
 	}
 
+	public RailCard(Rails rails, Player player) {
+		this(rails);
+		setOwner(player);
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -93,7 +98,6 @@ public class RailCard extends SellableCard {
 
 	@Override
 	public void buyCityOrRail(Player player) {
-		System.out.println("buyyyy");
 		this.setOwner(player);
 		player.addProperty(player);
 		player.listPropertyForMortage();
@@ -123,7 +127,9 @@ public class RailCard extends SellableCard {
 
 	@Override
 	public void sell(Player player) {
+		log.info("OWNER BEFORE SELL RAIL "+this.getOwner());
 		this.setOwner(null);
+		log.info("OWNER AFTER SELL RAIL "+this.getOwner());
 		player.setNumberOfRails(player.getNumberOfRails() - 1);
 		player.setMoney(player.getMoney() + this.getPrice() / 2);
 	}

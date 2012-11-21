@@ -10,7 +10,7 @@ public class GoToJailCard extends Cell {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		player.setPosition(CellPositions.JAIL);
+		//player.setPosition(CellPositions.JAIL);
 		log.info("[-----PLAYER:-------] " + player.getColor()
 				+ " GET CIRCLE MONEY +$200");
 		player.setMoney(player.getMoney() + 200);

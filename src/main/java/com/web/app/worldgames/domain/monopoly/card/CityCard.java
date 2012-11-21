@@ -27,6 +27,7 @@ public class CityCard extends SellableCard {
 	private boolean isHotel;
 	private int taxHotel;
 	private int position;
+//	private Player owner;
 	private final static Logger log = Logger.getLogger(CityCard.class);
 
 	Cities cities = null;
@@ -47,6 +48,11 @@ public class CityCard extends SellableCard {
 		this.taxHotel = cities.getTaxHotel();
 		this.isHotel = cities.isHotel();
 		this.position = cities.getPosition();
+	}
+	
+	public CityCard(Cities cities, Player owner) {
+		this(cities);
+		setOwner(owner);
 	}
 
 	public String getName() {
@@ -148,7 +154,13 @@ public class CityCard extends SellableCard {
 	public int getPosition() {
 		return position;
 	}
-
+//	public Player getOwner() {
+//		return owner;
+//	}
+//
+//	public void setOwner(Player owner) {
+//		this.owner = owner;
+//	}
 	public void setPosition(int position) {
 		this.position = position;
 	}
@@ -194,6 +206,8 @@ public class CityCard extends SellableCard {
 	@Override
 	public void effectOnPlayer(Player player) {
 		if (this.getOwner() != null) {
+			log.info("[OWNER before effect]: money" + this.getOwner().getMoney());
+			log.info("[PLAYER before effect]: money" + player.getMoney());
 			if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
 				log.info("[OWNER]: " + this.getOwner().getColor());
 				this.payRentToOwner(player, this.getOwner(),
@@ -290,6 +304,7 @@ public class CityCard extends SellableCard {
 		log.info("[MESSAGE]: You are owner now");
 		player.setMoney(player.getMoney() - getPrice());
 		log.info("[MONEY]: " + player.getMoney());
+		log.info("[BUY::: OWNER]: " + this.getOwner());
 		//player.addRegion();
 		player.addRegions(player);
 		player.addBuildAvailable();
@@ -326,7 +341,9 @@ public class CityCard extends SellableCard {
 						+ this.getHotelPrice() / 2);
 			}
 		} else {
+			log.info("OWNER BEFORE SELL CITY "+this.getOwner());
 			this.setOwner(null);
+			log.info("OWNER AFTER SELL CITY "+this.getOwner());
 			player.setMoney(player.getMoney() + this.getPrice() / 2);
 			player.listRegions(player).remove(this.getRegion());
 			// player.addBuildAvailable();

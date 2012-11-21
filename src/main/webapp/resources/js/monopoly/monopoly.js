@@ -142,10 +142,10 @@ $(document)
 
 								},
 								'buy' : function(json) {
-									var msg = 'player=' + json.player
-											+ ' bought cell with position='
+									var msg = 'player= ' + json.player
+											+ ' bought cell with position= '
 											+ MONO.config.position
-											+ ' now player money='
+											+ ' now player money= '
 											+ json.player_money;
 									chat.append(msg);
 									log(msg);
@@ -158,7 +158,7 @@ $(document)
 									// {type : 'up' || 'down'});
 								},
 								'pay' : function(json) {
-									log('Player='
+									log('Player= '
 											+ json.player
 											+ ' payed money for go out from jail');
 									MONO.animate.pay(json.Player,
@@ -311,6 +311,9 @@ $(document)
 									if (btnName === "buy" && buttons[btnName]) {
 										$('#buy').show(100);
 									}
+									if (btnName === "pay" && buttons[btnName]) {
+										$('#pay').show(100);
+									}
 								});
 							},
 							money : function(who, money) {
@@ -371,6 +374,7 @@ $(document)
 												console
 														.log('sending **pay** message to server');
 												MONO.transport.send('pay', {});
+												$(this).hide(100);
 											});
 							$('#done')
 									.click(

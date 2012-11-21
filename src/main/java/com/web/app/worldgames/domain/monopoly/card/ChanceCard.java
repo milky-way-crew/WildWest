@@ -10,6 +10,14 @@ import com.web.app.worldgames.domain.monopoly.Player;
 public class ChanceCard extends Cell {
 	private static final Logger log = Logger.getLogger(ChanceCard.class);
 	String information;
+	public String getInformation() {
+		return information;
+	}
+
+	public void setInformation(String information) {
+		this.information = information;
+	}
+
 	private int movePosition;
 
 	public int getMovePosition() {
@@ -27,21 +35,21 @@ public class ChanceCard extends Cell {
 		for (Chance chance : Chance.values()) {
 			if (chance.ordinal() == chanceIndex) {
 				log.info("[CHANCE] " + chance.getMessage());
-				information = chance.getMessage();
+				setInformation(chance.getMessage());
 				if (chance.getPosition() < player.getPosition()) {
 					log.info("[-----PLAYER:-------] " + player.getColor()
 							+ " GET CIRCLE MONEY +$200");
 					player.setMoney(player.getMoney() + 200);
 				}
 				setMovePosition(chance.getPosition());
-				player.setPosition(chance.getPosition());
+				//player.setPosition(chance.getPosition());
 			}
 		}
 	}
 
 	@Override
 	public String info() {
-		return information;
+		return "Chance card";
 	}
 
 }

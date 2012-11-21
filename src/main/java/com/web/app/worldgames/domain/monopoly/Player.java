@@ -45,20 +45,24 @@ public class Player {
 	private List<SellableCard> forSell = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
-	
-//	private List<SellableCard> property = new CopyOnWriteArrayList<SellableCard>();
-//	private List<SellableCard> forMortage = new CopyOnWriteArrayList<SellableCard>();
-//	private List<SellableCard> forUnMortage = new CopyOnWriteArrayList<SellableCard>();
-//	private List<SellableCard> forSell = new CopyOnWriteArrayList<SellableCard>();
+
+	// private List<SellableCard> property = new
+	// CopyOnWriteArrayList<SellableCard>();
+	// private List<SellableCard> forMortage = new
+	// CopyOnWriteArrayList<SellableCard>();
+	// private List<SellableCard> forUnMortage = new
+	// CopyOnWriteArrayList<SellableCard>();
+	// private List<SellableCard> forSell = new
+	// CopyOnWriteArrayList<SellableCard>();
 	private Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
-	//private Map<String, Integer> regions = new HashMap<String, Integer>();
+	// private Map<String, Integer> regions = new HashMap<String, Integer>();
 	private int numberOfBuildings = 0;
 	private static final Logger log = Logger.getLogger(Player.class);
 
 	// -----------MAYBY ONLY FOR TEST
-	Map<Integer, Integer> buildAvailable = new HashMap<Integer, Integer>();
+	Map<Integer, String> buildAvailable = new HashMap<Integer, String>();
 
-	public Map<Integer, Integer> getBuildAvailable() {
+	public Map<Integer, String> getBuildAvailable() {
 		return buildAvailable;
 	}
 
@@ -196,6 +200,7 @@ public class Player {
 	public Map<Integer, Integer> getBuildings() {
 		return buildings;
 	}
+
 	public List<SellableCard> getProperty() {
 		return property;
 	}
@@ -368,12 +373,12 @@ public class Player {
 	public void addProperty(Player player) {
 		for (Cities cities : Cities.values()) {
 			if (cities.getPosition() == player.getPosition()) {
-				property.add(new CityCard(cities));
+				property.add(new CityCard(cities, this));
 			}
 		}
 		for (Rails rails : Rails.values()) {
 			if (rails.getPosition() == player.getPosition()) {
-				property.add(new RailCard(rails));
+				property.add(new RailCard(rails, this));
 			}
 		}
 	}
@@ -381,9 +386,9 @@ public class Player {
 	public void addForMortage() {
 	}
 
-//	public void addSelledProperty(SellableCard card) {
-//		property.add(card);
-//	}
+	// public void addSelledProperty(SellableCard card) {
+	// property.add(card);
+	// }
 
 	public void deleteProperty(Player player, SellableCard card) {
 		property.remove(card);
@@ -427,21 +432,24 @@ public class Player {
 		return forMortage;
 	}
 
-	public Map<Integer, Integer> getMortageAvailable() {
-		Map<Integer, Integer> mortageAvailable = new HashMap<Integer, Integer>();
+	public Map<Integer, String> getMortageAvailable() {
+		Map<Integer, String> mortageAvailable = new HashMap<Integer, String>();
 		for (SellableCard p : this.getForMortage()) {
-			mortageAvailable.put(p.getPosition(), p.getPrice() / 2);
+			mortageAvailable.put(p.getPosition(),
+					"You can get $" + p.getPrice() / 2 + " after mortage");
 		}
 		return mortageAvailable;
 	}
 
-	public Map<Integer, Integer> getUnMortageAvailable() {
-		Map<Integer, Integer> unMortageAvailable = new HashMap<Integer, Integer>();
+	public Map<Integer, String> getUnMortageAvailable() {
+		Map<Integer, String> unMortageAvailable = new HashMap<Integer, String>();
 		for (SellableCard p : this.getForUnMortage()) {
-			unMortageAvailable.put(p.getPosition(), p.getPrice() / 2);
+			unMortageAvailable.put(p.getPosition(),
+					"You must pay $" + p.getPrice() / 2 + " for unmortage");
 		}
 		return unMortageAvailable;
 	}
+
 	public Map<Integer, Integer> getSellAvailable() {
 		Map<Integer, Integer> sellAvailable = new HashMap<Integer, Integer>();
 		for (SellableCard p : this.listPropertyForSell()) {
@@ -450,8 +458,8 @@ public class Player {
 		return sellAvailable;
 	}
 
-	public Map<Integer, Integer> addBuildAvailable() {
-		Map<Integer, Integer> buildAvailable = getBuildAvailable();
+	public Map<Integer, String> addBuildAvailable() {
+		Map<Integer, String> buildAvailable = getBuildAvailable();
 		buildAvailable.clear();
 		CityCard city = null;
 		// for (SellableCard properties : property) {
@@ -497,21 +505,31 @@ public class Player {
 						&& !city.isMortage()
 						&& this.checkMoney(city.getHousePrice())
 						&& city.getNumbersOfHouses() < 3) {
-					buildAvailable
-							.put(city.getPosition(), city.getHousePrice());
+					buildAvailable.put(
+							city.getPosition(),
+							"Player " + this.getName()
+									+ " can build house for $"
+									+ city.getHousePrice());
 					if (city.getNumbersOfHouses() == 3) {
-						buildAvailable.put(city.getPosition(),
-								city.getHotelPrice());
+						buildAvailable.put(
+								city.getPosition(),
+								"Player " + this.getName()
+										+ " can build hotel for $"
+										+ city.getHotelPrice());
 					}
 				} else if (this.getNumberOfRegions(this, city.getRegion()) == 3
 						&& !city.isMortage()
 						&& this.checkMoney(city.getHousePrice())
 						&& city.getNumbersOfHouses() < 3) {
 					buildAvailable
-							.put(city.getPosition(), city.getHousePrice());
+							.put(city.getPosition()," Player " + this.getName()
+									+ " can build house for $"
+									+ city.getHousePrice());
 					if (city.getNumbersOfHouses() == 3) {
 						buildAvailable.put(city.getPosition(),
-								city.getHotelPrice());
+								"Player " + this.getName()
+								+ " can build hotel for $"
+								+ city.getHotelPrice());
 					}
 				}
 			}
@@ -584,8 +602,8 @@ public class Player {
 	}
 
 	public boolean canSell() {
-		//return (!this.forSell.isEmpty()) ? true : false;
-		return (!this.getSellAvailable().isEmpty())?true:false;
+		// return (!this.forSell.isEmpty()) ? true : false;
+		return (!this.getSellAvailable().isEmpty()) ? true : false;
 	}
 
 	public boolean canRollDices() {
@@ -611,13 +629,13 @@ public class Player {
 		return (!getBuildAvailable().isEmpty()) ? true : false;
 	}
 
-	public void handOverBuilding(CityCard city) {
-		if (city.isHotel()) {
-			city.setHotel(false);
-			this.setMoney(this.getMoney() + city.getHotelPrice());
-		} else {
-			city.setNumbersOfHouses(city.getNumbersOfHouses() - 1);
-			this.setMoney(this.getMoney() + city.getHousePrice());
-		}
-	}
+	// public void handOverBuilding(CityCard city) {
+	// if (city.isHotel()) {
+	// city.setHotel(false);
+	// this.setMoney(this.getMoney() + city.getHotelPrice());
+	// } else {
+	// city.setNumbersOfHouses(city.getNumbersOfHouses() - 1);
+	// this.setMoney(this.getMoney() + city.getHousePrice());
+	// }
+	// }
 }

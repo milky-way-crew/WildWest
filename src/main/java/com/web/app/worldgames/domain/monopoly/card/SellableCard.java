@@ -86,36 +86,36 @@ public abstract class SellableCard extends Cell {
 		owner.setMoney(owner.getMoney() + price);
 	}
 
-	public void sellCityOrRail(Player player) {
-		RailCard rail = null;
-		CityCard city = null;
-		for (SellableCard cards : player.getForSell()) {
-			log.info("[-----------------SELL ACTION------------------------------]: ");
-			if (this instanceof RailCard) {
-				rail = (RailCard) cards;
-				rail.setOwner(null);
-				player.setNumberOfRails(player.getNumberOfRails() - 1);
-				player.setMoney(player.getMoney() + rail.getPrice() / 2);
-			} else if (this instanceof CityCard) {
-				city = (CityCard) cards;
-				if (city.getNumbersOfHouses() > 0) {
-					city.setNumbersOfHouses(city.getNumbersOfHouses() - 1);
-					player.setMoney(player.getMoney() + city.getHousePrice()
-							/ 2);
-					if (city.isHotel()) {
-						city.setHotel(false);
-						player.setMoney(player.getMoney()
-								+ city.getHotelPrice() / 2);
-					}
-				} else {
-					city.setOwner(null);
-					player.setMoney(player.getMoney() + city.getPrice() / 2);
-					player.listRegions(player).remove(city.getRegion());
-					// player.addBuildAvailable();
-				}
-			}
-		}
-	}
+//	public void sellCityOrRail(Player player) {
+//		RailCard rail = null;
+//		CityCard city = null;
+//		for (SellableCard cards : player.getForSell()) {
+//			log.info("[-----------------SELL ACTION------------------------------]: ");
+//			if (this instanceof RailCard) {
+//				rail = (RailCard) cards;
+//				rail.setOwner(null);
+//				player.setNumberOfRails(player.getNumberOfRails() - 1);
+//				player.setMoney(player.getMoney() + rail.getPrice() / 2);
+//			} else if (this instanceof CityCard) {
+//				city = (CityCard) cards;
+//				if (city.getNumbersOfHouses() > 0) {
+//					city.setNumbersOfHouses(city.getNumbersOfHouses() - 1);
+//					player.setMoney(player.getMoney() + city.getHousePrice()
+//							/ 2);
+//					if (city.isHotel()) {
+//						city.setHotel(false);
+//						player.setMoney(player.getMoney()
+//								+ city.getHotelPrice() / 2);
+//					}
+//				} else {
+//					city.setOwner(null);
+//					player.setMoney(player.getMoney() + city.getPrice() / 2);
+//					player.listRegions(player).remove(city.getRegion());
+//					// player.addBuildAvailable();
+//				}
+//			}
+//		}
+//	}
 
 	// public void sellCityOrRail(Player seller, Player buyer) {
 	// if (this.isMortage()) {

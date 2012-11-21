@@ -14,6 +14,14 @@ public class CommunityChestCard extends Cell {
 			.getLogger(CommunityChestCard.class);
 	private String msg;
 
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
 	public CommunityChest getRandomChestCard() {
 		Random randChest = new Random();
 		int chestIndex = randChest.nextInt(7);
@@ -35,7 +43,7 @@ public class CommunityChestCard extends Cell {
 		} else if (chest.getWhoIsGet().equals("coliseum")) {
 			player.setNumberFreeCard((player.getNumberFreeCard()) + 1);
 		}
-		msg = chest.getMessage();
+		this.setMsg(chest.getMessage());
 		log.info("[CHANCE:] "+msg);
 	}
 
