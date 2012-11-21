@@ -21,14 +21,6 @@ import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class MonopolyManager {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
-	// private static final String ROLL = "roll";
-	private static final String START = "start";
-	private static final String READY = "ready";
-	private static final String TURN = "turn";
-	// private static final String ROLL_EVENTS = "";
-	// private static final String TURN = "turn";
-	// private static final String DONE = "done";
-	// private static final String BUY = "buy";
 	private Game monopolyGame;
 	private User creator;
 
@@ -55,10 +47,10 @@ public class MonopolyManager {
 		if ($(type).equals("init")) {
 			onInit(idPlayer, response);
 		}
-		if ($(type).equals(READY)) {
+		if ($(type).equals(ButtonsLabel.READY)) {
 			onReady(idPlayer, response);
 		}
-		if ($(type).equals(START)) {
+		if ($(type).equals(ButtonsLabel.START)) {
 			onStart(response);
 		}
 		if (getMonopolyGame().isStarted()) {
@@ -207,6 +199,7 @@ public class MonopolyManager {
 					log.info("no position: ");
 				}
 			}
+			currentPlayer.addBuildAvailable();
 			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
 			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
 			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
@@ -229,7 +222,7 @@ public class MonopolyManager {
 		currentPlayer = getMonopolyGame().getCurrentPlayer();
 		log.info("[Player: ]" + currentPlayer.getName() + ":"
 				+ currentPlayer.getColor() + " can roll dice");
-		turn.put("type", TURN);
+		turn.put("type", ButtonsLabel.TURN);
 		turn.put("player", currentPlayer.getColor());
 		broadcast(turn);
 	}
@@ -302,6 +295,7 @@ public class MonopolyManager {
 					log.info("no position: ");
 				}
 			}
+			currentPlayer.addBuildAvailable();
 			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
 			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
 			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
@@ -353,8 +347,6 @@ public class MonopolyManager {
 					currentPlayer.getForMortage().add(city);
 					log.info("player money after unmortage: "
 							+ currentPlayer.getMoney());
-//					response.put("unmortage_list",
-//							currentPlayer.getUnMortageAvailable());
 					currentPlayer.listPropertyForSell();
 					log.info("list property for sell after mortage: "
 							+ currentPlayer.listPropertyForSell());
@@ -363,6 +355,7 @@ public class MonopolyManager {
 					log.info("no position: ");
 				}
 			}
+			currentPlayer.addBuildAvailable();
 			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
 			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
 			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
@@ -423,6 +416,7 @@ public class MonopolyManager {
 			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
 			state.put("buttons", buttons);
 			response.put("game_state", state);
+			currentPlayer.addBuildAvailable();
 		}
 		broadcast(response);
 	}
@@ -496,7 +490,7 @@ public class MonopolyManager {
 			response.put("game_status", "start");
 			turn = new HashMap<String, Object>();
 			Player currentPlayer = getMonopolyGame().getCurrentPlayer();
-			turn.put("type", TURN);
+			turn.put("type", ButtonsLabel.TURN);
 			turn.put("player", currentPlayer.getColor());
 
 		} else {
@@ -513,7 +507,7 @@ public class MonopolyManager {
 		currentPlayer.setReadyToStart(true);
 		log.info("[PLAYER IS READY TO START: ]" + currentPlayer.getColor()
 				+ " : " + currentPlayer.isReadyToStart());
-		response.put("type", READY);
+		response.put("type", ButtonsLabel.READY);
 		response.put("player", currentPlayer.getColor());
 		response.put("ready", currentPlayer.isReadyToStart());
 		broadcast(response);
@@ -521,7 +515,7 @@ public class MonopolyManager {
 
 	private void onInit(int idPlayer, Map<String, Object> response) {
 		WebSocketTransport transport = WebSocketTransport.getInstance();
-		response.put("type", "init");
+		response.put("type", ButtonsLabel.INIT);
 		response.put("color", getPlayerById(idPlayer).getColor());
 		response.put("money", getPlayerById(idPlayer).getMoney());
 		response.put("isCreator", getCreator().getId() == idPlayer);
@@ -581,7 +575,6 @@ public class MonopolyManager {
 		losers.add(player);
 	}
 
-	// public void
 	public void leaveGame(Player player) {
 		if (player.isLosser()) {
 			this.deleteLoserPlayer(monopolyGame.getAllPlayers(),

@@ -14,6 +14,15 @@ import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 public class JailCard extends Cell {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	Map<String, Object> result = new HashMap<String, Object>();
+	String msg = null;
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
 	@Override
 	public void effectOnPlayer(Player player) {
@@ -22,15 +31,17 @@ public class JailCard extends Cell {
 			log.info("[IN JAIL: ] use card");
 			player.setInJail(false);
 			player.setNumberFreeCard((player.getNumberFreeCard()) - 1);
+			this.setMsg("You had a free card and you are going from jail");
 		}
 	}
 
 	public boolean canPayRansom(Player player) {
-		return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL)) ? true : false;
+		return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL)&&player.isInJail()) ? true : false;
 	}
 
 	public void payRansom(Player player) {
 		player.setMoney(player.getMoney() - CardPrices.RANSOM_FROM_JAIL);
+		this.setMsg("You paid ransom");
 		player.setInJail(false);
 	}
 
@@ -43,8 +54,6 @@ public class JailCard extends Cell {
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
 			player.setPosition(dicePoint);
 			log.info("[PLAYER POSITION AFTER JAIL] : " + player.getPosition());
-			// Cell cell = CardFactory.chooseCard(player);
-			// cell.effectOnPlayer(player);
 			player.setCircleInJail(0);
 			player.setInJail(false);
 			go = dicePoint;

@@ -27,9 +27,7 @@ public class CityCard extends SellableCard {
 	private boolean isHotel;
 	private int taxHotel;
 	private int position;
-//	private Player owner;
 	private final static Logger log = Logger.getLogger(CityCard.class);
-
 	Cities cities = null;
 
 	public CityCard(Cities cities) {
@@ -154,13 +152,6 @@ public class CityCard extends SellableCard {
 	public int getPosition() {
 		return position;
 	}
-//	public Player getOwner() {
-//		return owner;
-//	}
-//
-//	public void setOwner(Player owner) {
-//		this.owner = owner;
-//	}
 	public void setPosition(int position) {
 		this.position = position;
 	}
@@ -173,6 +164,11 @@ public class CityCard extends SellableCard {
 		this.cities = cities;
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @return number of buildings on defined position
+	 */
 	public Map<Integer, Integer> build(Player player) {
 		Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
 		if (player.canBuild()) {

@@ -39,6 +39,7 @@ public class GameAction {
 				card.effectOnPlayer(player);
 				if (player == card.getOwner() || card.getOwner() != null) {
 					buttons.put(ButtonsLabel.BUY, false);
+					messages = "Pay rent $"+card.getRent(player, card.getOwner())+" to "+card.getOwner().getName();
 				} else {
 					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
 				}
@@ -53,6 +54,7 @@ public class GameAction {
 				RailCard card = (RailCard) cell;
 				if (player == card.getOwner() || card.getOwner() != null) {
 					buttons.put(ButtonsLabel.BUY, false);
+					messages = "Pay rent $"+card.getRent(player, card.getOwner())+" to "+card.getOwner().getName();
 				} else {
 					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
 				}
@@ -80,10 +82,14 @@ public class GameAction {
 				}
 			} else if (cell instanceof JailCard) {
 				cell.effectOnPlayer(player);
-				buttons.put(ButtonsLabel.PAY,
-						((JailCard) cell).canPayRansom(player));
-				buttons.put(ButtonsLabel.ROLL, true);
-				messages = "You may pay a ransom or roll dices";
+				if(player.isInJail()){
+					buttons.put(ButtonsLabel.PAY,
+							((JailCard) cell).canPayRansom(player));
+					buttons.put(ButtonsLabel.ROLL, true);
+					messages = "You may pay a ransom or roll dices";
+				}else{
+					buttons.put(ButtonsLabel.PAY, false);
+				}
 				buttons.put(ButtonsLabel.DONE, true);
 			} else if (cell instanceof FreeStation) {
 				cell.effectOnPlayer(player);

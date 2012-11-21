@@ -56,6 +56,6 @@ public class CommunityChestCard extends Cell {
 
 	@Override
 	public String info() {
-		return "Community chest ";
+		return "";
 	}
 }
