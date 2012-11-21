@@ -2,6 +2,10 @@
 	font-family:"Helvetica", "arial";
 }
 
+#cp {
+	color : white;
+	font-family: "Arial";
+}
 
 @font-face {
   font-family: 'Cabin Sketch';

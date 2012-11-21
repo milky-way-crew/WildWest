@@ -164,8 +164,12 @@ public class GuessGame {
 		// send the game state to all players.
 		HashMap<String, Object> gameLogicData = new HashMap<String, Object>();
 		gameLogicData.put("dataType", GAME_LOGIC);
-		gameLogicData.put("gameState", WAITING_TO_START);
-		this.broadcast(gameLogicData);
+		gameLogicData.put("gameState", currentState);
+		gameLogicData.put("answer", currentAnswer);
+		gameLogicData.put("isPlayerTurn", players.get(turn).getId() == idWho);
+		player.sendMessage(gameLogicData);
+		
+//		this.broadcast(gameLogicData);
 		player.setActive(true);
 
 		// start the game if there are 2 or more connections
