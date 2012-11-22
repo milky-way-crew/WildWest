@@ -260,7 +260,8 @@ $(function() {
 
 	guessGame.initWebSockets = function() {
 		if(window['WebSocket']) {
-			guessGame.socket = new WebSocket('ws://localhost:8889/');
+			var ws = 'ws://' + location.hostname + ':8889/' || 'ws://localhost:8889/';
+			guessGame.socket = new WebSocket(ws);
 
 			guessGame.socket.onopen = function(e) {
 				console.log('Connected to ws-Server successfully.');
