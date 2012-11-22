@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.domain.chess.ChessGame;
 import com.web.app.worldgames.domain.chess.ChessGameManager;
 
 public interface IChessGameService {
@@ -11,4 +12,5 @@ public interface IChessGameService {
 	ChessGameManager getGameById(int id);
 	boolean removeGameById(int id);
 	Set<Entry<Integer, ChessGameManager>> getAllGames();
+	void tryRemoveGame(ChessGame game);
 }

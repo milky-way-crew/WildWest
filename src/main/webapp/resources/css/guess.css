@@ -2,6 +2,10 @@
 	font-family:"Helvetica", "arial";
 }
 
+#main {
+	width: 1200px;
+}
+
 #cp {
 	color : white;
 	font-family: "Arial";
@@ -20,7 +24,6 @@
 
 #wrapper {
 	text-align: center;
-	/*width: 520px;*/
 	margin: 0 auto;
 }
 

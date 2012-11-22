@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<div class="container-fluid">
+	<div class="container" id="main">
 		<div class="row-fluid">
 			<div class="span3">
 				<h1>Chat</h1>

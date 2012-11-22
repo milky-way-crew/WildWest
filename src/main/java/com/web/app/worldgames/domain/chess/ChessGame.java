@@ -4,13 +4,12 @@ import org.apache.log4j.Logger;
 
 public class ChessGame {
 	private static final Logger log = Logger.getLogger(ChessGame.class);
-
+	private int id;
 	private Board board = new Board();
 	private ChessPlayer[] players;
 	private boolean isStarted = false;
 	private ChessPlayer white, black;
 	private ChessPlayer currentPlayer;
-	private boolean isEnded;
 
 	private Move lastMove;
 	private BattleResultsEnum lastMoveResult;
@@ -70,11 +69,6 @@ public class ChessGame {
 	}
 
 	public boolean isEnded() {
-		// FIXME: 
-		// End will be in 2 cases:
-		// 1) Flag is beaten
-		// 2) All figures of player are down
-
 		if (lastMoveResult == BattleResultsEnum.ABSOLUTE_WIN) {
 			return true;
 		}
@@ -85,7 +79,6 @@ public class ChessGame {
 				}
 			}			
 		}
-
 		return false;
 	}
 
@@ -234,5 +227,13 @@ public class ChessGame {
 	public void resetPlayerChoices() {
 		white.setDrawChoice(null);
 		black.setDrawChoice(null);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

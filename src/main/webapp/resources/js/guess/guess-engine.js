@@ -1,8 +1,14 @@
-/*global window, alert, console, $*/
+/*global document, window, alert, location, console, WebSocket, $ */
 
 $(function() {
 	"use strict";
-	var timer = {
+	var timer = {},
+		stats = {},
+		chat = {},
+		canvas = null,
+		guessGame = {},
+		ctx = null;
+	timer = {
 		config: {
 			secondsLeft: 0,
 			timerElement: document.getElementById('timer') || null,
@@ -34,31 +40,36 @@ $(function() {
 		stop: function() {
 			timer.config.isStopped = true;
 		}
-	},
-		canvas = document.getElementById('drawing-pad'),
-		ctx = canvas.getContext('2d'),
-		chat = {
-			MAX_MSG: 8,
-			$chat: null,
-			init: function() {
-				chat.$chat = $('#chat-history');
-			},
-			append: function(what) {
-				var msgCount = chat.$chat.find('li').size();
-				if(msgCount > chat.MAX_MSG) {
-					chat.$chat.find('li').first().fadeOut(100, function() {
-						$(this).remove();
-						chat.$chat.append('<li> ' + what + '</li>');
-					});
-				} else {
+	};
+	canvas = document.getElementById('drawing-pad');
+	ctx = canvas.getContext('2d');
+	chat = {
+		MAX_MSG: 8,
+		$chat: null,
+		init: function() {
+			chat.$chat = $('#chat-history');
+		},
+		append: function(what) {
+			var msgCount = chat.$chat.find('li').size();
+			if(msgCount > chat.MAX_MSG) {
+				chat.$chat.find('li').first().fadeOut(100, function() {
+					$(this).remove();
 					chat.$chat.append('<li> ' + what + '</li>');
-				}
-			},
-			clear: function() {
-				chat.$chat.html('');
+				});
+			} else {
+				chat.$chat.append('<li> ' + what + '</li>');
 			}
-		};
-	var stats = {
+		},
+		clear: function() {
+			chat.$chat.html('');
+		}
+	};
+	function green() {
+		$('#chat-history li').last().css({
+			"color": "rgb(15, 99, 30)"
+		});
+	}
+	stats = {
 		$stats: null,
 		init: function() {
 			stats.$stats = $('#stats');
@@ -81,18 +92,18 @@ $(function() {
 			}
 		}
 	};
-	var guessGame = {
+	guessGame = {
 		// Contants
 		LINE: 0,
 		CHAT: 1,
-		GAME_LOGIC: 2,
 		BIND_ME: 777,
+		G_LOGIC: 2,
 
 		// game state
 		WAITING_TO_START: 0,
-		GAME_START: 1,
-		GAME_OVER: 2,
-		GAME_RESTART: 3,
+		G_START: 1,
+		G_OVER: 2,
+		G_RESTART: 3,
 
 		isDrawing: false,
 		isTurnToDraw: false,
@@ -144,12 +155,28 @@ $(function() {
 		tooglePencil: function() {
 			guessGame.strokeStyle = '#444';
 			guessGame.thickness = "3";
-			$('#cp').css({"color" : '#444'});
+			$('#cp').css({
+				"color": '#444'
+			});
 		},
 		toogleEraser: function() {
 			guessGame.strokeStyle = "#F1F3EF";
 			guessGame.thickness = "10";
-			$('#cp').css({"color" : '#000'});
+			$('#cp').css({
+				"color": '#000'
+			});
+		},
+		clearCanvas: function() {
+			canvas.width = canvas.width;
+		},
+		drawLine: function(ctx, x1, y1, x2, y2, thickness, strokeStyle) {
+			ctx.beginPath();
+			ctx.moveTo(x1, y1);
+			ctx.lineTo(x2, y2);
+			ctx.lineCap = 'round';
+			ctx.lineWidth = thickness;
+			ctx.strokeStyle = strokeStyle;
+			ctx.stroke();
 		}
 	};
 
@@ -176,8 +203,9 @@ $(function() {
 		});
 
 		var sendMessage = function() {
-				var message = $("#chat-input").val();
-				var data = {};
+				var message, data;
+				message = $("#chat-input").val();
+				data = {};
 				data.dataType = guessGame.CHAT;
 				data.message = message;
 				guessGame.send(data);
@@ -194,18 +222,18 @@ $(function() {
 		});
 
 		$("#clear").click(function() {
-			canvas.width = canvas.width;
+			guessGame.clearCanvas();
 		});
 
 		$('#restart').click(function() {
-			canvas.width = canvas.width;
-			// chat.append("Restarting game.")
+			chat.append("Sending [new-game] request to server.");
+			guessGame.clearCanvas();
 			var data = {};
-			data.dataType = guessGame.GAME_LOGIC;
-			data.gameState = guessGame.GAME_RESTART;
+			data.gameState = guessGame.G_RESTART;
+			data.dataType = guessGame.G_LOGIC;
 			guessGame.send(data);
 
-			$('#restart').hide(100);
+			// $('#restart').hide(100);
 		});
 
 		$("#drawing-pad").mousedown(
@@ -225,16 +253,15 @@ $(function() {
 
 		function(e) {
 			if(guessGame.isTurnToDraw && guessGame.isDrawing) {
-				var offset = $(this).offset();
-				var mouseX = (e.pageX - offset.left - 10) || 0; // 10px
-				// for
-				// border
-				var mouseY = (e.pageY - offset.top - 10) || 0;
+				var offset, mouseX, mouseY, data;
+				offset = $(this).offset();
+				mouseX = (e.pageX - offset.left - 10) || 0; // 10px for border
+				mouseY = (e.pageY - offset.top - 10) || 0;
 
 				if(!(mouseX === guessGame.startX && mouseY === guessGame.startY)) {
-					drawLine(ctx, guessGame.startX, guessGame.startY, mouseX, mouseY, guessGame.thickness, guessGame.strokeStyle);
+					guessGame.drawLine(ctx, guessGame.startX, guessGame.startY, mouseX, mouseY, guessGame.thickness, guessGame.strokeStyle);
 
-					var data = {};
+					data = {};
 					data.dataType = guessGame.LINE;
 					data.startX = guessGame.startX;
 					data.startY = guessGame.startY;
@@ -259,7 +286,7 @@ $(function() {
 	};
 
 	guessGame.initWebSockets = function() {
-		if(window['WebSocket']) {
+		if(window.WebSocket) {
 			var ws = 'ws://' + location.hostname + ':8889/' || 'ws://localhost:8889/';
 			guessGame.socket = new WebSocket(ws);
 
@@ -274,24 +301,24 @@ $(function() {
 			guessGame.socket.onmessage = function(e) {
 				// check if the received data is chat message or line segment
 				// console.log("onmessage event:", e.data);
-				var data = JSON.parse(e.data);
+				var data, tokens;
+				data = JSON.parse(e.data);
 				if(data.dataType === guessGame.CHAT) {
 
 					chat.append(data.sender + " : " + data.message);
-					if(data.sender == "Server") {
+					if(data.sender === "Server") {
 						$('#chat-history li').last().css({
 							"color": "rgb(15, 99, 30)"
 						});
-						var tokens = data.message.split(" ");
-						if(tokens[0].toLowerCase() == "welcome") {
+						tokens = data.message.split(" ");
+						if(tokens[0].toLowerCase() === "welcome") {
 							stats.update(data.player, data.wins);
 						}
-						// DISCO
 					}
 				} else if(data.dataType === guessGame.LINE) {
-					drawLine(ctx, data.startX, data.startY, data.endX, data.endY, data.thickness, data.strokeStyle);
-				} else if(data.dataType == guessGame.GAME_LOGIC) {
-					if(data.gameState == guessGame.GAME_OVER) {
+					guessGame.drawLine(ctx, data.startX, data.startY, data.endX, data.endY, data.thickness, data.strokeStyle);
+				} else if(data.dataType === guessGame.G_LOGIC) {
+					if(data.gameState === guessGame.G_OVER) {
 						guessGame.isTurnToDraw = false;
 						// Chat message who wins
 						chat.append(data.winner + " wins! The answer was '" + data.answer + "'");
@@ -303,10 +330,10 @@ $(function() {
 						$('#drawing-pallete .btn-info').hide(100);
 						$("#restart").show(100);
 					}
-					console.log("game state: ", data.gameState, "GAME_START: ", guessGame.GAME_START);
-					if(data.gameState === guessGame.GAME_START) {
+					console.log("game state: ", data.gameState, "G_START: ", guessGame.G_START);
+					if(data.gameState === guessGame.G_START) {
 						// clear the canvas.
-						canvas.width = canvas.width;
+						guessGame.clearCanvas();
 						chat.clear();
 
 						if(data.isPlayerTurn) {
@@ -318,11 +345,13 @@ $(function() {
 							guessGame.isTurnToDraw = true;
 							// console.log('append answer to chat');
 							chat.append("Your turn to draw. Please draw '" + data.answer + "'.");
+							green();
 							$('#drawing-pallete').show(100);
 							timer.config.interval = 1000 * 2;
 							timer.start(60);
 						} else {
 							chat.append("Game Started. Get Ready. You have one minute to guess.");
+							green();
 							$('#drawing-pallete').hide(100);
 							timer.config.interval = 1000;
 							timer.start(60);
@@ -340,15 +369,7 @@ $(function() {
 		}
 	};
 
-	function drawLine(ctx, x1, y1, x2, y2, thickness, strokeStyle) {
-		ctx.beginPath();
-		ctx.moveTo(x1, y1);
-		ctx.lineTo(x2, y2);
-		ctx.lineCap = 'round';
-		ctx.lineWidth = thickness;
-		ctx.strokeStyle = strokeStyle;
-		ctx.stroke();
-	}
+
 
 	guessGame.init();
 });

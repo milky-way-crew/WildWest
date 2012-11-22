@@ -29,9 +29,11 @@ public class ChessGameService implements IChessGameService {
 	@Override
 	public synchronized int createGame(User host) {
 		int newId = -1;
-		ChessGameManager chessGame = new ChessGameManager(new ChessGame());
-		chessGame.setHost(new ChessPlayer(host));
 		newId = removedId.size() > 0 ? removedId.pop() : ++counter;
+		ChessGame game = new ChessGame();
+		game.setId(newId);
+		ChessGameManager chessGame = new ChessGameManager(game);
+		chessGame.setHost(new ChessPlayer(host));
 		serverMap.put(newId, chessGame);
 		return newId;
 	}
@@ -63,4 +65,16 @@ public class ChessGameService implements IChessGameService {
 		return serverMap.entrySet();
 	}
 
+	public void tryRemoveGame(ChessGame game) {
+		log.info("Searching for remove game with id=" + game.getId());
+		for (Entry<Integer, ChessGameManager> pair : serverMap.entrySet()) {
+			if (pair.getValue().getGame().getId() == game.getId()) {
+				if (!game.getBlack().isActive() && !game.getWhite().isActive()) {
+					log.info("Found game with id=" + game.getId() + " all players are inactive, removing game");
+					serverMap.remove(pair.getKey());
+				}
+				break;
+			}
+		}
+	}
 }

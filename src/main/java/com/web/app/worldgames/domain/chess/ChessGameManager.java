@@ -11,12 +11,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.web.app.worldgames.domain.User;
-import com.web.app.worldgames.service.ChessGameService;
+import com.web.app.worldgames.service.interfaces.IChessGameService;
 
 public class ChessGameManager {
-	@Autowired
-	private ChessGameService chessService;
-	
+
 	private static final Logger log = Logger.getLogger(ChessGameManager.class);
 	private Timer timer;
 
@@ -111,19 +109,22 @@ public class ChessGameManager {
 		return responseJson;
 	}
 
-	private void onDisconnect(Map<String, ? extends Object> params, final User user) {
-		// experimental feature
+	public void onDisconnect(Map<String, ? extends Object> params, final User user) {
 		ChessPlayer chessPlayer = game.getPlayerById(user.getId());
 		chessPlayer.setActive(false);
+		// Notify opponent about disconnect
+//		game.getOpponentOf(chessPlayer).getMail().add("Your opponent disconnected");
 		log.info("Player id=%d disconnected setting active=" + chessPlayer.isActive());
 		timer = new Timer();
 		timer.schedule(new TimerTask() {
+			@Autowired
+			private IChessGameService chessService;
+			
 			@Override
 			public void run() {
 				if (!game.getPlayerById(user.getId()).isActive()) {
-					log.info("Plyer disconencted");
-					log.info("trying to remove game");
-//					chessService.removeGameById()
+					log.info("Plyer disconnected, trying to remove game");
+					chessService.tryRemoveGame(game);
 					game.getOpponentOf(game.getPlayerById(user.getId())).notifyAbout(new GameAction() {
 						@Override
 						public void process(ChessGame game, Map<String, Object> json) {
@@ -142,18 +143,8 @@ public class ChessGameManager {
 	private void onChatReceived(Map<String, Object> responseJson, User user,
 			Object message) {
 		log.info("Received chat message from id=" + user.getId());
-		ChessPlayer opponent = game.getOpponentOf(game.getPlayerById(user
-				.getId()));
-		opponent.getMail().add(
-				game.getPlayerById(user.getId()).getNick() + " : " + message);
-
-		// opponent.notifyAbout(new GameAction() {
-		// @Override
-		// public void process(ChessGame game, Map<String, Object> json) {
-		// log.info("Notify about chat message");
-		// json.put("chat", chessPlayer.getNick() + " : " + message);
-		// }
-		// });
+		ChessPlayer opponent = game.getOpponentOf(game.getPlayerById(user.getId()));
+		opponent.getMail().add(game.getPlayerById(user.getId()).getNick() + " : " + message);
 	}
 
 	private void onReadyReceived(Map<String, Object> responseJson, User user) {
