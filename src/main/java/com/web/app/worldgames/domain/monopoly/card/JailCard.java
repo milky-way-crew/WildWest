@@ -36,7 +36,8 @@ public class JailCard extends Cell {
 	}
 
 	public boolean canPayRansom(Player player) {
-		return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL)&&player.isInJail()) ? true : false;
+		return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL) && player
+				.isInJail()) ? true : false;
 	}
 
 	public void payRansom(Player player) {
@@ -49,14 +50,18 @@ public class JailCard extends Cell {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String message = null;
 		Map<String, Object> buttons = new HashMap<String, Object>();
-		int go = 0;
+		boolean move = false;
 		if (player.doublePoints() || player.getCircleInJail() == 3) {
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
 			player.setPosition(dicePoint);
 			log.info("[PLAYER POSITION AFTER JAIL] : " + player.getPosition());
 			player.setCircleInJail(0);
 			player.setInJail(false);
-			go = dicePoint;
+			move = true;
+			result.put("was", CellPositions.JAIL);
+			result.put("dice1", dicePoint);
+			result.put("dice2", 0);
+			result.put("move", move);
 			message = "You are going from jail";
 			log.info("[JAIL_MESSAGE] : you are going from jail");
 			buttons.put(ButtonsLabel.DONE, true);
@@ -64,7 +69,6 @@ public class JailCard extends Cell {
 			player.setPosition(CellPositions.JAIL);
 			player.setInJail(true);
 			player.addCircleInJail();
-			// result.put("Move to:", 0);
 			message = "You saty in jail";
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
 			log.info("[JAIL] : You stay in jail");
@@ -77,7 +81,6 @@ public class JailCard extends Cell {
 		result.put("messages", message);
 		result.put("player", player.getColor());
 		result.put("money", player.getMoney());
-		result.put("go", go);
 		return result;
 	}
 

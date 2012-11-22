@@ -218,12 +218,12 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public int getRent(Player player, Player owner) {
-		if (isMortage()) {
+		if (this.isMortage()) {
 			player.setMoney(player.getMoney());
 			player.setPosition(player.getPosition());
-		} else {
+			log.info("[CITY IS MORTAGE]: " + this.isMortage());
+		} else if(!this.isMortage()){
 			log.info("[OWNER]: " + this.getOwner().getName());
-			// int numberOfRegions = owner.getRegions().get(this.getRegion());
 			int numberOfRegions = owner.getNumberOfRegions(owner,
 					owner.getRegion(player.getPosition()));
 			log.info("[NUMBER OF REGIONS NEW]: " + numberOfRegions);
