@@ -45,15 +45,6 @@ public class Player {
 	private List<SellableCard> forSell = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
-
-	// private List<SellableCard> property = new
-	// CopyOnWriteArrayList<SellableCard>();
-	// private List<SellableCard> forMortage = new
-	// CopyOnWriteArrayList<SellableCard>();
-	// private List<SellableCard> forUnMortage = new
-	// CopyOnWriteArrayList<SellableCard>();
-	// private List<SellableCard> forSell = new
-	// CopyOnWriteArrayList<SellableCard>();
 	private Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
 	// private Map<String, Integer> regions = new HashMap<String, Integer>();
 	private int numberOfBuildings = 0;
@@ -73,7 +64,6 @@ public class Player {
 		this.position = position;
 		this.money = money;
 		this.color = color;
-		// this.hasFreeCard = hasFreeCard;
 	}
 
 	// ----------for test
@@ -116,14 +106,6 @@ public class Player {
 	public void setMoney(int money) {
 		this.money = money;
 	}
-
-	// public boolean isHasFreeCard() {
-	// return hasFreeCard;
-	// }
-	//
-	// public void setHasFreeCard(boolean hasFreeCard) {
-	// this.hasFreeCard = hasFreeCard;
-	// }
 
 	public String getColor() {
 		return color;
@@ -184,10 +166,6 @@ public class Player {
 	public void setNumberFreeCard(int numberFreeCard) {
 		this.numberFreeCard = numberFreeCard;
 	}
-
-	// public void addFreeCard() {
-	// numberFreeCard++;
-	// }
 
 	public int getNumberOfBuildings() {
 		return numberOfBuildings;
@@ -264,7 +242,6 @@ public class Player {
 	}
 
 	public int rollDicesAndMove() {
-		// if (this.canRollDices()) {
 		position = getPosition() + (rollDiceOne() + rollDiceTwo());
 		this.setRolled(true);
 		int c = this.getCircle();
@@ -276,10 +253,6 @@ public class Player {
 			position = position - 40;
 		}
 		setPosition(position);
-		// setRollAction(false);
-		// } else {
-		// log.info("[PLAYER:] " + this.getName() + " cannot roll");
-		// }
 		return position;
 
 	}
@@ -385,10 +358,6 @@ public class Player {
 
 	public void addForMortage() {
 	}
-
-	// public void addSelledProperty(SellableCard card) {
-	// property.add(card);
-	// }
 
 	public void deleteProperty(Player player, SellableCard card) {
 		property.remove(card);
@@ -510,7 +479,7 @@ public class Player {
 							"Player " + this.getName()
 									+ " can build house for $"
 									+ city.getHousePrice());
-					if (city.getNumbersOfHouses() == 3) {
+					if (city.getNumbersOfHouses() == 3&& !city.isHotel()) {
 						buildAvailable.put(
 								city.getPosition(),
 								"Player " + this.getName()
@@ -521,15 +490,17 @@ public class Player {
 						&& !city.isMortage()
 						&& this.checkMoney(city.getHousePrice())
 						&& city.getNumbersOfHouses() < 3) {
-					buildAvailable
-							.put(city.getPosition()," Player " + this.getName()
+					buildAvailable.put(
+							city.getPosition(),
+							" Player " + this.getName()
 									+ " can build house for $"
 									+ city.getHousePrice());
-					if (city.getNumbersOfHouses() == 3) {
-						buildAvailable.put(city.getPosition(),
+					if (city.getNumbersOfHouses() == 3 && !city.isHotel()) {
+						buildAvailable.put(
+								city.getPosition(),
 								"Player " + this.getName()
-								+ " can build hotel for $"
-								+ city.getHotelPrice());
+										+ " can build hotel for $"
+										+ city.getHotelPrice());
 					}
 				}
 			}
@@ -617,25 +588,11 @@ public class Player {
 	}
 
 	public boolean canContinueGame() {
-		return ((this.canMortage() && this.canSell()) || this.getMoney() > 0) ? true
+		return ((this.canMortage() && this.canSell()) || this.getMoney() >= 0) ? true
 				: false;
 	}
-
-	// public boolean canHandOverBuilding() {
-	// return (this.getNumberOfBuildings() > 0) ? true : false;
-	// }
 
 	public boolean canBuild() {
 		return (!getBuildAvailable().isEmpty()) ? true : false;
 	}
-
-	// public void handOverBuilding(CityCard city) {
-	// if (city.isHotel()) {
-	// city.setHotel(false);
-	// this.setMoney(this.getMoney() + city.getHotelPrice());
-	// } else {
-	// city.setNumbersOfHouses(city.getNumbersOfHouses() - 1);
-	// this.setMoney(this.getMoney() + city.getHousePrice());
-	// }
-	// }
 }

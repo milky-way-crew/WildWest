@@ -1,7 +1,9 @@
 package com.web.app.worldgames.domain.monopoly.game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -11,21 +13,18 @@ import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.PlayerColors;
 import com.web.app.worldgames.domain.monopoly.StartGame;
+import com.web.app.worldgames.domain.monopoly.card.CityCard;
+import com.web.app.worldgames.domain.monopoly.card.JailCard;
+import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class Game {
 	private int id;
 	private boolean started = false;
 	private boolean end = false;
 	private Player currentPlayer = null;
-
+	private Map<SellableCard, Map<String, Object>> gameBoard = new HashMap<SellableCard, Map<String, Object>>();
 	public List<Player> playerList = new ArrayList<Player>();
 	public List<Player> loserList = new ArrayList<Player>();
-	// -------for test
-	public List<User> userList = new ArrayList<User>();
-	// public Map<Integer, SellableCard> boardCities = new HashMap<Integer,
-	// SellableCard>();
-	// public Map<Integer, SellableCard> boardRails = new HashMap<Integer,
-	// SellableCard>();
 	private static final Logger log = Logger.getLogger(Game.class);
 
 	public Game() {
@@ -93,6 +92,20 @@ public class Game {
 		return true;
 	}
 
+	public Map<SellableCard, Map<String, Object>> refreshBoard(
+			Map<SellableCard, Map<String, Object>> gameBoard, SellableCard card) {
+		Map<String, Object> temp = new HashMap<String, Object>();
+		temp.put("position", card.getPosition());
+		temp.put("owner", card.getOwner());
+		temp.put("mortage", card.isMortage());
+		if(card instanceof CityCard){
+			temp.put("houses", ((CityCard) card).getNumbersOfHouses());
+			temp.put("hotel", ((CityCard) card).isHotel());
+		}
+		gameBoard.put(card, temp);
+		return gameBoard;
+	}
+
 	public void addPlayers(User user) {
 		int listPlSize = playerList.size();
 		String color = null;
@@ -138,52 +151,4 @@ public class Game {
 		}
 		return null;
 	}
-
-	// ------------for test
-
-	// public void setPlayers() {
-	// for (int i = 0; i < getUserList().size(); i++) {
-	// User user = getUserList().get(i);
-	// addPlayers(user);
-	// }
-	// }
-
-	public void setPlayer() {
-		playerList.add((new Player("Player 1", CellPositions.START,
-				CardPrices.START_MONEY, PlayerColors.PLAYER1)));
-		playerList.add((new Player("Player 2", CellPositions.START,
-				CardPrices.START_MONEY, PlayerColors.PLAYER2)));
-		playerList.add((new Player("Player 3", CellPositions.START,
-				CardPrices.START_MONEY, PlayerColors.PLAYER3)));
-		playerList.add((new Player("Player 4", CellPositions.START,
-				CardPrices.START_MONEY, PlayerColors.PLAYER4)));
-	}
-
-	public void addUser() {
-		userList.add(new User(123, "Us1", "1234", "Player1123", "User@mail.ru",
-				1, "picture1", "role"));
-		userList.add(new User(2, "Us2", "124564", "Player2", "User2@mail.ru",
-				2, "picture2", "role2"));
-		userList.add(new User(3, "Us3", "12345", "Player3", "User3@mail.ru", 3,
-				"picture3", "role3"));
-	}
-
-	public List<User> getUserList() {
-		return userList;
-	}
-
-	// -----------
-
-	// public static void main(String[] args) {
-	// Game g = new Game();
-	// g.addUser();
-	// g.setPlayers();
-	// for(Player p:g.getAllPlayers()){
-	// System.out.println(p.getId());
-	// System.out.println(p.getName());
-	// System.out.println(p.getMoney());
-	// System.out.println(p.getColor());
-	// }
-	// }
-
 }

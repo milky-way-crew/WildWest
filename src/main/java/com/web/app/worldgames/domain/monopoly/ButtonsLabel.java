@@ -14,4 +14,6 @@ public interface ButtonsLabel {
 	String READY = "ready";
 	String NEXT = "next";
 	String DONE = "done";
+	String TURN = "turn";
+	String INIT = "init";
 }

@@ -14,6 +14,15 @@ import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 public class JailCard extends Cell {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	Map<String, Object> result = new HashMap<String, Object>();
+	String msg = null;
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
 	@Override
 	public void effectOnPlayer(Player player) {
@@ -22,15 +31,18 @@ public class JailCard extends Cell {
 			log.info("[IN JAIL: ] use card");
 			player.setInJail(false);
 			player.setNumberFreeCard((player.getNumberFreeCard()) - 1);
+			this.setMsg("You had a free card and you are going from jail");
 		}
 	}
 
 	public boolean canPayRansom(Player player) {
-		return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL)) ? true : false;
+		return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL) && player
+				.isInJail()) ? true : false;
 	}
 
 	public void payRansom(Player player) {
 		player.setMoney(player.getMoney() - CardPrices.RANSOM_FROM_JAIL);
+		this.setMsg("You paid ransom");
 		player.setInJail(false);
 	}
 
@@ -38,16 +50,18 @@ public class JailCard extends Cell {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String message = null;
 		Map<String, Object> buttons = new HashMap<String, Object>();
-		int go = 0;
+		boolean move = false;
 		if (player.doublePoints() || player.getCircleInJail() == 3) {
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
 			player.setPosition(dicePoint);
 			log.info("[PLAYER POSITION AFTER JAIL] : " + player.getPosition());
-			// Cell cell = CardFactory.chooseCard(player);
-			// cell.effectOnPlayer(player);
 			player.setCircleInJail(0);
 			player.setInJail(false);
-			go = dicePoint;
+			move = true;
+			result.put("was", CellPositions.JAIL);
+			result.put("dice1", dicePoint);
+			result.put("dice2", 0);
+			result.put("move", move);
 			message = "You are going from jail";
 			log.info("[JAIL_MESSAGE] : you are going from jail");
 			buttons.put(ButtonsLabel.DONE, true);
@@ -55,7 +69,6 @@ public class JailCard extends Cell {
 			player.setPosition(CellPositions.JAIL);
 			player.setInJail(true);
 			player.addCircleInJail();
-			// result.put("Move to:", 0);
 			message = "You saty in jail";
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
 			log.info("[JAIL] : You stay in jail");
@@ -68,7 +81,6 @@ public class JailCard extends Cell {
 		result.put("messages", message);
 		result.put("player", player.getColor());
 		result.put("money", player.getMoney());
-		result.put("go", go);
 		return result;
 	}
 

@@ -196,7 +196,20 @@ function() {
 					}
 				},
 				'build': function(json) {
+					var pos, buttons;
 					MONO.animate.build(json.build_list);
+
+					pos = parseInt(
+					prompt('Enter position to build. List=' + JSON.stringify(json.build_list)), 10);
+					buttons = json.game_state.buttons;
+					if(pos && json.player === MONO.config.color) {
+						MONO.transport.send('build', {
+							position: pos
+						});
+					}
+					if(MONO.config.color === json.player) {
+						ui.refreshButtons(buttons);
+
 					if(json.player === MONO.config.color) {
 						var pos = parseInt(prompt('-build>>choose=' + JSON.stringify(json.build_list)), 10);
 						if (pos) {
@@ -205,7 +218,7 @@ function() {
 							});							
 						}
 					}
-				},
+				}},
 				'sell': function(json) {
 					console.log('[sell] event');
 					var pos, buttons;
@@ -287,6 +300,9 @@ function() {
 			},
 			sell: function(argument) {
 				log('Animating ~not supported~ [sell]');
+			},
+			build: function(argument) {
+				log('Animating ~not supported~ [build]');
 			}
 		},
 		init: function() {
