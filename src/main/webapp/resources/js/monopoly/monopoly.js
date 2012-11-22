@@ -161,17 +161,17 @@ function() {
 				'mortage': function(json) {
 					console.log('[mortage] event');
 					var pos, buttons;
-					MONO.animate.mortage(json.mortage_list);
 					buttons = json.game_state.buttons;
+					MONO.animate.mortage(json.player, Object.keys(json.mortage_list));
 
-					if(json.player === MONO.config.color) {
-						pos = parseInt(prompt('-mortage>>choose=' + JSON.stringify(json.mortage_list)), 10);
-						if (pos) {
-							MONO.transport.send('mortage', {
-								position: pos
-							});
-						}
-					}
+					// if(json.player === MONO.config.color) {
+					// 	pos = parseInt(prompt('-mortage>>choose=' + JSON.stringify(json.mortage_list)), 10);
+					// 	if (pos) {
+					// 		MONO.transport.send('mortage', {
+					// 			position: pos
+					// 		});
+					// 	}
+					// }
 					if(MONO.config.color === json.player) {
 						ui.refreshButtons(buttons);
 						if(json.message) {
@@ -184,14 +184,17 @@ function() {
 					var pos, buttons;
 					MONO.animate.unmortage(json.unmortage_list);
 					buttons = json.game_state.buttons;
-					if(json.player === MONO.config.color) {
-						pos = parseInt(prompt('-unmortage>>choose=' + JSON.stringify(json.unmortage_list)), 10);
-						if (pos) {
-							MONO.transport.send('unmortage', {
-								position: pos
-							});
-						}
-					}
+					
+					MONO.animate.unmortage(json.player, $.map(Object.keys(json.unmortage_list), function(e) {return parseInt(e,10)}));
+
+					// if(json.player === MONO.config.color) {
+					// 	pos = parseInt(prompt('-unmortage>>choose=' + JSON.stringify(json.unmortage_list)), 10);
+					// 	if (pos) {
+					// 		MONO.transport.send('unmortage', {
+					// 			position: pos
+					// 		});
+					// 	}
+					// }
 					if(MONO.config.color === json.player) {
 						ui.refreshButtons(buttons);
 					}
@@ -200,14 +203,17 @@ function() {
 					var pos, buttons;
 					MONO.animate.build(json.build_list);
 					buttons = json.game_state.buttons;
-					if(json.player === MONO.config.color) {
-						pos = parseInt(prompt('-build>>choose=' + JSON.stringify(json.build_list)), 10);
-						if (pos) {
-							MONO.transport.send('build', {
-								position: pos
-							});							
-						}
-					}
+
+					MONO.animate.build(json.player, Object.keys(json.build_list));
+
+					// if(json.player === MONO.config.color) {
+					// 	pos = parseInt(prompt('-build>>choose=' + JSON.stringify(json.build_list)), 10);
+					// 	if (pos) {
+					// 		MONO.transport.send('build', {
+					// 			position: pos
+					// 		});							
+					// 	}
+					// }
 					if(MONO.config.color === json.player) {
 						ui.refreshButtons(buttons);
 					}
@@ -279,14 +285,16 @@ function() {
 				BOARD.animate.stepOnBoard(who, d1, d2, was);
 			},
 			buy: function(who, position) {
-				log('Animating ~not supported~ [buy]');
+				log('Animating [buy]');
+				BOARD.buy(who, position);
 			},
 			pay: function(player, money) {
 				log('Animating ~not supported~ [pay]');
-				MONO.animate.money(player, money);
+				BOARD.animate.money(player, money);
 			},
-			mortage: function(argument) {
+			mortage: function(who, positions) {
 				log('Animating ~not supported~ [mortage]');
+				BOARD.mortage(positions, who);
 			},
 			unmortage: function(argument) {
 				log('Animating ~not supported~ [unmortage]');
