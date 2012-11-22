@@ -15,19 +15,18 @@
 
 
 
-<link rel="stylesheet" href="resources/css/bootstrap.css"
-	type="text/css">
+<link rel="stylesheet" href="resources/css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="resources/css/bootstrap-responsive.css">
-<link type="text/css" rel="stylesheet"
-	href="resources/css/chatroom_style.css" />
+<link type="text/css" rel="stylesheet" href="resources/css/chatroom_style.css" />
 <link rel="stylesheet" href="resources/css/gameBoard.css">
 <link rel="stylesheet" href="resources/css/jquery-ui-1.9.1.custom.css">
 
 <script type="text/javascript" src="resources/js/jquery-1.8.2.js"></script>
-<script type="text/javascript"
-	src="resources/js/jquery-ui-1.9.1.custom.js"></script>
+<script type="text/javascript" src="resources/js/jquery-ui-1.9.1.custom.js"></script>
 <script src="resources/js/board/gameBoard.js" type="text/javascript"></script>
 
+<script src="resources/js/monopoly/monopoly-animate.js" type="text/javascript"></script>
+<script src="resources/js/monopoly/monopoly.js" type="text/javascript"></script>
 
 
 
