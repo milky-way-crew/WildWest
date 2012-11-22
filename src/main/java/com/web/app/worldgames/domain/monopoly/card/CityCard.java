@@ -202,20 +202,21 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		if (this.getOwner() != null) {
+		if (this.getOwner() != null && player != this.getOwner()) {
 			log.info("[OWNER before effect]: money"
 					+ this.getOwner().getMoney());
 			log.info("[PLAYER before effect]: money" + player.getMoney());
-			if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
-				log.info("[OWNER]: " + this.getOwner().getColor());
-				log.info("MORTAGE: " + this.isMortage());
-				this.payRentToOwner(player, this.getOwner(),
-						this.getRent(player, this.getOwner()));
-				log.info("[OWNER]: money" + this.getOwner().getMoney());
-				log.info("[PLAYER]: money" + player.getMoney());
-			} else {
-				player.setMoney(player.getMoney());
-			}
+			// if (this.canPayRent(player, this.getRent(player,
+			// this.getOwner()))) {
+			log.info("[OWNER]: " + this.getOwner().getColor());
+			log.info("MORTAGE: " + this.isMortage());
+			this.payRentToOwner(player, this.getOwner(),
+					this.getRent(player, this.getOwner()));
+			log.info("[OWNER]: money" + this.getOwner().getMoney());
+			log.info("[PLAYER]: money" + player.getMoney());
+			// } else {
+			// player.setMoney(player.getMoney());
+			// }
 		} else if (player == this.getOwner()) {
 			log.info("[OWNER]: You are owner");
 		}
@@ -223,13 +224,11 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public int getRent(Player player, Player owner) {
-		if (this.isMortage()
-				&& owner.getForUnMortage().contains(this.getPosition())) {
+		if (this.isMortage()) {
 			player.setMoney(player.getMoney());
 			player.setPosition(player.getPosition());
 			log.info("[CITY IS MORTAGE]: " + this.isMortage());
-		} else if (!this.isMortage()
-				&& owner.getForMortage().contains(this.getPosition())) {
+		} else if (!this.isMortage()) {
 			log.info("--------GET RENT TEST METHOD------FOR UNMORTAGE CONTAIN THIS OBJECT: "
 					+ owner.getForMortage().contains(this.getPosition()));
 			log.info("[OWNER]: " + this.getOwner().getName());
@@ -358,13 +357,13 @@ public class CityCard extends SellableCard {
 		}
 	}
 
-	public static void main(String[] args) {
-		Player owner = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
-		Player p = new Player("ajsdhefdc", 15, 1000, PlayerColors.PLAYER2);
-		CityCard c = new CityCard(Cities.ATHENS, null);
-		// CityCard c1 = new CityCard(Cities.TOKYO);
-		c.buyCityOrRail(owner);
-		c.mortage(owner);
-		c.effectOnPlayer(p);
-	}
+	// public static void main(String[] args) {
+	// Player owner = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
+	// Player p = new Player("ajsdhefdc", 15, 1000, PlayerColors.PLAYER2);
+	// CityCard c = new CityCard(Cities.ATHENS, null);
+	// // CityCard c1 = new CityCard(Cities.TOKYO);
+	// c.buyCityOrRail(owner);
+	// c.mortage(owner);
+	// c.effectOnPlayer(p);
+	// }
 }

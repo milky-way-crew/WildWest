@@ -51,14 +51,14 @@ public class RailCard extends SellableCard {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		if (this.getOwner() != null) {
-			if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
+		if (this.getOwner() != null&&player!=this.getOwner()) {
+			//if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
 				log.info("[OWNER]: " + this.getOwner().getColor());
 				this.payRentToOwner(player, this.getOwner(),
 						this.getRent(player, this.getOwner()));
 				log.info("[OWNER]:  money" + this.getOwner().getMoney());
 				log.info("[PLAYER]: money" + player.getMoney());
-			}
+			//}
 		} else if (player == this.getOwner()) {
 			log.info("[OWNER]: You are owner");
 		}

@@ -38,29 +38,29 @@ public class GameAction {
 			if (cell instanceof CityCard) {
 				CityCard card = (CityCard) cell;
 				card.effectOnPlayer(player);
-				if (player == card.getOwner() || card.getOwner() != null) {
+				if (player != card.getOwner() && card.getOwner() != null) {
 					buttons.put(ButtonsLabel.BUY, false);
 					messages = "Pay rent $"
 							+ card.getRent(player, card.getOwner()) + " to "
 							+ card.getOwner().getName();
+				} 
+//				else if (card.getOwner() != null
+//						&& card.getOwner() != player
+//						&& !card.canPayRent(player,
+//								card.getRent(player, card.getOwner()))) {
+//					messages = "You haven't money. You may mortage or sell your property.";
+//				} 
+				else if (card.getOwner() == player) {
+					messages = "You are owner!";
 				} else {
 					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
-				}
-				if (card.getOwner() != null
-						&& card.getOwner() != player
-						&& !card.canPayRent(player,
-								card.getRent(player, card.getOwner()))) {
-					messages = "You haven't money. You may mortage or sell your property.";
-				}
-				if (card.getOwner() == player) {
-					messages = "You are owner!";
 				}
 
 				buttons.put(ButtonsLabel.PAY, false);
 				buttons.put(ButtonsLabel.DONE, true);
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
-				if (player == card.getOwner() || card.getOwner() != null) {
+				if (player != card.getOwner() && card.getOwner() != null) {
 					buttons.put(ButtonsLabel.BUY, false);
 					messages = "Pay rent $"
 							+ card.getRent(player, card.getOwner()) + " to "
@@ -68,12 +68,12 @@ public class GameAction {
 				} else {
 					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
 				}
-				if (card.getOwner() != null
-						&& card.getOwner() != player
-						&& !card.canPayRent(player,
-								card.getRent(player, card.getOwner()))) {
-					messages = "You haven't money. You may mortage or sell your property.";
-				}
+//				if (card.getOwner() != null
+//						&& card.getOwner() != player
+//						&& !card.canPayRent(player,
+//								card.getRent(player, card.getOwner()))) {
+//					messages = "You haven't money. You may mortage or sell your property.";
+//				}
 				if (card.getOwner() == player) {
 					messages = "You are owner!";
 				}
@@ -83,28 +83,29 @@ public class GameAction {
 		} else {
 			if (cell instanceof GoCard) {
 				cell.effectOnPlayer(player);
-				messages = "You got $200";
 				buttons.put(ButtonsLabel.DONE, true);
 			} else if (cell instanceof TaxCard) {
-				if (((TaxCard) cell).canPayTax(player)) {
-					cell.effectOnPlayer(player);
-					messages = "You payed tax "+CardPrices.TAX;
-					buttons.put(ButtonsLabel.DONE, true);
-				} else {
-					messages = "You haven't money. You may mortage or sell your property.";
-					buttons.put(ButtonsLabel.DONE, false);
-				}
+//				if (((TaxCard) cell).canPayTax(player)) {
+//					cell.effectOnPlayer(player);
+//					messages = "You payed tax " + CardPrices.TAX;
+//					buttons.put(ButtonsLabel.DONE, true);
+//				} else {
+//					messages = "You haven't money. You may mortage or sell your property.";
+//					buttons.put(ButtonsLabel.DONE, false);
+//				}
+				cell.effectOnPlayer(player);
+				messages = "You payed tax " + CardPrices.TAX;
 			} else if (cell instanceof JailCard) {
 				cell.effectOnPlayer(player);
 				messages = ((JailCard) cell).getMsg();
-				buttons.put(ButtonsLabel.ROLL, true);
+				//buttons.put(ButtonsLabel.ROLL, true);
 				if (player.isInJail()) {
-					buttons.put(ButtonsLabel.ROLL, true);
+					//buttons.put(ButtonsLabel.ROLL, true);
 					buttons.put(ButtonsLabel.PAY,
 							((JailCard) cell).canPayRansom(player));
 					messages = "You may pay a ransom or roll dices";
 				} else {
-					buttons.put(ButtonsLabel.ROLL, true);
+					//buttons.put(ButtonsLabel.ROLL, true);
 					buttons.put(ButtonsLabel.PAY, false);
 				}
 				buttons.put(ButtonsLabel.DONE, true);
@@ -138,11 +139,6 @@ public class GameAction {
 				cell.effectOnPlayer(player);
 				messages = "You have a community chest: "
 						+ ((CommunityChestCard) cell).getMsg();
-				if (player.getMoney() < 0) {
-					buttons.put(ButtonsLabel.DONE, false);
-				} else {
-					buttons.put(ButtonsLabel.DONE, true);
-				}
 			}
 
 		}
@@ -151,7 +147,11 @@ public class GameAction {
 		buttons.put(ButtonsLabel.BUILD, player.canBuild());
 		buttons.put(ButtonsLabel.SELL, player.canSell());
 		buttons.put(ButtonsLabel.DONE, true);
-		buttons.put(ButtonsLabel.ROLL, player.doublePoints());
+//		if(player.isInJail()){
+//			buttons.put(ButtonsLabel.ROLL, true);
+//		}else{
+			buttons.put(ButtonsLabel.ROLL, player.doublePoints());
+//		}
 		state.put("buttons", buttons);
 		state.put("messages", messages);
 		state.put("player", player.getColor());

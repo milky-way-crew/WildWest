@@ -400,10 +400,10 @@ public class Player {
 		return unMortageAvailable;
 	}
 
-	public Map<Integer, Integer> getSellAvailable() {
-		Map<Integer, Integer> sellAvailable = new HashMap<Integer, Integer>();
+	public Map<Integer, String> getSellAvailable() {
+		Map<Integer, String> sellAvailable = new HashMap<Integer, String>();
 		for (SellableCard p : this.listPropertyForSell()) {
-			sellAvailable.put(p.getPosition(), p.getPrice() / 2);
+			sellAvailable.put(p.getPosition(), "You can get $" + p.getPrice() / 2 + " after mortage");
 		}
 		return sellAvailable;
 	}
@@ -534,7 +534,7 @@ public class Player {
 	}
 
 	public boolean canContinueGame() {
-		return ((this.canMortage() && this.canSell()) || this.getMoney() >= 0) ? true
+		return (this.canMortage() && this.canSell()) ? true
 				: false;
 	}
 

@@ -9,7 +9,7 @@ public class TaxCard extends Cell {
 	private final static Logger log = Logger.getLogger(TaxCard.class);
 	@Override
 	public void effectOnPlayer(Player player) {
-		log.info("[PLAYER]: " +player.getColor()+" money: " +player.getMoney());
+		log.info("[PLAYER]: " +player.getColor()+" money before tax: " +player.getMoney());
 		player.setMoney(player.getMoney() - CardPrices.TAX);
 		log.info("[PLAYER]: " +player.getColor()+" money after tax " +player.getMoney());
 	}
