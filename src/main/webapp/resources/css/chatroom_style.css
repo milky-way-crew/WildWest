@@ -9,7 +9,6 @@ body {
 }
 
 form,p,span {
-	margin: 0;
 	padding: 0;
 }
 
@@ -17,18 +16,14 @@ input {
 	font: 12px;
 }
 
-a {
-	color: #0000FF;
+#menu a {
+	color: #fff;
 	text-decoration: none;
+	margin: 10px;
 }
 
 tr.hilite td {
 	background: #0000FF;
-/*	color: #fff;*/
-}
-
-a:hover {
-	text-decoration: underline;
 }
 
 #chatBox {
@@ -44,7 +39,8 @@ a:hover {
 }
 
 #usermsg {
-	width: 500px;
+	width: 480px;
+	margin-top: 10px;
 	border: 1px solid #ACD8F0;
 }
 

@@ -1,6 +1,7 @@
 ajax_room = "ajax_room";
 
 var idRoom;
+
 function updateList() {
 	$
 			.ajax({
@@ -18,12 +19,28 @@ function updateList() {
 						$("#listTitle").append(
 								"<h2>" + json.userRoom.roomName + "</h2>");
 						$("#menu").html("");
-						$("#menu").append('<br><form name="roomAction" action="">');
+						$("#menu").append(
+								'<form name="roomAction" action=""><br>');
+
+						if (json.creator) {
+							$("#menu")
+									.append(
+											'<a id="start" '
+													+ 'class="btn btn-primary btn-medium">Start</a>');
+							$("#start").attr('disabled', true);
+						} else {
+							$("#menu")
+									.append(
+											'<a id="ready" '
+													+ 'class="btn btn-primary btn-medium">Ready</a>');
+						}
+						if (json.startStatus) {
+							$("#start").attr('disabled', false);
+						}
 						$("#menu")
 								.append(
-										'<a id="start" data-toggle="modal" class="btn btn-primary btn-medium">Start</a>'
-												+ '<a id="ready" data-toggle="modal" class="btn btn-primary btn-medium">Ready</a>'
-												+ '<a id="exit" data-toggle="modal" class="btn btn-primary btn-medium">Exit</a>');
+										'<a id="exit" '
+												+ 'class="btn btn-primary btn-medium">Exit</a>');
 						$("#menu").append('</form>');
 						$("#list").html("");
 						$("#list")
@@ -39,19 +56,23 @@ function updateList() {
 											+ json.userList[i].status
 											+ ' </td></tr>');
 						}
+						document.getElementById('exit').onclick = exitFromRoom;
+						document.getElementById('ready').onclick = setReadyStatus;
+						document.getElementById('start').onclick = startGame;
 					}
+
 					if (!$.isEmptyObject(json.roomList)) {
 						$("#listTitle").html("");
 						$("#listTitle").append("<h2>Room list</h2>");
 						$("#menu").html("");
-						$("#menu").append('<br><form name="roomAction" action="">');
 						$("#menu")
-								.append(
-										+'<a data-toggle="modal" href="#createRoomModal"'
+								.html(
+										'<form name="roomAction" action="">'
+												+ '<a data-toggle="modal" href="#createRoomModal" '
 												+ 'class="btn btn-primary btn-medium">Create room</a>'
-												+ '<a id="joinToRoom" data-toggle="modal'
-												+ 'class="btn btn-primary btn-medium">Join to room</a>');
-						$("#menu").append('</form>');
+												+ '<a id="joinToRoom" '
+												+ 'class="btn btn-primary btn-medium">Join to room</a>'
+												+ '</form>');
 						$("#list").html("");
 						$("#list")
 								.append(
@@ -66,16 +87,53 @@ function updateList() {
 											+ json.roomList[i].size
 											+ ' </td></tr>');
 						}
-					}
-					$('tr').each(function(i, e) {
-						$(e).click(function() {
-							idRoom = $(e).attr('id');
-							$(e).toggleClass('hilite');
+						document.getElementById('joinToRoom').onclick = joinToRoom;
+						document.getElementById('createRoom').onclick = createRoom;
+						$('tr').each(function(i, e) {
+							$(e).click(function() {
+								idRoom = $(e).attr('id');
+								$(e).toggleClass('hilite');
+							});
 						});
-					});
+					}
 				}
 			});
 
+}
+
+function startGame() {
+	$.ajax({
+		url : ajax_room,
+		type : "POST",
+		data : {
+			type : "start",
+			data : "",
+		},
+		error : function() {
+			alert("Pizdec");
+		},
+		success : function() {
+			alert("OK let's go!");
+		}
+	});
+}
+
+function setReadyStatus() {
+	$.ajax({
+		url : ajax_room,
+		type : "POST",
+		data : {
+			type : "ready",
+			data : "",
+		},
+		error : function() {
+			alert("Don't click so fast)");
+		},
+		success : function() {
+			$("#list").html("");
+			$("#menu").html("");
+		}
+	});
 }
 
 function createRoom() {
@@ -90,33 +148,56 @@ function createRoom() {
 			error : function() {
 				alert("Room not created");
 			},
-			success : function(json) {
+			success : function() {
+				$("#listTitle").html("");
+				$("#menu").html("");
+				$("#list").html("");
 			}
 		});
 	}
 };
 
+function exitFromRoom() {
+	$.ajax({
+		url : ajax_room,
+		type : "POST",
+		data : {
+			type : "exit",
+			data : "",
+		},
+		error : function() {
+			alert("Page not found");
+		},
+		success : function() {
+			$("#listTitle").html("");
+			$("#menu").html("");
+			$("#list").html("");
+		}
+	});
+}
+
 function joinToRoom() {
-	$
-			.ajax({
-				url : ajax_room,
-				type : "POST",
-				data : {
-					type : "join",
-					data : idRoom,
-				},
-				error : function() {
-					alert("Not join to room");
-				},
-				success : function(json) {
-				}
-			});
+	$.ajax({
+		url : ajax_room,
+		type : "POST",
+		data : {
+			type : "join",
+			data : idRoom,
+		},
+		error : function() {
+			alert("Not join to room");
+		},
+		success : function() {
+			$("#listTitle").html("");
+			$("#menu").html("");
+			$("#list").html("");
+			$("#start").disabled = true;
+		}
+	});
 };
 
 function closeModal() {
 	document.getElementById('roomName').value = "";
 }
 
-document.getElementById('joinToRoom').onclick = joinToRoom;
-document.getElementById('createRoom').onclick = createRoom;
-setInterval(updateList, 3000);
+setInterval(updateList, 2000);

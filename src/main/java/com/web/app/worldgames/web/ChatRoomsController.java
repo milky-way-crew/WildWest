@@ -68,4 +68,5 @@ public class ChatRoomsController {
 		+ chatParticipant.getNickname());
 	return chatParticipant;
     }
+
 }

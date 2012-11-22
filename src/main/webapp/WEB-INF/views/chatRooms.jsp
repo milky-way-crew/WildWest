@@ -55,23 +55,16 @@
 				</div>
 			</div>
 
-			<!-- room list -->
+			<!-- list -->
 			<div class="span4">
 				<div id="listTitle" class="well sidebar-nav"></div>
-				<div id="rightBar" class="well sidebar-nav">
-					<table id="list" border=2 class="table table-hover">
+				<div class="well sidebar-nav">
+					<table id="list" class="table table-hover">
 					</table>
-					<div id="menu">
-						<form name="roomAction" action="">
-							<br> <a data-toggle="modal" href="#createRoomModal"
-								class="btn btn-primary btn-medium">Create room</a> <a
-								id="joinToRoom" data-toggle="modal"
-								class="btn btn-primary btn-medium">Join to room</a>
-						</form>
-					</div>
+					<div id="menu"></div>
 				</div>
 			</div>
-			<!-- room list -->
+			<!-- list -->
 
 		</div>
 	</div>

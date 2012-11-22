@@ -40,7 +40,11 @@ public class RoomController {
 		json.put("roomList", updateRoomList(participant));
 	    } else {
 		json.put("userList", updateUserList(participant));
-		json.put("userRoom", manager.getChatRoomById(participant.getId_room()));
+		json.put("userRoom",
+			manager.getChatRoomById(participant.getId_room()));
+		json.put("creator", isCreator(participant));
+		if (activateStartButton(participant))
+		    json.put("startStatus", true);
 	    }
 	    return json;
 	}
@@ -48,19 +52,32 @@ public class RoomController {
 	    log.debug("Create room " + data + " by user: "
 		    + participant.getNickname());
 	    createRoom(participant, data);
-	    json.put("newRoom",
-		    manager.getChatRoomById(participant.getId_room()));
-	    //json.put("roomCreator", participant);
-	    return json;
 	}
 	if (type.toLowerCase().trim().equals("join")) {
 	    log.debug("User: " + participant.getNickname() + " joined to room");
 	    joinToRoom(participant, Integer.parseInt(data));
-	    json.put("roomParticipant", participant);
-	    return json;
 	}
-
+	if (type.toLowerCase().trim().equals("exit")) {
+	    log.debug("User: "
+		    + participant.getNickname()
+		    + " exit from room: "
+		    + manager.getChatRoomById(participant.getId_room())
+			    .getRoomName());
+	    exitFromRoom(participant);
+	}
+	if (type.toLowerCase().trim().equals("ready")) {
+	    log.debug("User: " + participant.getNickname() + " set Status to: "
+		    + participant.getStatus());
+	    setReadyStatus(participant);
+	}
 	return json;
+    }
+
+    private boolean isCreator(ChatParticipant participant) {
+	if (participant.getStatus().toLowerCase().trim().equals("creator")) {
+	    return true;
+	}
+	return false;
     }
 
     private List<ChatRoom> updateRoomList(ChatParticipant participant) {
@@ -84,11 +101,24 @@ public class RoomController {
     }
 
     private void exitFromRoom(ChatParticipant participant) {
+	if (chooseNewCreator(participant)!=null){
+	    chooseNewCreator(participant).setStatus(CREATOR);	    
+	}
 	manager.getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
 	manager.getChatRoomById(manager.getIdWorldRoom()).addChatParticipant(
 		participant);
 	participant.setId_room(manager.getIdWorldRoom());
+    }
+
+    private ChatParticipant chooseNewCreator(ChatParticipant participant) {
+	for (ChatParticipant chatParticipant : manager.getChatRoomById(
+		participant.getId_room()).getChatParticipants()) {
+	    if (participant.getParticipantId()!=chatParticipant.getParticipantId()){
+		return chatParticipant;
+	    }
+	}
+	return null;
     }
 
     private void setReadyStatus(ChatParticipant participant) {
