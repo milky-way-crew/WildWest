@@ -275,25 +275,6 @@ public class Player {
 		}
 	}
 
-	// public void addRegion() {
-	// for (Cities cities : Cities.values()) {
-	// if (cities.getPosition() == this.getPosition()) {
-	// System.out.println("add new region");
-	// Integer r = regions.get(cities.getRegion());
-	// regions.put(cities.getRegion(), r == null ? 1 : r + 1);
-	// System.out.println(" region"+regions);
-	// }
-	// }
-	// }
-
-	// public Map<String, Integer> getRegions() {
-	// return regions;
-	// }
-	//
-	// public void setRegions(Map<String, Integer> regions) {
-	// this.regions = regions;
-	// }
-
 	public List<SellableCard> getForSell() {
 		return forSell;
 	}
@@ -431,43 +412,9 @@ public class Player {
 		Map<Integer, String> buildAvailable = getBuildAvailable();
 		buildAvailable.clear();
 		CityCard city = null;
-		// for (SellableCard properties : property) {
-		// if (properties instanceof CityCard) {
-		// city = (CityCard) properties;
-		// // log.info("[IN BUILD AVALIABLE METHOD]: " + "REGION "
-		// // + city.getRegion() + " NUM REGIONS: "
-		// // + this.getRegions().get(city.getRegion()));
-		// if ((city.getRegion().equals("brown") || city.getRegion()
-		// .equals("blue"))
-		// && this.getRegions().get(city.getRegion()) == 2
-		// && !city.isMortage()
-		// && this.checkMoney(city.getHousePrice())
-		// && city.getNumbersOfHouses() < 3) {
-		// buildAvailable
-		// .put(city.getPosition(), city.getHousePrice());
-		// if (city.getNumbersOfHouses() == 3) {
-		// buildAvailable.put(city.getPosition(),
-		// city.getHotelPrice());
-		// }
-		// } else if (this.getRegions().get(city.getRegion()) == 3
-		// && !city.isMortage()
-		// && this.checkMoney(city.getHousePrice())
-		// && city.getNumbersOfHouses() < 3) {
-		// buildAvailable
-		// .put(city.getPosition(), city.getHousePrice());
-		// if (city.getNumbersOfHouses() == 3) {
-		// buildAvailable.put(city.getPosition(),
-		// city.getHotelPrice());
-		// }
-		// }
-		// }
-		// }
 		for (SellableCard properties : property) {
 			if (properties instanceof CityCard) {
 				city = (CityCard) properties;
-				// log.info("[IN BUILD AVALIABLE METHOD]: " + "REGION "
-				// + city.getRegion() + " NUM REGIONS: "
-				// + this.getRegions().get(city.getRegion()));
 				if ((city.getRegion().equals("brown") || city.getRegion()
 						.equals("blue"))
 						&& this.getNumberOfRegions(this, city.getRegion()) == 2
@@ -573,7 +520,6 @@ public class Player {
 	}
 
 	public boolean canSell() {
-		// return (!this.forSell.isEmpty()) ? true : false;
 		return (!this.getSellAvailable().isEmpty()) ? true : false;
 	}
 

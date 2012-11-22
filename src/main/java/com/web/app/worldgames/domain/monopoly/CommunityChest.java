@@ -1,12 +1,12 @@
 package com.web.app.worldgames.domain.monopoly;
 
 public enum CommunityChest {
-	COMMUNITY_CHEST1("Bank paid $300 to you", 300, true, "player"), COMMUNITY_CHEST2(
-			"You've won at lottery $500", 500, true, "player"), COMMUNITY_CHEST3(
-			"You've lost $200", 200, false, "player"), COMMUNITY_CHEST4(
-			"You must pay tax of $100", 100, false, "player"), COMMUNITY_CHEST5(
-			"Bank paid $100 to you", 100, true, "player"), COMMUNITY_CHEST6(
-			"Pay poor tax of $30", 30, false, "player"), COMMUNITY_CHEST7(
+	COMMUNITY_CHEST1("Bank paid $100 to you", 100, true, "player"), COMMUNITY_CHEST2(
+			"You've won at lottery $200", 200, true, "player"), COMMUNITY_CHEST3(
+			"You've lost $300", 300, false, "player"), COMMUNITY_CHEST4(
+			"You must pay tax of $150", 150, false, "player"), COMMUNITY_CHEST5(
+			"Bank paid $50 to you", 50, true, "player"), COMMUNITY_CHEST6(
+			"Pay poor tax of $50", 50, false, "player"), COMMUNITY_CHEST7(
 			"You've got free card to entrace from Coliseum ", 0, true,
 			"coliseum");
 	private final String message;

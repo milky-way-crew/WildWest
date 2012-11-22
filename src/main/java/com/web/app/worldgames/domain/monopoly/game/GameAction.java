@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
+import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.card.Cell;
@@ -39,29 +40,42 @@ public class GameAction {
 				card.effectOnPlayer(player);
 				if (player == card.getOwner() || card.getOwner() != null) {
 					buttons.put(ButtonsLabel.BUY, false);
-					messages = "Pay rent $"+card.getRent(player, card.getOwner())+" to "+card.getOwner().getName();
+					messages = "Pay rent $"
+							+ card.getRent(player, card.getOwner()) + " to "
+							+ card.getOwner().getName();
 				} else {
 					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
 				}
 				if (card.getOwner() != null
+						&& card.getOwner() != player
 						&& !card.canPayRent(player,
 								card.getRent(player, card.getOwner()))) {
 					messages = "You haven't money. You may mortage or sell your property.";
 				}
+				if (card.getOwner() == player) {
+					messages = "You are owner!";
+				}
+
 				buttons.put(ButtonsLabel.PAY, false);
 				buttons.put(ButtonsLabel.DONE, true);
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
 				if (player == card.getOwner() || card.getOwner() != null) {
 					buttons.put(ButtonsLabel.BUY, false);
-					messages = "Pay rent $"+card.getRent(player, card.getOwner())+" to "+card.getOwner().getName();
+					messages = "Pay rent $"
+							+ card.getRent(player, card.getOwner()) + " to "
+							+ card.getOwner().getName();
 				} else {
 					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
 				}
 				if (card.getOwner() != null
+						&& card.getOwner() != player
 						&& !card.canPayRent(player,
 								card.getRent(player, card.getOwner()))) {
 					messages = "You haven't money. You may mortage or sell your property.";
+				}
+				if (card.getOwner() == player) {
+					messages = "You are owner!";
 				}
 				buttons.put(ButtonsLabel.PAY, false);
 				buttons.put(ButtonsLabel.DONE, true);
@@ -74,20 +88,23 @@ public class GameAction {
 			} else if (cell instanceof TaxCard) {
 				if (((TaxCard) cell).canPayTax(player)) {
 					cell.effectOnPlayer(player);
-					messages = "You payed tax";
-					buttons.put(ButtonsLabel.DONE,true);
+					messages = "You payed tax "+CardPrices.TAX;
+					buttons.put(ButtonsLabel.DONE, true);
 				} else {
 					messages = "You haven't money. You may mortage or sell your property.";
 					buttons.put(ButtonsLabel.DONE, false);
 				}
 			} else if (cell instanceof JailCard) {
 				cell.effectOnPlayer(player);
-				if(player.isInJail()){
+				messages = ((JailCard) cell).getMsg();
+				buttons.put(ButtonsLabel.ROLL, true);
+				if (player.isInJail()) {
+					buttons.put(ButtonsLabel.ROLL, true);
 					buttons.put(ButtonsLabel.PAY,
 							((JailCard) cell).canPayRansom(player));
-					buttons.put(ButtonsLabel.ROLL, true);
 					messages = "You may pay a ransom or roll dices";
-				}else{
+				} else {
+					buttons.put(ButtonsLabel.ROLL, true);
 					buttons.put(ButtonsLabel.PAY, false);
 				}
 				buttons.put(ButtonsLabel.DONE, true);

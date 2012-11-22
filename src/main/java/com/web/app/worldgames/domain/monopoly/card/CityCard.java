@@ -47,7 +47,7 @@ public class CityCard extends SellableCard {
 		this.isHotel = cities.isHotel();
 		this.position = cities.getPosition();
 	}
-	
+
 	public CityCard(Cities cities, Player owner) {
 		this(cities);
 		setOwner(owner);
@@ -152,6 +152,7 @@ public class CityCard extends SellableCard {
 	public int getPosition() {
 		return position;
 	}
+
 	public void setPosition(int position) {
 		this.position = position;
 	}
@@ -202,14 +203,18 @@ public class CityCard extends SellableCard {
 	@Override
 	public void effectOnPlayer(Player player) {
 		if (this.getOwner() != null) {
-			log.info("[OWNER before effect]: money" + this.getOwner().getMoney());
+			log.info("[OWNER before effect]: money"
+					+ this.getOwner().getMoney());
 			log.info("[PLAYER before effect]: money" + player.getMoney());
 			if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
 				log.info("[OWNER]: " + this.getOwner().getColor());
+				log.info("MORTAGE: " + this.isMortage());
 				this.payRentToOwner(player, this.getOwner(),
 						this.getRent(player, this.getOwner()));
 				log.info("[OWNER]: money" + this.getOwner().getMoney());
 				log.info("[PLAYER]: money" + player.getMoney());
+			} else {
+				player.setMoney(player.getMoney());
 			}
 		} else if (player == this.getOwner()) {
 			log.info("[OWNER]: You are owner");
@@ -218,11 +223,15 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public int getRent(Player player, Player owner) {
-		if (this.isMortage()) {
+		if (this.isMortage()
+				&& owner.getForUnMortage().contains(this.getPosition())) {
 			player.setMoney(player.getMoney());
 			player.setPosition(player.getPosition());
 			log.info("[CITY IS MORTAGE]: " + this.isMortage());
-		} else if(!this.isMortage()){
+		} else if (!this.isMortage()
+				&& owner.getForMortage().contains(this.getPosition())) {
+			log.info("--------GET RENT TEST METHOD------FOR UNMORTAGE CONTAIN THIS OBJECT: "
+					+ owner.getForMortage().contains(this.getPosition()));
 			log.info("[OWNER]: " + this.getOwner().getName());
 			int numberOfRegions = owner.getNumberOfRegions(owner,
 					owner.getRegion(player.getPosition()));
@@ -301,7 +310,7 @@ public class CityCard extends SellableCard {
 		player.setMoney(player.getMoney() - getPrice());
 		log.info("[MONEY]: " + player.getMoney());
 		log.info("[BUY::: OWNER]: " + this.getOwner());
-		//player.addRegion();
+		// player.addRegion();
 		player.addRegions(player);
 		player.addBuildAvailable();
 		log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
@@ -327,33 +336,35 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public void sell(Player player) {
+		log.info("--------------------------- IN SELL METHOD--------------");
 		if (this.getNumbersOfHouses() > 0) {
 			this.setNumbersOfHouses(this.getNumbersOfHouses() - 1);
-			player.setMoney(player.getMoney() + this.getHousePrice()
-					/ 2);
+			player.setMoney(player.getMoney() + this.getHousePrice() / 2);
 			if (this.isHotel()) {
 				this.setHotel(false);
-				player.setMoney(player.getMoney()
-						+ this.getHotelPrice() / 2);
+				player.setMoney(player.getMoney() + this.getHotelPrice() / 2);
 			}
 		} else {
-			log.info("OWNER BEFORE SELL CITY "+this.getOwner());
-			this.setOwner(null);
-			log.info("OWNER AFTER SELL CITY "+this.getOwner());
+			log.info("OWNER BEFORE SELL CITY " + this.getOwner());
+			SellableCard sell_city = StartGame.boardCities.get(this
+					.getPosition());
+			log.info("POSIOTION OF SELLABLE CARD" + this.getPosition()
+					+ " sell_city: " + sell_city);
+			sell_city.setOwner(null);
+			log.info("NOW OWNER OF THIS CITY: " + sell_city.getOwner());
+			log.info("OWNER AFTER SELL CITY " + this.getOwner());
 			player.setMoney(player.getMoney() + this.getPrice() / 2);
 			player.listRegions(player).remove(this.getRegion());
-			// player.addBuildAvailable();
 		}
 	}
 
-//	public static void main(String[] args) {
-//		Player owner = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
-//		Player p = new Player("ajsdhefdc", 15, 1000, PlayerColors.PLAYER2);
-//		CityCard c = new CityCard(Cities.ATHENS);
-//		CityCard c1 = new CityCard(Cities.TOKYO);
-//		c.buyCityOrRail(owner);
-//		c1.buyCityOrRail(owner);
-//		c.effectOnPlayer(p);
-//		c1.effectOnPlayer(p);
-//	}
+	public static void main(String[] args) {
+		Player owner = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
+		Player p = new Player("ajsdhefdc", 15, 1000, PlayerColors.PLAYER2);
+		CityCard c = new CityCard(Cities.ATHENS, null);
+		// CityCard c1 = new CityCard(Cities.TOKYO);
+		c.buyCityOrRail(owner);
+		c.mortage(owner);
+		c.effectOnPlayer(p);
+	}
 }

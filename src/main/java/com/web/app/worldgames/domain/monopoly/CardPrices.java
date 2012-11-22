@@ -4,8 +4,7 @@ public interface CardPrices {
 	int START_MONEY = 1500;
 	int CIRCLE_MONEY =200;
 	int RANSOM_FROM_JAIL = 50;
-	int GO = 200;
-	int TAX = 100;
+	int TAX = 150;
 	int RAIL1 = 50;
 	int RAIL2 = 100;
 	int RAIL3 = 150;

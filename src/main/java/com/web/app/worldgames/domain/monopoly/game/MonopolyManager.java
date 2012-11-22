@@ -85,6 +85,8 @@ public class MonopolyManager {
 	private void onBuild(int idPlayer, String type,
 			Map<String, Object> response, String data) {
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+		Map<String, Object> buttons = new HashMap<String, Object>();
+		Map<String, Object> state = new HashMap<String, Object>();
 		Map<Integer, String> buildings = currentPlayer.getBuildAvailable();
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (currentPlayer.getId() == idPlayer) {
@@ -122,14 +124,22 @@ public class MonopolyManager {
 						response.put("player_money", currentPlayer.getMoney());
 						// response.put("build_list",
 						// currentPlayer.getBuildAvailable());
-					} else if ((city.getNumbersOfHouses() == 3 && city
-							.isHotel()) || city.isMortage()) {
-						// buildings.remove(city.getPosition());
-
-					}
+					} 
+//					else if ((city.getNumbersOfHouses() == 3 && city
+//							.isHotel()) || city.isMortage()) {
+//						// buildings.remove(city.getPosition());
+//
+//					}
 				} else {
 					log.info("no position: ");
 				}
+				currentPlayer.addBuildAvailable();
+				buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+				buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+				buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+				buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+				state.put("buttons", buttons);
+				response.put("game_state", state);
 			}
 		}
 		broadcast(response);

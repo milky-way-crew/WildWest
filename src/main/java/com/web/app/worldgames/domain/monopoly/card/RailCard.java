@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.Rails;
+import com.web.app.worldgames.domain.monopoly.StartGame;
 
 public class RailCard extends SellableCard {
 	private String name;
@@ -128,7 +129,12 @@ public class RailCard extends SellableCard {
 	@Override
 	public void sell(Player player) {
 		log.info("OWNER BEFORE SELL RAIL "+this.getOwner());
-		this.setOwner(null);
+		//this.setOwner(null);
+		SellableCard sell_city = StartGame.boardRails.get(this.getPosition());
+		log.info("POSIOTION OF SELLABLE CARD" + this.getPosition()
+				+ " sell_city: " + sell_city);
+		sell_city.setOwner(null);
+		log.info("NOW OWNER OF THIS CITY: "+sell_city.getOwner());
 		log.info("OWNER AFTER SELL RAIL "+this.getOwner());
 		player.setNumberOfRails(player.getNumberOfRails() - 1);
 		player.setMoney(player.getMoney() + this.getPrice() / 2);

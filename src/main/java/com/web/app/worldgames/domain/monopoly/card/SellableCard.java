@@ -73,7 +73,7 @@ public abstract class SellableCard extends Cell {
 	public boolean canPayRent(Player player, int rent) {
 		return (player.checkMoney(rent) && this.getOwner() != player
 				&& this.getOwner() != null && this instanceof SellableCard && this
-					.getOwner() != null) ? true : false;
+					.getOwner() != null&&!this.isMortage()) ? true : false;
 	}
 
 	public boolean canBuy(Player player) {
