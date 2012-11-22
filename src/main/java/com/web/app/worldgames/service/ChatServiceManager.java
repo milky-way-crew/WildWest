@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.web.app.worldgames.domain.chat.ChatParticipant;
 import com.web.app.worldgames.domain.chat.ChatRoom;
 
 public class ChatServiceManager {
@@ -43,10 +44,21 @@ public class ChatServiceManager {
     public void deleteRoomById(int id) {
 	for (int i = 0; i < chatRooms.size(); i++) {
 	    if (id == chatRooms.get(i).getRoomId()) {
-		chatRooms.remove(i);
 		log.debug("Room " + chatRooms.get(i).getRoomName() + " removed");
+		chatRooms.remove(i);
+		break;
 	    }
 	}
+    }
+    
+    public boolean isParticipantInAnyRoom(ChatParticipant participant){
+	boolean flag = false;
+	for (ChatRoom room: chatRooms){
+	    if (room.isParticipantInThisRoom(participant)){
+		flag = true;
+	    }
+	}
+	return flag;
     }
 
     public void calculateRoomsSize() {

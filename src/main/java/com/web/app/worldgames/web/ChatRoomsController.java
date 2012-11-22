@@ -29,19 +29,17 @@ public class ChatRoomsController {
     public ModelAndView showPage(HttpServletRequest request) {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
-	if (!manager.getChatRoomById(chatParticipant.getId_room())
-		.isParticipantInRoom(chatParticipant)) {
+	if (!manager.isParticipantInAnyRoom(chatParticipant)) {
 	    generateTextColorForParticipant(chatParticipant);
 	    request.getSession().setAttribute("chatParticipant",
 		    chatParticipant);
 	    log.debug("Put ChatParticipant in session and in world particicipant list: "
 		    + chatParticipant.getNickname());
-	    manager.getChatRoomById(chatParticipant.getId_room())
+	    manager.getChatRoomById(manager.getIdWorldRoom())
 		    .addChatParticipant(chatParticipant);
 	} else {
-	    request.getSession().setAttribute("chatParticipant",
-		    chatParticipant);
-	    log.debug("ChatParticipant put in session "
+	    chatParticipant = getChatParticipantFromRequest(request);
+	    log.debug("ChatParticipant get from session "
 		    + chatParticipant.getNickname());
 	}
 	ModelAndView modelAndView = new ModelAndView();

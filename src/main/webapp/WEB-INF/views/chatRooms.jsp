@@ -45,6 +45,7 @@
 		<div class="row-fluid">
 			<div class="span8">
 				<div id="title" class="well">
+					<h1>Chat</h1>
 					<div id="chatBox"></div>
 					<form name="message" action="">
 						<input type="text" id="usermsg"
@@ -56,16 +57,18 @@
 
 			<!-- room list -->
 			<div class="span4">
+				<div id="listTitle" class="well sidebar-nav"></div>
 				<div id="rightBar" class="well sidebar-nav">
-					<h2>Room List</h2>
 					<table id="list" border=2 class="table table-hover">
 					</table>
-					<form name="roomAction" action="">
-						<br> <a data-toggle="modal" href="#createRoomModal"
-							class="btn btn-primary btn-medium">Create room</a> <br> <br>
-						<a id="joinToRoom" data-toggle="modal" href="#createRoomModal"
-							class="btn btn-primary btn-medium">Join to room</a>
-					</form>
+					<div id="menu">
+						<form name="roomAction" action="">
+							<br> <a data-toggle="modal" href="#createRoomModal"
+								class="btn btn-primary btn-medium">Create room</a> <a
+								id="joinToRoom" data-toggle="modal"
+								class="btn btn-primary btn-medium">Join to room</a>
+						</form>
+					</div>
 				</div>
 			</div>
 			<!-- room list -->
@@ -88,15 +91,15 @@
 			</div>
 			<div class="modal-footer">
 				<a id="createRoom" href="#" class="btn btn-success">Create</a> <a
-					id="closeModal" href="#" class="btn"
+					id="closeModal" href="#" onclick="closeModal()" class="btn"
 					data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>
 	<!-- modal window create room -->
+	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript" src="resources/js/chat.js"></script>
 	<script type="text/javascript" src="resources/js/room.js"></script>
-	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>

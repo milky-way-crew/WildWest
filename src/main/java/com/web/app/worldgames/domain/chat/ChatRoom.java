@@ -38,14 +38,15 @@ public class ChatRoom {
     public void deleteChatParticipantById(int id) {
 	for (int i = 0; i < chatParticipants.size(); i++) {
 	    if (id == chatParticipants.get(i).getParticipantId()) {
-		chatParticipants.remove(i);
 		log.debug("User " + chatParticipants.get(i).getNickname()
-			+ " removed from roomChat");
+			+ " deleted from room" + this.roomName);
+		chatParticipants.remove(i);
+		break;
 	    }
 	}
     }
 
-    public boolean isParticipantInRoom(ChatParticipant chatParticipant) {
+    public boolean isParticipantInThisRoom(ChatParticipant chatParticipant) {
 	for (ChatParticipant participant : chatParticipants) {
 	    if (participant.getParticipantId() == chatParticipant
 		    .getParticipantId())

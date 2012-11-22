@@ -5,6 +5,7 @@ body {
 	color: #222;
 	text-align: center;
 	padding: 35px;
+	margin-top: 30px;
 }
 
 form,p,span {
@@ -19,6 +20,11 @@ input {
 a {
 	color: #0000FF;
 	text-decoration: none;
+}
+
+tr.hilite td {
+	background: #0000FF;
+/*	color: #fff;*/
 }
 
 a:hover {
@@ -44,7 +50,7 @@ a:hover {
 
 #list {
 	border: 2;
-	cellspacing: 3; 
+	cellspacing: 3;
 	cellpadding: 3;
 	align: center;
 }

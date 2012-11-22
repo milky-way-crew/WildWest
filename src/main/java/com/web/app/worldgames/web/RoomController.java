@@ -40,22 +40,18 @@ public class RoomController {
 		json.put("roomList", updateRoomList(participant));
 	    } else {
 		json.put("userList", updateUserList(participant));
+		json.put("userRoom", manager.getChatRoomById(participant.getId_room()));
 	    }
 	    return json;
 	}
 	if (type.toLowerCase().trim().equals("create")) {
-	    json.clear();
 	    log.debug("Create room " + data + " by user: "
 		    + participant.getNickname());
-	    if (data.equals("")) {
-		return json;
-	    } else {
-		createRoom(participant, data);
-		json.put("newRoom",
-			manager.getChatRoomById(participant.getId_room()));
-		json.put("roomCreator", participant);
-		return json;
-	    }
+	    createRoom(participant, data);
+	    json.put("newRoom",
+		    manager.getChatRoomById(participant.getId_room()));
+	    //json.put("roomCreator", participant);
+	    return json;
 	}
 	if (type.toLowerCase().trim().equals("join")) {
 	    log.debug("User: " + participant.getNickname() + " joined to room");
@@ -63,6 +59,7 @@ public class RoomController {
 	    json.put("roomParticipant", participant);
 	    return json;
 	}
+
 	return json;
     }
 
@@ -108,11 +105,10 @@ public class RoomController {
 	    boolean flag = true;
 	    for (ChatParticipant player : manager.getChatRoomById(
 		    participant.getId_room()).getChatParticipants()) {
-		if (participant.getParticipantId() != player.getParticipantId()) {
-		    if (player.getStatus().toLowerCase().trim()
-			    .equals(NOT_READY_STATUS)) {
-			flag = false;
-		    }
+		if (participant.getParticipantId() != player.getParticipantId()
+			&& player.getStatus().toLowerCase().trim()
+				.equals(NOT_READY_STATUS)) {
+		    flag = false;
 		}
 	    }
 	    return flag;
