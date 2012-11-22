@@ -497,18 +497,25 @@
 
 		<!-- Create buttons -->
 		<div class="playerButton">
-			<input id="buyButton" type="submit" value="BUY"> <input
-				id="mortageButton" type="submit" value="MORTAGE"> <input
-				id="unmortageButton" type="submit" value="UNMORTAGE"> <input
-				id="buildButton" type="submit" value="BUILD"> <input
-				id="sellButton" type="submit" value="Sell"> <input
-				id="diceButton" type="submit" value="RollDice"> <input
-				id="doneButton" type="submit" value="Done">
+				<div class="span6 well" id="controls">
+					<button class="btn btn-primary" id="roll">roll</button>
+					<button class="btn btn-primary" id="buy">buy</button>
+					<button class="btn btn-primary" id="pay">pay</button>
+					<button class="btn btn-primary" id="mortage">mortage</button>
+					<button class="btn btn-primary" id="unmortage">unmortage</button>
+					<button class="btn btn-primary" id="build">build</button>
+					<button class="btn btn-primary" id="sell">sell</button>
+				</div>
+				<div class="span3 well" id="menu">
+					<button class="btn btn-primary" id="done">done</button>
+					<button class="btn btn-primary" id="start">start</button>
+					<button class="btn btn-primary" id="ready">ready</button>
+				</div>
 		</div>
 
 
 		<div id="upChat">
-			<!-- TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST -->
+			<!--  buttons
 			<div class="container" align="center">
 				<div class="span6 well" id="controls">
 					<button class="btn btn-primary" id="roll">roll</button>
@@ -525,7 +532,8 @@
 					<button class="btn btn-primary" id="ready">ready</button>
 				</div>
 			</div>
-
+ 			-->
+			
 			<ul id="chat">
 			</ul>
 			<!-- TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST -->

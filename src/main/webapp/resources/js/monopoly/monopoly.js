@@ -29,6 +29,7 @@ function() {
 				$('#' + btnName).animate({
 					"opacity": opacityValue
 				}, 100);
+
 				if(btnName === "buy" && buttons[btnName]) {
 					$('#buy').show(100);
 				}
