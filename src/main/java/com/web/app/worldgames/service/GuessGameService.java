@@ -49,20 +49,24 @@ public enum GuessGameService {
 	}
 	public void tryRemoveGame(int idGame) {
 		GuessGame game = serverMap.get(idGame);
-		log.info(String.format("Trying to remove game with id:%d.", idGame));
-		
-		boolean anyActive = false;
-		
-		for (GuessPlayer player : game.getPlayers()) {
-			anyActive |= player.isActive();
-			if (anyActive == true) {
-				break;
+		if (game != null) {
+			log.info(String.format("Trying to remove game with id:%d.", idGame));
+			
+			boolean anyActive = false;
+			
+			for (GuessPlayer player : game.getPlayers()) {
+				anyActive |= player.isActive();
+				if (anyActive == true) {
+					break;
+				}
 			}
-		}
-		
-		if (anyActive == false) {
-			log.info(String.format("Removing game with id:%d. Reason: 0 players in.", idGame));
-			serverMap.remove(idGame);
+			
+			if (anyActive == false) {
+				log.info(String.format("Removing game with id:%d. Reason: 0 players in.", idGame));
+				serverMap.remove(idGame);
+			}
+		} else {
+			log.info(String.format("Game with id=%d already removed or never existed", idGame));
 		}
 	}
 }

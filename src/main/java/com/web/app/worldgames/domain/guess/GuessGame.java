@@ -179,7 +179,13 @@ public class GuessGame {
 	}
 
 	private boolean canBeStarted() {
-		return currentState == WAITING_TO_START && players.size() >= 2;
+		int activeCount = 0;
+		for (GuessPlayer player: players) {
+			if (player.isActive()) {
+				activeCount++;
+			}
+		}
+		return currentState == WAITING_TO_START && players.size() >= 2 && activeCount > 1;
 	}
 
 	public void onMessage(int type, String message)
