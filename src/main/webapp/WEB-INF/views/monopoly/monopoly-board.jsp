@@ -359,10 +359,10 @@
 
 		</table>
 
-		<!-- Block about player's information -->
+	<!-- Block about player's information -->
 		<div id="playerInfo">
 			<div id="accordion">
-				<h3>Player1</h3>
+				<h3>Player1 </h3>
 				<div id="infoPlayer1">
 
 					<table id="firstInfoTable" width="100px" height="200px">
@@ -421,11 +421,11 @@
 							<td class="grayMini" id="firstMiniCell36"></td>
 						</tr>
 					</table>
-					<h3>M 1000</h3>
+					<h3 id="MoneyPlayer1"> M 1000</h3>
 				</div>
 				<h3>Player2</h3>
-				<div id="infoPlayer">
-					<table id="firstInfoTable" width="100px" height="200px">
+				<div id="infoPlayer2">
+				<table id="thirdInfoTable" width="100px" height="200px">
 						<tr>
 							<td class="brownMini" id="secondMiniCell2"></td>
 							<td class="brownMini" id="secondMiniCell4"></td>
@@ -456,7 +456,7 @@
 						</tr>
 					</table>
 
-					<table id="secondInfoTable" width="130px" height="160px">
+					<table id="fourInfoTable" width="130px" height="160px">
 						<tr>
 							<td class="yellowMini" id="secondMiniCell27"></td>
 							<td class="yellowMini" id="secondMiniCell28"></td>
@@ -481,16 +481,131 @@
 							<td class="grayMini" id="secondMiniCell36"></td>
 						</tr>
 					</table>
-					<h3 id="secondMoney">M 1000</h3>
+					<h3 id="MoneyPlayer2"> M 1000</h3>
 				</div>
 				<h3>Player3</h3>
-				<div></div>
-				<h3>Player4</h3>
-				<div>
+					<div id="infoPlayer3">
+				<table id="fifthInfoTable" width="100px" height="200px">
+						<tr>
+							<td class="brownMini" id="thirdMiniCell2"></td>
+							<td class="brownMini" id="thirdMiniCell4"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="azureMini" id="thirdMiniCell7"></td>
+							<td class="azureMini" id="thirdMiniCell9"></td>
+							<td class="azureMini" id="thirdMiniCell10"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="lightredMini" id="thirdMiniCell12"></td>
+							<td class="lightredMini" id="thirdMiniCell14"></td>
+							<td class="lightredMini" id="thirdMiniCell15"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="orangeMini" id="thirdMiniCell17"></td>
+							<td class="orangeMini" id="thirdMiniCell19"></td>
+							<td class="orangeMini" id="thirdMiniCell20"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="redMini" id="thirdMiniCell22"></td>
+							<td class="redMini" id="thirdMiniCell24"></td>
+							<td class="redMini" id="thirdMiniCell25"></td>
+						</tr>
+					</table>
 
-					<p>Nothing...</p>
+					<table id="sixthInfoTable" width="130px" height="160px">
+						<tr>
+							<td class="yellowMini" id="thirdMiniCell27"></td>
+							<td class="yellowMini" id="thirdMiniCell28"></td>
+							<td class="yellowMini" id="thirdMiniCell30"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="greenMini" id="thirdMiniCell32"></td>
+							<td class="greenMini" id="thirdMiniCell33"></td>
+							<td class="greenMini" id="thirdMiniCell35"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="blueMini" id="thirdMiniCell38"></td>
+							<td class="blueMini" id="thirdMiniCell40"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="grayMini" id="thirdMiniCell6"></td>
+							<td class="grayMini" id="thirdMiniCell16"></td>
+							<td class="grayMini" id="thirdMiniCell26"></td>
+							<td class="grayMini" id="thirddMiniCell36"></td>
+						</tr>
+					</table>
+					<h3 id="MoneyPlayer3"> M 1000</h3>
 				</div>
-			</div>
+					
+				<h3>Player4</h3>
+				<div id="infoPlayer2">
+				<table id="seventhInfoTable" width="100px" height="200px">
+						<tr>
+							<td class="brownMini" id="fourMiniCell2"></td>
+							<td class="brownMini" id="fourdMiniCell4"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="azureMini" id="fourMiniCell7"></td>
+							<td class="azureMini" id="fourMiniCell9"></td>
+							<td class="azureMini" id="fourMiniCell10"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="lightredMini" id="fourMiniCell12"></td>
+							<td class="lightredMini" id="fourMiniCell14"></td>
+							<td class="lightredMini" id="fourMiniCell15"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="orangeMini" id="fourMiniCell17"></td>
+							<td class="orangeMini" id="fourMiniCell19"></td>
+							<td class="orangeMini" id="fourMiniCell20"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="redMini" id="fourMiniCell22"></td>
+							<td class="redMini" id="fourMiniCell24"></td>
+							<td class="redMini" id="fourMiniCell25"></td>
+						</tr>
+					</table>
+
+					<table id="eighthInfoTable" width="130px" height="160px">
+						<tr>
+							<td class="yellowMini" id="fourMiniCell27"></td>
+							<td class="yellowMini" id="fourMiniCell28"></td>
+							<td class="yellowMini" id="fourMiniCell30"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="greenMini" id="fourMiniCell32"></td>
+							<td class="greenMini" id="fourMiniCell33"></td>
+							<td class="greenMini" id="fourMiniCell35"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="blueMini" id="fourMiniCell38"></td>
+							<td class="blueMini" id="fourMiniCell40"></td>
+						</tr>
+						<tr height="5px"></tr>
+						<tr>
+							<td class="grayMini" id="fourMiniCell6"></td>
+							<td class="grayMini" id="fourMiniCell16"></td>
+							<td class="grayMini" id="fourMiniCell26"></td>
+							<td class="grayMini" id="fourMiniCell36"></td>
+						</tr>
+					</table>
+					<h3 id="MoneyPlayer4"> M 1000</h3>
+				</div>			
+				
+				</div>
 
 		</div>
 

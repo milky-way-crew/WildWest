@@ -1,93 +1,93 @@
 body{
-  background-color: #CCE7D0;
+background-color: #CCE7D0;
 
 }
 
 .hidden{
-  display:none;
+    display:none;
 }
 
 #table{
 
-  background: url("../img/board/board900x901.png") no-repeat center center ;
-  position:absolute;
-  top:2%;
-  left:2%;
-  margin:0px;
-  padding:0px;
-  background-color:#CCE7D0;
+background: url("../img/board/board900x901.png") no-repeat center center ;
+position:absolute;
+top:2%;
+left:2%;
+margin:0px;
+padding:0px;
+background-color:#CCE7D0;
 }
 
 .board{
-  top:0px;
-  left:0px;
+top:0px;
+left:0px;
 
 }
 
 
 
 .northwest, .northeast, .southwest, .southeast{
-  width:145px;
-  height:145px;
+width:145px;
+height:145px;
 
 }
 
 .south_north{
-  width:71px;
+width:71px;
 
 }
 .west_east{
-  height:74px;
+height:74px;
 }
 
 .ownerNorth{
-  position:absolute;
-  top:-60px;
-  left:10px;
-  width:50px;
-  height:14px;
-  background-color:#ffffff;
+position:absolute;
+top:-60px;
+left:10px;
+width:50px;
+height:14px;
+background-color:#ffffff;
 }
 .ownerSouth{
-  position:absolute;
-  top:45px;
-  left:10px;
-  width:50px;
-  height:14px;
-  background-color:#ffffff;
+position:absolute;
+top:45px;
+left:10px;
+width:50px;
+height:14px;
+background-color:#ffffff;
 }
 .ownerWest{
-  position:absolute;
-  top:-25px;
-  left:15px;
-  width:14px;
-  height:50px;
-  background-color:#ffffff;
+position:absolute;
+top:-25px;
+left:15px;
+width:14px;
+height:50px;
+background-color:#ffffff;
 }
 .ownerEast{
-  position:absolute;
-  top:-25px;
-  left:115px;
-  width:14px;
-  height:50px;
-  background-color:#ffffff;
+position:absolute;
+top:-25px;
+left:115px;
+width:14px;
+height:50px;
+background-color:#ffffff;
 }
 .cityPosition{
-  position:relative;
+position:relative;
 
 }
 
 #divPlayer1, #divPlayer2, #divPlayer3, #divPlayer4{
-  height:20px;
+height:20px;
 }
 
 #playerInfo{
-  position:absolute;
-  left:1100px;
-  top:25px;
-  width: 40%;
-  margin-right:30px;
-  padding-right:30px;
+position:absolute;
+left:1100px;
+top:25px;
+width: 40%;
+margin-right:30px;
+padding-right:30px;
 }
 
 /*!
@@ -100,116 +100,112 @@ body{
  *
  * http://docs.jquery.com/UI/Accordion#theming
  */
- .ui-accordion .ui-accordion-header { display: block; cursor: pointer; position: relative; margin-top: 2px; padding: .5em .5em .5em .7em; zoom: 1; }
- .ui-accordion .ui-accordion-icons { padding-left: 2.2em; }
- .ui-accordion .ui-accordion-noicons { padding-left: .7em; }
- .ui-accordion .ui-accordion-icons .ui-accordion-icons { padding-left: 2.2em; }
- .ui-accordion .ui-accordion-header .ui-accordion-header-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
- .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; overflow: auto; zoom: 1; }
+.ui-accordion .ui-accordion-header { display: block; cursor: pointer; position: relative; margin-top: 2px; padding: .5em .5em .5em .7em; zoom: 1; }
+.ui-accordion .ui-accordion-icons { padding-left: 2.2em; }
+.ui-accordion .ui-accordion-noicons { padding-left: .7em; }
+.ui-accordion .ui-accordion-icons .ui-accordion-icons { padding-left: 2.2em; }
+.ui-accordion .ui-accordion-header .ui-accordion-header-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
+.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; overflow: auto; zoom: 1; }
 
 
- .playerButton{
-  position:absolute;
-  top:1000px;
-  /*left:50px;*/
-}
-
-#menu {
-  text-align: center;
-}
-
-#controls {
-  text-align: center;
+.playerButton{
+position:absolute;
+top:1000px;
+left:50px;
 }
 
 #upChat{
-  position:absolute;
-  left:1100px;
-  top:500px;
+position:absolute;
+left:1100px;
+top:500px;
 }
 
 #roolDice{
-  position:absolute;
-  left:400px;
-  top:250px;
+position:absolute;
+left:400px;
+top:250px;
 }
 
-#feedback { font-size: 1.4em; }
-#selectable .ui-selecting { background: #FECA40; }
-#selectable .ui-selected { background: #F39814; color: white; }
-#selectable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
-#selectable li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px; font-size: 4em; text-align: center; }
+ #feedback { font-size: 1.4em; }
+    #selectable .ui-selecting { background: #FECA40; }
+    #selectable .ui-selected { background: #F39814; color: white; }
+    #selectable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
+    #selectable li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px; font-size: 4em; text-align: center; }
 
 
-#firstInfoTable, #secondInfoTable{
-  float:left;
-  margin-right: 15px;
+#firstInfoTable, #secondInfoTable, #thirdInfoTable, #fourInfoTable, #fifthInfoTable, #sixthInfoTable, #seventhInfoTable, #eighthInfoTable{
+float:left;
+margin-right: 15px;
 }
 
 
 .city{
-  border-color: black;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: black;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 
 .brownMini{
-  background: url("../img/board/player1.png") no-repeat center center ;
-  border-color: #955438;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+
+border-color: #955438;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 
 .azureMini{
-  border-color: #A9E1FA;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: #A9E1FA;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 
 .lightredMini{
-  border-color: #D83996;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: #D83996;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 .orangeMini{
-  border-color: orange;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: orange;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 
 .redMini{
-  border-color: red;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: red;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 
 .yellowMini{
-  border-color: yellow;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: yellow;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 
 .greenMini{
-  border-color: green;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: green;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 
 .blueMini{
-  border-color: blue;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: blue;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 }
 .grayMini{
-  border-color: gray;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
+border-color: gray;
+border-style: solid;
+border-width: 1px 1px 1px 1px;
 
+}
+
+#infoPlayer1, #infoPlayer2, #infoPlayer3, #infoPlayer4{
+background:#CCE7D0;
 }
 
 
 .disableButton{
-  opacity:0.5;
+opacity:0.5;
 }
 
 
@@ -217,37 +213,37 @@ body{
 
 
 .north_position_house{
-  position:relative; 
-  left: -2px; 
-  top:45px;
+position:relative; 
+left: -2px; 
+top:45px;
 }
 
 .south_position_house{
-  position:relative; 
-  left: -2px; 
-  top:-75px;
+position:relative; 
+left: -2px; 
+top:-75px;
 }
 
 .east_position_house{
-  position:relative; 
-  left: -25px; 
-  top:-13px;
-  -moz-transform: rotate(90deg);  
-  -o-transform: rotate(90deg);  
+position:relative; 
+left: -25px; 
+top:-13px;
+ -moz-transform: rotate(90deg);  
+       -o-transform: rotate(90deg);  
   -webkit-transform: rotate(90deg);  
-  -ms-transform: rotate(90deg);  
-  transform: rotate(90deg); 
+      -ms-transform: rotate(90deg);  
+          transform: rotate(90deg); 
 }
 
 .west_position_house{
-  position:relative; 
-  left: 95px; 
-  top:-13px;
-  -moz-transform: rotate(90deg);  
-  -o-transform: rotate(90deg);  
+position:relative; 
+left: 95px; 
+top:-13px;
+ -moz-transform: rotate(90deg);  
+       -o-transform: rotate(90deg);  
   -webkit-transform: rotate(90deg);  
-  -ms-transform: rotate(90deg);  
-  transform: rotate(90deg); 
+      -ms-transform: rotate(90deg);  
+          transform: rotate(90deg); 
 }
 
 
@@ -255,34 +251,48 @@ body{
 
 
 .setColorPlayer1{
-  background-color:#BB7E3D;
+background-color:#BB7E3D;
 }
 
 .setColorPlayer2{
-  background-color:#B2B73D;
+background-color:#B2B73D;
 }
 .setColorPlayer3{
-  background-color:#742630;
+background-color:#742630;
 }
 .setColorPlayer4{
-  background-color:#A13AB2;
+background-color:#A13AB2;
 }
 
 
 .setDefaultColor{
-  background-color:#CCE7D0;
+background-color:#CCE7D0;
 }
 
 
 .setMortageCell{
-  background-color:white;
+background-color:white;
 }
 
 .visibleCell{
-  border-color:#ffffff;
+border-color:#ffffff;
 
 }
 .unmortageSelected{
-  border-color:#000000;
+border-color:#000000;
 }
 
+.setMiniImagePlayer1{
+background: url("../img/board/miniPlayer1.png") no-repeat center center ;
+}
+
+.setMiniImagePlayer2{
+background: url("../img/board/miniPlayer2.png") no-repeat center center ;
+}
+
+.setMiniImagePlayer3{
+background: url("../img/board/miniPlayer3.png") no-repeat center center ;
+}
+.setMiniImagePlayer4{
+background: url("../img/board/miniPlayer4.png") no-repeat center center ;
+}
