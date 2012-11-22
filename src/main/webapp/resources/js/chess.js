@@ -1,5 +1,4 @@
-/*global jQuery, console, alert, document, setInterval, clearInterval, prompt, bootbox*/
-
+/*global jQuery, console, alert, document, setInterval, setTimeout, clearInterval, prompt, bootbox*/
 
 (function($) {
     "use strict";
@@ -77,7 +76,7 @@
             GAME.inform('Sending your move to server');
 
             GAME.sendMove(idFrom, idTo, function(json) {
-                GAME.inform('Result of move:' + json.result);
+                // GAME.inform('Result of move:' + json.result);
 
                 if(typeof GAME.handleEvent[json.result] !== 'undefined') {
                     console.log('Result of move from server: ' + json.result);
@@ -243,7 +242,8 @@
         updaterService: function() {
             GAME.sendMessage('changes', function(json) {
                 GAME.config.canMove = json.move;
-                GAME.inform('Move : ' + json.move);
+                var message = typeof json.move === 'undefined' ? 'Waiting for opponent' : (json.move ? 'Its your turn' : 'Opponent turn'); 
+                GAME.inform(message);
 
                 if(typeof json.result !== 'undefined') {
                     if(typeof json.enemyMove !== 'undefined') {
@@ -391,25 +391,6 @@
     };
 
     $(document).ready(function() {
-        //      var hoverIn = function() {
-        //              if($('.selected').length > 0) {
-        //                  var from = $('.selected').parent().attr('id');
-        //                  if(GAME.isValidMove(from, $(this).attr('id'))) {
-        //                      $(this).addClass('valid');
-        //                  } else {
-        //                      $(this).addClass('invalid');
-        //                  }
-        //              }
-        //          },
-        //          hoverOut = function() {
-        //              $(this).removeClass('valid');
-        //              $(this).removeClass('invalid');
-        //          },
-        //          lock = false;
-        // TODO: Its laggy
-        // $('#chess_board td').each(function() {
-        // $(this).hover(hoverIn, hoverOut);
-        // });
         $('#chess_board td').each(function() {
             $(this).click(function() {
                 if($('.selected').length > 0) {
@@ -433,21 +414,18 @@
 
         $('.figure').each(function() {
             $(this).click(function() {
-                var $clicked = $(this).parent().attr('id'),
-                    clickedType = GAME.config.board[$clicked].type.toLowerCase()[0];
+                var $this = $(this),
+                    $clicked = $this.parent().attr('id'),
+                    clickedType = GAME.config.board[$clicked].type;//.toLowerCase()[0];
 
-                if(clickedType !== 't' && clickedType !== 'f') {
-                    if(GAME.isOwnerOf($clicked) && GAME.config.canMove) {
-                        console.log('CLICK ON OWN FIGURE');
+                if(clickedType !== 'TRAP' && clickedType !== 'FLAG' 
+                    && GAME.isOwnerOf($clicked) && GAME.config.canMove) {
                         $('.selected').removeClass('selected');
-                        $(this).addClass('selected');
-
-                        // $($(this).parent()).addClass('selected');
-                        $(this).effect("bounce", {
+                        $this.addClass('selected');
+                        $this.effect("bounce", {
                             times: 3
                         }, 300);
                         return false;
-                    }
                 }
             });
         });
@@ -483,17 +461,4 @@
         GAME.initBoard();
         setInterval(GAME.updaterService, 5000);
     });
-})(jQuery, bootbox);
-
-//var socket = new WebSocket("ws://localhost:8888/");
-//socket.onopen = function() {
-//  console.log("KAWABUNGA!");
-//};
-//socket.onclose = function() {
-//  console.log("AGNUBAWAWK");
-//};
-//socket.onmessage = function(event) {
-//  console.log("Msg:", event.data);
-//  updater(event.data + "\n");
-//};
-// socket.send(data);
+})(jQuery);
