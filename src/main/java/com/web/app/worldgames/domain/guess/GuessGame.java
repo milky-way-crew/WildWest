@@ -34,9 +34,8 @@ public class GuessGame {
 	private int turn = 0;
 	private String currentAnswer = "apple";
 	private Timer timer = new Timer();
-	// hardcode :(
-	private List<String> answers = java.util.Arrays.asList(new String[] {
-			"apple", "dog", "cat", "mouse", "student", "anger", "sadness" });
+
+	private static List<String> answers = AnswerLoader.loadAnswers();
 
 	private List<GuessPlayer> players = new ArrayList<GuessPlayer>();
 
@@ -241,7 +240,7 @@ public class GuessGame {
 	private boolean isTrueAnswer(String string) {
 		String[] strings = string.split(" ");
 		for (String maybeTrueAnswer : strings) {
-			if (maybeTrueAnswer.trim().equalsIgnoreCase(currentAnswer)) {
+			if (currentAnswer.startsWith(maybeTrueAnswer.trim().toLowerCase())) {
 				return true;
 			}
 		}
