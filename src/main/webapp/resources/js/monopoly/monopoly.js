@@ -46,6 +46,7 @@ function() {
         },
         clearTooltipsIn: function(area) {
             $(area).attr('data-original-title', '');
+            $(area).tooltip('hide');
         }
     };
     chat = {
