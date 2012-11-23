@@ -337,8 +337,8 @@ public void price(){
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (currentPlayer.getId() == idPlayer) {
 			if (currentPlayer.canMortage()) {
-				
-				//response.put("player_money", currentPlayer.getMoney());
+				response.put("type", "mortage");
+				response.put("player_money", currentPlayer.getMoney());
 				JsonNode tree = null;
 				try {
 					tree = objectMapper.readTree(data);
@@ -368,7 +368,7 @@ public void price(){
 					
 					log.info("player money after mortage: "
 							+ currentPlayer.getMoney());
-					response.put("mortage_list", currentPlayer.getMortageAvailable());
+					// response.put("mortage_list", currentPlayer.getMortageAvailable());
 					if (currentPlayer.listPropertyForSell().contains(city)) {
 						currentPlayer.removeObj(
 								currentPlayer.listPropertyForSell(), city);
@@ -389,7 +389,7 @@ public void price(){
 					log.info("list property for sell after mortage: "
 							+ currentPlayer.listPropertyForSell());
 					response.put("player_money", currentPlayer.getMoney());
-					broadcast(response);
+					// broadcast(response);
 					// currentPlayer.listPropertyForSell();
 				} else {
 					log.info("no position: ");
@@ -397,7 +397,7 @@ public void price(){
 					response.put("mortage_list",
 							currentPlayer.getMortageAvailable());
 					response.put("player", currentPlayer.getColor());
-					broadcast(response);
+					// broadcast(response);
 				}
 			}
 			currentPlayer.addBuildAvailable();
@@ -408,7 +408,7 @@ public void price(){
 			state.put("buttons", buttons);
 			response.put("game_state", state);
 		}
-		//broadcast(response);
+		broadcast(response);
 	}
 
 	private void onUnMortage(int idPlayer, String type,
