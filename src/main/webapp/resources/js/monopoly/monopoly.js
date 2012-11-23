@@ -68,7 +68,8 @@ function() {
             money: 0,
             color: '',
             game_status: "",
-            position: 0
+            position: 0,
+            price:0
         },
         transport: {
             socket: null,
@@ -226,6 +227,15 @@ function() {
                         MONO.animate.sell(json.player, $.map(Object.keys(json.sell_list), function(e) {
                             return parseInt(e, 10);
                         }), json.sell_list);
+                    }
+                },
+                'auction':function(json){
+                	 price = parseInt(
+                     prompt('price'));
+                    if(price && json.player === MONO.config.color) {
+                    		MONO.transport.send('auction', {
+                    			price: price
+                    		});
                     }
                 },
                 'init': function(json) {
