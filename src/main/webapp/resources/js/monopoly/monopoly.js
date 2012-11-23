@@ -575,6 +575,7 @@ function() {
                         });
 
                         // we don't need tooltips anymore
+                        $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
                 });
@@ -599,8 +600,6 @@ function() {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        $(this).removeClass('setMortageCell').removeClass('unmortageSelected').addClass("setMiniImagePlayer" + playerOrder);
-
                         MONO.transport.send('unmortage', {
                             position: pos
                         });
@@ -610,7 +609,8 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('unmortageSelected');
                         });
-
+                        
+                        $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
                 });
@@ -633,8 +633,6 @@ function() {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        console.log('Build in cell', e);
-                        BOARD.houseManipulation.buildHouse(e);
                         $(this).removeClass('visibleCell');
 
                         MONO.transport.send('build', {
@@ -646,6 +644,7 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('visibleCell');
                         });
+                        
                         $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
@@ -670,8 +669,6 @@ function() {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        console.log('Sell in cell', e);
-                        BOARD.sellAll(player, e);
                         $(this).removeClass('visibleCell');
 
                         MONO.transport.send('sell', {
@@ -683,6 +680,7 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('visibleCell');
                         });
+                        
                         $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
