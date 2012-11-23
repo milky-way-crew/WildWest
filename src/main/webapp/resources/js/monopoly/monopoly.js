@@ -140,19 +140,25 @@ function() {
                     MONO.config.money = money;
                     MONO.animate.money(color, money);
 
-                    MONO.config.position = json.was + offset;
+                    MONO.config.position = (json.was + offset) % 40;
                     log('position on board [was] -> ' + json.was);
                     log('position on board [now] -> ' + MONO.config.position);
 
                     log('Starting animation of roll event');
                     BOARD.rollDice(dice1, dice2);
                     MONO.animate.move(color, dice1, dice2, json.was);
+                    ui.clearTooltipsIn('#board [rel=tooltip]');
 
                     // this player moves
                     if(MONO.config.color === color) {
                         ui.refreshButtons(buttons);
                         if(message) {
                             chat.append("server: " + message);
+                            ui.attachTooltip('#cell' + MONO.config.position, message);
+
+                            // $('#cell' + MONO.config.position).tooltip({'placement' : 'bottom'});
+                            // $('#cell' + MONO.config.position).tooltip('destroy');
+                            $('#cell' + MONO.config.position).tooltip('show');
                         }
                         // experimental feature
                         $("#accordion").accordion({
