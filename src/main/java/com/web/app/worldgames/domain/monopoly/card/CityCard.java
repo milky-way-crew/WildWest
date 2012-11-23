@@ -29,6 +29,7 @@ public class CityCard extends SellableCard {
 	private int position;
 	private final static Logger log = Logger.getLogger(CityCard.class);
 	Cities cities = null;
+	private StartGame start = new StartGame();
 
 	public CityCard(Cities cities) {
 		this.name = cities.getCityName();
@@ -312,6 +313,7 @@ public class CityCard extends SellableCard {
 		// player.addRegion();
 		player.addRegions(player);
 		player.addBuildAvailable();
+		
 		log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
 		log.info("[REGIONS LIST]: " + player.listRegions(player));
 
@@ -355,6 +357,26 @@ public class CityCard extends SellableCard {
 			player.setMoney(player.getMoney() + this.getPrice() / 2);
 			player.listRegions(player).remove(this.getRegion());
 		}
+	}
+
+	@Override
+	public void auctionCityOrRail(Player player, int price) {
+		System.out.println("auction cityyy");
+		this.setOwner(player);
+		player.addProperty(player);
+		player.listPropertyForMortage();
+		player.listPropertyForSell();
+		log.info("[MESSAGE]: You are owner now");
+		player.setMoney(player.getMoney() - price);
+		log.info("[MONEY]: " + player.getMoney());
+		log.info("[BUY::: OWNER]: " + this.getOwner());
+		// player.addRegion();
+		player.addRegions(player);
+		player.addBuildAvailable();
+		
+		log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
+		log.info("[REGIONS LIST]: " + player.listRegions(player));
+		
 	}
 
 	// public static void main(String[] args) {

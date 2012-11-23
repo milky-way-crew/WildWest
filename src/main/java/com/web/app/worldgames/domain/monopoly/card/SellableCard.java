@@ -1,18 +1,18 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 
 public abstract class SellableCard extends Cell {
-	private int price;
-	private boolean mortage;
-	private Player owner;
-
 	public abstract int getRent(Player player, Player owner);
 
 	public abstract void buyCityOrRail(Player player);
+	public abstract void auctionCityOrRail(Player player, int price);
 
 	public abstract void sell(Player player);
 
@@ -23,6 +23,10 @@ public abstract class SellableCard extends Cell {
 	public abstract boolean canSell(Player player);
 
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
+	private int price;
+	private boolean mortage;
+	private Player owner;
+	
 
 	public boolean isMortage() {
 		return mortage;
@@ -59,6 +63,8 @@ public abstract class SellableCard extends Cell {
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
+
+	
 
 	// public boolean canPayRent(Player player, int rent) {
 	// return (player.checkMoney(rent) && this.getOwner() != player

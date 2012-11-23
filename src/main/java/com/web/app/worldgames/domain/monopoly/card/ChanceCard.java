@@ -37,7 +37,7 @@ public class ChanceCard extends Cell {
 				log.info("[CHANCE] " + chance.getMessage());
 				setInformation(chance.getMessage());
 				if (chance.getPosition() < player.getPosition()) {
-					log.info("[-----PLAYER:-------] " + player.getColor()
+					log.info("[-----PLAYER:-----IN CHANCE--] " + player.getColor()
 							+ " GET CIRCLE MONEY +$200");
 					player.setMoney(player.getMoney() + 200);
 				}

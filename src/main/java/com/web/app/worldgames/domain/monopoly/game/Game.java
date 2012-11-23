@@ -22,10 +22,25 @@ public class Game {
 	private boolean started = false;
 	private boolean end = false;
 	private Player currentPlayer = null;
-	private Map<SellableCard, Map<String, Object>> gameBoard = new HashMap<SellableCard, Map<String, Object>>();
+	private Map<Integer, Map<String, Object>> gameBoard = new HashMap<Integer, Map<String, Object>>();
+	private Map<String, Map<String, Object>> players = new HashMap<String, Map<String, Object>>();
+
 	public List<Player> playerList = new ArrayList<Player>();
 	public List<Player> loserList = new ArrayList<Player>();
 	private static final Logger log = Logger.getLogger(Game.class);
+	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
+
+	public List<SellableCard> getActiveBoard() {
+		return activeBoard;
+	}
+
+	public void addToActivBoard(SellableCard card) {
+		activeBoard.add(card);
+	}
+
+	public void removeFromActivBoard(SellableCard card) {
+		activeBoard.remove(card);
+	}
 
 	public Game() {
 	}
@@ -70,6 +85,14 @@ public class Game {
 		this.currentPlayer = currentPlayer;
 	}
 
+	public Map<Integer, Map<String, Object>> getGameBoard() {
+		return gameBoard;
+	}
+
+//	public void setGameBoard(Map<Integer, Map<String, Object>> gameBoard) {
+//		this.gameBoard = gameBoard;
+//	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -92,18 +115,30 @@ public class Game {
 		return true;
 	}
 
-	public Map<SellableCard, Map<String, Object>> refreshBoard(
-			Map<SellableCard, Map<String, Object>> gameBoard, SellableCard card) {
+	public Map<Integer, Map<String, Object>> refreshBoard() {
 		Map<String, Object> temp = new HashMap<String, Object>();
-		temp.put("position", card.getPosition());
-		temp.put("owner", card.getOwner());
-		temp.put("mortage", card.isMortage());
-		if(card instanceof CityCard){
-			temp.put("houses", ((CityCard) card).getNumbersOfHouses());
-			temp.put("hotel", ((CityCard) card).isHotel());
+		for (SellableCard card : activeBoard) {
+			temp.put("position", card.getPosition());
+			temp.put("owner", card.getOwner().getColor());
+			temp.put("mortage", card.isMortage());
+			if (card instanceof CityCard) {
+				temp.put("houses", ((CityCard) card).getNumbersOfHouses());
+				temp.put("hotel", ((CityCard) card).isHotel());
+			}
+			gameBoard.put(card.getPosition(), temp);
 		}
-		gameBoard.put(card, temp);
 		return gameBoard;
+	}
+
+	public Map<String, Map<String, Object>> refreshPlayers() {
+		Map<String, Object> temp = new HashMap<String, Object>();
+		for (Player player : playerList) {
+			temp.put("color", player.getColor());
+			temp.put("money", player.getMoney());
+			temp.put("position", player.getPosition());
+			players.put(player.getColor(), temp);
+		}
+		return players;
 	}
 
 	public void addPlayers(User user) {

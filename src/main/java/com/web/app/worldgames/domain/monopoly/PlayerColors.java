@@ -1,7 +1,7 @@
 package com.web.app.worldgames.domain.monopoly;
 
 public enum PlayerColors {
-	PLAYER1("RED"),PLAYER2("GREEN"),PLAYER3("BLUE"), PLAYER4("YELLOW");
+	PLAYER1("BROWN"),PLAYER2("GREEN"),PLAYER3("RED"), PLAYER4("VIOLET");
 	private String color;
 
 	PlayerColors(String color) {

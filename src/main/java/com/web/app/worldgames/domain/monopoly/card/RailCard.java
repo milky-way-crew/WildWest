@@ -140,4 +140,18 @@ public class RailCard extends SellableCard {
 		player.setMoney(player.getMoney() + this.getPrice() / 2);
 	}
 
+	@Override
+	public void auctionCityOrRail(Player player, int price) {
+		this.setOwner(player);
+		player.addProperty(player);
+		player.listPropertyForMortage();
+		player.listPropertyForSell();
+		System.out.println("You are owner now");
+		player.setMoney(player.getMoney() - price);
+		System.out.println("Your money: " + player.getMoney());
+		player.addNumberOfRails();
+		System.out.println("Your have ports number: "
+				+ player.getNumberOfRails());
+	}
+
 }
