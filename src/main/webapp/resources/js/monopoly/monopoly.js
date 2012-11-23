@@ -736,6 +736,14 @@ function() {
 				cell=playerNumber+"MiniCell"+cell;
 				$(cell).removeClass('setMortageCell').addClass("setMiniImagePlayer"+playerOrder);
             },
+            build:function(cell){
+        		
+				BOARD.houseManipulation.buildHouse(cell);
+        	},
+        	sell:function(cell, player){
+				
+        		BOARD.sellAll(player,cell);
+        	}
             
 
         },
