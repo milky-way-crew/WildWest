@@ -131,7 +131,7 @@
 						<div id="ownerCell20" class="ownerWest"></div>
 					</div>
 				</td>
-				<td colspan="9" rowspan="9">
+				<td id = "cell41" colspan="9" rowspan="9">
 					<div id="roolDice">
 						<img id="diceImg1" src="resources/img/board/die1.gif" width="50px"
 							height="50px"> </img> <img id="diceImg2"
