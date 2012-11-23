@@ -46,6 +46,7 @@ function() {
         },
         clearTooltipsIn: function(area) {
             $(area).attr('data-original-title', '');
+            $(area).tooltip('hide');
         }
     };
     chat = {
@@ -140,19 +141,25 @@ function() {
                     MONO.config.money = money;
                     MONO.animate.money(color, money);
 
-                    MONO.config.position = json.was + offset;
+                    MONO.config.position = (json.was + offset) % 40;
                     log('position on board [was] -> ' + json.was);
                     log('position on board [now] -> ' + MONO.config.position);
 
                     log('Starting animation of roll event');
                     BOARD.rollDice(dice1, dice2);
                     MONO.animate.move(color, dice1, dice2, json.was);
+                    ui.clearTooltipsIn('#board [rel=tooltip]');
 
                     // this player moves
                     if(MONO.config.color === color) {
                         ui.refreshButtons(buttons);
                         if(message) {
                             chat.append("server: " + message);
+                            ui.attachTooltip('#cell' + MONO.config.position, message);
+
+                            // $('#cell' + MONO.config.position).tooltip({'placement' : 'bottom'});
+                            // $('#cell' + MONO.config.position).tooltip('destroy');
+                            $('#cell' + MONO.config.position).tooltip('show');
                         }
                         // experimental feature
                         $("#accordion").accordion({
@@ -173,98 +180,51 @@ function() {
                     log('Player= ' + json.player + ' payed money for go out from jail');
                     MONO.animate.pay(json.player, json.player_money);
                 },
-                'mortage': function(json) {
-                    console.log('[mortage] event');
+                'handler': function(json, draw, animate, list) {
                     var pos, buttons;
                     buttons = json.game_state.buttons;
                     MONO.animate.money(json.player, json.player_money);
-
                     if (json.player === MONO.config.color) {
                         ui.refreshButtons(buttons);                        
                     } 
-
                     if (json.position && json.player) {
-                        BOARD.draw.mortage(json.position, json.player);
+                        draw(json.position, json.player);
                     }
-
-                    if(json.player === MONO.config.color && json.mortage_list) {
-                        var onlyNumbers = $.map(Object.keys(json.mortage_list), function(e) {
+                    if(json.player === MONO.config.color && list) {
+                        var onlyNumbers = $.map(Object.keys(list), function(e) {
                             return parseInt(e, 10);
                         });
-
-                        MONO.animate.mortage(json.player, onlyNumbers, json.mortage_list);
+                        animate(json.player, onlyNumbers, list);
                         if(json.message) {
                             chat.append("server: " + json.message);
                         }
-                    }
+                    }                    
+                },
+                'mortage': function(json) {
+                    console.log('[mortage] event');
+                    MONO.events.handle.handler(json, BOARD.draw.mortage, MONO.animate.mortage, json.mortage_list);
                 },
                 'unmortage': function(json) {
                     console.log('[unmortage] event');
-                    var pos, buttons;
-                    buttons = json.game_state.buttons;
-                    MONO.animate.money(json.player, json.player_money);
-
-                    if (json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);                        
-                    } 
-
-                    if (json.position && json.player) {
-                        BOARD.draw.unmortage(json.position, json.player);
-                    }
-
-                    if(json.player === MONO.config.color && json.unmortage_list) {
-                        var onlyNumbers = $.map(Object.keys(json.unmortage_list), function(e) {
-                            return parseInt(e, 10);
-                        });
-
-                        MONO.animate.unmortage(json.player, onlyNumbers, json.unmortage_list);
-                        if(json.message) {
-                            chat.append("server: " + json.message);
-                        }
-                    }
+                    MONO.events.handle.handler(json, BOARD.draw.unmortage, MONO.animate.unmortage, json.unmortage_list);
                 },
                 'build': function(json) {
                     console.log('[build] event');
-                    var pos, buttons;
-                    buttons = json.game_state.buttons;
-                    MONO.animate.money(json.player, json.player_money);
-
-                    if(json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);
-                        MONO.animate.build(json.player, $.map(Object.keys(json.build_list), function(e) {
-                            return parseInt(e, 10);
-                        }));
-                    }
+                    MONO.events.handle.handler(json, BOARD.draw.build, MONO.animate.build, json.build_list);
                 },
                 'sell': function(json) {
                     console.log('[sell] event');
-                    var pos, buttons;
-                    buttons = json.game_state.buttons;
-                    MONO.animate.money(json.player, json.player_money);
-
-                    if(json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);
-                        MONO.animate.sell(json.player, $.map(Object.keys(json.sell_list), function(e) {
-                            return parseInt(e, 10);
-                        }), json.sell_list);
-                    }
+                    MONO.events.handle.handler(json, BOARD.draw.sell, MONO.animate.sell, json.sell_list);
                 },
                 'auction':function(json){
                 	console.log('[auction] event');
                 	var price;
-                	//MONO.animate.auction();
-                	//buttons = json.game_state.buttons;
-                //	if(json.player === MONO.config.color) {
                 	price = parseInt(prompt('set price' ));
                 	if (price) {
                 	MONO.transport.send('auction', {
                 	price: price
                 	});
-                	//}
                 	}
-//                	if(MONO.config.color === json.player) {
-//                	ui.refreshButtons(buttons);
-//                	}
                 },
                 'init': function(json) {
                     console.log('[init] event');
@@ -626,6 +586,7 @@ function() {
                         });
 
                         // we don't need tooltips anymore
+                        $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
                 });
@@ -650,8 +611,6 @@ function() {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        $(this).removeClass('setMortageCell').removeClass('unmortageSelected').addClass("setMiniImagePlayer" + playerOrder);
-
                         MONO.transport.send('unmortage', {
                             position: pos
                         });
@@ -661,7 +620,8 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('unmortageSelected');
                         });
-
+                        
+                        $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
                 });
@@ -684,8 +644,6 @@ function() {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        console.log('Build in cell', e);
-                        BOARD.houseManipulation.buildHouse(e);
                         $(this).removeClass('visibleCell');
 
                         MONO.transport.send('build', {
@@ -697,6 +655,7 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('visibleCell');
                         });
+                        
                         $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
@@ -721,8 +680,6 @@ function() {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        console.log('Sell in cell', e);
-                        BOARD.sellAll(player, e);
                         $(this).removeClass('visibleCell');
 
                         MONO.transport.send('sell', {
@@ -734,6 +691,7 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('visibleCell');
                         });
+                        
                         $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
@@ -779,6 +737,7 @@ function() {
 
             return id;
         },
+
         draw: {
             mortage: function(cell, player) {
                 var playerNumber = BOARD.getPlayerNumber(player);
@@ -787,8 +746,21 @@ function() {
                 $(cell).addClass('setMortageCell').removeClass("setMiniImagePlayer" + playerOrder);
             },
             unmortage: function (cell, player) {
+            	var playerNumber = BOARD.getPlayerNumber(player);
+				var playerOrder = BOARD.getPlayer(player); 
+				cell=playerNumber+"MiniCell"+cell;
+				$(cell).removeClass('setMortageCell').addClass("setMiniImagePlayer"+playerOrder);
+            },
+            build:function(cell){
+        		
+				BOARD.houseManipulation.buildHouse(cell);
+        	},
+        	sell:function(cell, player){
+				
+        		BOARD.sellAll(player,cell);
+        	}
+            
 
-            }
         },
 
         init: function() { /*--Accardion--*/
