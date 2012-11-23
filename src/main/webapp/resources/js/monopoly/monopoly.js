@@ -250,13 +250,21 @@ function() {
                     }
                 },
                 'auction':function(json){
-                	 price = parseInt(
-                     prompt('price'));
-                    if(price && json.player === MONO.config.color) {
-                    		MONO.transport.send('auction', {
-                    			price: price
-                    		});
-                    }
+                	console.log('[auction] event');
+                	var price;
+                	//MONO.animate.auction();
+                	//buttons = json.game_state.buttons;
+                //	if(json.player === MONO.config.color) {
+                	price = parseInt(prompt('set price' ));
+                	if (price) {
+                	MONO.transport.send('auction', {
+                	price: price
+                	});
+                	//}
+                	}
+//                	if(MONO.config.color === json.player) {
+//                	ui.refreshButtons(buttons);
+//                	}
                 },
                 'init': function(json) {
                     console.log('[init] event');

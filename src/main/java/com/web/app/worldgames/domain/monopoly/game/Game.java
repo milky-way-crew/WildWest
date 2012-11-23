@@ -29,6 +29,7 @@ public class Game {
 	public List<Player> loserList = new ArrayList<Player>();
 	private static final Logger log = Logger.getLogger(Game.class);
 	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
+	private int auctionPrice;
 
 	public List<SellableCard> getActiveBoard() {
 		return activeBoard;
@@ -89,9 +90,17 @@ public class Game {
 		return gameBoard;
 	}
 
-//	public void setGameBoard(Map<Integer, Map<String, Object>> gameBoard) {
-//		this.gameBoard = gameBoard;
-//	}
+	// public void setGameBoard(Map<Integer, Map<String, Object>> gameBoard) {
+	// this.gameBoard = gameBoard;
+	// }
+
+	public int getAuctionPrice() {
+		return auctionPrice;
+	}
+
+	public void setAuctionPrice(int auctionPrice) {
+		this.auctionPrice = auctionPrice;
+	}
 
 	@Override
 	public int hashCode() {

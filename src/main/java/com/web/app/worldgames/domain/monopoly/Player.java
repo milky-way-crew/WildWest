@@ -48,7 +48,7 @@ public class Player {
 	private Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
 	// private Map<String, Integer> regions = new HashMap<String, Integer>();
 	private int numberOfBuildings = 0;
-	private int auction_price;
+	
 	private static final Logger log = Logger.getLogger(Player.class);
 
 	// -----------MAYBY ONLY FOR TEST
@@ -187,14 +187,14 @@ public class Player {
 	public void setBuildings(Map<Integer, Integer> buildings) {
 		this.buildings = buildings;
 	}
-
-	public int getAuction_price() {
-		return auction_price;
-	}
-
-	public void setAuction_price(int auction_price) {
-		this.auction_price = auction_price;
-	}
+//
+//	public int getAuctionPrice() {
+//		return auctionPrice;
+//	}
+//
+//	public void setAuctionPrice(int auctionPrice) {
+//		this.auctionPrice = auctionPrice;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -412,7 +412,8 @@ public class Player {
 	public Map<Integer, String> getSellAvailable() {
 		Map<Integer, String> sellAvailable = new HashMap<Integer, String>();
 		for (SellableCard p : this.listPropertyForSell()) {
-			sellAvailable.put(p.getPosition(), "You can get $" + p.getPrice() / 2 + " after mortage");
+			sellAvailable.put(p.getPosition(), "You can get $" + p.getPrice()
+					/ 2 + " after mortage");
 		}
 		return sellAvailable;
 	}
@@ -435,7 +436,7 @@ public class Player {
 							"Player " + this.getName()
 									+ " can build house for $"
 									+ city.getHousePrice());
-					if (city.getNumbersOfHouses() == 3&& !city.isHotel()) {
+					if (city.getNumbersOfHouses() == 3 && !city.isHotel()) {
 						buildAvailable.put(
 								city.getPosition(),
 								"Player " + this.getName()
@@ -488,30 +489,31 @@ public class Player {
 		} else {
 			log.info("[MESSAGE]: property list is empty");
 		}
-		//return forMortage;
+		// return forMortage;
 	}
-//	public List<SellableCard> listPropertyForMortage() {
-//		CityCard city = null;
-//		if (this.checkProperty()) {
-//			for (SellableCard card : this.playerProperty()) {
-//				if (card instanceof CityCard) {
-//					city = (CityCard) card;
-//					if (!city.isMortage() && !forMortage.contains(city)
-//							&& city.getNumbersOfHouses() == 0
-//							&& !city.isHotel()) {
-//						forMortage.add(city);
-//					}
-//				} else if (card instanceof RailCard) {
-//					if (!card.isMortage() && !forMortage.contains(card)) {
-//						forMortage.add(card);
-//					}
-//				}
-//			}
-//		} else {
-//			log.info("[MESSAGE]: property list is empty");
-//		}
-//		return forMortage;
-//	}
+
+	// public List<SellableCard> listPropertyForMortage() {
+	// CityCard city = null;
+	// if (this.checkProperty()) {
+	// for (SellableCard card : this.playerProperty()) {
+	// if (card instanceof CityCard) {
+	// city = (CityCard) card;
+	// if (!city.isMortage() && !forMortage.contains(city)
+	// && city.getNumbersOfHouses() == 0
+	// && !city.isHotel()) {
+	// forMortage.add(city);
+	// }
+	// } else if (card instanceof RailCard) {
+	// if (!card.isMortage() && !forMortage.contains(card)) {
+	// forMortage.add(card);
+	// }
+	// }
+	// }
+	// } else {
+	// log.info("[MESSAGE]: property list is empty");
+	// }
+	// return forMortage;
+	// }
 
 	public List<SellableCard> listPropertyForSell() {
 		if (this.checkProperty()) {
@@ -565,8 +567,7 @@ public class Player {
 	}
 
 	public boolean canContinueGame() {
-		return (this.canMortage() && this.canSell()) ? true
-				: false;
+		return (this.canMortage() && this.canSell()) ? true : false;
 	}
 
 	public boolean canBuild() {
