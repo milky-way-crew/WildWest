@@ -48,7 +48,7 @@ public class Player {
 	private Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
 	// private Map<String, Integer> regions = new HashMap<String, Integer>();
 	private int numberOfBuildings = 0;
-	
+
 	private static final Logger log = Logger.getLogger(Player.class);
 
 	// -----------MAYBY ONLY FOR TEST
@@ -187,14 +187,15 @@ public class Player {
 	public void setBuildings(Map<Integer, Integer> buildings) {
 		this.buildings = buildings;
 	}
-//
-//	public int getAuctionPrice() {
-//		return auctionPrice;
-//	}
-//
-//	public void setAuctionPrice(int auctionPrice) {
-//		this.auctionPrice = auctionPrice;
-//	}
+
+	//
+	// public int getAuctionPrice() {
+	// return auctionPrice;
+	// }
+	//
+	// public void setAuctionPrice(int auctionPrice) {
+	// this.auctionPrice = auctionPrice;
+	// }
 
 	@Override
 	public int hashCode() {
@@ -436,13 +437,17 @@ public class Player {
 							"Player " + this.getName()
 									+ " can build house for $"
 									+ city.getHousePrice());
-					if (city.getNumbersOfHouses() == 3 && !city.isHotel()) {
-						buildAvailable.put(
-								city.getPosition(),
-								"Player " + this.getName()
-										+ " can build hotel for $"
-										+ city.getHotelPrice());
-					}
+				} else if ((city.getRegion().equals("brown") || city
+						.getRegion().equals("blue"))
+						&& this.getNumberOfRegions(this, city.getRegion()) == 2
+						&& !city.isMortage()
+						&& this.checkMoney(city.getHotelPrice())
+						&& city.getNumbersOfHouses() == 3 && !city.isHotel()) {
+					buildAvailable.put(
+							city.getPosition(),
+							"Player " + this.getName()
+									+ " can build hotel for $"
+									+ city.getHotelPrice());
 				} else if (this.getNumberOfRegions(this, city.getRegion()) == 3
 						&& !city.isMortage()
 						&& this.checkMoney(city.getHousePrice())
@@ -452,13 +457,15 @@ public class Player {
 							" Player " + this.getName()
 									+ " can build house for $"
 									+ city.getHousePrice());
-					if (city.getNumbersOfHouses() == 3 && !city.isHotel()) {
-						buildAvailable.put(
-								city.getPosition(),
-								"Player " + this.getName()
-										+ " can build hotel for $"
-										+ city.getHotelPrice());
-					}
+				} else if (this.getNumberOfRegions(this, city.getRegion()) == 3
+						&& !city.isMortage()
+						&& this.checkMoney(city.getHotelPrice())
+						&& city.getNumbersOfHouses() == 3 && !city.isHotel()) {
+					buildAvailable.put(
+							city.getPosition(),
+							"Player " + this.getName()
+									+ " can build hotel for $"
+									+ city.getHotelPrice());
 				}
 			}
 		}
