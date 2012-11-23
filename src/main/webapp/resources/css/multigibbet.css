@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+
+ 
+a {
+	font: 1px;
+	width: 10px;
+	height: 15px;
+	color: #0000FF;
+	text-decoration: none;
+}
+
+#select {
+	width: 20px;
+	height: 20px
+}
+
+#ready {
+	width: 50px;
+	height: 20px;
+	color: #00FF00;
+}
+
+#send {
+	width: 20px;
+	height: 20px
+}
+
+#exit {
+	width: 20px;
+	height: 20px
+}
+
+#usermsg {
+	font: 12px;
+	width: 200px;
+	border: 1px solid #ACD8F0;
+}
+#word {
+	width: 200px;
+	height: 30px;
+	font: 12px;
+	border: 1px solid #ACD8F0;
+}
+#live {
+	width: 25px;
+	height: 20px;
+	border: 1px solid #ACD8F0;
+}
+
+.error {
+	color: #ff0000;
+}
