@@ -216,6 +216,16 @@ function() {
                     console.log('[sell] event');
                     MONO.events.handle.handler(json, BOARD.draw.sell, MONO.animate.sell, json.sell_list);
                 },
+                'auction':function(json){
+                	console.log('[auction] event');
+                	var price;
+                	price = parseInt(prompt('set price' ));
+                	if (price) {
+                	MONO.transport.send('auction', {
+                	price: price
+                	});
+                	}
+                },
                 'init': function(json) {
                     console.log('[init] event');
                     MONO.config.color = json.color;

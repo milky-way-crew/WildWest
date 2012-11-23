@@ -100,30 +100,22 @@ public class MonopolyManager {
 		return response;
 	}
 
-	// private void onAuction(List<Player> allPlayers, String type,
-	// Map<String, Object> response, String data) {
-	//
-	// }
-
 	private void onAuction(int idPlayer, String type,
 			Map<String, Object> response, String data) {
-		// Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 		Player currentPlayer = getPlayerById(idPlayer);
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
 		ObjectMapper objectMapper = new ObjectMapper();
-		// if (currentPlayer.getId() == idPlayer) {
-		SellableCard card = null;
-		if (StartGame.boardCities.containsKey(currentPlayer.getPosition())) {
-			card = StartGame.boardCities.get(currentPlayer.getPosition());
-		} else if (StartGame.boardRails
-				.containsKey(currentPlayer.getPosition())) {
-			card = StartGame.boardRails.get(currentPlayer.getPosition());
-		}
-		setAuctionStartPrice(card.getPrice());
+//		SellableCard card = null;
+//		if (StartGame.boardCities.containsKey(currentPlayer.getPosition())) {
+//			card = StartGame.boardCities.get(currentPlayer.getPosition());
+//		} else if (StartGame.boardRails
+//				.containsKey(currentPlayer.getPosition())) {
+//			card = StartGame.boardRails.get(currentPlayer.getPosition());
+//		}
+		//setAuctionStartPrice(100);
 		response.put("type", ButtonsLabel.AUCTION);
 		response.put("player", currentPlayer.getColor());
-		// broadcast(response);
 		JsonNode tree = null;
 		try {
 			tree = objectMapper.readTree(data);
@@ -135,36 +127,18 @@ public class MonopolyManager {
 		JsonNode dataBlock = tree.path("data");
 		if (dataBlock.has("price")) {
 			int price = dataBlock.path("price").getIntValue();
-			broadcast(response);
-			if (price > getAuctionStartPrice()) {
-				setAuctionStartPrice(price);
-				log.info(" NOW PRICE======" + getAuctionStartPrice());
+			if (price > monopolyGame.getAuctionPrice()) {
+//				log.info("price"+price);
+				monopolyGame.setAuctionPrice(price);
+				log.info(" NOW PRICE======" + monopolyGame.getAuctionPrice());
 			} else {
-				setAuctionStartPrice(getAuctionStartPrice());
+				monopolyGame.setAuctionPrice(monopolyGame.getAuctionPrice());
+				log.info("PRICE IS LESS=========");
 			}
-			// for (Player p : monopolyGame.getAllPlayers()) {
-			// // if(p.getId()==monopolyGame)
-			// log.info("player: "+p.getId()+" : "+price);
-			// p.setAuction_price(price);
-			// }
-			// int max_price
-			// =monopolyGame.getAllPlayers().get(0).getAuction_price();
-			// Player auctionWinner = null;
-			// for (Player p : monopolyGame.getAllPlayers()) {
-			// int temp = p.getAuction_price();
-			// if (temp > max_price) {
-			// max_price = temp;
-			// auctionWinner = p;
-			// }
-			// }
-			// // card.auctionCityOrRail(auctionWinner, max_price);
-			// auctionWinner.setMoney(auctionWinner.getMoney() - max_price);
-			// log.info("--------------AAAAAAAAAUUUCCTTTTTIIIOOOOOOOOOONNNNNNN----"
-			// + auctionWinner.getMoney());
 		} else {
 			log.info("no price: ");
 		}
-		currentPlayer.addBuildAvailable();
+//		currentPlayer.addBuildAvailable();
 		// buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
 		// buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
 		// buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
