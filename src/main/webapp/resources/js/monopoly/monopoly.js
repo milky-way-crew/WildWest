@@ -155,14 +155,15 @@ function() {
                             chat.append("server: " + message);
                         }
                         // experimental feature
-                        $("#accordion").accordion({ active: BOARD.getPlayer(color) - 1 });
+                        $("#accordion").accordion({
+                            active: BOARD.getPlayer(color) - 1
+                        });
                     }
 
                     // chat.append("player[" + color + "] is on cell: " + json.cell.name);
                 },
                 'buy': function(json) {
-                    var msg = 'player= ' + json.player + ' bought cell with position= '
-                        + MONO.config.position + ' now player money= ' + json.player_money;
+                    var msg = 'player= ' + json.player + ' bought cell with position= ' + MONO.config.position + ' now player money= ' + json.player_money;
                     chat.append(msg);
                     log(msg);
                     MONO.animate.buy(json.player, MONO.config.position);
@@ -178,8 +179,15 @@ function() {
                     buttons = json.game_state.buttons;
                     MONO.animate.money(json.player, json.player_money);
 
-                    if(json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);
+                    if (json.player === MONO.config.color) {
+                        ui.refreshButtons(buttons);                        
+                    } 
+
+                    if (json.position && json.player) {
+                        BOARD.draw.mortage(json.position, json.player);
+                    }
+
+                    if(json.player === MONO.config.color && json.mortage_list) {
                         var onlyNumbers = $.map(Object.keys(json.mortage_list), function(e) {
                             return parseInt(e, 10);
                         });
@@ -195,12 +203,24 @@ function() {
                     var pos, buttons;
                     buttons = json.game_state.buttons;
                     MONO.animate.money(json.player, json.player_money);
-                    
-                    if(json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);
-                        MONO.animate.unmortage(json.player, $.map(Object.keys(json.unmortage_list), function(e) {
+
+                    if (json.player === MONO.config.color) {
+                        ui.refreshButtons(buttons);                        
+                    } 
+
+                    if (json.position && json.player) {
+                        BOARD.draw.unmortage(json.position, json.player);
+                    }
+
+                    if(json.player === MONO.config.color && json.unmortage_list) {
+                        var onlyNumbers = $.map(Object.keys(json.unmortage_list), function(e) {
                             return parseInt(e, 10);
-                        }), json.unmortage_list);
+                        });
+
+                        MONO.animate.unmortage(json.player, onlyNumbers, json.unmortage_list);
+                        if(json.message) {
+                            chat.append("server: " + json.message);
+                        }
                     }
                 },
                 'build': function(json) {
@@ -586,7 +606,6 @@ function() {
                     if($(cell).hasClass('visibleCell')) {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
-                        $(this).addClass('setMortageCell').removeClass('visibleCell').removeClass("setMiniImagePlayer"+playerOrder);
 
                         MONO.transport.send('mortage', {
                             position: pos
@@ -615,15 +634,15 @@ function() {
                 var cell = number + "MiniCell" + cellArr[i];
                 $(cell).unbind('click');
                 $(cell).bind('click');
-                
+
                 ui.attachTooltip(cell, messages[cellArr[i]]);
-                
+
                 $(cell).click(function() {
                     if($(cell).hasClass('unmortageSelected')) {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        $(this).removeClass('setMortageCell').removeClass('unmortageSelected').addClass("setMiniImagePlayer"+playerOrder);
+                        $(this).removeClass('setMortageCell').removeClass('unmortageSelected').addClass("setMiniImagePlayer" + playerOrder);
 
                         MONO.transport.send('unmortage', {
                             position: pos
@@ -676,8 +695,6 @@ function() {
                 });
 
             });
-
-
         },
         sell: function(cellArr, player, messages) {
             var number = BOARD.getPlayerNumber(player);
@@ -719,7 +736,6 @@ function() {
             $("#diceImg1").attr("src", "resources/img/board/die" + dice1 + ".gif");
             $("#diceImg2").attr("src", "resources/img/board/die" + dice2 + ".gif");
         },
-
         buy: function(player, cell) {
             var number = BOARD.getPlayerNumber(player);
             var playerNumber = BOARD.getPlayer(player);
@@ -728,16 +744,13 @@ function() {
             cell = "#ownerCell" + cell;
             $(number + "MiniCell" + miniCell).addClass("setMiniImagePlayer" + playerNumber);
             $(cell).addClass("setColorPlayer" + playerNumber);
-
         },
-
-
         updateMoney: function(who, money) {
             var colorToMoney = {
-                'BROWN' : '1',
-                'GREEN' : '2',
-                'RED' : '3',
-                'VIOLET' : '4'
+                'BROWN': '1',
+                'GREEN': '2',
+                'RED': '3',
+                'VIOLET': '4'
             };
             $("#MoneyPlayer" + colorToMoney[who]).html(money + "$");
         },
@@ -755,22 +768,22 @@ function() {
             } else {
                 id = 4;
             }
-            
+
             return id;
         },
-        draw:{
-        	mortage:function(cell, player){
-        		var playerNumber = BOARD.getPlayerNumber(player);
-				var playerOrder = BOARD.getPlayer(player); 
-				cell=playerNumber+"MiniCell"+cell;
-				$(cell).addClass('setMortageCell').removeClass('visibleCell').removeClass("setMiniImagePlayer"+playerOrder);
-                		
-        	}
-        	
+        draw: {
+            mortage: function(cell, player) {
+                var playerNumber = BOARD.getPlayerNumber(player);
+                var playerOrder = BOARD.getPlayer(player);
+                cell = playerNumber + "MiniCell" + cell;
+                $(cell).addClass('setMortageCell').removeClass("setMiniImagePlayer" + playerOrder);
+            },
+            unmortage: function (cell, player) {
+
+            }
         },
-        
-        init: function() {
-            /*--Accardion--*/
+
+        init: function() { /*--Accardion--*/
             $(function() {
                 $("#accordion").accordion();
             }); /*--BUTTON--*/
