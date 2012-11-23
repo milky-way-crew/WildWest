@@ -172,81 +172,41 @@ function() {
                     log('Player= ' + json.player + ' payed money for go out from jail');
                     MONO.animate.pay(json.player, json.player_money);
                 },
-                'mortage': function(json) {
-                    console.log('[mortage] event');
+                'handler': function(json, draw, animate, list) {
                     var pos, buttons;
                     buttons = json.game_state.buttons;
                     MONO.animate.money(json.player, json.player_money);
-
                     if (json.player === MONO.config.color) {
                         ui.refreshButtons(buttons);                        
                     } 
-
                     if (json.position && json.player) {
-                        BOARD.draw.mortage(json.position, json.player);
+                        draw(json.position, json.player);
                     }
-
-                    if(json.player === MONO.config.color && json.mortage_list) {
-                        var onlyNumbers = $.map(Object.keys(json.mortage_list), function(e) {
+                    if(json.player === MONO.config.color && list) {
+                        var onlyNumbers = $.map(Object.keys(list), function(e) {
                             return parseInt(e, 10);
                         });
-
-                        MONO.animate.mortage(json.player, onlyNumbers, json.mortage_list);
+                        animate(json.player, onlyNumbers, list);
                         if(json.message) {
                             chat.append("server: " + json.message);
                         }
-                    }
+                    }                    
+                },
+                'mortage': function(json) {
+                    console.log('[mortage] event');
+                    MONO.events.handle.handler(json, BOARD.draw.mortage, MONO.animate.mortage, json.mortage_list);
                 },
                 'unmortage': function(json) {
                     console.log('[unmortage] event');
-                    var pos, buttons;
-                    buttons = json.game_state.buttons;
-                    MONO.animate.money(json.player, json.player_money);
-
-                    if (json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);                        
-                    } 
-
-                    if (json.position && json.player) {
-                        BOARD.draw.unmortage(json.position, json.player);
-                    }
-
-                    if(json.player === MONO.config.color && json.unmortage_list) {
-                        var onlyNumbers = $.map(Object.keys(json.unmortage_list), function(e) {
-                            return parseInt(e, 10);
-                        });
-
-                        MONO.animate.unmortage(json.player, onlyNumbers, json.unmortage_list);
-                        if(json.message) {
-                            chat.append("server: " + json.message);
-                        }
-                    }
+                    MONO.events.handle.handler(json, BOARD.draw.unmortage, MONO.animate.unmortage, json.unmortage_list);
                 },
                 'build': function(json) {
                     console.log('[build] event');
-                    var pos, buttons;
-                    buttons = json.game_state.buttons;
-                    MONO.animate.money(json.player, json.player_money);
-
-                    if(json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);
-                        MONO.animate.build(json.player, $.map(Object.keys(json.build_list), function(e) {
-                            return parseInt(e, 10);
-                        }));
-                    }
+                    MONO.events.handle.handler(json, BOARD.draw.build, MONO.animate.build, json.build_list);
                 },
                 'sell': function(json) {
                     console.log('[sell] event');
-                    var pos, buttons;
-                    buttons = json.game_state.buttons;
-                    MONO.animate.money(json.player, json.player_money);
-
-                    if(json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);
-                        MONO.animate.sell(json.player, $.map(Object.keys(json.sell_list), function(e) {
-                            return parseInt(e, 10);
-                        }), json.sell_list);
-                    }
+                    MONO.events.handle.handler(json, BOARD.draw.sell, MONO.animate.sell, json.sell_list);
                 },
                 'init': function(json) {
                     console.log('[init] event');
