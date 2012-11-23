@@ -488,7 +488,12 @@ function() {
                     start++;
                     if(start > 40) start -= 40;
                 }
-            }
+            },
+            setPlayerPosition:function(player, cell){
+				
+				var dice = cell;
+				BOARD.animate.jumpOnBoard(player, dice,0,1);
+			}
 
         },
         houseManipulation: { /**** Build the house ****/
