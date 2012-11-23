@@ -60,8 +60,7 @@
 				</p>
 				<p><a href="./chess" class="btn btn-primary">&#9829; Chess-servers</a></p>
 				<p><a href="./gibbet" class="btn btn-primary">&#9820; Gibbet</a></p>
-				<p><a href="./multigibbet" class="btn btn-primary">&#9720; MultiGibbet</a></p>
-				<p><a href="./mgibbet" class="btn btn-primary">&#9700; MGibbet</a></p>
+				<p><a href="./mgibbet" class="btn btn-primary">&#9700; MultiGibbet</a></p>
 
 			</c:otherwise>
 		</c:choose>

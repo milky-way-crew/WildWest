@@ -24,7 +24,7 @@
 	</div>
 	<div class="container">
 		<h2>Availiable servers:</h2>
-		<c:forEach var="entry" items="${chess}">
+		<c:forEach var="entry" items="${gibbet}">
 			<c:out value="Id: ${entry.key}" />
 			<p>
 				<a

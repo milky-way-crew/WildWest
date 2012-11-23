@@ -12,20 +12,22 @@ public class GibbetPlayer {
 	private boolean isReady = false;
 	private String opponent; 
 	private String myword;
+	private String win;
 	
 	
 	public GibbetPlayer(User user) {
-		this(user.getId(), user.getNickname(), null, null,null);
+		this(user.getId(), user.getNickname(), null, null,null,"");
 	}
 
 
-	public GibbetPlayer(int id, String nick, GibbetPlayerTypesEnum type, String opponent, String myword) {
+	public GibbetPlayer(int id, String nick, GibbetPlayerTypesEnum type, String opponent, String myword,String win) {
 		super();
 		this.id = id;
 		this.nick = nick;
 		this.type = type;
 		this.opponent = opponent;
 		this.myword = myword;
+		this.win = win;
 	}
 	
 	public int getId() {
@@ -74,6 +76,14 @@ public class GibbetPlayer {
 
 	public void setReady(boolean isReady) {
 		this.isReady = isReady;
+	}
+	
+	public String getWin() {
+		return win;
+	}
+
+	public void setWin(String win) {
+		this.win = win;
 	}
 	
 

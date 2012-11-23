@@ -51,8 +51,8 @@ public class MultiGibbetController  {
 	@RequestMapping(value = "/mgibbet") 
 	public String showGibbetServers(Model model) {
 		model.addAttribute("test", "GibbetContoller");
-		model.addAttribute("chess", gibbetService.getAllGames());
-		log.info("Showing all chess games to user");
+		model.addAttribute("gibbet", gibbetService.getAllGames());
+		log.info("Showing all gibbet games to user");
 		return "gibbetlist";
 	}
 
@@ -63,12 +63,12 @@ public class MultiGibbetController  {
 			session.setAttribute("user", userDao.findUserByLogin("test"));
 		}
 
-		log.info("Starting creating chess-game");
+		log.info("Starting creating gibbet-game");
 		User userHost = (User) session.getAttribute("user");
 		int gameId = gibbetService.createGame(userHost);
 		//		int gameId = chessService.createGame(userHost);
 		session.setAttribute("idGibbetGame", gameId);
-		log.info("Finished creating chess-game with id: " + gameId);
+		log.info("Finished creating gibbet-game with id: " + gameId);
 
 		return "redirect:/multigibbet";
 	}
@@ -105,10 +105,9 @@ public class MultiGibbetController  {
 	}
 
 
-	Gibbet gibbet = new Gibbet();
-	ReadWord read = new ReadWord();
-	String wordtrue;
-	String words;
+	private Gibbet gibbet = new Gibbet();
+	private ReadWord read = new ReadWord();
+	private String wordtrue;
 	@RequestMapping(value = "/ajaxmulti", method = RequestMethod.POST)
 	public @ResponseBody
 	String onMessage(HttpServletRequest request,
@@ -145,6 +144,16 @@ public class MultiGibbetController  {
 				return "";
 			}
 			if(word.equals(wordtrue)){
+				if(gibbetGame.getHost().getId()==user.getId()){
+					log.info("SET HOST");
+					gibbetGame.getHost().setWin("win");
+					gibbetGame.getClient().setWin("lose");
+				}
+				if(gibbetGame.getClient().getId()==user.getId()){
+					log.info("SET Client");
+					gibbetGame.getHost().setWin("lose");
+					gibbetGame.getClient().setWin("win");
+				}
 				return "You win "+word;
 			}
 			return word;
@@ -152,9 +161,14 @@ public class MultiGibbetController  {
 
 
 		if(type.toLowerCase().trim().equals("something")){
-			if(gibbetGame.getClient().getId()==user.getId()){
+			if(gibbetGame.getClient().getId()==user.getId() && gibbetGame.getClient().getMyWord()!=null){
 				return gibbetGame.getClient().getMyWord();
-			}else{
+			}
+			if(gibbetGame.getClient().getId()==user.getId() && gibbetGame.getClient().getMyWord()==null){
+				return "not word";
+			}
+			else
+				{
 				log.info("button OK is put  "+data);
 				word = read.readFromFile(data);
 				wordtrue = word;
@@ -176,7 +190,7 @@ public class MultiGibbetController  {
 	public @ResponseBody
 	String ready(HttpServletRequest request,
 			@RequestParam("type") String type, @RequestParam("data") String data,
-			@RequestParam("word") String word) throws FileNotFoundException  {
+			@RequestParam("word") String word)   {
 
 		User user = (User) request.getSession().getAttribute("user");
 		int idGame = (Integer) request.getSession().getAttribute("idGibbetGame");
@@ -196,9 +210,6 @@ public class MultiGibbetController  {
 		}
 		if(type.toLowerCase().trim().equals("update")){
 			if(gibbetGame.getHost().isReady() && gibbetGame.getClient().isReady()){
-				//					if(gibbetGame.getHost().getId()==user.getId()){
-				//						return "game";
-				//					}
 				return "game";
 			}
 			if(gibbetGame.getHost().isReady()==false && gibbetGame.getClient().isReady()){
@@ -221,16 +232,16 @@ public class MultiGibbetController  {
 			@RequestParam("type") String type, @RequestParam("data") String data,
 			@RequestParam("word") String word) throws FileNotFoundException  {
 
-		log.info("update is go =)");
+//		log.info("update is go =)");
 		User user = (User) request.getSession().getAttribute("user");
 		int idGame = (Integer) request.getSession().getAttribute("idGibbetGame");
 		GibbetGameManager gibbetGame = gibbetService.getGameById(idGame);
 
 		if(type.toLowerCase().trim().equals("up")){
-			if(gibbetGame.getHost().getId()==user.getId()){
+			if(gibbetGame.getHost().getId()==user.getId() && gibbetGame.getHost().getOpponent()!=null){
 				return gibbetGame.getHost().getOpponent();
 			}
-			if(gibbetGame.getClient().getId()==user.getId()){
+			if(gibbetGame.getClient().getId()==user.getId() && gibbetGame.getClient().getOpponent()!=null){
 				return gibbetGame.getClient().getOpponent();
 			}
 		}
@@ -241,4 +252,40 @@ public class MultiGibbetController  {
 		}
 		return "lolo";
 	}
+	
+	@RequestMapping(value = "/win", method = RequestMethod.POST)
+	public @ResponseBody
+	String win(HttpServletRequest request,
+			@RequestParam("type") String type, @RequestParam("data") String data)   {
+		User user = (User) request.getSession().getAttribute("user");
+		int idGame = (Integer) request.getSession().getAttribute("idGibbetGame");
+		GibbetGameManager gibbetGame = gibbetService.getGameById(idGame);
+			if(gibbetGame.getHost().getId()==user.getId()){
+				if(type.toLowerCase().trim().equals("0")){
+				gibbetGame.getHost().setWin("lose");
+				gibbetGame.getClient().setWin("win");}
+				log.info("Host "+gibbetGame.getClient().getWin());
+				return gibbetGame.getHost().getWin();
+			}
+			if(gibbetGame.getClient().getId()==user.getId()){
+				if(type.toLowerCase().trim().equals("0")){
+				gibbetGame.getHost().setWin("win");
+				gibbetGame.getClient().setWin("lose");}
+				log.info("Klient "+gibbetGame.getClient().getWin());
+				return gibbetGame.getClient().getWin();
+			}
+		return "";
+	}
+	
+	@RequestMapping(value = "/exitgibbet") 
+	public String leaveGame(HttpSession session) {
+		log.info("Exit requested");
+		Integer id = (Integer) session.getAttribute("idGibbetGame");
+
+		session.removeAttribute("idGibbetGame");
+		gibbetService.removeGameById(id);
+
+		return "redirect:/home";
+	}
+
 }

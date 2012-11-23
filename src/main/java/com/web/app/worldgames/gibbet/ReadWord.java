@@ -39,7 +39,7 @@ public class ReadWord {
 		int wordsInFile=0;
 		while(scan.hasNext()){
 			String temp = scan.next();
-			log.info("read words"+wordsInFile+"   "+temp);
+//			log.info("read words"+wordsInFile+"   "+temp);
 			wordsInFile++;
 		}
 		log.info("words in file are "+wordsInFile);
@@ -49,10 +49,10 @@ public class ReadWord {
 		int l=0;
 		while(scanner.hasNext()){
 			String temp = scanner.next();
-			log.info("Temp word is  "+temp+"  l="+l);
+//			log.info("Temp word is  "+temp+"  l="+l);
 			if(l==numberWord){
 				word=temp;
-				log.info("Word is:  "+word);
+//				log.info("Word is:  "+word);
 			}
 			l++;
 		}

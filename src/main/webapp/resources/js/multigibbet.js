@@ -26,14 +26,16 @@ function select() {
 //			alert("Message not send random  "+ document.getElementById('list').value);
 		},
 		success : function(text) {
+			if(text!="not word"){
 			document.getElementById('word').value=text;
 			document.getElementById('live').value=7;
 			document.getElementById('select').style.visibility = "hidden";
 			visible();
 			leng=text.length;
+			document.getElementById('image').src = "resources/img/gibbet/gibbet7.jpg";
+			}
 		}
 	});
-	 document.getElementById('image').src = "resources/img/gibbet/gibbet7.jpg";
 };
 
 
@@ -61,16 +63,16 @@ function button() {
 					document.getElementById('select').style.visibility = "visible";
 //					alert("you lose");
 					hidden();
-					$('#lose').modal();
+//					$('#lose').modal();
 				}
 			}
 			else{
 				if(json.length>leng){
-					document.getElementById('select').style.visibility = "visible";
+//					document.getElementById('select').style.visibility = "visible";
 //					alert("you win");
 					hidden();
 					json=json.substr(8,json.length);
-					$('#win').modal();
+//					$('#win').modal();
 				}
 			document.getElementById('word').value=json;
 			document.getElementById(idButton).style.visibility = "hidden";
@@ -129,13 +131,13 @@ function updateReady() {
 	});
 };
 
-function timeUpdate(){
-	if(readyGame==false){
-		updateReady();
-	}
-};
-
-setInterval(timeUpdate, 500);
+//function timeUpdate(){
+//	if(readyGame==false){
+//		updateReady();
+//	}
+//};
+//
+//setInterval(timeUpdate, 500);
 
 
 function up(){
@@ -151,13 +153,56 @@ function up(){
 //				alert("Update loser  ");
 			},
 			success : function(text) {
-				document.getElementById('opword').value=text;
+				if(text!="lolo"){
+				document.getElementById('opword').value=text;}
 			}
 		});
 };
-setInterval(up, 500);
+//function updat(){
+//	if(readyGame==true){
+//		up();
+//	}
+//}
+//setInterval(updat, 500);
+
+function win(){
+	$.ajax({
+		url : "win",
+		type : "POST",
+		data : {
+			type : document.getElementById('live').value,
+			data : ""  
+		},
+		error : function() {
+//			alert("Update loser  ");
+		},
+		success : function(text) {
+			if(text!=""){
+//			document.getElementById('opword').value=text;
+			}
+			if(text=="win"){
+				hidden();
+				$('#win').modal();
+			}
+			if(text=="lose"){
+				hidden();
+				$('#lose').modal();
+			}
+		}
+	});
+};
 
 
+function allUpdate(){
+	if(readyGame==true){
+		up();
+		win();
+	};
+	if(readyGame==false){
+		updateReady();
+	}
+};
+setInterval(allUpdate, 500);
 
 function visible(){
 	document.getElementById('q').style.visibility = "visible";

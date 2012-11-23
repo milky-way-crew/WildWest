@@ -55,7 +55,7 @@
 						<input  type="text" id="word"> 
 					</form></p>
 					
-					<input type="text" id="live" value="0">Your life:</input>
+					<input type="text" id="live" value="7">Your life:</input>
 				<p id="controls">
 				
 				<p><a class="btn btn-primary btn-medium" id="q" >Q</a>
@@ -88,7 +88,7 @@
 				<a class="btn btn-primary btn-medium" id="m" >M</a>
 				</p>
 				</p>
-					<a href="./home" class="btn btn-danger" id="exit">Exit</a>
+					<a href="./exitgibbet" class="btn btn-danger" id="exit">Exit</a>
 		</div>
 		
 		<div class="span4">
@@ -99,22 +99,13 @@
 	</div>
 	</div>
 	
-	<div class="container">
+<!-- 	<div class="container"> -->
 		<div id="win" class="modal" style="display:none ;">
 		<p>You win</p>
 			<div class="modal-header">
 				<img id="image" src="resources/img/gibbet/win.jpg" >
-			<!-- </div>
-			 <div class="modal-body">
-				<h2></h2>
-				<p>Enter room name:</p>
-				<input type="text" id="roomName" size=100
-					placeholder="Enter room name...">
-			</div>  -->
-			<!--  <div class="modal-footer">
-				<a id="createRoom" href="#" class="btn btn-success">OK!</a> 
-			</div> --> 
 		</div>
+				<a href="./exitgibbet" class="btn btn-danger" id="exit">Exit</a>
 	</div>
 	
 	<div class="container">
@@ -123,15 +114,7 @@
 			<div class="modal-header">
 				<img id="image" src="resources/img/gibbet/lose.jpg" >
 			</div>
-			<!--  <div class="modal-body">
-				<h2></h2>
-				<p>Enter room name:</p>
-				<input type="text" id="roomName" size=100
-					placeholder="Enter room name...">
-			</div> --> 
-			 <!-- <div class="modal-footer">
-				<a id="createRoom" href="#" class="btn btn-success">OK!</a> 
-			</div> --> 
+			<a href="./exitgibbet" class="btn btn-danger" id="exit">Exit</a>
 		</div>
 	</div>
 	<script type="text/javascript" src="resources/js/multigibbet.js"></script>

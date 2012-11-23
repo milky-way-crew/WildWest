@@ -26,8 +26,6 @@ public class GibbetGameManager {
 		if (game != null && user != null) {
 			log.info("Setting host: " + user);
 			game.setWhite(user);
-//			log.info("Setting game board");
-//			game.setBoard(Board.createInitializedBoard());
 		} else {
 			throw new NullPointerException("User object is " + user
 					+ " Game object is: " + game);
@@ -57,4 +55,5 @@ public class GibbetGameManager {
 	public boolean isStarted() {
 		return game.isStarted();
 	}
+	
 }
