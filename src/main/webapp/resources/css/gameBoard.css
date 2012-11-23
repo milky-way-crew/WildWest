@@ -1,5 +1,5 @@
 body{
-background-color: #CCE7D0;
+/*background-color: #CCE7D0;*/ 
 
 }
 
@@ -109,9 +109,12 @@ padding-right:30px;
 
 
 .playerButton{
-position:absolute;
-top:1000px;
-left:50px;
+  text-align: center;
+  top: 424px;
+  left: 270px;
+  position:absolute;
+/*top:1000px;*/
+/*left:50px;*/
 }
 
 #upChat{

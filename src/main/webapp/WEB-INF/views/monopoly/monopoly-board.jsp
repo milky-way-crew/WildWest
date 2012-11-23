@@ -23,18 +23,24 @@
 
 <script type="text/javascript" src="resources/js/jquery-1.8.2.js"></script>
 <script type="text/javascript" src="resources/js/jquery-ui-1.9.1.custom.js"></script>
-<!-- 
-<script src="resources/js/board/game/Board.js" type="text/javascript"></script>
- -->
-<script src="resources/js/monopoly/monopoly-animate.js" type="text/javascript"></script>
+
+<!-- @herbion -->
+<script type="text/javascript" src="resources/js/bootstrap-transition.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap-modal.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap-popover.js"></script>
+<!-- @herbion -->
+
 <script src="resources/js/monopoly/monopoly.js" type="text/javascript"></script>
 
 
 
 </head>
-
-<body bgcolor="#CCE7D0">
-
+<!-- NO MORE GREEN BACKGROUND COLORS -->
+<!-- <body bgcolor="#CCE7D0"> -->
+<body>
 	<div id="board">
 
 		<table id="table" border="1" rules="all">
@@ -613,7 +619,7 @@
 
 		<!-- Create buttons -->
 		<div class="playerButton">
-				<div class="span6 well" id="controls">
+				<div class="well" id="controls">
 					<button class="btn btn-primary" id="roll">roll</button>
 					<button class="btn btn-primary" id="buy">buy</button>
 					<button class="btn btn-primary" id="pay">pay</button>
@@ -622,7 +628,7 @@
 					<button class="btn btn-primary" id="build">build</button>
 					<button class="btn btn-primary" id="sell">sell</button>
 				</div>
-				<div class="span3 well" id="menu">
+				<div class="well" id="menu">
 					<button class="btn btn-primary" id="done">done</button>
 					<button class="btn btn-primary" id="start">start</button>
 					<button class="btn btn-primary" id="ready">ready</button>
