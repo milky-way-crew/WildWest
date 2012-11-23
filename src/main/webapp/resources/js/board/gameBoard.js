@@ -33,6 +33,12 @@
 				"RED" 	: '#player3',
 				"VIOLET" :'#player4'
 			
+			},
+			PLAYER_NUMBER:{
+				"BROWN" : '#first',
+				"GREEN" : '#second',
+				"RED" 	: '#third',
+				"VIOLET" :'#four'
 			}
 			
 		},
@@ -149,75 +155,12 @@
 				}
 
 			},
-		button:{
-			buyButton:$(function(){
-			/*
-					$("#buyButton").click(function(){
-					$("#ownerCell"+(DICE+1)+"").addClass('setColorPlayer1');
-					$("#miniCityCell"+(DICE+1)+"").addClass('setColorPlayer1');
-					});
-					*/
-				}),
-				
-			mortageButton:$(function(){
-			
-				$('#mortageButton').click(function() {
-						
-						BOARD.cellManipalation([2,4,6]);
-						BOARD.mortage([2,4,6]);
-						
-					});
-					}),
-				
-			unmortageButton:$(function(){
-			
-				$('#unmortageButton').click(function() {
-						BOARD.unmortageSelect([2,6]);
-						BOARD.unmortage([2,6]);
-					
-				});
-				}),
-				
-			buildButton : $(function(){
-			
-					$('#buildButton').click(function() {
-						BOARD.houseManipulation.buildHouse('#house_cell2');
-					});
-				}),
-			sellButton: $(function(){
-				$('#sellButton').click(function() {
-						BOARD.houseManipulation.sellHouse('#house_cell2');
-					});
-				}),
-				
-			rollDiceButton: function(){
-				$('#diceButton').click(function() {
-							
-					alert('rool');
-					});
-			},
-									
-			doneButton:$(function(){
-					$('#doneButton').click(function() {
-						alert('Done');
-						});
-					}),
-			/**** Change the button at disable ****/
-			setDisableButton:function (button){
-				$(button).attr('disabled',true);
-				$(button).addClass('disableButton');
-			},
-			/**** Change the button at enable ****/
-			setEnableButton:function (button){
-				$(button).attr('disabled',false);
-				$(button).removeClass('disableButton');
-			}
-		}, 
-		
+	
 		
 		houseManipulation:{
 							/**** Build the house  ****/
 							buildHouse:function (houseCell){
+							
 							houseCell = "#house_cell"+houseCell;
 								if($(houseCell).attr('src')=="resources/img/board/emptyhouse.png"){
 									$(houseCell).attr('src', 'resources/img/board/house1.png');
@@ -228,10 +171,11 @@
 								}else{
 									$(houseCell).attr('src', 'resources/img/board/big_hotel.png');
 								}
+								
 							},
 							/**** Sell the house  ****/
 							sellHouse:function (houseCell){
-							houseCell = "#house_cell"+houseCell;
+								houseCell = "#house_cell"+houseCell;
 								if($(houseCell).attr('src')=="resources/img/board/big_hotel.png"){
 									$(houseCell).attr('src', 'resources/img/board/house3.png');
 								}else if($(houseCell).attr('src')=="resources/img/board/house3.png"){
@@ -243,9 +187,12 @@
 								}
 							}
 		},
-								sell:function(player,cell){
+								sellAll:function(player,cell){
 								var houseCell = "#house_cell"+cell;
 								var ownerCell = "#ownerCell"+cell;
+								var number = BOARD.getPlayerNumber(player);
+								var playerNumber = BOARD.getPlayer(player);
+								var miniCell=cell;
 			
 								if($(houseCell).attr('src')=="resources/img/board/big_hotel.png"){
 									$(houseCell).attr('src', 'resources/img/board/house3.png');
@@ -256,16 +203,9 @@
 								}else if($(houseCell).attr('src')=="resources/img/board/house1.png"){
 									$(houseCell).attr('src', "resources/img/board/emptyhouse.png");
 								}else{
-									if(player=="BROWN"){
-									$(ownerCell).removeClass("setColorPlayer1");
-									}else if(player=="GREEN"){
-									$(ownerCell).removeClass("setColorPlayer2");
-									}else if(player=="RED"){
-									$(ownerCell).removeClass("setColorPlayer3");
-									}else{
-									$(ownerCell).removeClass("setColorPlayer4");
-									}
-								
+									$(ownerCell).removeClass("setColorPlayer"+playerNumber);
+									$(number+"MiniCell"+miniCell).removeClass("setMiniImagePlayer"+playerNumber);
+																	
 								}
 								
 								
@@ -273,30 +213,32 @@
 		},
 		
 		/* Mortage and unmartage manipolation*/
-		cellManipalation:function(cellArr){
+		cellManipulation:function(cellArr, player){
+		var number = BOARD.getPlayerNumber(player);
 		for(var i = 0; i<cellArr.length; i++){
-			cell="#firstMiniCell"+cellArr[i];
+			cell=number+"MiniCell"+cellArr[i];
 			$(cell).addClass('visibleCell');
 		}
 		
-		/*
-						cell="#miniCityCell"+cell;
-						$(cell).addClass('visibleCell');
-		*/
-									
+								
 		},
 		
-		unmortageSelect:function(cellArr){
+		unmortageSelect:function(cellArr, player){
+		
+		var number = BOARD.getPlayerNumber(player);
 			for(var i = 0; i<cellArr.length; i++){
-			cell="#firstMiniCell"+cellArr[i];
+			cell=number+"MiniCell"+cellArr[i];
 			$(cell).addClass('unmortageSelected');
 		}
 		},
-		mortage:function(cellArr){
+		mortage:function(cellArr, player){
+		BOARD.cellManipulation(cellArr, player);
 		
+		var playerNumber = BOARD.getPlayerNumber(player);
 		for(var i = 0; i<cellArr.length; i++){
-				cell="#firstMiniCell"+cellArr[i];
-				
+				cell=""+playerNumber+"MiniCell"+cellArr[i];
+				$(cell).unbind('click');
+				$(cell).bind('click');
 				
 				
 				$(cell).click(function(){
@@ -319,9 +261,17 @@
 			}
 						
 		},
-		unmortage:function(cellArr){
+		unmortage:function(cellArr, player){
+		BOARD.unmortageSelect(cellArr, player);
+		var number = BOARD.getPlayerNumber(player);
+		
 			for(var i = 0; i<cellArr.length; i++){
-				cell="#firstMiniCell"+cellArr[i];
+			
+			
+				cell=number+"MiniCell"+cellArr[i];
+				
+				$(cell).unbind('click');
+				$(cell).bind('click');
 				
 				$(cell).click(function(){
 				if($(cell).hasClass('unmortageSelected')){
@@ -340,28 +290,103 @@
 			
 			}
 		},
+		
+		build:function(cellArr, player){
+			var number = BOARD.getPlayerNumber(player);
+			BOARD.cellManipulation(cellArr, player); 
+			
+			$.each(cellArr, function(i, e) {
+				cell=number+"MiniCell"+e;
+				
+				$(cell).unbind('click');
+				$(cell).bind('click');
+				$(cell).click(function() {
+					if($(this).hasClass('visibleCell')){
+						var $selected = $(this);
+						console.log('Build in cell', e);
+						BOARD.houseManipulation.buildHouse(e);
+						$(this).removeClass('visibleCell');
+						
+						$('.visibleCell').filter(function(i, e) {
+							return $selected.attr('id') != $(e).attr('id');
+						}).each(function(i, e) {
+							$(e).removeClass('visibleCell');
+						});
+										
+					}
+				});
+
+			});
+			
+			
+		},
+		sell:function(cellArr, player){
+			var number = BOARD.getPlayerNumber(player);
+			BOARD.cellManipulation(cellArr, player); 
+		
+			$.each(cellArr, function(i, e) {
+				cell=number+"MiniCell"+e;
+			
+				$(cell).unbind('click');
+				$(cell).bind('click');
+				$(cell).click(function() {
+					if($(this).hasClass('visibleCell')){
+						var $selected = $(this);
+						console.log('Sell in cell', e);
+						BOARD.sellAll(player,e);
+						$(this).removeClass('visibleCell');
+						
+						$('.visibleCell').filter(function(i, e) {
+							return $selected.attr('id') != $(e).attr('id');
+						}).each(function(i, e) {
+							$(e).removeClass('visibleCell');
+						});
+										
+					}
+				});
+			});
+		},
 		rollDice:function(dice1, dice2){
 			$("#diceImg1").attr("src", "resources/img/board/die"+dice1+".gif");
 			$("#diceImg2").attr("src", "resources/img/board/die"+dice2+".gif");
 		},
 				
 		buy:function(player, cell){
+			var number = BOARD.getPlayerNumber(player);
+			var playerNumber = BOARD.getPlayer(player);
+			var miniCell=cell;
+			
 			cell = "#ownerCell"+cell;
-			if(player=="BROWN"){
-			$(cell).addClass("setColorPlayer1");
-			}else if(player=="GREEN"){
-			$(cell).addClass("setColorPlayer2");
-			}else if(player=="RED"){
-			$(cell).addClass("setColorPlayer3");
-			}else{
-			$(cell).addClass("setColorPlayer4");
-			}
-		
+			$(number+"MiniCell"+miniCell).addClass("setMiniImagePlayer"+playerNumber);
+			$(cell).addClass("setColorPlayer"+playerNumber);
+					
 		},
 		
 		
 		setMoney:function(message){
-			$("#secondMoney").text(message);
+			$("#MoneyPlayer1").text(message);
+		},
+		getPlayerNumber:function(player){
+			if(player=="BROWN"){
+					return BOARD.CONSTANT.PLAYER_NUMBER["BROWN"];		
+			}else if(player=="GREEN"){
+				return BOARD.CONSTANT.PLAYER_NUMBER["GREEN"];
+			}else if(player=="RED"){
+				return BOARD.CONSTANT.PLAYER_NUMBER["RED"];
+			}else{
+				return BOARD.CONSTANT.PLAYER_NUMBER["VIOLET"];
+			}
+		},
+		getPlayer:function(player){
+			if(player=="BROWN"){
+					return 1;		
+			}else if(player=="GREEN"){
+				return 2;
+			}else if(player=="RED"){
+				return 3;
+			}else{
+				return 4;
+			}
 		},
 		init: function(){
 		
@@ -379,21 +404,7 @@
 					});
 			});
 			
-			$(function() {
-			$('#infoPlayer1').css('background', '#CCE7D0');
-			});
 			
-			
-			
-			BOARD.button.mortageButton;
-			BOARD.button.unmortageButton;
-			BOARD.button.buildButton;
-			BOARD.button.sellButton;
-			BOARD.button.roolDiceButton;
-			
-			/*
-			BOARD.mortageManipolation.mortage;
-			*/
 			
 		
 		}

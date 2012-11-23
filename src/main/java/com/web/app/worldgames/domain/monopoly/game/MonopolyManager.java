@@ -368,8 +368,7 @@ public void price(){
 					
 					log.info("player money after mortage: "
 							+ currentPlayer.getMoney());
-					// response.put("mortage_list",
-					// currentPlayer.getMortageAvailable());
+					response.put("mortage_list", currentPlayer.getMortageAvailable());
 					if (currentPlayer.listPropertyForSell().contains(city)) {
 						currentPlayer.removeObj(
 								currentPlayer.listPropertyForSell(), city);
@@ -456,6 +455,7 @@ public void price(){
 							+ currentPlayer.listPropertyForSell());
 					response.put("player_money", currentPlayer.getMoney());
 					broadcast(response);
+
 				} else {
 					log.info("no position: ");
 					response.put("type", ButtonsLabel.UNMORTAGE);

@@ -1,5 +1,5 @@
 body{
-background-color: #CCE7D0;
+/*background-color: #CCE7D0;*/ 
 
 }
 
@@ -8,8 +8,6 @@ background-color: #CCE7D0;
 }
 
 #table{
-
-background: url("../img/board/board900x901.png") no-repeat center center ;
 position:absolute;
 top:2%;
 left:2%;
@@ -39,6 +37,134 @@ width:71px;
 .west_east{
 height:74px;
 }
+
+#cell1{
+background: url("../img/board/cell1.png") no-repeat top left ;
+border:0px;
+}
+#cell2{
+background: url("../img/board/cell2.png") no-repeat top center ;
+}
+#cell3{
+background: url("../img/board/cell3.png") no-repeat top center ;
+}
+#cell4{
+background: url("../img/board/cell4.png") no-repeat top center ;
+}
+#cell5{
+background: url("../img/board/cell5.png") no-repeat top center ;
+}
+#cell6{
+background: url("../img/board/cell6.png") no-repeat top center ;
+}
+#cell7{
+background: url("../img/board/cell7.png") no-repeat top left ;
+}
+#cell8{
+background: url("../img/board/cell8.png") no-repeat top center ;
+}
+#cell9{
+background: url("../img/board/cell9.png") no-repeat top center ;
+}
+#cell10{
+background: url("../img/board/cell10.png") no-repeat top center ;
+}
+#cell11{
+background: url("../img/board/cell11.png") no-repeat top right ;
+}
+#cell12{
+background: url("../img/board/cell12.png") no-repeat  center right;
+}
+#cell13{
+background: url("../img/board/cell13.png") no-repeat  center right;
+}
+#cell14{
+background: url("../img/board/cell14.png") no-repeat  center right;
+}
+#cell15{
+background: url("../img/board/cell15.png") no-repeat  center right;
+}
+#cell16{
+background: url("../img/board/cell16.png") no-repeat  center right;
+}
+#cell17{
+background: url("../img/board/cell17.png") no-repeat  center right;
+}
+#cell18{
+background: url("../img/board/cell18.png") no-repeat  center right;
+}
+#cell19{
+background: url("../img/board/cell19.png") no-repeat  center right;
+}
+#cell20{
+background: url("../img/board/cell20.png") no-repeat  center right;
+}
+#cell21{
+background: url("../img/board/cell21.png") no-repeat  bottom right;
+}
+#cell22{
+background: url("../img/board/cell22.png") no-repeat  bottom center;
+}
+#cell23{
+background: url("../img/board/cell23.png") no-repeat  bottom center;
+}
+#cell24{
+background: url("../img/board/cell24.png") no-repeat  bottom center;
+}
+#cell25{
+background: url("../img/board/cell25.png") no-repeat  bottom center;
+}
+#cell26{
+background: url("../img/board/cell26.png") no-repeat  bottom center;
+}
+#cell27{
+background: url("../img/board/cell27.png") no-repeat  bottom center;
+}
+#cell28{
+background: url("../img/board/cell28.png") no-repeat  bottom center;
+}
+#cell29{
+background: url("../img/board/cell29.png") no-repeat  bottom center;
+}
+#cell30{
+background: url("../img/board/cell30.png") no-repeat  bottom center;
+}
+#cell31{
+background: url("../img/board/cell31.png") no-repeat  bottom left;
+}
+#cell32{
+background: url("../img/board/cell32.png") no-repeat  center left;
+}
+#cell33{
+background: url("../img/board/cell33.png") no-repeat  center left;
+}
+#cell34{
+background: url("../img/board/cell34.png") no-repeat  center left;
+}
+#cell35{
+background: url("../img/board/cell35.png") no-repeat  center left;
+}
+#cell36{
+background: url("../img/board/cell36.png") no-repeat  center left;
+}
+#cell37{
+background: url("../img/board/cell37.png") no-repeat  center left;
+}
+#cell38{
+background: url("../img/board/cell38.png") no-repeat  center left;
+}
+#cell39{
+background: url("../img/board/cell39.png") no-repeat  center left;
+}
+#cell40{
+background: url("../img/board/cell40.png") no-repeat  center left;
+
+}
+#cell41{
+background: url("../img/board/cell41.png") no-repeat center center ;
+border: 0px;
+}
+
 
 .ownerNorth{
 position:absolute;
@@ -109,9 +235,12 @@ padding-right:30px;
 
 
 .playerButton{
-position:absolute;
-top:1000px;
-left:50px;
+  text-align: center;
+  top: 424px;
+  left: 270px;
+  position:absolute;
+/*top:1000px;*/
+/*left:50px;*/
 }
 
 #upChat{
@@ -133,7 +262,7 @@ top:250px;
     #selectable li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px; font-size: 4em; text-align: center; }
 
 
-#firstInfoTable, #secondInfoTable{
+#firstInfoTable, #secondInfoTable, #thirdInfoTable, #fourInfoTable, #fifthInfoTable, #sixthInfoTable, #seventhInfoTable, #eighthInfoTable{
 float:left;
 margin-right: 15px;
 }
@@ -146,7 +275,7 @@ border-width: 1px 1px 1px 1px;
 }
 
 .brownMini{
-background: url("../img/board/player1.png") no-repeat center center ;
+
 border-color: #955438;
 border-style: solid;
 border-width: 1px 1px 1px 1px;
@@ -197,6 +326,10 @@ border-color: gray;
 border-style: solid;
 border-width: 1px 1px 1px 1px;
 
+}
+
+#infoPlayer1, #infoPlayer2, #infoPlayer3, #infoPlayer4{
+background:#CCE7D0;
 }
 
 
@@ -278,3 +411,17 @@ border-color:#ffffff;
 border-color:#000000;
 }
 
+.setMiniImagePlayer1{
+background: url("../img/board/miniPlayer1.png") no-repeat center center ;
+}
+
+.setMiniImagePlayer2{
+background: url("../img/board/miniPlayer2.png") no-repeat center center ;
+}
+
+.setMiniImagePlayer3{
+background: url("../img/board/miniPlayer3.png") no-repeat center center ;
+}
+.setMiniImagePlayer4{
+background: url("../img/board/miniPlayer4.png") no-repeat center center ;
+}
