@@ -68,7 +68,8 @@ function() {
             money: 0,
             color: '',
             game_status: "",
-            position: 0
+            position: 0,
+            price:0
         },
         transport: {
             socket: null,
