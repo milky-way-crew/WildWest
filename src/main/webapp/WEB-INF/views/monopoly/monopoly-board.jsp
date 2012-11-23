@@ -518,6 +518,7 @@
 					<button class="btn btn-primary" id="unmortage">unmortage</button>
 					<button class="btn btn-primary" id="build">build</button>
 					<button class="btn btn-primary" id="sell">sell</button>
+					<button class="btn btn-primary" id="auction">auction</button>
 				</div>
 				<div class="span4 well" id="menu">
 					<button class="btn btn-primary" id="done">done</button>

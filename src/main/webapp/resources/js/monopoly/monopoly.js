@@ -58,7 +58,8 @@ function() {
 			money: 0,
 			color: '',
 			game_status: "",
-			position: 0
+			position: 0,
+			price:0
 		},
 		transport: {
 			socket: null,
@@ -228,6 +229,19 @@ function() {
 						ui.refreshButtons(buttons);
 					}
 				},
+				'auction': function(json) {
+					console.log('[auction] event');
+					var price;
+					MONO.animate.auction();
+						price = parseInt(prompt('Set your price' ));
+						if(json.player === MONO.config.color) {
+						if (price) {
+							MONO.transport.send('auction', {
+							price: price
+							});							
+						}
+						}
+				},
 				'init': function(json) {
 					console.log('[init] event');
 					MONO.config.color = json.color;
@@ -292,6 +306,9 @@ function() {
 			},
 			sell: function(argument) {
 				log('Animating ~not supported~ [sell]');
+			},
+			auction: function(argument) {
+				log('Animating ~not supported~ [auction]');
 			},
 			build: function(argument) {
 				log('Animating ~not supported~ [build]');
