@@ -26,6 +26,7 @@ public class MonopolyManager {
 	private User creator;
 	private int auctionStartPrice;
 	private static final String ID_NODE = "id";
+
 	public MonopolyManager(Game monopolyGame) {
 		this.setMonopolyGame(monopolyGame);
 	}
@@ -41,9 +42,11 @@ public class MonopolyManager {
 	public void setAuctionStartPrice(int auctionStartPrice) {
 		this.auctionStartPrice = auctionStartPrice;
 	}
-public void price(){
-	
-}
+
+	public void price() {
+
+	}
+
 	public void setCreator(User creator) {
 		this.creator = creator;
 		log.info("[CREATOR] " + creator);
@@ -104,73 +107,71 @@ public void price(){
 
 	private void onAuction(int idPlayer, String type,
 			Map<String, Object> response, String data) {
-		//Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+		// Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 		Player currentPlayer = getPlayerById(idPlayer);
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
 		ObjectMapper objectMapper = new ObjectMapper();
-		//if (currentPlayer.getId() == idPlayer) {
-			SellableCard card = null;
-			if (StartGame.boardCities.containsKey(currentPlayer
-					.getPosition())) {
-				card = StartGame.boardCities.get(currentPlayer
-						.getPosition());
-			} else if (StartGame.boardRails.containsKey(currentPlayer
-					.getPosition())) {
-				card = StartGame.boardRails
-						.get(currentPlayer.getPosition());
-			}
-			setAuctionStartPrice(card.getPrice());
-			response.put("type", ButtonsLabel.AUCTION);
-			response.put("player", currentPlayer.getColor());
-			//broadcast(response);
-			JsonNode tree = null;
-			try {
-				tree = objectMapper.readTree(data);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			JsonNode dataBlock = tree.path("data");
-			if (dataBlock.has("price")) {
-				int price = dataBlock.path("price").getIntValue();
-				broadcast(response);
-				if(price>getAuctionStartPrice()){
-					setAuctionStartPrice(price);
-					log.info(" NOW PRICE======"+getAuctionStartPrice());
-				}else{
-					setAuctionStartPrice(getAuctionStartPrice());
-				}
-//				 for (Player p : monopolyGame.getAllPlayers()) {
-//					// if(p.getId()==monopolyGame)
-//					 log.info("player: "+p.getId()+" : "+price);
-//				 p.setAuction_price(price);
-//				 }
-//				 int max_price =monopolyGame.getAllPlayers().get(0).getAuction_price();
-//				 Player auctionWinner = null;
-//				 for (Player p : monopolyGame.getAllPlayers()) {
-//				 int temp = p.getAuction_price();
-//				 if (temp > max_price) {
-//				 max_price = temp;
-//				 auctionWinner = p;
-//				 }
-//				 }
-//				 // card.auctionCityOrRail(auctionWinner, max_price);
-//				 auctionWinner.setMoney(auctionWinner.getMoney() - max_price);
-//				 log.info("--------------AAAAAAAAAUUUCCTTTTTIIIOOOOOOOOOONNNNNNN----"
-//				 + auctionWinner.getMoney());
+		// if (currentPlayer.getId() == idPlayer) {
+		SellableCard card = null;
+		if (StartGame.boardCities.containsKey(currentPlayer.getPosition())) {
+			card = StartGame.boardCities.get(currentPlayer.getPosition());
+		} else if (StartGame.boardRails
+				.containsKey(currentPlayer.getPosition())) {
+			card = StartGame.boardRails.get(currentPlayer.getPosition());
+		}
+		setAuctionStartPrice(card.getPrice());
+		response.put("type", ButtonsLabel.AUCTION);
+		response.put("player", currentPlayer.getColor());
+		// broadcast(response);
+		JsonNode tree = null;
+		try {
+			tree = objectMapper.readTree(data);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JsonNode dataBlock = tree.path("data");
+		if (dataBlock.has("price")) {
+			int price = dataBlock.path("price").getIntValue();
+			broadcast(response);
+			if (price > getAuctionStartPrice()) {
+				setAuctionStartPrice(price);
+				log.info(" NOW PRICE======" + getAuctionStartPrice());
 			} else {
-				log.info("no price: ");
+				setAuctionStartPrice(getAuctionStartPrice());
 			}
-			currentPlayer.addBuildAvailable();
-//			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
-//			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
-//			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
-//			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
-//			state.put("buttons", buttons);
-//			response.put("game_state", state);
-		//}
+			// for (Player p : monopolyGame.getAllPlayers()) {
+			// // if(p.getId()==monopolyGame)
+			// log.info("player: "+p.getId()+" : "+price);
+			// p.setAuction_price(price);
+			// }
+			// int max_price
+			// =monopolyGame.getAllPlayers().get(0).getAuction_price();
+			// Player auctionWinner = null;
+			// for (Player p : monopolyGame.getAllPlayers()) {
+			// int temp = p.getAuction_price();
+			// if (temp > max_price) {
+			// max_price = temp;
+			// auctionWinner = p;
+			// }
+			// }
+			// // card.auctionCityOrRail(auctionWinner, max_price);
+			// auctionWinner.setMoney(auctionWinner.getMoney() - max_price);
+			// log.info("--------------AAAAAAAAAUUUCCTTTTTIIIOOOOOOOOOONNNNNNN----"
+			// + auctionWinner.getMoney());
+		} else {
+			log.info("no price: ");
+		}
+		currentPlayer.addBuildAvailable();
+		// buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+		// buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+		// buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+		// buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+		// state.put("buttons", buttons);
+		// response.put("game_state", state);
+		// }
 		broadcast(response);
 	}
 
@@ -181,57 +182,57 @@ public void price(){
 		Map<String, Object> state = new HashMap<String, Object>();
 		Map<Integer, String> buildings = currentPlayer.getBuildAvailable();
 		ObjectMapper objectMapper = new ObjectMapper();
-		// if (currentPlayer.getId() == idPlayer) {
-		if (currentPlayer.canBuild()) {
-			response.put("type", ButtonsLabel.BUILD);
-			response.put("build_list", currentPlayer.addBuildAvailable());
-			// response.put("build_list",
-			// currentPlayer.getBuildAvailable());
-			response.put("player", currentPlayer.getColor());
-			response.put("player_money", currentPlayer.getMoney());
-			JsonNode tree = null;
-			try {
-				tree = objectMapper.readTree(data);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			JsonNode dataBlock = tree.path("data");
-			if (dataBlock.has("position")) {
-				CityCard city = null;
-				int pos = dataBlock.path("position").getIntValue();
-				log.info("received position: " + pos);
-				log.info("player money: " + currentPlayer.getMoney());
-				city = (CityCard) currentPlayer.cardByPosition(pos);
-				if ((city.getNumbersOfHouses() < 3 || !city.isHotel())
-						|| !city.isMortage()) {
-					city.build(currentPlayer);
-					log.info("build process: " + city.getName());
-					// response.put("build_list",
-					// currentPlayer.addBuildAvailable());
-					log.info("list for build: " + buildings);
-					response.put("player_money", currentPlayer.getMoney());
-					// response.put("build_list",
-					// currentPlayer.getBuildAvailable());
-				} else if (city.getNumbersOfHouses() == 3 && !city.isMortage()) {
-					city.build(currentPlayer);
-					log.info("HOTEL BUILT");
+		if (currentPlayer.getId() == idPlayer) {
+			if (currentPlayer.canBuild()) {
+				response.put("type", ButtonsLabel.BUILD);
+				response.put("player_money", currentPlayer.getMoney());
+				JsonNode tree = null;
+				try {
+					tree = objectMapper.readTree(data);
+				} catch (JsonProcessingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} else {
-				log.info("no position: ");
+				JsonNode dataBlock = tree.path("data");
+				if (dataBlock.has("position")) {
+					CityCard city = null;
+					int pos = dataBlock.path("position").getIntValue();
+					log.info("received position: " + pos);
+					log.info("player money: " + currentPlayer.getMoney());
+					response.put("position", pos);
+					response.put("player", currentPlayer.getColor());
+					city = (CityCard) currentPlayer.cardByPosition(pos);
+					if ((city.getNumbersOfHouses() < 3 || !city.isHotel())
+							|| !city.isMortage()) {
+						city.build(currentPlayer);
+						log.info("build process: " + city.getName());
+						log.info("list for build: " + buildings);
+						response.put("player_money", currentPlayer.getMoney());
+					} else if (city.getNumbersOfHouses() == 3
+							&& !city.isMortage()) {
+						city.build(currentPlayer);
+						log.info("HOTEL BUILT");
+					}
+				} else {
+					log.info("no position: ");
+					response.put("type", ButtonsLabel.BUILD);
+					response.put("build_list",
+							currentPlayer.addBuildAvailable());
+					response.put("player", currentPlayer.getColor());
+				}
+				currentPlayer.addBuildAvailable();
+				buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+				buttons.put(ButtonsLabel.UNMORTAGE,
+						currentPlayer.canUnmortage());
+				buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+				buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+				state.put("buttons", buttons);
+				response.put("game_state", state);
 			}
-			currentPlayer.addBuildAvailable();
-			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
-			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
-			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
-			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
-			state.put("buttons", buttons);
-			response.put("game_state", state);
 		}
-		// }
 		broadcast(response);
 	}
 
@@ -244,8 +245,6 @@ public void price(){
 		if (currentPlayer.getId() == idPlayer) {
 			if (currentPlayer.canSell()) {
 				response.put("type", ButtonsLabel.SELL);
-				response.put("player", currentPlayer.getColor());
-				response.put("sell_list", currentPlayer.getSellAvailable());
 				response.put("player_money", currentPlayer.getMoney());
 				JsonNode tree = null;
 				try {
@@ -265,6 +264,8 @@ public void price(){
 					log.info("list before sell: " + currentPlayer.getForSell());
 					log.info("player money before sell: "
 							+ currentPlayer.getMoney());
+					response.put("position", pos);
+					response.put("player", currentPlayer.getColor());
 					card = currentPlayer.cardByPosition(pos);
 					card.sell(currentPlayer);
 					currentPlayer.removeObj(currentPlayer.getProperty(), card);
@@ -281,8 +282,6 @@ public void price(){
 					log.info("list after sell: " + currentPlayer.getForSell());
 					log.info("player money after sell: "
 							+ currentPlayer.getMoney());
-					// response.put("sell_list",
-					// currentPlayer.getSellAvailable());
 					Cell cell = CardFactory.chooseCard(currentPlayer);
 					log.info("CHECK card" + cell.getName());
 					if (cell instanceof SellableCard) {
@@ -299,6 +298,9 @@ public void price(){
 					response.put("player_money", currentPlayer.getMoney());
 				} else {
 					log.info("no position: ");
+					response.put("type", ButtonsLabel.SELL);
+					response.put("sell_list", currentPlayer.getSellAvailable());
+					response.put("player", currentPlayer.getColor());
 				}
 			}
 			currentPlayer.addBuildAvailable();
@@ -365,10 +367,11 @@ public void price(){
 					log.info("list after mortage: "
 							+ currentPlayer.getForMortage());
 					currentPlayer.getForUnMortage().add(city);
-					
+
 					log.info("player money after mortage: "
 							+ currentPlayer.getMoney());
-					// response.put("mortage_list", currentPlayer.getMortageAvailable());
+					// response.put("mortage_list",
+					// currentPlayer.getMortageAvailable());
 					if (currentPlayer.listPropertyForSell().contains(city)) {
 						currentPlayer.removeObj(
 								currentPlayer.listPropertyForSell(), city);
@@ -419,8 +422,9 @@ public void price(){
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (currentPlayer.getId() == idPlayer) {
 			if (currentPlayer.canUnmortage()) {
-				
-				//response.put("player_money", currentPlayer.getMoney());
+				response.put("type", ButtonsLabel.UNMORTAGE);
+				response.put("player_money", currentPlayer.getMoney());
+				// response.put("player_money", currentPlayer.getMoney());
 				JsonNode tree = null;
 				try {
 					tree = objectMapper.readTree(data);
@@ -440,7 +444,7 @@ public void price(){
 					log.info("player money before: " + currentPlayer.getMoney());
 					city = currentPlayer.cardByPosition(pos);
 					response.put("position", pos);
-					response.put("color", currentPlayer.getColor());
+					response.put("player", currentPlayer.getColor());
 					city.unMortage(currentPlayer);
 					log.info("unmortage city: " + city.getName());
 					currentPlayer.removeObj(currentPlayer.getForUnMortage(),
@@ -454,15 +458,12 @@ public void price(){
 					log.info("list property for sell after mortage: "
 							+ currentPlayer.listPropertyForSell());
 					response.put("player_money", currentPlayer.getMoney());
-					broadcast(response);
-
 				} else {
 					log.info("no position: ");
 					response.put("type", ButtonsLabel.UNMORTAGE);
 					response.put("unmortage_list",
 							currentPlayer.getUnMortageAvailable());
 					response.put("player", currentPlayer.getColor());
-					broadcast(response);
 				}
 			}
 			currentPlayer.addBuildAvailable();
@@ -505,7 +506,7 @@ public void price(){
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
-		
+
 		if (currentPlayer.getId() == idPlayer) {
 			log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
 			SellableCard card = (SellableCard) CardFactory
@@ -609,7 +610,7 @@ public void price(){
 						buttons.put(ButtonsLabel.ROLL, false);
 						buttons.put(ButtonsLabel.SELL, false);
 						buttons.put(ButtonsLabel.UNMORTAGE, false);
-						messages = "Game ended. Winner is "+winner.getName();
+						messages = "Game ended. Winner is " + winner.getName();
 						state.put("messages", messages);
 						state.put("buttons", buttons);
 						response.put("game_state", state);
