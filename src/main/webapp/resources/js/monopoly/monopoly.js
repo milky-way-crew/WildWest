@@ -562,7 +562,6 @@ function() {
             BOARD.cellManipulation(cellArr, player);
 
             var playerNumber = BOARD.getPlayerNumber(player);
-            var playerOrder = BOARD.getPlayer(player);
             for(var i = 0; i < cellArr.length; i++) {
                 var cell = "" + playerNumber + "MiniCell" + cellArr[i];
                 $(cell).unbind('click');
@@ -576,8 +575,7 @@ function() {
                     if($(cell).hasClass('visibleCell')) {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
-                        $(this).addClass('setMortageCell').removeClass('visibleCell').removeClass("setMiniImagePlayer"+playerOrder);
-
+                        $(this).addClass('setMortageCell').removeClass('visibleCell');
                         MONO.transport.send('mortage', {
                             position: pos
                         });
@@ -589,6 +587,7 @@ function() {
                         });
 
                         // we don't need tooltips anymore
+                        $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
                 });
@@ -599,7 +598,6 @@ function() {
         unmortage: function(cellArr, player, messages) {
             BOARD.unmortageSelect(cellArr, player);
             var number = BOARD.getPlayerNumber(player);
-            var playerOrder = BOARD.getPlayer(player);
 
             for(var i = 0; i < cellArr.length; i++) {
                 var cell = number + "MiniCell" + cellArr[i];
@@ -613,7 +611,7 @@ function() {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        $(this).removeClass('setMortageCell').removeClass('unmortageSelected').addClass("setMiniImagePlayer"+playerOrder);
+                        $(this).removeClass('setMortageCell').removeClass('unmortageSelected');
 
                         MONO.transport.send('unmortage', {
                             position: pos
@@ -624,7 +622,7 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('unmortageSelected');
                         });
-
+                        $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
                 });
@@ -660,6 +658,7 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('visibleCell');
                         });
+                        $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
                 });
@@ -698,7 +697,7 @@ function() {
                         }).each(function(i, e) {
                             $(e).removeClass('visibleCell');
                         });
-
+                        $(this).tooltip('hide');
                         ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
                     }
                 });

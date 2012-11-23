@@ -280,8 +280,7 @@ public class MonopolyManager {
 					currentPlayer.getForUnMortage().add(city);
 					log.info("player money after mortage: "
 							+ currentPlayer.getMoney());
-					// response.put("mortage_list",
-					// currentPlayer.getMortageAvailable());
+					response.put("mortage_list", currentPlayer.getMortageAvailable());
 					if (currentPlayer.listPropertyForSell().contains(city)) {
 						currentPlayer.removeObj(
 								currentPlayer.listPropertyForSell(), city);
@@ -363,6 +362,7 @@ public class MonopolyManager {
 					log.info("list property for sell after mortage: "
 							+ currentPlayer.listPropertyForSell());
 					response.put("player_money", currentPlayer.getMoney());
+					response.put("unmortage_list", currentPlayer.getUnMortageAvailable());
 				} else {
 					log.info("no position: ");
 				}
