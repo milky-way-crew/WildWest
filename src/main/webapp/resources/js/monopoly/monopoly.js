@@ -753,7 +753,7 @@ function() {
         		var playerNumber = BOARD.getPlayerNumber(player);
 				var playerOrder = BOARD.getPlayer(player); 
 				cell=playerNumber+"MiniCell"+cell;
-				$(cell).addClass('setMortageCell').removeClass('visibleCell').removeClass("setMiniImagePlayer"+playerOrder);
+				$(cell).addClass('setMortageCell').removeClass("setMiniImagePlayer"+playerOrder);
                 		
         	}
         	
