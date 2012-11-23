@@ -562,6 +562,7 @@ function() {
             BOARD.cellManipulation(cellArr, player);
 
             var playerNumber = BOARD.getPlayerNumber(player);
+            var playerOrder = BOARD.getPlayer(player);
             for(var i = 0; i < cellArr.length; i++) {
                 var cell = "" + playerNumber + "MiniCell" + cellArr[i];
                 $(cell).unbind('click');
@@ -575,7 +576,7 @@ function() {
                     if($(cell).hasClass('visibleCell')) {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
-                        $(this).addClass('setMortageCell').removeClass('visibleCell');
+                        $(this).addClass('setMortageCell').removeClass('visibleCell').removeClass("setMiniImagePlayer"+playerOrder);
 
                         MONO.transport.send('mortage', {
                             position: pos
@@ -598,6 +599,7 @@ function() {
         unmortage: function(cellArr, player, messages) {
             BOARD.unmortageSelect(cellArr, player);
             var number = BOARD.getPlayerNumber(player);
+            var playerOrder = BOARD.getPlayer(player);
 
             for(var i = 0; i < cellArr.length; i++) {
                 var cell = number + "MiniCell" + cellArr[i];
@@ -611,7 +613,7 @@ function() {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        $(this).removeClass('setMortageCell').removeClass('unmortageSelected');
+                        $(this).removeClass('setMortageCell').removeClass('unmortageSelected').addClass("setMiniImagePlayer"+playerOrder);
 
                         MONO.transport.send('unmortage', {
                             position: pos
