@@ -748,6 +748,17 @@ function() {
             
             return id;
         },
+        draw:{
+        	mortage:function(cell, player){
+        		var playerNumber = BOARD.getPlayerNumber(player);
+				var playerOrder = BOARD.getPlayer(player); 
+				cell=playerNumber+"MiniCell"+cell;
+				$(cell).addClass('setMortageCell').removeClass('visibleCell').removeClass("setMiniImagePlayer"+playerOrder);
+                		
+        	}
+        	
+        },
+        
         init: function() {
             /*--Accardion--*/
             $(function() {
