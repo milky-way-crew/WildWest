@@ -235,12 +235,14 @@ padding-right:30px;
 
 
 .playerButton{
+  margin-bottom: 0px;
   text-align: center;
-  top: 424px;
-  left: 270px;
-  position:absolute;
-/*top:1000px;*/
-/*left:50px;*/
+  margin-top: 75%;
+}
+
+.playerButton .well {
+  background-color: rgba(255,255,255,0.5);
+  margin: 0px;
 }
 
 #upChat{
