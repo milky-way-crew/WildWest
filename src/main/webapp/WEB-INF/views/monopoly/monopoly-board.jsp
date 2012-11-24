@@ -138,6 +138,24 @@
 							src="resources/img/board/die1.gif" width="50px" height="50px">
 						</img>
 					</div>
+							<!-- Create buttons -->
+					<div class="playerButton">
+							<div class="well" id="controls">
+								<button class="btn btn-primary" id="roll">roll</button>
+								<button class="btn btn-primary" id="buy">buy</button>
+								<button class="btn btn-primary" id="pay">pay</button>
+								<button class="btn btn-primary" id="mortage">mortage</button>
+								<button class="btn btn-primary" id="unmortage">unmortage</button>
+								<button class="btn btn-primary" id="build">build</button>
+								<button class="btn btn-primary" id="sell">sell</button>
+								<button class="btn btn-primary" id="auction">auction</button>
+							</div>
+							<div class="well" id="menu">
+								<button class="btn btn-primary" id="done">done</button>
+								<button class="btn btn-primary" id="start">start</button>
+								<button class="btn btn-primary" id="ready">ready</button>
+							</div>
+					</div>
 				</td>
 
 				<td class="west_east" id="cell32">
@@ -617,24 +635,7 @@
 		</div>
 
 
-		<!-- Create buttons -->
-		<div class="playerButton">
-				<div class="well" id="controls">
-					<button class="btn btn-primary" id="roll">roll</button>
-					<button class="btn btn-primary" id="buy">buy</button>
-					<button class="btn btn-primary" id="pay">pay</button>
-					<button class="btn btn-primary" id="mortage">mortage</button>
-					<button class="btn btn-primary" id="unmortage">unmortage</button>
-					<button class="btn btn-primary" id="build">build</button>
-					<button class="btn btn-primary" id="sell">sell</button>
-					<button class="btn btn-primary" id="auction">auction</button>
-				</div>
-				<div class="well" id="menu">
-					<button class="btn btn-primary" id="done">done</button>
-					<button class="btn btn-primary" id="start">start</button>
-					<button class="btn btn-primary" id="ready">ready</button>
-				</div>
-		</div>
+
 
 
 		<div id="upChat">

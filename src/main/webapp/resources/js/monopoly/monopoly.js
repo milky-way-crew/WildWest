@@ -357,7 +357,7 @@ function() {
                 DOWN_BIG_JUMP: '+=110%',
                 DOWN_SMALL_JUMP: '+=74%'
             },
-            DURATION: 500,
+            DURATION: 200,
 
             COLOR_PLAYER: {
                 "BROWN": '#player1',
@@ -489,7 +489,12 @@ function() {
                     start++;
                     if(start > 40) start -= 40;
                 }
-            }
+            },
+            setPlayerPosition:function(player, cell){
+				
+				var dice = cell;
+				BOARD.animate.jumpOnBoard(player, dice,0,1);
+			}
 
         },
         houseManipulation: { /**** Build the house ****/
