@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
@@ -30,7 +31,7 @@ public class Game {
 	private static final Logger log = Logger.getLogger(Game.class);
 	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
 	private int auctionPrice;
-
+	private long time;
 	public List<SellableCard> getActiveBoard() {
 		return activeBoard;
 	}
@@ -101,7 +102,13 @@ public class Game {
 	public void setAuctionPrice(int auctionPrice) {
 		this.auctionPrice = auctionPrice;
 	}
+	public long getTime() {
+		return time;
+	}
 
+	public void setTime(long time) {
+		this.time = time;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -194,5 +201,19 @@ public class Game {
 			return this.getAllPlayers().get(turn);
 		}
 		return null;
+	}
+	public long checkAuctionEndTime(int auctionPrice, long time){
+	long start =time;
+	long end=0;
+	log.info("IN CHECT METHOD:::"+ System.currentTimeMillis());
+		try{
+			TimeUnit.SECONDS.sleep(30); 
+			end=System.currentTimeMillis();
+			log.info("IN CHECT METHOD:::"+ System.currentTimeMillis());
+			log.info("IN CHECT METHOD::: start="+start);
+		}catch(Exception e){
+			
+		}
+		return end-start;
 	}
 }

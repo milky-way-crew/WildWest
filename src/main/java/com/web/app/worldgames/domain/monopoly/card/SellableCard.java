@@ -26,7 +26,8 @@ public abstract class SellableCard extends Cell {
 	private int price;
 	private boolean mortage;
 	private Player owner;
-	
+	private boolean auctionStarted;
+	private boolean auctionEnded;
 
 	public boolean isMortage() {
 		return mortage;
@@ -71,6 +72,44 @@ public abstract class SellableCard extends Cell {
 	// && this.getOwner() != null && this instanceof SellableCard && this
 	// .getOwner() != null&&!this.isMortage()) ? true : false;
 	// }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + price;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SellableCard other = (SellableCard) obj;
+		if (price != other.price)
+			return false;
+		return true;
+	}
+
+	public boolean isAuctionStarted() {
+		return auctionStarted;
+	}
+
+	public void setAuctionStarted(boolean auctionStarted) {
+		this.auctionStarted = auctionStarted;
+	}
+
+	public boolean isAuctionEnded() {
+		return auctionEnded;
+	}
+
+	public void setAuctionEnded(boolean auctionEnded) {
+		this.auctionEnded = auctionEnded;
+	}
 
 	public boolean canBuy(Player player) {
 		return (player.checkMoney(this.getPrice()) && this.getOwner() == null && this instanceof SellableCard) ? true

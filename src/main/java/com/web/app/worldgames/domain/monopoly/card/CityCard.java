@@ -193,8 +193,9 @@ public class CityCard extends SellableCard {
 				buildings
 						.put(this.getPosition(), this.getNumbersOfHouses() + 1);
 				player.setBuildings(buildings);
-				log.info("[Message]: " + "You build houtel. Number of  are: "
-						+ getNumbersOfHouses());
+				log.info("[Message]: "
+						+ "You build houtel. Number of  houses are: "
+						+ getNumbersOfHouses() + " : hotel: " + this.isHotel());
 			}
 
 		}
@@ -313,7 +314,7 @@ public class CityCard extends SellableCard {
 		// player.addRegion();
 		player.addRegions(player);
 		player.addBuildAvailable();
-		
+
 		log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
 		log.info("[REGIONS LIST]: " + player.listRegions(player));
 
@@ -361,31 +362,35 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public void auctionCityOrRail(Player player, int price) {
-		System.out.println("auction cityyy");
-		this.setOwner(player);
-		player.addProperty(player);
-		player.listPropertyForMortage();
-		player.listPropertyForSell();
-		log.info("[MESSAGE]: You are owner now");
-		player.setMoney(player.getMoney() - price);
-		log.info("[MONEY]: " + player.getMoney());
-		log.info("[BUY::: OWNER]: " + this.getOwner());
-		// player.addRegion();
-		player.addRegions(player);
-		player.addBuildAvailable();
-		
-		log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
-		log.info("[REGIONS LIST]: " + player.listRegions(player));
-		
+		if (this.getOwner() == null) {
+
+			System.out.println("auction cityyy");
+			this.setOwner(player);
+			player.addProperty(player);
+			player.listPropertyForMortage();
+			player.listPropertyForSell();
+			log.info("[MESSAGE AUCTION]: You are owner now");
+			player.setMoney(player.getMoney() - price);
+			log.info("[MONEY AUCTION]: " + player.getMoney());
+			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
+			player.addRegions(player);
+			player.addBuildAvailable();
+			log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
+			log.info("[REGIONS LIST:::AUCTION]: " + player.listRegions(player));
+		} else {
+			log.info("is owner");
+		}
+
 	}
 
-	// public static void main(String[] args) {
-	// Player owner = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
-	// Player p = new Player("ajsdhefdc", 15, 1000, PlayerColors.PLAYER2);
-	// CityCard c = new CityCard(Cities.ATHENS, null);
-	// // CityCard c1 = new CityCard(Cities.TOKYO);
-	// c.buyCityOrRail(owner);
-	// c.mortage(owner);
-	// c.effectOnPlayer(p);
-	// }
+	 public static void main(String[] args) {
+	 Player owner = new Player("ajsdhc", 12, 1000, PlayerColors.PLAYER1);
+	 Player p = new Player("ajsdhefdc", 15, 1000, PlayerColors.PLAYER2);
+	 CityCard c = new CityCard(Cities.ATHENS, null);
+	 // CityCard c1 = new CityCard(Cities.TOKYO);
+	 c.buyCityOrRail(owner);
+	 c.mortage(owner);
+	 c.effectOnPlayer(p);
+	 System.out.println(p!=c.getOwner() && c.getOwner()!=null);
+	 }
 }

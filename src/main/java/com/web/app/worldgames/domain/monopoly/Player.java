@@ -27,7 +27,6 @@ public class Player {
 	// for test----
 	private PlayerColors colors;
 	// -----
-	// private boolean hasFreeCard = false;
 	private int numberFreeCard = 0;
 	private static Random randDice = new Random();
 	private int numberOfRails = 0;
@@ -48,7 +47,16 @@ public class Player {
 	private Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
 	// private Map<String, Integer> regions = new HashMap<String, Integer>();
 	private int numberOfBuildings = 0;
+private boolean isAuctionCreator;
+private boolean canCreateAuction;
 
+	public boolean isCanCreateAuction() {
+	return canCreateAuction;
+}
+
+public void setCanCreateAuction(boolean canCreateAuction) {
+	this.canCreateAuction = canCreateAuction;
+}
 	private static final Logger log = Logger.getLogger(Player.class);
 
 	// -----------MAYBY ONLY FOR TEST
@@ -188,14 +196,13 @@ public class Player {
 		this.buildings = buildings;
 	}
 
-	//
-	// public int getAuctionPrice() {
-	// return auctionPrice;
-	// }
-	//
-	// public void setAuctionPrice(int auctionPrice) {
-	// this.auctionPrice = auctionPrice;
-	// }
+	public boolean isAuctionCreator() {
+		return isAuctionCreator;
+	}
+
+	public void setAuctionCreator(boolean isAuctionCreator) {
+		this.isAuctionCreator = isAuctionCreator;
+	}
 
 	@Override
 	public int hashCode() {
@@ -499,29 +506,6 @@ public class Player {
 		// return forMortage;
 	}
 
-	// public List<SellableCard> listPropertyForMortage() {
-	// CityCard city = null;
-	// if (this.checkProperty()) {
-	// for (SellableCard card : this.playerProperty()) {
-	// if (card instanceof CityCard) {
-	// city = (CityCard) card;
-	// if (!city.isMortage() && !forMortage.contains(city)
-	// && city.getNumbersOfHouses() == 0
-	// && !city.isHotel()) {
-	// forMortage.add(city);
-	// }
-	// } else if (card instanceof RailCard) {
-	// if (!card.isMortage() && !forMortage.contains(card)) {
-	// forMortage.add(card);
-	// }
-	// }
-	// }
-	// } else {
-	// log.info("[MESSAGE]: property list is empty");
-	// }
-	// return forMortage;
-	// }
-
 	public List<SellableCard> listPropertyForSell() {
 		if (this.checkProperty()) {
 			for (SellableCard card : this.playerProperty()) {
@@ -579,5 +563,8 @@ public class Player {
 
 	public boolean canBuild() {
 		return (!getBuildAvailable().isEmpty()) ? true : false;
+	}
+	public boolean canAuction(int auctionPrice){
+		return this.checkMoney(auctionPrice);
 	}
 }

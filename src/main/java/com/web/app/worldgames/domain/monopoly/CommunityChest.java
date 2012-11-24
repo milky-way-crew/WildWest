@@ -15,7 +15,7 @@ public enum CommunityChest {
 							"You must pay tax of $150", 150, false, "player"), COMMUNITY_CHEST5(
 									"Bank paid $50 to you", 50, true, "player"), COMMUNITY_CHEST6(
 											"Pay poor tax of $50", 50, false, "player"), COMMUNITY_CHEST7(
-													"You've got free card to entrace from Coliseum ", 0, true,
+													"You've got free card to entrace from Jail ", 0, true,
 													"coliseum");
 	private final String message;
 	private final int money;

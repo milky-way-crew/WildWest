@@ -50,6 +50,34 @@ public class RailCard extends SellableCard {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((rails == null) ? 0 : rails.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RailCard other = (RailCard) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (rails != other.rails)
+			return false;
+		return true;
+	}
+
+	@Override
 	public void effectOnPlayer(Player player) {
 		if (this.getOwner() != null&&player!=this.getOwner()) {
 			//if (this.canPayRent(player, this.getRent(player, this.getOwner()))) {
@@ -142,6 +170,7 @@ public class RailCard extends SellableCard {
 
 	@Override
 	public void auctionCityOrRail(Player player, int price) {
+		if (this.getOwner() == null) {
 		this.setOwner(player);
 		player.addProperty(player);
 		player.listPropertyForMortage();
@@ -152,6 +181,9 @@ public class RailCard extends SellableCard {
 		player.addNumberOfRails();
 		System.out.println("Your have ports number: "
 				+ player.getNumberOfRails());
+		} else {
+			log.info("is owner");
+		}
 	}
 
 }

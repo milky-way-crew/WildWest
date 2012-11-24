@@ -225,6 +225,7 @@ function() {
                 	price: price
                 	});
                 	}
+                	//setTimeout(function(){alert('End')},10000);
                 },
                 'init': function(json) {
                     console.log('[init] event');

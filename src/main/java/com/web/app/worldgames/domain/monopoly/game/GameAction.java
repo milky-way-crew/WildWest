@@ -38,29 +38,25 @@ public class GameAction {
 			if (cell instanceof CityCard) {
 				CityCard card = (CityCard) cell;
 				card.effectOnPlayer(player);
-				if (player != card.getOwner() && card.getOwner() != null) {
+				if (player!=card.getOwner() && card.getOwner()!=null) {
 					buttons.put(ButtonsLabel.BUY, false);
 					messages = "Pay rent $"
 							+ card.getRent(player, card.getOwner()) + " to "
 							+ card.getOwner().getName();
 				} 
-//				else if (card.getOwner() != null
-//						&& card.getOwner() != player
-//						&& !card.canPayRent(player,
-//								card.getRent(player, card.getOwner()))) {
-//					messages = "You haven't money. You may mortage or sell your property.";
-//				} 
-				else if (card.getOwner() == player) {
+				else if (player==card.getOwner()) {
 					messages = "You are owner!";
 				} else {
 					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
 				}
-
+				if(card.getOwner()==null){
+					buttons.put(ButtonsLabel.AUCTION, true);
+				}
 				buttons.put(ButtonsLabel.PAY, false);
 				buttons.put(ButtonsLabel.DONE, true);
 			} else if (cell instanceof RailCard) {
 				RailCard card = (RailCard) cell;
-				if (player != card.getOwner() && card.getOwner() != null) {
+				if (player!=card.getOwner() && card.getOwner()!=null){
 					buttons.put(ButtonsLabel.BUY, false);
 					messages = "Pay rent $"
 							+ card.getRent(player, card.getOwner()) + " to "
@@ -68,14 +64,11 @@ public class GameAction {
 				} else {
 					buttons.put(ButtonsLabel.BUY, card.canBuy(player));
 				}
-//				if (card.getOwner() != null
-//						&& card.getOwner() != player
-//						&& !card.canPayRent(player,
-//								card.getRent(player, card.getOwner()))) {
-//					messages = "You haven't money. You may mortage or sell your property.";
-//				}
-				if (card.getOwner() == player) {
+				if (card.getOwner()==player) {
 					messages = "You are owner!";
+				}
+				if(card.getOwner()==null){
+					buttons.put(ButtonsLabel.AUCTION, true);
 				}
 				buttons.put(ButtonsLabel.PAY, false);
 				buttons.put(ButtonsLabel.DONE, true);
@@ -85,14 +78,6 @@ public class GameAction {
 				cell.effectOnPlayer(player);
 				buttons.put(ButtonsLabel.DONE, true);
 			} else if (cell instanceof TaxCard) {
-//				if (((TaxCard) cell).canPayTax(player)) {
-//					cell.effectOnPlayer(player);
-//					messages = "You payed tax " + CardPrices.TAX;
-//					buttons.put(ButtonsLabel.DONE, true);
-//				} else {
-//					messages = "You haven't money. You may mortage or sell your property.";
-//					buttons.put(ButtonsLabel.DONE, false);
-//				}
 				cell.effectOnPlayer(player);
 				messages = "You payed tax " + CardPrices.TAX;
 			} else if (cell instanceof JailCard) {
