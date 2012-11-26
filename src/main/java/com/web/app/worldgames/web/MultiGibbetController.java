@@ -278,12 +278,34 @@ public class MultiGibbetController  {
 	}
 	
 	@RequestMapping(value = "/exitgibbet") 
-	public String leaveGame(HttpSession session) {
+	public String leaveGame(HttpServletRequest request,HttpSession session) {
+		User user = (User) request.getSession().getAttribute("user");
+		int idGame = (Integer) request.getSession().getAttribute("idGibbetGame");
+		GibbetGameManager gibbetGame = gibbetService.getGameById(idGame);
+		Integer id = (Integer) request.getSession().getAttribute("idGibbetGame");
 		log.info("Exit requested");
-		Integer id = (Integer) session.getAttribute("idGibbetGame");
-
-		session.removeAttribute("idGibbetGame");
-		gibbetService.removeGameById(id);
+		if(gibbetGame.getHost().getId()==user.getId()){
+			if(gibbetGame.getClient().getNick().equals("")){
+				request.getSession().removeAttribute("idGibbetGame");
+				gibbetService.removeGameById(id);
+				return "redirect:/home";
+			}
+			gibbetGame.getHost().setNick("");
+			gibbetGame.getClient().setWin("win");
+			return "redirect:/home";
+		}
+		if(gibbetGame.getClient().getId()==user.getId()){
+			if(gibbetGame.getHost().getNick().equals("")){
+				request.getSession().removeAttribute("idGibbetGame");
+				gibbetService.removeGameById(id);
+				return "redirect:/home";
+			}
+			gibbetGame.getClient().setNick("");
+			gibbetGame.getHost().setWin("win");
+			return "redirect:/home";
+		}
+//		request.getSession().removeAttribute("idGibbetGame");
+//		gibbetService.removeGameById(id);
 
 		return "redirect:/home";
 	}
