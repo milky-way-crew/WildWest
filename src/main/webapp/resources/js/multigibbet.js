@@ -192,21 +192,6 @@ function allUpdate(){
 setInterval(allUpdate, 500);
 
 
-function exit(){
-	$.ajax({
-		url : "exitgibbet",
-		type : "POST",
-		data : {
-			type : ""
-		},
-		error : function() {
-//			alert("Update loser  ");
-		},
-		success : function(text) {
-			alert(text);
-		}
-	});
-};
 function visible(){
 	document.getElementById('q').style.visibility = "visible";
 	document.getElementById('w').style.visibility = "visible";
@@ -271,9 +256,7 @@ hidden();
 document.getElementById('select').onclick = select;
 document.getElementById('select').style.visibility = "hidden";
 document.getElementById('ready').onclick = ready;
-//document.getElementById('exit1').onclick = exit;
-//document.getElementById('exit2').onclick = exit;
-//document.getElementById('exit3').onclick = exit;
+document.getElementById('list').disabled = true;
 document.getElementById('word').disabled = true;
 document.getElementById('opword').disabled = true;
 document.getElementById('live').disabled = true;

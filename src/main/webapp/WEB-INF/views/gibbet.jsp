@@ -44,7 +44,7 @@
 		<option value="names">names</option>
 		<option value="developer">developer</option>
 		</select>
-		<a  class="btn btn-primary btn-medium"  id="select">OK!</a> 
+		<a  class="btn btn-primary btn-medium"  id="select">OK!<i class="icon-white icon-ok"></i></a> 
 			<label id="lab">Word</label>
 					<form name="messages" >
 						<input  type="text" id="word"> 
@@ -82,7 +82,7 @@
 				<a class="btn btn-primary btn-medium" id="m" >M</a>
 				</p>
 				</p>
-					<a href="./home" class="btn btn-danger" id="exit">Exit</a>
+					<a href="./home" class="btn btn-danger" id="exit">Exit<i class="icon-white icon-remove"></i></a>
 		</div>
 		
 		<div class="span4">

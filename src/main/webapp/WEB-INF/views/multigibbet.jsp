@@ -44,8 +44,8 @@
 		<option value="names">names</option>
 		<option value="developer">developer</option>
 		</select>
-		<a  class="btn btn-primary btn-medium"  id="select">OK!</a>
-		<a  class="btn btn-primary btn-medium"  id="ready">Ready</a>  
+		<a  class="btn btn-primary btn-medium"  id="select">OK!<i class="icon-white icon-ok"></i></a>
+		<a  class="btn btn-primary btn-medium"  id="ready">Ready<i class="icon-white icon-thumbs-up"></i></a>  
 				<p>	<label id="labop">Your oponent</label>
 			<form name="message" >
 						<input  type="text" id="opword"> 
@@ -88,7 +88,7 @@
 				<a class="btn btn-primary btn-medium" id="m" >M</a>
 				</p>
 				</p>
-					<a href="./exitgibbet" class="btn btn-danger" id="exit1">Exit</a>
+					<a href="./exitgibbet" class="btn btn-danger" id="exit">Exit<i class="icon-white icon-remove"></i></a>
 		</div>
 		
 		<div class="span4">
@@ -105,7 +105,7 @@
 			<div class="modal-header">
 				<img id="image" src="resources/img/gibbet/win.jpg" >
 		</div>
-				<a href="./exitgibbet" class="btn btn-danger" id="exit2">Exit</a>
+				<a href="./exitgibbet" class="btn btn-danger" id="exit">Exit<i class="icon-white icon-remove"></i></a>
 	</div>
 	
 	<div class="container">
@@ -114,7 +114,7 @@
 			<div class="modal-header">
 				<img id="image" src="resources/img/gibbet/lose.jpg" >
 			</div>
-			<a href="./exitgibbet" class="btn btn-danger" id="exit3">Exit</a>
+			<a href="./exitgibbet" class="btn btn-danger" id="exit">Exit<i class="icon-white icon-remove"></i></a>
 		</div>
 	</div>
 	<script type="text/javascript" src="resources/js/multigibbet.js"></script>

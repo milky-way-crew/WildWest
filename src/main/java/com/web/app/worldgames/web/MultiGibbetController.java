@@ -285,7 +285,7 @@ public class MultiGibbetController  {
 		Integer id = (Integer) request.getSession().getAttribute("idGibbetGame");
 		log.info("Exit requested");
 		if(gibbetGame.getHost().getId()==user.getId()){
-			if(gibbetGame.getClient().getNick().equals("")){
+			if(gibbetGame.getClient().getNick().equals("") || gibbetGame.getClient()==null){
 				request.getSession().removeAttribute("idGibbetGame");
 				gibbetService.removeGameById(id);
 				return "redirect:/home";

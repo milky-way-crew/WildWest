@@ -10,23 +10,19 @@ a {
 }
 
 #select {
-	width: 20px;
+	width: 40px;
 	height: 20px
 }
 
 #ready {
-	width: 50px;
+	width: 70px;
 	height: 20px;
 	color: #00FF00;
 }
 
-#send {
-	width: 20px;
-	height: 20px
-}
 
 #exit {
-	width: 20px;
+	width: 40px;
 	height: 20px
 }
 
