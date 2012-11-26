@@ -8,7 +8,7 @@ public enum BattleResultsEnum {
 	private BattleResultsEnum(int value) {
 		this.value = value;
 	}
-
+  
 	public int getValue() {
 		return value;
 	}
