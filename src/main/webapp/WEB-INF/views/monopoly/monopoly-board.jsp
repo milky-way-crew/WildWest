@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="resources/css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="resources/css/bootstrap-responsive.css" type="text/css">
 <!-- Game styles -->
-<link rel="stylesheet" href="resources/css/chatroom_style.css" type="text/css"/>
+<!-- <link rel="stylesheet" href="resources/css/chatroom_style.css" type="text/css"/> -->
 <link rel="stylesheet" href="resources/css/gameBoard.css" type="text/css">
 
 <link rel="stylesheet" href="resources/css/jquery-ui-1.9.1.custom.css" type="text/css">
@@ -37,7 +37,7 @@
 				<td id="cell22" class="north">
 					<div class="north">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house red">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -47,7 +47,7 @@
 				<td id="cell24" class="north">
 					<div class="north">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house red">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -55,7 +55,7 @@
 				<td id="cell25" class="north">
 					<div class="north">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house red">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -68,7 +68,7 @@
 				<td id="cell27" class="north">
 					<div class="north">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house yellow">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 				<td id="cell28" class="north">
 					<div class="north">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house yellow">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -86,7 +86,7 @@
 				<td id="cell30" class="north">
 					<div class="north">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house yellow">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -96,7 +96,10 @@
 			<tr>
 				<td class="west" id="cell20">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="town-image">
+						<img src="resources/img/board/city/fortress.svg">
+					</div>
+					<div class="house orange">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
@@ -144,57 +147,57 @@
 								<div id="info">
 									<table id="info-table-1">
 										<tr>
-											<td class="brownMini" id="miniCell2"></td>
-											<td class="brownMini" id="miniCell4"></td>
+											<td class="mini brown" id="miniCell2"></td>
+											<td class="mini brown" id="miniCell4"></td>
 										</tr>
 										<tr height="5px"></tr>
 										<tr>
-											<td class="azureMini" id="miniCell7"></td>
-											<td class="azureMini" id="miniCell9"></td>
-											<td class="azureMini" id="miniCell10"></td>
+											<td class="mini azure" id="miniCell7"></td>
+											<td class="mini azure" id="miniCell9"></td>
+											<td class="mini azure" id="miniCell10"></td>
 										</tr>
 										<tr height="5px"></tr>
 										<tr>
-											<td class="lightredMini" id="miniCell12"></td>
-											<td class="lightredMini" id="miniCell14"></td>
-											<td class="lightredMini" id="miniCell15"></td>
+											<td class="mini lightred" id="miniCell12"></td>
+											<td class="mini lightred" id="miniCell14"></td>
+											<td class="mini lightred" id="miniCell15"></td>
 										</tr>
 										<tr height="5px"></tr>
 										<tr>
-											<td class="orangeMini" id="miniCell17"></td>
-											<td class="orangeMini" id="miniCell19"></td>
-											<td class="orangeMini" id="miniCell20"></td>
+											<td class="mini orange" id="miniCell17"></td>
+											<td class="mini orange" id="miniCell19"></td>
+											<td class="mini orange" id="miniCell20"></td>
 										</tr>
 										<tr height="5px"></tr>
 										<tr>
-											<td class="redMini" id="miniCell22"></td>
-											<td class="redMini" id="miniCell24"></td>
-											<td class="redMini" id="miniCell25"></td>
+											<td class="mini red" id="miniCell22"></td>
+											<td class="mini red" id="miniCell24"></td>
+											<td class="mini red" id="miniCell25"></td>
 										</tr>
 									</table>
 									<table id="info-table-2">
 										<tr>
-											<td class="yellowMini" id="miniCell27"></td>
-											<td class="yellowMini" id="miniCell28"></td>
-											<td class="yellowMini" id="miniCell30"></td>
+											<td class="mini yellow" id="miniCell27"></td>
+											<td class="mini yellow" id="miniCell28"></td>
+											<td class="mini yellow" id="miniCell30"></td>
 										</tr>
 										<tr height="5px"></tr>
 										<tr>
-											<td class="greenMini" id="miniCell32"></td>
-											<td class="greenMini" id="miniCell33"></td>
-											<td class="greenMini" id="miniCell35"></td>
+											<td class="mini green" id="miniCell32"></td>
+											<td class="mini green" id="miniCell33"></td>
+											<td class="mini green" id="miniCell35"></td>
 										</tr>
 										<tr height="5px"></tr>
 										<tr>
-											<td class="blueMini" id="miniCell38"></td>
-											<td class="blueMini" id="miniCell40"></td>
+											<td class="mini blue" id="miniCell38"></td>
+											<td class="mini blue" id="miniCell40"></td>
 										</tr>
 										<tr height="5px"></tr>
 										<tr>
-											<td class="grayMini" id="miniCell6"></td>
-											<td class="grayMini" id="miniCell16"></td>
-											<td class="grayMini" id="miniCell26"></td>
-											<td class="grayMini" id="miniCell36"></td>
+											<td class="mini gray" id="miniCell6"></td>
+											<td class="mini gray" id="miniCell16"></td>
+											<td class="mini gray" id="miniCell26"></td>
+											<td class="mini gray" id="miniCell36"></td>
 										</tr>
 									</table>
 									<div id="money">
@@ -203,18 +206,19 @@
 										<span class="label" id="money-player-3">1000$</span>
 										<span class="label" id="money-player-4">1000$</span>										
 									</div>
+									<!-- ************* -->
+									<!-- [Roll dices]  -->
+									<!-- ************* -->
+									<div id="roolDice">
+										<img id="diceImg1" src="resources/img/board/die1.gif" width="50px"
+											height="50px"> </img> <img id="diceImg2"
+											src="resources/img/board/die1.gif" width="50px" height="50px">
+										</img>
+									</div>
 								</div>			
 							</div>
 
-						<!-- ************* -->
-						<!-- [Roll dices]  -->
-						<!-- ************* -->
-						<div id="roolDice">
-							<img id="diceImg1" src="resources/img/board/die1.gif" width="50px"
-								height="50px"> </img> <img id="diceImg2"
-								src="resources/img/board/die1.gif" width="50px" height="50px">
-							</img>
-						</div>
+
 
 						<!-- ************** -->
 						<!-- [Menu buttons] -->
@@ -240,9 +244,6 @@
 								    </a>
 								    <a href="javascript:void(0);" id="done" class="button lightbg-blue clearfix"><span>done</span>
 								    </a>
-<!-- 									<button class="btn btn-primary" id="done">done</button>
-									<button class="btn btn-primary" id="start">start</button>
-									<button class="btn btn-primary" id="ready">ready</button> -->
 								</div>
 						</div>
 					</div>
@@ -252,7 +253,7 @@
 				</td>
 				<td class="east" id="cell32">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="house green">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
@@ -260,13 +261,16 @@
 			<tr>
 				<td class="west" id="cell19">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="town-image">
+						<img src="resources/img/board/city/fortress.svg">
+					</div>
+					<div class="house orange">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
 				<td class="east" id="cell33">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="house green">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
@@ -280,13 +284,16 @@
 			<tr>
 				<td class="west" id="cell17">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="town-image">
+						<img src="resources/img/board/city/cathedral.svg">
+					</div>
+					<div class="house orange">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
 				<td class="east" id="cell35">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="house green">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
@@ -317,7 +324,10 @@
 						<span class="nub"></span>
 					</span> 
 					<div class="owner"></div>
-					<div class="house">
+					<div class="town-image">
+						<img src="resources/img/board/city/farm.svg">
+					</div>
+					<div class="house lightred">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
@@ -338,13 +348,16 @@
 						<span class="nub"></span>
 					</span> 
 					<div class="owner"></div>
-					<div class="house">
+					<div class="town-image">
+						<img src="resources/img/board/city/fo.svg">
+					</div>
+					<div class="house lightred">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
 				<td class="east" id="cell38">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="house blue">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
@@ -358,13 +371,16 @@
 			<tr>
 				<td class="west" id="cell12">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="town-image">
+						<img src="resources/img/board/city/fortress.svg">
+					</div>
+					<div class="house lightred">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
 				<td class="east" id="cell40">
 					<div class="owner"></div>
-					<div class="house">
+					<div class="house blue">
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
@@ -375,7 +391,7 @@
 				<td class="south" id="cell10">
 					<div class="south">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house azure">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -383,7 +399,7 @@
 				<td class="south" id="cell9">
 					<div class="south">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house azure">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -393,7 +409,7 @@
 				<td class="south" id="cell7">
 					<div class="south">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house azure">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -408,7 +424,7 @@
 				<td class="south" id="cell4">
 					<div class="south">
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house brown">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
@@ -429,7 +445,7 @@
 							<span class="nub"></span>
 						</span> 
 						<div class="owner"></div>
-						<div class="house">
+						<div class="house brown">
 							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
 						</div>
 					</div>
