@@ -75,14 +75,15 @@ public class GameServerController {
 	    HttpServletRequest request) {
 	ChatParticipant participantClient = ChatRoomsController
 		.getChatParticipantFromRequest(request);
-	log.debug("Connect err");
+	/*log.debug("Connect err");
 	int gameId = manager.getChatRoomById(participantClient.getId_room())
 		.getGameId();
 	String gameType = manager.getChatRoomById(
 		participantClient.getId_room()).getType();
 	log.debug("User: " + participantClient.getNickname()
 		+ " connect to game server");
-	/* connecting to game */
-	return "redirect:/" + gameType.toLowerCase();
+	 connecting to game 
+	return "redirect:/" + gameType.toLowerCase();*/
+	return "redirect:/404";
     }
 }

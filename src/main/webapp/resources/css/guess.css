@@ -1,0 +1,87 @@
+#navbar {
+	font-family:"Helvetica", "arial";
+}
+
+#main {
+	width: 1200px;
+}
+
+#cp {
+	color : white;
+	font-family: "Arial";
+}
+
+@font-face {
+  font-family: 'Cabin Sketch';
+  font-style: normal;
+  font-weight: 700;
+  src: local('CabinSketch Bold'), local('CabinSketch-Bold'), url('../font/sketch.woff') format('woff');
+}
+
+#game-container {
+    width: 584px;
+}
+
+#wrapper {
+	text-align: center;
+	margin: 0 auto;
+}
+
+#chat-header {
+	text-align : center;
+}
+body {
+	background: #ccd6e1;
+	font-family: 'Cabin Sketch', arial, serif;
+}
+
+#game {
+	/*width: 500px;*/
+	/*margin: 0 auto;*/
+}
+
+	#game h1 {
+		text-align: center;
+		margin-bottom: 5px;
+		text-shadow: 0px 1px 0px #fff;
+	}
+
+#drawing-pad {
+	
+	border: 10px solid #fffeff;
+	background: #f1f3ef;
+	box-shadow:0px 3px 5px #333;
+}
+
+#drawing-pad:hover, #drawing-pad:active, #drawing-pad:focus {
+	cursor:url("../img/draw/pencil.png"), crosshair;
+}
+
+#drawing-pallete {
+	font-size: 20px;
+}
+	#drawing-pallete button{
+	//	font-size: 1.2em;
+		cursor : pointer;
+	//	display : none;
+	}
+
+
+#chat-history {
+	word-wrap:break-word;
+	list-style: none;
+	padding: 0;
+}
+
+	#chat-history li {
+		font-family: 'Neucha', Helvetica;
+		font-size: 1.4em;
+		border-bottom: 1px dashed rgba(20,20,20,.2);
+		margin: 10px 0;
+		color: #000;
+	}
+
+#stats li {
+	font-family: 'Neucha', Helvetica;
+	font-size: 1.4em;	
+}

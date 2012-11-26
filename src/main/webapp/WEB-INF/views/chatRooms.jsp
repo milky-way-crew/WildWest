@@ -103,7 +103,7 @@
 	</div>
 	<!-- modal window create room -->
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
-	<script type="text/javascript" src="resources/js/chat.js"></script>
+	<script type="text/javascript" src="resources/js/chat-rooms.js"></script>
 	<script type="text/javascript" src="resources/js/room.js"></script>
 	<script type="text/javascript"
 		src="resources/js/bootstrap-transition.js"></script>

@@ -12,6 +12,7 @@ public class ChessPlayer {
 	private String nick;
 	private ChessPlayerTypesEnum type;
 	private Deque<GameAction> notifiers = new LinkedList<GameAction>();
+	private List<String> mail = new ArrayList<String>();
 	private boolean isReady = false;
 	
 	public void notifyAbout(GameAction action) {
@@ -22,7 +23,8 @@ public class ChessPlayer {
 		return notifiers.pollFirst();
 	}
 
-	private FigureTypesEnum drawChoice = null;	
+	private FigureTypesEnum drawChoice = null;
+	private boolean active;	
 	
 	public void setDrawChoice(FigureTypesEnum drawChoice) {
 		this.drawChoice = drawChoice;
@@ -84,5 +86,21 @@ public class ChessPlayer {
 
 	public void setReady(boolean isReady) {
 		this.isReady = isReady;
+	}
+
+	public List<String> getMail() {
+		return mail;
+	}
+
+	public void setMail(List<String> mail) {
+		this.mail = mail;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

@@ -77,7 +77,6 @@
 
             GAME.sendMove(idFrom, idTo, function(json) {
                 // GAME.inform('Result of move:' + json.result);
-
                 if(typeof GAME.handleEvent[json.result] !== 'undefined') {
                     console.log('Result of move from server: ' + json.result);
                     GAME.handleEvent[json.result](idFrom, idTo, json);
@@ -217,22 +216,25 @@
                 }]);
             },
             "ABSOLUTE_WIN": function(idFrom, idTo, json) {
-                alert('abs win');
+                // alert('abs win');
                 GAME.view.animateWin(idFrom, idTo, json);
 
-                if(GAME.isOwnerOf(idFrom) === true) {
-                    bootbox.alert('<h1>Congradulations!</h1> <p>you win the game</p>');
+                if(GAME.isOwnerOf(idFrom) === true || typeof idFrom === 'undefined') {
+                	$('#fin-label').html('Congradulations! You win the game.');
+                	$('#fin img').attr("src", "./resources/img/chess/win.png");
                 } else {
-                    bootbox.alert('<h1>You loose the game.</h1> <p>better luck next time</p>');
+                	$('#fin img').attr("src", "./resources/img/chess/loose.png");
+                	$('#fin-label').html('You loose the game, better luck next time.');
                 }
 
+                $('#fin').modal();
+                
                 clearInterval(GAME.updaterService);
                 GAME.inform('redirecting in 5 seconds');
                 setTimeout("window.location='./chess/exit'", 7000);
             },
             "END": function(json) {
                 bootbox.alert('End of game, redirecting to home in 4 seconds');
-
                 // window.location.href = "../chess/exit";
             }
             //***************************************//
@@ -241,8 +243,15 @@
         },
         updaterService: function() {
             GAME.sendMessage('changes', function(json) {
+                if(json.mail) {
+                    $.each(json.mail, function(i, mail) {
+                        chat.prepend('<h4>' + mail + '</h4>');
+                    });
+                }
+
+
                 GAME.config.canMove = json.move;
-                var message = typeof json.move === 'undefined' ? 'Waiting for opponent' : (json.move ? 'Its your turn' : 'Opponent turn'); 
+                var message = typeof json.move === 'undefined' ? 'Waiting for opponent' : (json.move ? 'Its your turn' : 'Opponent turn');
                 GAME.inform(message);
 
                 if(typeof json.result !== 'undefined') {
@@ -266,7 +275,6 @@
                 }
             });
         },
-
         isOwnerOf: function(id) {
             console.log("OWNER OF " + id + " is " + GAME.config.board[id].owner);
             console.log("PLAYER OWNER ID: " + GAME.config.owner);
@@ -416,16 +424,14 @@
             $(this).click(function() {
                 var $this = $(this),
                     $clicked = $this.parent().attr('id'),
-                    clickedType = GAME.config.board[$clicked].type;//.toLowerCase()[0];
-
-                if(clickedType !== 'TRAP' && clickedType !== 'FLAG' 
-                    && GAME.isOwnerOf($clicked) && GAME.config.canMove) {
-                        $('.selected').removeClass('selected');
-                        $this.addClass('selected');
-                        $this.effect("bounce", {
-                            times: 3
-                        }, 300);
-                        return false;
+                    clickedType = GAME.config.board[$clicked].type; //.toLowerCase()[0];
+                if(clickedType !== 'TRAP' && clickedType !== 'FLAG' && GAME.isOwnerOf($clicked) && GAME.config.canMove) {
+                    $('.selected').removeClass('selected');
+                    $this.addClass('selected');
+                    $this.effect("bounce", {
+                        times: 3
+                    }, 300);
+                    return false;
                 }
             });
         });
@@ -438,12 +444,21 @@
             });
         });
 
+        var bfFadeIn = function () {
+            $('#bf').fadeIn(300);
+            $('#before_game img').attr('src', './resources/img/chess/dazz2.gif');
+            $('#before_game img').animate({'margin-top' : '20px'}, 200);
+        }, bfFadeOut = function () {
+            $('#bf').fadeOut(500);
+            $('#before_game img').attr('src', './resources/img/chess/cats.gif');
+            $('#before_game img').animate({'margin-top' : '0px'}, 200);
+        };
+
         $('#ready').click(function() {
-            $('#before_game').fadeOut(500);
+            bfFadeOut();
             GAME.sendMessage({
                 'ready': true
             }, function(json) {
-
             });
         });
 
@@ -452,13 +467,52 @@
             'is-started': null
         }, function(json) {
             if(json.started === false) {
-                $('#before_game').fadeIn(300);
+                // $('#before_game').fadeIn(300);
+                bfFadeIn();
             } else {
-                $('#before_game').fadeOut(500);
+                bfFadeOut();
+                // $('#before_game').fadeOut(500);
             }
         });
 
         GAME.initBoard();
-        setInterval(GAME.updaterService, 5000);
+                
+        // ***********************
+        chat.init($('#chat-history ul'));
+        chat.MAX_MSG = 100;
+        var send = function() {
+                var msg = $('#chat-input').val();
+                $('#chat-input').val('');
+                if(msg.length > 0) {
+                    chat.prepend('<h4>me : ' + msg + '</h4>');
+                    GAME.sendMessage({
+                        'chat': msg
+                    }, function(argument) {
+
+                    });
+                }
+                return false;
+            };
+
+        $('#send').click(send);
+        $('#chat-input').keypress(function(event) {
+            if(event.keyCode == '13') {
+                return send();
+            }
+        });
+        // ********************
+        
+        var bu = function(e) { 
+        	e.preventDefault();
+       		GAME.sendMessage({
+       			'chat': 'disconnected.'
+       		}, function(a) {});
+       		GAME.sendMessage({
+       			'disco' : true
+       		}, function(a) {});
+        };
+        $(window).on("beforeunload", bu);
+        
+        setInterval(GAME.updaterService, 3000);
     });
 })(jQuery);

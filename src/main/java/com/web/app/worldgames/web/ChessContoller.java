@@ -46,12 +46,6 @@ public class ChessContoller {
 		return chessService.getAllGames();
 	}
 
-	@RequestMapping(value = "/board") 
-	public @ResponseBody Board getBoard() {
-
-		return chessService.getGameById(1).getGame().getBoard();
-	} 
-
 	@RequestMapping(value = "/chess/create")
 	public String createServer(HttpSession session) {
 		if (session.getAttribute("user") == null) {
@@ -109,11 +103,17 @@ public class ChessContoller {
 
 	@RequestMapping(value = "/chess/exit") 
 	public String leaveGame(HttpSession session) {
-		log.info("Exit requested");
-		Integer id = (Integer) session.getAttribute("idChessGame");
-
-		session.removeAttribute("idChessGame");
-		chessService.removeGameById(id);
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			Integer id = (Integer) session.getAttribute("idChessGame");
+			log.info(String.format("Exit requested from user-id=%d chess-id=%d", user.getId(), id));
+			ChessGameManager gameManager = chessService.getGameById(id);
+			if (gameManager != null) {
+				gameManager.onDisconnect(null, user);
+//				session.removeAttribute("idChessGame");
+//				chessService.removeGameById(id);
+			}
+		}
 
 		return "redirect:/home";
 	}

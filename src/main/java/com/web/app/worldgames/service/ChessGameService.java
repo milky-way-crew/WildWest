@@ -1,7 +1,10 @@
 package com.web.app.worldgames.service;
 
 import java.util.Collections;
+
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -21,15 +24,19 @@ public class ChessGameService implements IChessGameService {
 	private static final Logger log = Logger.getLogger(ChessGameService.class);
 
 	private static final Map<Integer, ChessGameManager> serverMap = Collections.synchronizedMap(new HashMap<Integer, ChessGameManager>());
-	// private static final <Integer> removedId = new ArrayList<Integer>();
+	 private static final Deque<Integer> removedId = new LinkedList<Integer>();
 	private static int counter = 0;
 	
 	@Override
 	public synchronized int createGame(User host) {
-		ChessGameManager chessGame = new ChessGameManager(new ChessGame());
+		int newId = -1;
+		newId = removedId.size() > 0 ? removedId.pop() : ++counter;
+		ChessGame game = new ChessGame();
+		game.setId(newId);
+		ChessGameManager chessGame = new ChessGameManager(game);
 		chessGame.setHost(new ChessPlayer(host));
-		serverMap.put(++counter, chessGame);
-		return counter;
+		serverMap.put(newId, chessGame);
+		return newId;
 	}
 
 	@Override
@@ -46,7 +53,7 @@ public class ChessGameService implements IChessGameService {
 		if (serverMap.containsKey(id)) {
 			log.info("removing game with id: " + id);
 			serverMap.remove(id);
-			// counter--;
+			removedId.push(id);
 			return true;
 		} else {
 			log.info("Cannot found game with such id=" + id);
@@ -59,4 +66,16 @@ public class ChessGameService implements IChessGameService {
 		return serverMap.entrySet();
 	}
 
+	public void tryRemoveGame(ChessGame game) {
+		log.info("Searching for remove game with id=" + game.getId());
+		for (Entry<Integer, ChessGameManager> pair : serverMap.entrySet()) {
+			if (pair.getValue().getGame().getId() == game.getId()) {
+				if (!game.getBlack().isActive() && !game.getWhite().isActive()) {
+					log.info("Found game with id=" + game.getId() + " all players are inactive, removing game");
+					serverMap.remove(pair.getKey());
+				}
+				break;
+			}
+		}
+	}
 }
