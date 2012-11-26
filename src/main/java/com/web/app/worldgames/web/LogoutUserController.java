@@ -7,12 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.app.worldgames.domain.chat.ChatParticipant;
-import com.web.app.worldgames.service.ChatServiceManager;
+import com.web.app.worldgames.service.ChatRoomServiceManager;
 
 @Controller
 public class LogoutUserController {
 
-    private static ChatServiceManager manager = ChatRoomsController
+    private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
 
     @RequestMapping(value = { "/logout" })

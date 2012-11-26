@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.chat.ChatParticipant;
-import com.web.app.worldgames.service.ChatServiceManager;
+import com.web.app.worldgames.service.ChatRoomServiceManager;
 
 @Controller
 public class ChatRoomsController {
@@ -23,7 +23,7 @@ public class ChatRoomsController {
     private static final Logger log = Logger
 	    .getLogger(ChatRoomsController.class);
 
-    private static ChatServiceManager manager = new ChatServiceManager();
+    private static ChatRoomServiceManager manager = new ChatRoomServiceManager();
 
     @RequestMapping(value = "/chatRooms", method = RequestMethod.GET)
     public ModelAndView showPage(HttpServletRequest request) {
@@ -48,7 +48,7 @@ public class ChatRoomsController {
 
     }
 
-    public static ChatServiceManager getManager() {
+    public static ChatRoomServiceManager getManager() {
 	return manager;
     }
 

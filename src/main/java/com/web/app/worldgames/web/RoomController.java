@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.app.worldgames.domain.chat.ChatParticipant;
 import com.web.app.worldgames.domain.chat.ChatRoom;
-import com.web.app.worldgames.service.ChatServiceManager;
+import com.web.app.worldgames.service.ChatRoomServiceManager;
 
 @Controller
 public class RoomController {
@@ -23,7 +25,7 @@ public class RoomController {
     static final String READY_STATUS = "ready";
     static final String NOT_READY_STATUS = "";
     private static final Logger log = Logger.getLogger(RoomController.class);
-    private static ChatServiceManager manager = ChatRoomsController
+    private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
 
     @RequestMapping(value = "/ajax_room", method = RequestMethod.POST)
@@ -32,6 +34,7 @@ public class RoomController {
 	    @RequestParam("type") String type, @RequestParam("data") String data) {
 	ChatParticipant participant = ChatRoomsController
 		.getChatParticipantFromRequest(request);
+	JSONParser parser = new JSONParser();
 	JSONObject json = new JSONObject();
 
 	if (type.toLowerCase().trim().equals("lists")) {
@@ -42,16 +45,36 @@ public class RoomController {
 		json.put("userList", updateUserList(participant));
 		json.put("userRoom",
 			manager.getChatRoomById(participant.getId_room()));
-		json.put("creator", isCreator(participant));
+		json.put("creatorRedirect",
+			manager.getChatRoomById(participant.getId_room())
+				.getRoomCreator(participant).isRedirectState());
+		json.put("isCreator", isCreator(participant));
+		json.put("filter", participant.isChatFilter());
+		json.put("myRedirect", participant.isRedirectState());
 		if (activateStartButton(participant))
 		    json.put("startStatus", true);
 	    }
 	    return json;
 	}
+	if (type.toLowerCase().trim().equals("filteron")) {
+	    log.debug("Filter turn On by User: " + participant.getNickname());
+	    participant.setChatFilter(true);
+	}
+	if (type.toLowerCase().trim().equals("filteroff")) {
+	    log.debug("Filter turn Off by User: " + participant.getNickname());
+	    participant.setChatFilter(false);
+	}
 	if (type.toLowerCase().trim().equals("create")) {
-	    log.debug("Create room " + data + " by user: "
+	    try {
+		json = (JSONObject) parser.parse(data);
+	    } catch (ParseException e) {
+		e.printStackTrace();
+	    }
+	    log.debug("Create room " + json.get("name") + " by user: "
 		    + participant.getNickname());
-	    createRoom(participant, data);
+	    log.debug("Room type is: " + json.get("type"));
+	    createRoom(participant, json.get("name").toString(),
+		    json.get("type").toString());
 	}
 	if (type.toLowerCase().trim().equals("join")) {
 	    log.debug("User: " + participant.getNickname() + " joined to room");
@@ -101,8 +124,8 @@ public class RoomController {
     }
 
     private void exitFromRoom(ChatParticipant participant) {
-	if (chooseNewCreator(participant)!=null){
-	    chooseNewCreator(participant).setStatus(CREATOR);	    
+	if (chooseNewCreator(participant) != null) {
+	    chooseNewCreator(participant).setStatus(CREATOR);
 	}
 	manager.getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
@@ -114,7 +137,8 @@ public class RoomController {
     private ChatParticipant chooseNewCreator(ChatParticipant participant) {
 	for (ChatParticipant chatParticipant : manager.getChatRoomById(
 		participant.getId_room()).getChatParticipants()) {
-	    if (participant.getParticipantId()!=chatParticipant.getParticipantId()){
+	    if (participant.getParticipantId() != chatParticipant
+		    .getParticipantId()) {
 		return chatParticipant;
 	    }
 	}
@@ -146,12 +170,13 @@ public class RoomController {
 	return false;
     }
 
-    private void createRoom(ChatParticipant participant, String roomName) {
+    private void createRoom(ChatParticipant participant, String roomName,
+	    String type) {
 	manager.getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
 	int lastRoom = manager.getChatRooms().size() - 1;
 	int newId = manager.getChatRoomById(lastRoom).getRoomId() + 1;
-	manager.addChatRoom(roomName, newId);
+	manager.addChatRoom(roomName, newId, type);
 	participant.setId_room(newId);
 	participant.setStatus(CREATOR);
 	manager.getChatRoomById(participant.getId_room()).addChatParticipant(

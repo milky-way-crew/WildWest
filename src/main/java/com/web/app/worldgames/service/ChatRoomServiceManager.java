@@ -8,15 +8,15 @@ import org.apache.log4j.Logger;
 import com.web.app.worldgames.domain.chat.ChatParticipant;
 import com.web.app.worldgames.domain.chat.ChatRoom;
 
-public class ChatServiceManager {
+public class ChatRoomServiceManager {
 
     private static final int ID_WORLD_ROOM = 0;
     private static final Logger log = Logger
-	    .getLogger(ChatServiceManager.class);
+	    .getLogger(ChatRoomServiceManager.class);
     private static List<ChatRoom> chatRooms = new ArrayList<ChatRoom>();
 
-    public ChatServiceManager() {
-	chatRooms.add(new ChatRoom("World", ID_WORLD_ROOM));
+    public ChatRoomServiceManager() {
+	chatRooms.add(new ChatRoom("World", ID_WORLD_ROOM, "chat"));
     }
 
     public List<ChatRoom> getChatRooms() {
@@ -24,11 +24,11 @@ public class ChatServiceManager {
     }
 
     public void setChatRooms(List<ChatRoom> chatRooms) {
-	ChatServiceManager.chatRooms = chatRooms;
+	ChatRoomServiceManager.chatRooms = chatRooms;
     }
 
-    public void addChatRoom(String roomName, int id) {
-	chatRooms.add(new ChatRoom(roomName, id));
+    public void addChatRoom(String roomName, int id, String type) {
+	chatRooms.add(new ChatRoom(roomName, id, type));
 	log.debug("ChatRoom " + roomName + " added to room list");
     }
 
@@ -50,11 +50,11 @@ public class ChatServiceManager {
 	    }
 	}
     }
-    
-    public boolean isParticipantInAnyRoom(ChatParticipant participant){
+
+    public boolean isParticipantInAnyRoom(ChatParticipant participant) {
 	boolean flag = false;
-	for (ChatRoom room: chatRooms){
-	    if (room.isParticipantInThisRoom(participant)){
+	for (ChatRoom room : chatRooms) {
+	    if (room.isParticipantInThisRoom(participant)) {
 		flag = true;
 	    }
 	}

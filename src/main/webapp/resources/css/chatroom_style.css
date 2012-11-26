@@ -8,8 +8,16 @@ body {
 	margin-top: 30px;
 }
 
+#listTitle h2 {
+	font-size: 18pt;
+}
+
 form,p,span {
 	padding: 0;
+}
+
+td {
+	text-align: center !important;
 }
 
 input {
@@ -19,7 +27,7 @@ input {
 #menu a {
 	color: #fff;
 	text-decoration: none;
-	margin: 10px;
+	margin: 5px;
 }
 
 tr.hilite td {
@@ -44,11 +52,20 @@ tr.hilite td {
 	border: 1px solid #ACD8F0;
 }
 
+.modal-body {
+	height: 150px;
+	widht: auto;
+}
+
+.btn-group {
+	margin-bottom: 10px;
+}
+
 #list {
 	border: 2;
 	cellspacing: 3;
 	cellpadding: 3;
-	align: center;
+	text-align: center;
 }
 
 .error {

@@ -17,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.app.worldgames.domain.chat.ChatParticipant;
-import com.web.app.worldgames.service.ChatServiceManager;
+import com.web.app.worldgames.domain.chat.ChatRoom;
+import com.web.app.worldgames.service.ChatRoomServiceManager;
 
 @Controller
 public class ChatController {
 
     static final String DATE_FORMAT = "HH:mm";
     private static final Logger log = Logger.getLogger(ChatController.class);
-    private static ChatServiceManager manager = ChatRoomsController
+    private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
 
     @RequestMapping(value = "/ajax_chat", method = RequestMethod.POST)
@@ -54,8 +55,9 @@ public class ChatController {
 	StringBuilder sb = new StringBuilder();
 	sb.append("<p style='color:");
 	sb.append(participant.getTextColor());
-	sb.append("'>");
-	sb.append("[");
+	sb.append("' id=");
+	sb.append(participant.getParticipantId());
+	sb.append(">[");
 	sb.append(dateFormat.format(date));
 	sb.append("] ");
 	sb.append(manager.getChatRoomById(participant.getId_room())
@@ -69,19 +71,32 @@ public class ChatController {
     }
 
     private void broadcast(ChatParticipant participant, String data) {
-	if (data != "") {
-	    for (ChatParticipant chatParticipant : manager.getChatRoomById(
-		    participant.getId_room()).getChatParticipants()) {
-		if (chatParticipant.getParticipantId() != participant
-			.getParticipantId()) {
+	if (participant.getId_room() == manager.getIdWorldRoom()) {
+	    broadcastFromWorldRoom(participant, data);
+	} else {
+	    broadcastInRoom(participant, data);
+	}
+    }
+
+    private void broadcastFromWorldRoom(ChatParticipant participant, String data) {
+	for (ChatRoom room : manager.getChatRooms()) {
+	    for (ChatParticipant chatParticipant : room.getChatParticipants()) {
+		if ((chatParticipant.getParticipantId() != participant
+			.getParticipantId())
+			&& (chatParticipant.isChatFilter() == false)) {
 		    chatParticipant.addMessage(answerOnMessage(participant,
 			    data));
-		    log.debug("BROADCAST MESSAGE: "
-			    + answerOnMessage(participant, data) + " TO USER: "
-			    + chatParticipant.getNickname());
-		    log.debug("deliver contains = "
-			    + chatParticipant.deliver.toString());
 		}
+	    }
+	}
+    }
+
+    private void broadcastInRoom(ChatParticipant participant, String data) {
+	for (ChatParticipant chatParticipant : manager.getChatRoomById(
+		participant.getId_room()).getChatParticipants()) {
+	    if (chatParticipant.getParticipantId() != participant
+		    .getParticipantId()) {
+		chatParticipant.addMessage(answerOnMessage(participant, data));
 	    }
 	}
     }

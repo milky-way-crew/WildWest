@@ -37,5 +37,9 @@ function updateMessages() {
 		}
 	});
 };
-document.getElementById('send').onclick = message;
+
+$("#send").click(function() {
+	message();
+});
+
 setInterval(updateMessages, 3000);

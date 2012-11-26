@@ -24,13 +24,13 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="#">MONOPOLY</a>
+				</a> <a class="brand" href="http://www.redtube.com/">redtube.com</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="#">Profile</a></li>
 						<li><a href="#">TOP-100</a></li>
-						<li><a href="#">Sign out</a></li>
+						<li><a href="./logout">Sign out</a></li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->
@@ -50,15 +50,17 @@
 					<form name="message" action="">
 						<input type="text" id="usermsg"
 							placeholder="Enter your message here..."> <a
-							class="btn btn-primary btn-medium" id="send">Send</a>
+							class="btn btn-primary btn-medium" id="send">Send <i
+							class="icon-white icon-envelope"></i></a>
+						<div id="chatOption"></div>
 					</form>
 				</div>
 			</div>
 
 			<!-- list -->
 			<div class="span4">
-				<div id="listTitle" class="well sidebar-nav"></div>
-				<div class="well sidebar-nav">
+				<div id="listTitle" class="well"></div>
+				<div class="well">
 					<table id="list" class="table table-hover">
 					</table>
 					<div id="menu"></div>
@@ -77,15 +79,25 @@
 				<h1>Create room</h1>
 			</div>
 			<div class="modal-body">
-				<h2></h2>
-				<p>Enter room name:</p>
-				<input type="text" id="roomName" size=100
+				<p></p>
+				Enter room name: <input type="text" id="roomName" size=100
 					placeholder="Enter room name...">
+				<div class="btn-group">
+					<a id="info" class="btn dropdown-toggle btn-info" data-toggle="dropdown"
+						href="#">Choose Game <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a id="Monopoly" tabindex="-1" href="#">Monopoly</a></li>
+						<li><a id="Chess" tabindex="-1" href="#">Chess</a></li>
+						<li><a id="DrawAndGuess" tabindex="-1" href="#">Draw and Guess</a></li>
+						<li><a id="Gibbet" tabindex="-1" href="#">Gibbet</a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<a id="createRoom" href="#" class="btn btn-success">Create</a> <a
-					id="closeModal" href="#" onclick="closeModal()" class="btn"
-					data-dismiss="modal">Close</a>
+				<a id="createRoom" href="#" class="btn btn-success"
+					data-dismiss="modal">Create <i class="icon-white icon-edit"></i>
+				</a> <a id="closeModal" class="btn" data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>

@@ -7,15 +7,23 @@ import org.apache.log4j.Logger;
 
 public class ChatRoom {
     private static final Logger log = Logger.getLogger(ChatRoom.class);
+    static final String MONOPOLY = "monopoly";
+    static final String CHESS = "chess";
+    static final String DRAW = "drawandguess";
+    static final String GIBBET = "gibbet";
 
     private List<ChatParticipant> chatParticipants = new ArrayList<ChatParticipant>();
     private int roomId;
+    private int gameId;
     private String roomName;
     private int size;
+    private String type;
+    private int maxSize;
 
-    public ChatRoom(String roomName, int id) {
+    public ChatRoom(String roomName, int id, String type) {
 	this.roomId = id;
 	this.roomName = roomName;
+	this.type = type;
 	log.debug("Room " + roomName + " added");
     }
 
@@ -55,6 +63,15 @@ public class ChatRoom {
 	return false;
     }
 
+    public ChatParticipant getRoomCreator(ChatParticipant participant) {
+	for (ChatParticipant candidat : chatParticipants) {
+	    if (candidat.getStatus().toLowerCase().trim().equals("creator")) {
+		return candidat;
+	    }
+	}
+	return participant;
+    }
+
     public List<ChatParticipant> getChatParticipants() {
 	return chatParticipants;
     }
@@ -85,5 +102,41 @@ public class ChatRoom {
 
     public void setSize(int size) {
 	this.size = size;
+    }
+
+    public String getType() {
+	return type;
+    }
+
+    public void setType(String type) {
+	this.type = type;
+    }
+
+    public int getGameId() {
+	return gameId;
+    }
+
+    public void setGameId(int gameId) {
+	this.gameId = gameId;
+    }
+
+    public int getMaxSize() {
+	if (this.type.toLowerCase().trim().equals(MONOPOLY)) {
+	    this.maxSize = 4;
+	}
+	if (this.type.toLowerCase().trim().equals(CHESS)) {
+	    this.maxSize = 2;
+	}
+	if (this.type.toLowerCase().trim().equals(GIBBET)) {
+	    this.maxSize = 2;
+	}
+	if (this.type.toLowerCase().trim().equals(DRAW)) {
+	    this.maxSize = 50;
+	}
+	return maxSize;
+    }
+
+    public void setMaxSize(int maxSize) {
+	this.maxSize = maxSize;
     }
 }
