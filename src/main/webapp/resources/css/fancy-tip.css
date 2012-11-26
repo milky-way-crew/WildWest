@@ -1,0 +1,156 @@
+.tip {
+  font-family: 'Archivo Narrow', sans-serif;
+  font-weight: bold;
+  color: #333;
+  /*display: block;*/
+
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+}
+.tip .tip-header {
+  margin: 0px;
+}
+.tip .tip-content {
+
+}
+.tip span {
+	-webkit-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	position: absolute;
+	padding: 10px;
+	width: 190px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	text-shadow: 0 0 0 #ffffff;
+	font-weight: 800;
+	color: rgba(255, 255, 255, 0);
+	opacity: 0;
+	font-size: 16px;
+	-moz-transition: all 0.4s ease-in;
+	-webkit-transition: all 0.4s ease-in;
+	-o-transition: all 0.4s ease-in;
+	-webkit-transition: all 0.4s ease-in;
+	-webkit-transition-delay: 0.1s;
+	-moz-transition-delay: 0.1s;
+	-o-transition-delay: 0.1s;
+	-transition-delay: 0.1s;
+	z-index: 1;
+}
+
+.tip span .nub {
+  display: block;
+  width: 10px;
+  height: 10px;
+  padding: 5px;
+  border-style: solid;
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.8);
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  left: 42%;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  z-index: 0;
+  -moz-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -webkit-transition-delay: 0.1s;
+  -moz-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  -transition-delay: 0.1s;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.tip span.top {
+  top: 0px;
+  left: 4px;
+  width: 150px;
+}
+.tip span.top .nub {
+  left: 20%;
+  bottom: -8px;
+}
+.tip span.bottom {
+  bottom: 0px;
+  left: 4px;
+}
+.tip span.bottom .nub {
+  left: 20%;
+  top: -8px;
+}
+.tip span.left {
+  top: 0px;
+  left: 4px;
+}
+.tip span.left .nub {
+  left: 180px;
+  top: 20px;
+}
+.tip span.right {
+  top: 0px;
+  right: 4px;
+}
+.tip span.right .nub {
+  left: -8px;
+  top: 20px;
+  margin: 0 0 0 0;
+  -moz-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+}
+.tip:hover span {
+  background: #78896D; /* TODO: change this auqa blue sucking color. WAS: #0099ff */ /*#73C2C0*/  
+  height: auto;
+  color: #fff;
+  font-size: 16px;
+  opacity: 100;
+  -moz-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -webkit-transition-delay: 0.1s;
+  -moz-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  -transition-delay: 0.1s;
+}
+.tip:hover span .nub {
+  -moz-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -webkit-transition-delay: 0.1s;
+  -moz-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  -transition-delay: 0.1s;
+}
+.tip:hover span.bottom {
+  bottom: -60px;
+}
+.tip:hover span.left {
+  left: -193px;
+}
+.tip:hover span.right {
+  right: -193px;
+}
+.tip:hover span.top {
+  top: -150px; /* was -60px */
+}

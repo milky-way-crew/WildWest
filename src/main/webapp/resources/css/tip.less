@@ -1,0 +1,194 @@
+@import url(http://fonts.googleapis.com/css?family=Archivo+Narrow:400);
+@import url(http://fonts.googleapis.com/css?family=Archivo+Narrow:700);
+@tipcolor: #0099ff;
+.default(){
+  text-shadow: 1px 1px 0px #fff;
+  font-weight: 400; 
+  color: #333;
+  border: 1px solid #aaa;
+  cursor: pointer;
+  .rounded(4px);
+  background: #feffe8; /* Old browsers */
+  background: -moz-linear-gradient(top,  #feffe8 0%, #d6dbbf 100%); /* FF3.6+ */
+  background: -webkit-linear-gradient(top,  #feffe8 0%,#d6dbbf 100%); /* Chrome10+,Safari5.1+ */
+  background: linear-gradient(to bottom,  #feffe8 0%,#d6dbbf 100%); /* W3C */
+  .transition;
+  &:hover {
+    background: -moz-linear-gradient(top,  #fffce7 0%, #fdfd9f 100%); /* FF3.6+ */
+    background: -webkit-linear-gradient(top,  #fffce7 0%,#fdfd9f 100%); /* Chrome10+,Safari5.1+ */
+    background: linear-gradient(to bottom,  #fffce7 0%,#fdfd9f 100%); /* W3C */
+
+  }
+  &:active {
+    background: -moz-linear-gradient(top,  #f8c67a 0%, #e28904 49%, #f9ac39 50%, #f9d4a1 100%); /* FF3.6+ */
+    background: -webkit-linear-gradient(top,  #f8c67a 0%,#e28904 49%,#f9ac39 50%,#f9d4a1 100%); /* Chrome10+,Safari5.1+ */
+    background: linear-gradient(to bottom,  #f8c67a 0%,#e28904 49%,#f9ac39 50%,#f9d4a1 100%); /* W3C */
+  }
+}
+
+.textinset(@horizontal: 1px, @vertical: 1px, @blur: 0px, @color: #fff) {
+  text-shadow: @horizontal @vertical @blur @color;
+}
+.inset(@dims:1px 1px 1px, @color:#fff) {
+    box-shadow: @dims @color; // Opera, FFX4
+    -moz-box-shadow:@dims @color; // FFX3.5
+    -webkit-box-shadow:@dims @color; // Safari/Chrome/WebKit
+}
+
+.box-size() {
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.rotate(@deg: 45deg) {
+    -moz-transform: rotate(@deg);
+        -webkit-transform: rotate(@deg);
+        -o-transform: rotate(@deg);
+        -ms-transform: rotate(@deg);
+        transform: rotate(@deg);
+}
+
+.transition (@time: .4s, @range: all, @ease: ease-in) {
+  -moz-transition: @range @time @ease;
+  -webkit-transition: @range @time @ease;
+  -o-transition: @range @time @ease;
+  transition: @range @time @ease;
+}
+
+.transition-delay (@time: .2s) {
+	-webkit-transition-delay: @time;  
+	-moz-transition-delay: @time;  
+	-o-transition-delay: @time;  
+	-transition-delay: @time; 
+}
+
+.rounded(@radius: 5px) {
+	-moz-border-radius:@radius; // FFX1-3.5
+	-webkit-border-radius:@radius; // Safari 3/Chrome 0.2
+  border-radius: @radius;
+}
+
+body { 
+  width: 100%; 
+  background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/grid.png) repeat #fefefe;
+}
+b {
+  font-color: red;
+}
+.wrap {
+  width: 500px;
+  margin: 100px auto;
+  
+  
+  /* button stuffs */
+  button {
+    font-family: 'Archivo Narrow', sans-serif; 
+    font-weight: bold; 
+    font-size: 36px; 
+    .textinset; 
+    color: #333;
+    display: block; 
+    padding: 10px 30px; 
+    margin: 0 auto; 
+    min-width: 200px; 
+    .box-size; 
+    position: relative;
+    z-index: 1;
+    .inset;
+    .default;
+    
+    /* span stuffs (tooltip) */
+    span {
+      .box-size;
+      position: absolute;
+      padding: 10px;
+      width: 190px;
+      .rounded;
+      .textinset(0,0,0);
+      font-weight: normal;
+      color: rgba(255,255,255,0);
+      opacity: 0;
+      font-size: 16px;
+      .transition;
+      .transition-delay;
+      z-index: 1;
+      .nub{
+        display: block; 
+        width: 10px; 
+        height: 10px; 
+        padding: 5px;
+        border-style: solid; 
+        border-color: transparent; 
+        background: rgba(255,255,255,.8);
+        .box-size; 
+        position: absolute; 
+        left: 42%;
+        .rotate;
+        z-index: 0;
+        .transition;
+        .transition-delay;
+        .rounded(0px);
+      }
+      &.top {
+        top: 0px;
+        left: 4px;
+        .nub {
+          left: 20%; 
+          bottom: -8px;
+        }
+      }
+      &.bottom {
+        bottom: 0px;
+        left: 4px;
+        .nub {
+          left: 20%; 
+          top: -8px;
+        }
+      }
+      &.left {
+        top: 0px;
+        left: 4px;
+        .nub {
+          left: 180px; 
+          top: 20px;
+        }
+      }
+      &.right {
+        top: 0px;
+        right: 4px;
+        .nub {
+          left: -8px; 
+          top: 20px;
+          margin: 0 0 0 0;
+          .transition;
+        }
+      }
+    }
+    &:hover {
+      span {
+        background: @tipcolor;
+        height: auto;
+        color: #fff;
+        font-size: 16px;
+        opacity: 100;
+        .transition;
+        .transition-delay;
+        .nub {
+          .transition;
+          .transition-delay;
+        }
+        &.bottom {
+          bottom: -60px;
+        }
+        &.left {
+          left: -193px;
+        }
+        &.right {
+          right: -193px;
+        }
+        &.top {
+          top: -60px;
+        }
+      }
+    }
+  }
+}

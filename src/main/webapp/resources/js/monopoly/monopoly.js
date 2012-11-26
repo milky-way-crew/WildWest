@@ -163,7 +163,7 @@ function() {
                         }
                         // experimental feature
                         $("#accordion").accordion({
-                            active: BOARD.getPlayer(color) - 1
+                            active: BOARD.colorToIndex(color) - 1
                         });
                     }
 
@@ -270,7 +270,7 @@ function() {
         animate: {
             money: function(who, money) {
                 console.log('Setting money to', money, 'player=', who);
-                BOARD.updateMoney(who, money);
+                BOARD.draw.updateMoney(who, money);
             },
             move: function(who, d1, d2, was) {
                 log('Animating [move]');
@@ -324,7 +324,7 @@ function() {
                     });
                 };
             $('#controls button').each(initButton);
-            $('#menu button').each(initButton);
+            $('#menu a').each(initButton);
         }
     };
 
@@ -357,21 +357,12 @@ function() {
                 DOWN_SMALL_JUMP: '+=74%'
             },
             DURATION: 200,
-
-            COLOR_PLAYER: {
-                "BROWN": '#player1',
-                "GREEN": '#player2',
-                "RED": '#player3',
-                "VIOLET": '#player4'
-
-            },
-            PLAYER_NUMBER: {
-                "BROWN": '#first',
-                "GREEN": '#second',
-                "RED": '#third',
-                "VIOLET": '#four'
+            COLOR_TO_NUMBER: {
+                'BROWN': '1',
+                'GREEN': '2',
+                'RED': '3',
+                'VIOLET': '4'
             }
-
         },
         animate: { /**** Player move on the left or on the right ***/
             playerLeftAnimate: function(player, shift) {
@@ -401,7 +392,7 @@ function() {
             stepOnBoard: function(playerColor, dice1, dice2, startCell) {
                 var start = startCell;
                 var DICE = dice1 + dice2;
-                var player = BOARD.CONSTANT.COLOR_PLAYER[playerColor];
+                var player = '#player' + BOARD.colorToIndex(playerColor);
                 for(var i = 0; i < DICE; i++) {
                     if(start >= 1 && start < 11) {
                         if(start == 1) {
@@ -442,12 +433,11 @@ function() {
                     if(start > 40) start -= 40;
                 }
             },
-
             /* JUMP the player */
             jumpOnBoard: function(playerColor, dice1, dice2, startCell) {
                 var start = startCell;
                 var DICE = dice1 + dice2;
-                var player = BOARD.CONSTANT.COLOR_PLAYER[playerColor];
+                var player = '#player' + BOARD.colorToIndex(playerColor);
 
                 for(var i = 0; i < DICE; i++) {
                     if(start >= 1 && start < 11) {
@@ -498,36 +488,35 @@ function() {
         },
         houseManipulation: { /**** Build the house ****/
             buildHouse: function(houseCell) {
-                houseCell = "#house_cell" + houseCell;
-                if($(houseCell).attr('src') == "resources/img/board/emptyhouse.png") {
-                    $(houseCell).attr('src', 'resources/img/board/house1.png');
-                } else if($(houseCell).attr('src') == "resources/img/board/house1.png") {
-                    $(houseCell).attr('src', 'resources/img/board/house2.png');
-                } else if($(houseCell).attr('src') == "resources/img/board/house2.png") {
-                    $(houseCell).attr('src', 'resources/img/board/house3.png');
+                $houseCell = $("#cell" + houseCell + ' img');
+                if($houseCell.attr('src') == "resources/img/board/emptyhouse.png") {
+                    $houseCell.attr('src', 'resources/img/board/house1.png');
+                } else if($houseCell.attr('src') == "resources/img/board/house1.png") {
+                    $houseCell.attr('src', 'resources/img/board/house2.png');
+                } else if($houseCell.attr('src') == "resources/img/board/house2.png") {
+                    $houseCell.attr('src', 'resources/img/board/house3.png');
                 } else {
-                    $(houseCell).attr('src', 'resources/img/board/big_hotel.png');
+                    $houseCell.attr('src', 'resources/img/board/big_hotel.png');
                 }
             },
             /**** Sell the house ****/
             sellHouse: function(houseCell) {
-                houseCell = "#house_cell" + houseCell;
-                if($(houseCell).attr('src') == "resources/img/board/big_hotel.png") {
-                    $(houseCell).attr('src', 'resources/img/board/house3.png');
-                } else if($(houseCell).attr('src') == "resources/img/board/house3.png") {
-                    $(houseCell).attr('src', 'resources/img/board/house2.png');
-                } else if($(houseCell).attr('src') == "resources/img/board/house2.png") {
-                    $(houseCell).attr('src', 'resources/img/board/house1.png');
-                } else if($(houseCell).attr('src') == "resources/img/board/house1.png") {
-                    $(houseCell).attr('src', "resources/img/board/emptyhouse.png");
+                $houseCell = $("#cell" + houseCell + ' img');
+                if($houseCell.attr('src') == "resources/img/board/big_hotel.png") {
+                    $houseCell.attr('src', 'resources/img/board/house3.png');
+                } else if($houseCell.attr('src') == "resources/img/board/house3.png") {
+                    $houseCell.attr('src', 'resources/img/board/house2.png');
+                } else if($houseCell.attr('src') == "resources/img/board/house2.png") {
+                    $houseCell.attr('src', 'resources/img/board/house1.png');
+                } else if($houseCell.attr('src') == "resources/img/board/house1.png") {
+                    $houseCell.attr('src', "resources/img/board/emptyhouse.png");
                 }
             }
         },
         sellAll: function(player, cell) {
-            var houseCell = "#house_cell" + cell;
+             var houseCell = "#house_cell" + cell;
             var ownerCell = "#ownerCell" + cell;
-            var number = BOARD.getPlayerNumber(player);
-            var playerNumber = BOARD.getPlayer(player);
+            var playerNumber = BOARD.colorToIndex(player);
             var miniCell = cell;
 
             if($(houseCell).attr('src') == "resources/img/board/big_hotel.png") {
@@ -544,234 +533,92 @@ function() {
 
             }
         },
-
-        /* Mortage and unmartage manipolation*/
-        cellManipulation: function(cellArr, player) {
-            var number = BOARD.getPlayerNumber(player);
-            for(var i = 0; i < cellArr.length; i++) {
-                var cell = '' + number + "MiniCell" + cellArr[i];
-                $(cell).addClass('visibleCell');
-            }
+        hightlightCells: function(cellArr, player, _class) {
+            $.each(cellArr, function (i, e) {
+                $('#miniCell' + e).addClass(_class);
+            });
         },
+        _handler: function(player, messages, messageType, visibleClass) {
+            BOARD.hightlightCells(Object.keys(messages), player, visibleClass);
 
-        unmortageSelect: function(cellArr, player) {
-            var number = BOARD.getPlayerNumber(player);
-            for(var i = 0; i < cellArr.length; i++) {
-                var cell = number + "MiniCell" + cellArr[i];
-                $(cell).addClass('unmortageSelected');
-            }
-        },
-        mortage: function(cellArr, player, messages) {
-            BOARD.cellManipulation(cellArr, player);
+            $.each(messages, function (index, message) {
+                var id = '#miniCell' + index, 
+                    $cell = $(id);
+                $cell.unbind('click');
+                ui.attachTooltip(id, message);
 
-            var playerNumber = BOARD.getPlayerNumber(player);
-            var playerOrder = BOARD.getPlayer(player);
-            for(var i = 0; i < cellArr.length; i++) {
-                var cell = "" + playerNumber + "MiniCell" + cellArr[i];
-                $(cell).unbind('click');
-                $(cell).bind('click');
-
-                // WARNING: experimental feature
-                // add cost to cell as tooltip title
-                ui.attachTooltip(cell, messages[cellArr[i]]);
-
-                $(cell).click(function() {
-                    if($(cell).hasClass('visibleCell')) {
+                $cell.click(function() {
+                    if($(this).hasClass(visibleClass)) {
                         var $selected = $(this),
                             pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
 
-                        MONO.transport.send('mortage', {
+                        MONO.transport.send(messageType, {
                             position: pos
                         });
 
-                        $('.visibleCell').filter(function(i, e) {
+                        $('.' + visibleClass).filter(function(i, e) {
                             return $selected.attr('id') != $(e).attr('id');
                         }).each(function(i, e) {
-                            $(e).removeClass('visibleCell');
+                            $(e).removeClass(visibleClass);
                         });
 
                         // we don't need tooltips anymore
                         $(this).tooltip('hide');
-                        ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
+                        ui.clearTooltipsIn('#info [rel=tooltip]');
                     }
                 });
-
-            }
-
+            });
+        },
+        mortage: function(cellArr, player, messages) {
+            BOARD._handler(player, messages, 'mortage', 'visibleCell');
         },
         unmortage: function(cellArr, player, messages) {
-            BOARD.unmortageSelect(cellArr, player);
-            var number = BOARD.getPlayerNumber(player);
-            var playerOrder = BOARD.getPlayer(player);
-
-            for(var i = 0; i < cellArr.length; i++) {
-                var cell = number + "MiniCell" + cellArr[i];
-                $(cell).unbind('click');
-                $(cell).bind('click');
-
-                ui.attachTooltip(cell, messages[cellArr[i]]);
-
-                $(cell).click(function() {
-                    if($(cell).hasClass('unmortageSelected')) {
-                        var $selected = $(this),
-                            pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
-
-                        MONO.transport.send('unmortage', {
-                            position: pos
-                        });
-
-                        $('.unmortageSelected').filter(function(i, e) {
-                            return $selected.attr('id') != $(e).attr('id');
-                        }).each(function(i, e) {
-                            $(e).removeClass('unmortageSelected');
-                        });
-                        
-                        $(this).tooltip('hide');
-                        ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
-                    }
-                });
-
-            }
+            BOARD._handler(player, messages, 'unmortage', 'unmortageSelected');
         },
-
         build: function(cellArr, player, messages) {
-            var number = BOARD.getPlayerNumber(player);
-            BOARD.cellManipulation(cellArr, player);
-
-            $.each(cellArr, function(i, e) {
-                var cell = number + "MiniCell" + e;
-                $(cell).unbind('click');
-                $(cell).bind('click');
-                ui.attachTooltip(cell, messages[cellArr[i]]);
-
-                $(cell).click(function() {
-                    if($(this).hasClass('visibleCell')) {
-                        var $selected = $(this),
-                            pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
-
-                        $(this).removeClass('visibleCell');
-
-                        MONO.transport.send('build', {
-                            position: pos
-                        });
-
-                        $('.visibleCell').filter(function(i, e) {
-                            return $selected.attr('id') != $(e).attr('id');
-                        }).each(function(i, e) {
-                            $(e).removeClass('visibleCell');
-                        });
-                        
-                        $(this).tooltip('hide');
-                        ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
-                    }
-                });
-
-            });
+            BOARD._handler(player, messages, 'build', 'visibleCell');
         },
         sell: function(cellArr, player, messages) {
-            var number = BOARD.getPlayerNumber(player);
-            BOARD.cellManipulation(cellArr, player);
-
-            $.each(cellArr, function(i, e) {
-                var cell = number + "MiniCell" + e;
-
-                $(cell).unbind('click');
-                $(cell).bind('click');
-
-                ui.attachTooltip(cell, messages[cellArr[i]]);
-
-                $(cell).click(function() {
-                    if($(this).hasClass('visibleCell')) {
-                        var $selected = $(this),
-                            pos = parseInt($selected.attr('id').match(/\d+$/)[0], 10);
-
-                        $(this).removeClass('visibleCell');
-
-                        MONO.transport.send('sell', {
-                            position: pos
-                        });
-
-                        $('.visibleCell').filter(function(i, e) {
-                            return $selected.attr('id') != $(e).attr('id');
-                        }).each(function(i, e) {
-                            $(e).removeClass('visibleCell');
-                        });
-                        
-                        $(this).tooltip('hide');
-                        ui.clearTooltipsIn('#playerInfo [rel=tooltip]');
-                    }
-                });
-            });
+            BOARD._handler(player, messages, 'sell', 'visibleCell');
         },
         rollDice: function(dice1, dice2) {
             $("#diceImg1").attr("src", "resources/img/board/die" + dice1 + ".gif");
             $("#diceImg2").attr("src", "resources/img/board/die" + dice2 + ".gif");
         },
         buy: function(player, cell) {
-            var number = BOARD.getPlayerNumber(player);
-            var playerNumber = BOARD.getPlayer(player);
-            var miniCell = cell;
-
-            cell = "#ownerCell" + cell;
-            $(number + "MiniCell" + miniCell).addClass("setMiniImagePlayer" + playerNumber);
-            $(cell).addClass("setColorPlayer" + playerNumber);
+            var playerNumber = BOARD.colorToIndex(player);
+            $('#cell' + cell + ' .owner').addClass("setColorPlayer" + playerNumber, 1000);
+            $('#miniCell' + cell).addClass("setMiniImagePlayer" + playerNumber);
         },
-        updateMoney: function(who, money) {
-            var colorToMoney = {
-                'BROWN': '1',
-                'GREEN': '2',
-                'RED': '3',
-                'VIOLET': '4'
-            };
-            $("#MoneyPlayer" + colorToMoney[who]).html(money + "$");
-        },
-        getPlayerNumber: function(player) {
-            return BOARD.CONSTANT.PLAYER_NUMBER[player];
-        },
-        getPlayer: function(player) {
-            var id;
-            if(player == "BROWN") {
-                id = 1;
-            } else if(player == "GREEN") {
-                id = 2;
-            } else if(player == "RED") {
-                id = 3;
-            } else {
-                id = 4;
-            }
-
-            return id;
+        colorToIndex: function(player) {
+            return BOARD.CONSTANT.COLOR_TO_NUMBER[player];
         },
 
         draw: {
             mortage: function(cell, player) {
-                var playerNumber = BOARD.getPlayerNumber(player);
-                var playerOrder = BOARD.getPlayer(player);
-                cell = playerNumber + "MiniCell" + cell;
-                $(cell).addClass('setMortageCell').removeClass("setMiniImagePlayer" + playerOrder);
+                var index = BOARD.colorToIndex(player);
+                $('#miniCell' + cell).addClass('setMortageCell').removeClass("setMiniImagePlayer" + index);
             },
             unmortage: function (cell, player) {
-            	var playerNumber = BOARD.getPlayerNumber(player);
-				var playerOrder = BOARD.getPlayer(player); 
-				cell=playerNumber+"MiniCell"+cell;
-				$(cell).removeClass('setMortageCell').addClass("setMiniImagePlayer"+playerOrder);
+				var index = BOARD.colorToIndex(player); 
+				$('#miniCell' + cell).removeClass('setMortageCell').addClass("setMiniImagePlayer" + index);
             },
             build:function(cell){
-        		
 				BOARD.houseManipulation.buildHouse(cell);
         	},
         	sell:function(cell, player){
-				
         		BOARD.sellAll(player,cell);
-        	}
-            
 
+        	},
+            updateMoney: function(who, money) {
+                $("#money-player-" + BOARD.colorToIndex(who)).html(money + "$");
+            },
         },
 
-        init: function() { /*--Accardion--*/
+        init: function() { 
             $(function() {
                 $("#accordion").accordion();
-            }); /*--BUTTON--*/
+            });
             $(function() {
                 $("input[type=submit]").button().click(function(event) {
                     event.preventDefault();
@@ -782,3 +629,4 @@ function() {
     BOARD.init();
     MONO.init();
 });
+
