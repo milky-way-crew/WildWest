@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.web.app.worldgames.domain.chat.ChatParticipant;
 import com.web.app.worldgames.service.ChatRoomServiceManager;
+import com.web.app.worldgames.service.ChessGameService;
 
 @Controller
 public class GameServerController {
@@ -23,6 +24,7 @@ public class GameServerController {
 	    .getLogger(GameServerController.class);
     private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
+    
 
     private int createGameAndGetID(String gameType) {
 	int id = 0;
@@ -54,7 +56,7 @@ public class GameServerController {
 		.getChatParticipantFromRequest(request);
 	if (participantHost == null) {
 	    log.debug("User not found in Session");
-	    return "to error 404";
+	    return "redirect:/404";
 	}
 	participantHost.setRedirectState(true);
 	setRedirectToAllInRoomByID(participantHost.getId_room(), true);
