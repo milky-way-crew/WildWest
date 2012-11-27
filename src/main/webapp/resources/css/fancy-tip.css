@@ -1,6 +1,6 @@
 .tip {
   font-family: 'Archivo Narrow', sans-serif;
-  font-weight: bold;
+  font-weight: 400;
   color: #333;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -12,7 +12,9 @@
   margin: 0px;
 }
 .tip .tip-content {
-
+}
+.tip .active {
+  color: blueviolet;
 }
 .tip span {
 	-webkit-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
@@ -116,7 +118,7 @@
   -webkit-transition: all 0.4s ease-in;
 }
 .tip:hover span {
-  background: #0099ff; /* TODO: change this auqa blue sucking color. WAS: #0099ff */ /*#73C2C0*/  /*#78896D*/
+  background: #73C2C0; /* TODO: change this auqa blue sucking color. WAS: #0099ff */ /*#73C2C0*/  /*#78896D*/
   height: auto;
   color: #fff;
   font-size: 16px;
@@ -141,7 +143,7 @@
   -transition-delay: 0.1s;
 }
 .tip:hover span.bottom {
-  bottom: -60px;
+  bottom: -260px;
 }
 .tip:hover span.left {
   left: -193px;
