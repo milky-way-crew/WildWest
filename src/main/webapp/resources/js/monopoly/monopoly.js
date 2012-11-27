@@ -1,5 +1,65 @@
 /*jslint browser: true*/
 /*global jQuery, $, WebSocket, BOARD, console, prompt, bootbox*/
+var normalizeOffset = function(who, cellId) {
+    var offset = $('#cell' + cellId).offset();
+
+    var offsetMap = {
+        BROWN : {
+            bottom: function(offset) {
+                offset.top += 35;
+            },
+            left: function() {
+                offset.left += 35;
+            },
+            up: function() {
+                offset.top += 35;
+            }, 
+            right: function() {
+                offset.left += 35;
+            }, 
+            corner: function() {
+                offset.top += 30;
+                offset.left += 30;
+            }
+        }
+    };
+
+    if (cellId > 1 && cellId < 11) {
+        offsetMap[who].bottom(offset);
+    } else if (cellId > 11 && cellId < 21) {
+        offsetMap[who].left(offset);
+    } else if (cellId > 21 && cellId < 31) {
+        offsetMap[who].up(offset);
+    } else if (cellId > 31 && cellId <= 40) {
+        offsetMap[who].right(offset);
+    } else if (cellId % 10 == 1) {
+        offsetMap[who].corner(offset);
+    } else {
+        console.error('Unknown cell position, cant move there.');
+    }
+
+    return offset;
+};
+
+var goTo = function(who, from, offset) {
+    var COLOR_TO_NUMBER = {
+        'BROWN': '1',
+        'GREEN': '2',
+        'RED': '3',
+        'VIOLET': '4'
+    };
+    var cellOffset;
+
+    var $player = $('#player' + COLOR_TO_NUMBER[who]);
+    console.log('Player selector: ' + '#player' + COLOR_TO_NUMBER[who]);
+
+    while (offset-- >= 0) {   
+        $player.animate(normalizeOffset(who, from++ % 41), 500);        
+        console.log('Moving to cell: ' + '#cell' + ((from - 1) % 41));
+    }
+};
+
+
 
 $(document).ready(
 

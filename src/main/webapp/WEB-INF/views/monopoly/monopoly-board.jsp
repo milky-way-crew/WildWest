@@ -542,22 +542,22 @@
 					</div>
 				</td>
 				<td class="southeast" id="cell1">
-					<div id="divPlayer1" style="position: relative;">
+					<!-- <div id="divPlayer1" style="position: relative;"> -->
 						<img id="player1" src="resources/img/board/player-1.png"
-							style="position: absolute; left: 20%; top: +30%;"></img>
-					</div>
-					<div id="divPlayer2" style="position: relative;">
+							style="position: absolute;"></img>
+					<!-- </div> -->
+					<!-- <div id="divPlayer2" style="position: relative;"> -->
 						<img id="player2" src="resources/img/board/player-2.png"
-							style="position: absolute; left: 40%; top: -65%;"></img>
-					</div>
-					<div id="divPlayer3" style="position: relative;">
+							style="position: absolute;"></img>
+					<!-- </div> -->
+					<!-- <div id="divPlayer3" style="position: relative;"> -->
 						<img id="player3" src="resources/img/board/player-3.png"
-							style="position: absolute; left: 20%; top: -20%;"></img>
-					</div>
-					<div id="divPlayer4" style="position: relative;">
+							style="position: absolute;"></img>
+					<!-- </div> -->
+					<!-- <div id="divPlayer4" style="position: relative;"> -->
 						<img id="player4" src="resources/img/board/player-4.png"
-							style="position: absolute; left: 40%; top: -120%;"></img>
-					</div>
+							style="position: absolute;"></img>
+					<!-- </div> -->
 				</td>
 			</tr>
 		</table>

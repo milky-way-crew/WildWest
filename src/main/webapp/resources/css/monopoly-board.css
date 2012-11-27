@@ -122,6 +122,13 @@ body {
       left: 0px;
       bottom: 0px;
     }
+    .north .town-image {
+      width: 74px;
+      height: 74px;
+      position: absolute;
+      margin-top: 30px;
+      margin-left: 0px;      
+    }
 
   /* down cells */
   div.south {
@@ -143,6 +150,14 @@ body {
       left: 0px;
       top: 0px;
     }
+    .south .town-image {
+      width: 74px;
+      height: 74px;
+      position: absolute;
+      margin-top: 30px;
+      margin-left: 0px;      
+    }
+
 
   /* <<< left cells */
   .west .owner {
