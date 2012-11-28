@@ -8,13 +8,12 @@ public class StartCard extends Cell {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		player.setMoney(CardPrices.START_MONEY);
+//		player.setMoney(CardPrices.START_MONEY);
 		player.setPosition(CellPositions.START);
-		// player.setHasFreeCard(false);
 	}
 
 	@Override
 	public String info() {
-		return "You can start: ";
+		return "You are staing on start";
 	}
 }

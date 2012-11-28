@@ -6,12 +6,17 @@ import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.CommunityChest;
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.PlayerColors;
-import com.web.app.worldgames.domain.monopoly.StartGame;
 
+/**
+ * 
+ * @author Inna
+ * 
+ */
 public class CommunityChestCard extends Cell {
 	private final static Logger log = Logger
 			.getLogger(CommunityChestCard.class);
+	private final static String PLAYER_GET_MONEY = "money";
+	private final static String PLAYER_GET_CARG = "card";
 	private String msg;
 
 	public String getMsg() {
@@ -22,6 +27,10 @@ public class CommunityChestCard extends Cell {
 		this.msg = msg;
 	}
 
+	/**
+	 * 
+	 * @return random CommunityChest
+	 */
 	public CommunityChest getRandomChestCard() {
 		Random randChest = new Random();
 		int chestIndex = randChest.nextInt(7);
@@ -33,25 +42,30 @@ public class CommunityChestCard extends Cell {
 		return null;
 	}
 
+	/**
+	 * The execute method add or subtract players money; or player wins a
+	 * release from prison card
+	 * 
+	 * @param player
+	 * @param chest
+	 */
 	public void service(Player player, CommunityChest chest) {
-		if (chest.getWhoIsGet().equals("player")) {
+		if (chest.getWhatIsGet().equals(PLAYER_GET_MONEY)) {
 			if (chest.isAdd()) {
 				player.setMoney(player.getMoney() + chest.getMoney());
 			} else {
 				player.setMoney(player.getMoney() - chest.getMoney());
 			}
-		} else if (chest.getWhoIsGet().equals("coliseum")) {
+		} else if (chest.getWhatIsGet().equals(PLAYER_GET_CARG)) {
 			player.setNumberFreeCard((player.getNumberFreeCard()) + 1);
 		}
 		this.setMsg(chest.getMessage());
-		log.info("[CHANCE:] "+msg);
+		log.info("[CHANCE:] " + msg);
 	}
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		log.info("Player money before chest"+player.getMoney());
 		service(player, getRandomChestCard());
-		log.info("Player money after chest"+player.getMoney());
 	}
 
 	@Override

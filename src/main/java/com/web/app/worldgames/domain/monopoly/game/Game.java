@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
@@ -15,7 +14,6 @@ import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.PlayerColors;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
-import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class Game {
@@ -28,21 +26,10 @@ public class Game {
 
 	public List<Player> playerList = new ArrayList<Player>();
 	public List<Player> loserList = new ArrayList<Player>();
-	private static final Logger log = Logger.getLogger(Game.class);
 	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
 	private int auctionPrice;
-	private long time;
-	public List<SellableCard> getActiveBoard() {
-		return activeBoard;
-	}
 
-	public void addToActivBoard(SellableCard card) {
-		activeBoard.add(card);
-	}
-
-	public void removeFromActivBoard(SellableCard card) {
-		activeBoard.remove(card);
-	}
+	private static final Logger log = Logger.getLogger(Game.class);
 
 	public Game() {
 	}
@@ -91,10 +78,6 @@ public class Game {
 		return gameBoard;
 	}
 
-	// public void setGameBoard(Map<Integer, Map<String, Object>> gameBoard) {
-	// this.gameBoard = gameBoard;
-	// }
-
 	public int getAuctionPrice() {
 		return auctionPrice;
 	}
@@ -102,13 +85,19 @@ public class Game {
 	public void setAuctionPrice(int auctionPrice) {
 		this.auctionPrice = auctionPrice;
 	}
-	public long getTime() {
-		return time;
+
+	public List<SellableCard> getActiveBoard() {
+		return activeBoard;
 	}
 
-	public void setTime(long time) {
-		this.time = time;
+	public void addToActivBoard(SellableCard card) {
+		activeBoard.add(card);
 	}
+
+	public void removeFromActivBoard(SellableCard card) {
+		activeBoard.remove(card);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -129,6 +118,86 @@ public class Game {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	/**
+	 * Method add new user to player list in game
+	 * 
+	 * @param user
+	 */
+	public void addPlayers(User user) {
+		int listPlSize = playerList.size();
+		String color = null;
+		log.info("[PLAYER  LIST] " + playerList);
+		for (PlayerColors playerColors : PlayerColors.values()) {
+			if (playerColors.ordinal() == listPlSize) {
+				color = playerColors.getColor();
+			}
+		}
+		playerList.add(new Player(user, CellPositions.START,
+				CardPrices.START_MONEY, color));
+		log.info("[PLAYER  LIST AFTER --ADD--] " + playerList);
+	}
+
+	/**
+	 * The execute method add player in loser list if he leaves game
+	 * 
+	 * @param player
+	 */
+	public void addLoser(Player player) {
+		loserList.add(player);
+	}
+
+	/**
+	 * 
+	 * @return true if all players ready to start game
+	 */
+	public boolean isReadyToStart() {
+		for (Player players : getAllPlayers()) {
+			if (players.isReadyToStart() && playerList.size() > 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * The execute method starting game
+	 */
+	public void start() {
+		StartGame.initCities();
+		StartGame.initRails();
+		this.setStarted(true);
+		if (currentPlayer == null) {
+			this.setCurrentPlayer(this.getAllPlayers().get(0));
+		}
+	}
+
+	public Player getNextPlayer() {
+		int turn = 0;
+		if (this.isStarted()) {
+			turn = this.getAllPlayers().indexOf(this.getCurrentPlayer());
+			turn = (turn + 1) % getAllPlayers().size();
+			return this.getAllPlayers().get(turn);
+		}
+		return null;
+	}
+
+	public Player getPreventPlayer() {
+		int turn = 0;
+		Player preventPlayer = null;
+		if (this.isStarted()) {
+			turn = this.getAllPlayers().indexOf(this.getCurrentPlayer());
+			if (turn == 0) {
+				preventPlayer = this.getAllPlayers().get(
+						this.getAllPlayers().size() - 1);
+			} else {
+				turn = turn - 1;
+				preventPlayer = this.getAllPlayers().get(turn);
+			}
+		}
+		log.info("PREVENT PLAYER" + preventPlayer);
+		return preventPlayer;
 	}
 
 	public Map<Integer, Map<String, Object>> refreshBoard() {
@@ -155,65 +224,5 @@ public class Game {
 			players.put(player.getColor(), temp);
 		}
 		return players;
-	}
-
-	public void addPlayers(User user) {
-		int listPlSize = playerList.size();
-		String color = null;
-		log.info("[PLAYER  LIST] " + playerList);
-		for (PlayerColors playerColors : PlayerColors.values()) {
-			if (playerColors.ordinal() == listPlSize) {
-				color = playerColors.getColor();
-			}
-		}
-		playerList.add(new Player(user, CellPositions.START,
-				CardPrices.START_MONEY, color));
-		log.info("[PLAYER  LIST AFTER --ADD--] " + playerList);
-	}
-
-	public boolean isReadyToStart() {
-		for (Player players : getAllPlayers()) {
-			if (players.isReadyToStart() && playerList.size() > 1) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void addLoser(Player player) {
-		loserList.add(player);
-	}
-
-	public void start() {
-		StartGame.initCities();
-		StartGame.initRails();
-		this.setStarted(true);
-		if (currentPlayer == null) {
-			this.setCurrentPlayer(this.getAllPlayers().get(0));
-		}
-	}
-
-	public Player getNextPlayer() {
-		int turn = 0;
-		if (this.isStarted()) {
-			turn = this.getAllPlayers().indexOf(this.getCurrentPlayer());
-			turn = (turn + 1) % getAllPlayers().size();
-			return this.getAllPlayers().get(turn);
-		}
-		return null;
-	}
-	public long checkAuctionEndTime(int auctionPrice, long time){
-	long start =time;
-	long end=0;
-	log.info("IN CHECT METHOD:::"+ System.currentTimeMillis());
-		try{
-			TimeUnit.SECONDS.sleep(30); 
-			end=System.currentTimeMillis();
-			log.info("IN CHECT METHOD:::"+ System.currentTimeMillis());
-			log.info("IN CHECT METHOD::: start="+start);
-		}catch(Exception e){
-			
-		}
-		return end-start;
 	}
 }

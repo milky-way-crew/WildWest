@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
+import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Chance;
 import com.web.app.worldgames.domain.monopoly.Player;
 
@@ -34,12 +35,9 @@ public class ChanceCard extends Cell {
 		int chanceIndex = randChance.nextInt(6);
 		for (Chance chance : Chance.values()) {
 			if (chance.ordinal() == chanceIndex) {
-				log.info("[CHANCE] " + chance.getMessage());
 				setInformation(chance.getMessage());
 				if (chance.getPosition() < player.getPosition()) {
-					log.info("[-----PLAYER:-----IN CHANCE--] " + player.getColor()
-							+ " GET CIRCLE MONEY +$200");
-					player.setMoney(player.getMoney() + 200);
+					player.setMoney(player.getMoney() + CardPrices.CIRCLE_MONEY);
 				}
 				setMovePosition(chance.getPosition());
 				//player.setPosition(chance.getPosition());

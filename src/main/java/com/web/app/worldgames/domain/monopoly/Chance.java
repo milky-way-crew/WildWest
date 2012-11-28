@@ -7,6 +7,7 @@ public enum Chance {
 			"Go directly to rail", CellPositions.MONOPOLY_RAIL2), CHANCE5(
 			"Go directly to rail", CellPositions.MONOPOLY_RAIL3), CHANCE6(
 			"Go directly to rail", CellPositions.MONOPOLY_RAIL4);
+	
 	private final String message;
 	private final int position;
 

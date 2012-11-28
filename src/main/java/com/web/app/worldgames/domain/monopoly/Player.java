@@ -24,11 +24,8 @@ public class Player {
 	private int position;
 	private int money;
 	private String color;
-	// for test----
-	private PlayerColors colors;
-	// -----
 	private int numberFreeCard = 0;
-	private static Random randDice = new Random();
+	private  static Random randDice = new Random();
 	private int numberOfRails = 0;
 	private boolean rolled;
 	private int circleInJail = 0;
@@ -39,34 +36,34 @@ public class Player {
 	private boolean readyToStart = false;
 	private boolean isLosser = false;
 	private boolean isWinner = false;
-	private List<String> listRegions = new ArrayList<String>();
-	private List<SellableCard> property = new ArrayList<SellableCard>();
+	private List<String> listRegions = new CopyOnWriteArrayList<String>();
+	// private List<String> listRegions = new ArrayList<String>();
+	// private List<SellableCard> property = new ArrayList<SellableCard>();
+	private List<SellableCard> property = new CopyOnWriteArrayList<SellableCard>();
 	private List<SellableCard> forSell = new ArrayList<SellableCard>();
 	private List<SellableCard> forMortage = new ArrayList<SellableCard>();
 	private List<SellableCard> forUnMortage = new ArrayList<SellableCard>();
 	private Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
-	// private Map<String, Integer> regions = new HashMap<String, Integer>();
 	private int numberOfBuildings = 0;
-private boolean isAuctionCreator;
-private boolean canCreateAuction;
+	private boolean isAuctionCreator;
+	private boolean canCreateAuction;
 
 	public boolean isCanCreateAuction() {
-	return canCreateAuction;
-}
+		return canCreateAuction;
+	}
 
-public void setCanCreateAuction(boolean canCreateAuction) {
-	this.canCreateAuction = canCreateAuction;
-}
+	public void setCanCreateAuction(boolean canCreateAuction) {
+		this.canCreateAuction = canCreateAuction;
+	}
+
 	private static final Logger log = Logger.getLogger(Player.class);
 
-	// -----------MAYBY ONLY FOR TEST
 	Map<Integer, String> buildAvailable = new HashMap<Integer, String>();
 
 	public Map<Integer, String> getBuildAvailable() {
 		return buildAvailable;
 	}
 
-	// --------------
 	public Player(User user, int position, int money, String color) {
 		this.id = user.getId();
 		this.name = user.getNickname();
@@ -75,15 +72,6 @@ public void setCanCreateAuction(boolean canCreateAuction) {
 		this.color = color;
 	}
 
-	// ----------for test
-	public Player(String name, int position, int money, PlayerColors colors) {
-		this.name = name;
-		this.position = position;
-		this.money = money;
-		this.colors = colors;
-	}
-
-	// -----------
 	public int getId() {
 		return id;
 	}
@@ -204,15 +192,6 @@ public void setCanCreateAuction(boolean canCreateAuction) {
 		this.isAuctionCreator = isAuctionCreator;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
-
 	public boolean isRolled() {
 		return rolled;
 	}
@@ -230,6 +209,14 @@ public void setCanCreateAuction(boolean canCreateAuction) {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -239,11 +226,6 @@ public void setCanCreateAuction(boolean canCreateAuction) {
 			return false;
 		Player other = (Player) obj;
 		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
@@ -503,7 +485,6 @@ public void setCanCreateAuction(boolean canCreateAuction) {
 		} else {
 			log.info("[MESSAGE]: property list is empty");
 		}
-		// return forMortage;
 	}
 
 	public List<SellableCard> listPropertyForSell() {
@@ -535,16 +516,20 @@ public void setCanCreateAuction(boolean canCreateAuction) {
 	}
 
 	public boolean canMortage() {
-		return (!this.getForMortage().isEmpty()) ? true : false;
+		return !this.getForMortage().isEmpty();
+		// return (!this.getForMortage().isEmpty()) ? true : false;
 	}
 
 	public boolean canUnmortage() {
-		return (!this.getForUnMortage().isEmpty() && this.getMoney() > 0) ? true
-				: false;
+		return !this.getForUnMortage().isEmpty() && this.getMoney() > 0;
+		// return (!this.getForUnMortage().isEmpty() && this.getMoney() > 0) ?
+		// true
+		// : false;
 	}
 
 	public boolean canSell() {
-		return (!this.getSellAvailable().isEmpty()) ? true : false;
+		return !this.getSellAvailable().isEmpty();
+		// return (!this.getSellAvailable().isEmpty()) ? true : false;
 	}
 
 	public boolean canRollDices() {
@@ -558,13 +543,16 @@ public void setCanCreateAuction(boolean canCreateAuction) {
 	}
 
 	public boolean canContinueGame() {
-		return (this.canMortage() && this.canSell()) ? true : false;
+		return this.canMortage() || this.canSell();
+		// return (this.canMortage() && this.canSell()) ? true : false;
 	}
 
 	public boolean canBuild() {
-		return (!getBuildAvailable().isEmpty()) ? true : false;
+		return !getBuildAvailable().isEmpty();
+		// return (!getBuildAvailable().isEmpty()) ? true : false;
 	}
-	public boolean canAuction(int auctionPrice){
+
+	public boolean canAuction(int auctionPrice) {
 		return this.checkMoney(auctionPrice);
 	}
 }

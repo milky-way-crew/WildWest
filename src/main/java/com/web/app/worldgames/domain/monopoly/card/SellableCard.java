@@ -1,19 +1,42 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 
 public abstract class SellableCard extends Cell {
+	/**
+	 * @param player
+	 *            who pay rent
+	 * @param owner
+	 *            player who get rent
+	 * @return rent
+	 */
 	public abstract int getRent(Player player, Player owner);
 
+	/**
+	 * The execute method buy city; add this city to players property list; add
+	 * to mortage list; add to sell list
+	 * 
+	 * @param player
+	 *            who buy city
+	 */
 	public abstract void buyCityOrRail(Player player);
+
+	/**
+	 * The execute method holds an auction
+	 * 
+	 * @param player
+	 *            winner of auction
+	 * @param price
+	 *            of purchase
+	 */
 	public abstract void auctionCityOrRail(Player player, int price);
 
+	/**
+	 * The execute method sell city, houses and hotel
+	 * 
+	 * @param player
+	 *            who sell this property
+	 */
 	public abstract void sell(Player player);
 
 	public abstract boolean canMortage(Player player);
@@ -22,7 +45,7 @@ public abstract class SellableCard extends Cell {
 
 	public abstract boolean canSell(Player player);
 
-	private static final Logger log = Logger.getLogger(MonopolyManager.class);
+	
 	private int price;
 	private boolean mortage;
 	private Player owner;
@@ -39,13 +62,11 @@ public abstract class SellableCard extends Cell {
 
 	public void mortage(Player player) {
 		this.mortage = true;
-		log.info("[MORTAGE MESSAGE]: You mortage this object");
 		player.setMoney(player.getMoney() + getPrice() / 2);
 	}
 
 	public void unMortage(Player player) {
 		this.mortage = false;
-		log.info("[UNMORTAGE MESSAGE]: You unmortage this object");
 		player.setMoney(player.getMoney() - getPrice() / 2);
 	}
 
@@ -65,35 +86,27 @@ public abstract class SellableCard extends Cell {
 		this.owner = owner;
 	}
 
-	
-
-	// public boolean canPayRent(Player player, int rent) {
-	// return (player.checkMoney(rent) && this.getOwner() != player
-	// && this.getOwner() != null && this instanceof SellableCard && this
-	// .getOwner() != null&&!this.isMortage()) ? true : false;
-	// }
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + price;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SellableCard other = (SellableCard) obj;
-		if (price != other.price)
-			return false;
-		return true;
-	}
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + price;
+//		return result;
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		SellableCard other = (SellableCard) obj;
+//		if (price != other.price)
+//			return false;
+//		return true;
+//	}
 
 	public boolean isAuctionStarted() {
 		return auctionStarted;
@@ -112,8 +125,11 @@ public abstract class SellableCard extends Cell {
 	}
 
 	public boolean canBuy(Player player) {
-		return (player.checkMoney(this.getPrice()) && this.getOwner() == null && this instanceof SellableCard) ? true
-				: false;
+		return player.checkMoney(this.getPrice()) && this.getOwner() == null
+				&& this instanceof SellableCard;
+		// return (player.checkMoney(this.getPrice()) && this.getOwner() == null
+		// && this instanceof SellableCard) ? true
+		// : false;
 	}
 
 	public void payRentToOwner(Player player, Player owner, int price) {

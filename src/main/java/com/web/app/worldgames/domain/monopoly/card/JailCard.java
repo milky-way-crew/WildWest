@@ -13,7 +13,6 @@ import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 
 public class JailCard extends Cell {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
-	Map<String, Object> result = new HashMap<String, Object>();
 	String msg = null;
 
 	public String getMsg() {
@@ -25,19 +24,30 @@ public class JailCard extends Cell {
 	}
 
 	@Override
+	/**
+	 * This method define if player has free card, he release from prison
+	 * else he pay ransom or roll dices three times
+	 */
 	public void effectOnPlayer(Player player) {
 		player.setInJail(true);
 		if (player.getNumberFreeCard() > 0) {
-			log.info("[IN JAIL: ] use card");
 			player.setInJail(false);
 			player.setNumberFreeCard((player.getNumberFreeCard()) - 1);
 			this.setMsg("You had a free card and you are going from jail");
 		}
 	}
 
+	/**
+	 * This method define if player can pay ransom
+	 * 
+	 * @param player
+	 * @return true if he can
+	 */
 	public boolean canPayRansom(Player player) {
-		return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL) && player
-				.isInJail()) ? true : false;
+		return player.checkMoney(CardPrices.RANSOM_FROM_JAIL)
+				&& player.isInJail();
+		// return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL) && player
+		// .isInJail()) ? true : false;
 	}
 
 	public void payRansom(Player player) {
@@ -46,10 +56,17 @@ public class JailCard extends Cell {
 		player.setInJail(false);
 	}
 
+	/**
+	 * Method executes roll dices if player refuse or cann't pay ransom
+	 * 
+	 * @param player
+	 * @param dicePoint
+	 * 
+	 */
 	public Map<String, Object> rollAndWait(Player player, int dicePoint) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		String message = null;
+		Map<String, Object> response = new HashMap<String, Object>();
 		Map<String, Object> buttons = new HashMap<String, Object>();
+		String message = null;
 		boolean move = false;
 		if (player.doublePoints() || player.getCircleInJail() == 3) {
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
@@ -58,35 +75,34 @@ public class JailCard extends Cell {
 			player.setCircleInJail(0);
 			player.setInJail(false);
 			move = true;
-			result.put("was", CellPositions.JAIL);
-			result.put("dice1", dicePoint);
-			result.put("dice2", 0);
-			result.put("move", move);
+			response.put("was", CellPositions.JAIL);
+			response.put("dice1", dicePoint);
+			response.put("dice2", 0);
+			response.put("move", move);
 			message = "You are going from jail";
 			log.info("[JAIL_MESSAGE] : you are going from jail");
-			buttons.put(ButtonsLabel.DONE, true);
 		} else {
 			player.setPosition(CellPositions.JAIL);
 			player.setInJail(true);
 			player.addCircleInJail();
-			message = "You saty in jail";
+			message = "You stay in jail";
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
 			log.info("[JAIL] : You stay in jail");
-			buttons.put(ButtonsLabel.DONE, true);
 			buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
 			buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
 			buttons.put(ButtonsLabel.SELL, player.canSell());
 		}
-		result.put("buttons", buttons);
-		result.put("messages", message);
-		result.put("player", player.getColor());
-		result.put("money", player.getMoney());
-		return result;
+		buttons.put(ButtonsLabel.DONE, true);
+		response.put("buttons", buttons);
+		response.put("messages", message);
+		response.put("player", player.getColor());
+		response.put("money", player.getMoney());
+		return response;
 	}
 
 	@Override
 	public String info() {
-		return "Player is in jail";
+		return "In jail";
 	}
 
 }

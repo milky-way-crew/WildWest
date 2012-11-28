@@ -3,13 +3,17 @@ package com.web.app.worldgames.domain.monopoly.card;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
-
+/**
+ * 
+ * @author Inna
+ *
+ */
 public class CardFactory {
+	
 	public static Cell chooseCard(Player player) {
 		Cell cell = null;
 		if (StartGame.boardCities.containsKey(player.getPosition())) {
 			cell = StartGame.boardCities.get(player.getPosition());
-			//cell.setName("City Card");
 			return cell;
 		} else if ((player.getPosition() == CellPositions.TAX2)
 				|| (player.getPosition() == CellPositions.TAX1)) {
@@ -43,7 +47,7 @@ public class CardFactory {
 			cell.setName("Jail Card");
 			return cell;
 		} else if (player.getPosition() == CellPositions.START) {
-			cell = new GoCard();
+			cell = new StartCard();
 			cell.setName("Start");
 			return cell;
 		} else if (player.getPosition() == CellPositions.FREE_STATION) {
