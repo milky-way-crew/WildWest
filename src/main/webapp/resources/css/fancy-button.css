@@ -1,0 +1,304 @@
+.square-button {
+	border: 0;
+	text-decoration: none;
+	outline: 0;
+	background: #4E68C7;
+	border-radius: 0;
+	box-shadow: 1px 0px 1px #203891,0px 1px 1px #3852B1,2px 1px 1px #203891,1px 2px 1px #3852B1,3px 2px 1px #203891,2px 3px 1px #3852B1,4px 3px 1px #203891,3px 4px 1px #3852B1,5px 4px 1px #203891,4px 5px 1px #3852B1,6px 5px 1px #203891;
+	color: white;
+	white-space: nowrap;
+	font-family: 'Bubblegum Sans', 'Gotham Rounded B', "proxima-nova-soft", sans-serif;
+	padding: 9px 16px;
+	font-size: 16px;
+	position: relative;
+	top: -5px;
+}
+.square-button:hover, .square-button:focus {
+	color: white;
+	background: #3D57B4;
+}
+.square-button:active {
+	box-shadow: 0px 1px #203891,0px 1px 1px #3852B1,2px 1px 1px #203891,1px 2px 1px #3852B1,3px 2px 1px #203891;
+	top: -2px;
+	left: 3px;
+	color: black;
+}
+
+    /*font-family: 'Yanone Kaffeesatz';*/
+	/*position: relative;*/
+/*
+.orange {
+    color: rgba(255,255,255,1);
+    text-decoration: none;
+    background-color: rgba(219,87,5,1);
+    font-weight: 5.5em;
+    font-size: 3em;
+    display: inline-block;
+    padding: 4px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+    -moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+    box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+    margin: 100px auto;
+	width: 160px;
+	text-align: center;
+	
+	-webkit-transition: all .1s ease;
+	-moz-transition: all .1s ease;
+	-ms-transition: all .1s ease;
+	-o-transition: all .1s ease;
+	transition: all .1s ease;
+}
+
+.orange:active {
+    -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+    -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+    box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+    position: relative;
+    top: 6px;
+}
+.orange:hover {
+	text-decoration: none !important;
+	color: #dafffe !important;
+}
+*/
+/*****Buttons*****/
+.button:hover {
+	text-decoration: none !important;
+	color: #dafffe !important;
+}
+
+.button {
+	width: 6.5em;
+	display: inline-block;
+    font-family: 'Yanone Kaffeesatz', 'Helvetica', 'Arial';
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-ie-border-radius: 6px;
+	border-radius: 6px;
+	padding: .48em .8em;
+	text-shadow: rgba(0,0,0,.5) 0px -1px 0px;
+	font-size: 22px;
+	font-weight: 700;
+	-webkit-transition-property: background-color;
+	-webkit-transition-duration: .15s;
+	-webkit-transition-timing-function: ease-in-out;
+	cursor: pointer;
+	text-decoration: none;
+	/*margin-bottom: 20px;*/
+}
+.button:active {
+	-webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+    -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+    box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+    position: relative;
+    top: 6px;
+}
+.button span {
+	vertical-align: middle;
+}
+.icon {
+	width: 26px;
+	height: 26px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	-ie-border-radius: 13px;
+	border-radius: 13px;
+	background: rgba(0,0,0,.3);
+	float: right;
+	-webkit-box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2) inset, 0px 0px 0px 1px rgba(255,255,255,.2);
+	-moz-box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2) inset, 0px 0px 0px 1px rgba(255,255,255,.2);
+	-ie-box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2) inset, 0px 0px 0px 1px rgba(255,255,255,.2);
+	box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2) inset, 0px 0px 0px 1px rgba(255,255,255,.2);
+}
+.arrow {
+	margin: 7px 0px 0 8px;
+	-webkit-border-style: solid;
+	-moz-border-style: solid;
+	-ie-border-style: solid;
+	border-style: solid;
+	border-width:6px 6px 6px 12px;
+	width: 0;
+	height: 0;
+}
+/********Light Background Colors********/
+/*Blue*/
+.lightbg-blue {
+	background-color: #64a8a6;
+	color: #dafffe;
+	-webkit-box-shadow: 0px 0px 0px 1px #4e8381 inset, 0px 0px 0px 2px #74b6b4 inset, 0px 4px 0px 0px #4a7c7b, 0px 5px 0px 0px #355655, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #4e8381 inset, 0px 0px 0px 2px #74b6b4 inset, 0px 4px 0px 0px #4a7c7b, 0px 5px 0px 0px #355655, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #4e8381 inset, 0px 0px 0px 2px #74b6b4 inset, 0px 4px 0px 0px #4a7c7b, 0px 5px 0px 0px #355655, 0px 8px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #4e8381 inset, 0px 0px 0px 2px #74b6b4 inset, 0px 4px 0px 0px #4a7c7b, 0px 5px 0px 0px #355655, 0px 8px 0px 0px rgba(0,0,0,.15);
+}
+.lightbg-blue:hover {
+	background-color: #73c2c0;
+}
+.lightbg-blue:active {
+	background-color: #5a9896;
+	-webkit-box-shadow: 0px 0px 0px 1px #589391 inset, 0px 0px 0px 2px #65a9a7 inset, 0px 1px 0px 0px #355655, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #589391 inset, 0px 0px 0px 2px #65a9a7 inset, 0px 1px 0px 0px #355655, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #589391 inset, 0px 0px 0px 2px #65a9a7 inset, 0px 1px 0px 0px #355655, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #589391 inset, 0px 0px 0px 2px #65a9a7 inset, 0px 1px 0px 0px #355655, 0px 3px 0px 0px rgba(0,0,0,.15);
+}
+.lightbg-blue .arrow {
+	border-color: transparent transparent transparent #74b6b4;
+}
+/*Pink*/
+.lightbg-pink {
+	background-color: #cc3747;
+	color: #ffdada;
+	-webkit-box-shadow: 0px 0px 0px 1px #8d1b27 inset, 0px 0px 0px 2px #dd4356 inset, 0px 4px 0px 0px #8d1b27, 0px 5px 0px 0px #65141c, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #8d1b27 inset, 0px 0px 0px 2px #dd4356 inset, 0px 4px 0px 0px #8d1b27, 0px 5px 0px 0px #65141c, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #8d1b27 inset, 0px 0px 0px 2px #dd4356 inset, 0px 4px 0px 0px #8d1b27, 0px 5px 0px 0px #65141c, 0px 8px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #8d1b27 inset, 0px 0px 0px 2px #dd4356 inset, 0px 4px 0px 0px #8d1b27, 0px 5px 0px 0px #65141c, 0px 8px 0px 0px rgba(0,0,0,.15);
+}
+.lightbg-pink:hover {
+	background-color: #dd3c4d;
+}
+.lightbg-pink:active {
+	background-color: #bb3241;
+	-webkit-box-shadow: 0px 0px 0px 1px #8d1b27 inset, 0px 0px 0px 2px #dd4356 inset, 0px 1px 0px 0px #8d1b27, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #8d1b27 inset, 0px 0px 0px 2px #dd4356 inset, 0px 1px 0px 0px #8d1b27, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #8d1b27 inset, 0px 0px 0px 2px #dd4356 inset, 0px 1px 0px 0px #8d1b27, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #8d1b27 inset, 0px 0px 0px 2px #dd4356 inset, 0px 1px 0px 0px #8d1b27, 0px 3px 0px 0px rgba(0,0,0,.15);
+}
+.lightbg-pink .arrow {
+	border-color: transparent transparent transparent #dd4356;
+}
+/*Orange*/
+.lightbg-orange {
+	background-color: #e65440;
+	color: #ffdada;
+	-webkit-box-shadow: 0px 0px 0px 1px #b24132 inset, 0px 0px 0px 2px #ea624a inset, 0px 4px 0px 0px #a53c2e, 0px 5px 0px 0px #7e2e23, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #b24132 inset, 0px 0px 0px 2px #ea624a inset, 0px 4px 0px 0px #a53c2e, 0px 5px 0px 0px #7e2e23, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #b24132 inset, 0px 0px 0px 2px #ea624a inset, 0px 4px 0px 0px #a53c2e, 0px 5px 0px 0px #7e2e23, 0px 8px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #b24132 inset, 0px 0px 0px 2px #ea624a inset, 0px 4px 0px 0px #a53c2e, 0px 5px 0px 0px #7e2e23, 0px 8px 0px 0px rgba(0,0,0,.15);
+}
+.lightbg-orange:hover {
+	background-color: #f15843;
+}
+.lightbg-orange:active {
+	background-color: #d54e3b;
+	-webkit-box-shadow: 0px 0px 0px 1px #b24132 inset, 0px 0px 0px 2px #ea624a inset, 0px 1px 0px 0px #a53c2e, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #b24132 inset, 0px 0px 0px 2px #ea624a inset, 0px 1px 0px 0px #a53c2e, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #b24132 inset, 0px 0px 0px 2px #ea624a inset, 0px 1px 0px 0px #a53c2e, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #b24132 inset, 0px 0px 0px 2px #ea624a inset, 0px 1px 0px 0px #a53c2e, 0px 3px 0px 0px rgba(0,0,0,.15);
+}
+.lightbg-orange .arrow {
+	border-color: transparent transparent transparent #ea624a;
+}
+/*Green*/
+.lightbg-green {
+	background-color: #78896d;
+	color: #e2f1d8;
+	-webkit-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+}
+.lightbg-green:hover {
+	background-color: #8b9f7f;
+}
+.lightbg-green:active {
+	background-color: #68775f;
+	-webkit-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+}
+.lightbg-green .arrow {
+	border-color: transparent transparent transparent #87977a;
+}
+/********Dark Background Colors********/
+/*Blue*/
+.darkbg-blue {
+	background-color: #64a8a6;
+	color: #dafffe;
+	-webkit-box-shadow: 0px 0px 0px 1px #74b6b4 inset, 0px 4px 0px 0px #4a7c7b, 0px 5px 0px 0px #355655, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #74b6b4 inset, 0px 4px 0px 0px #4a7c7b, 0px 5px 0px 0px #355655, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #74b6b4 inset, 0px 4px 0px 0px #4a7c7b, 0px 5px 0px 0px #355655, 0px 8px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #74b6b4 inset, 0px 4px 0px 0px #4a7c7b, 0px 5px 0px 0px #355655, 0px 8px 0px 0px rgba(0,0,0,.15);
+}
+.darkbg-blue:hover {
+	background-color: #73c2c0;
+}
+.darkbg-blue:active {
+	background-color: #5a9896;
+	-webkit-box-shadow: 0px 0px 0px 1px #65a9a7 inset, 0px 1px 0px 0px #355655, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #65a9a7 inset, 0px 1px 0px 0px #355655, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #65a9a7 inset, 0px 1px 0px 0px #355655, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #65a9a7 inset, 0px 1px 0px 0px #355655, 0px 3px 0px 0px rgba(0,0,0,.15);
+}
+.darkbg-blue .arrow {
+	border-color: transparent transparent transparent #74b6b4;
+}
+/*Pink*/
+.darkbg-pink {
+	background-color: #cc3747;
+	color: #ffdada;
+	-webkit-box-shadow: 0px 0px 0px 1px #dd4356 inset, 0px 4px 0px 0px #8d1b27, 0px 5px 0px 0px #65141c, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #dd4356 inset, 0px 4px 0px 0px #8d1b27, 0px 5px 0px 0px #65141c, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #dd4356 inset, 0px 4px 0px 0px #8d1b27, 0px 5px 0px 0px #65141c, 0px 8px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #dd4356 inset, 0px 4px 0px 0px #8d1b27, 0px 5px 0px 0px #65141c, 0px 8px 0px 0px rgba(0,0,0,.15);
+}
+.darkbg-pink:hover {
+	background-color: #dd3c4d;
+}
+.darkbg-pink:active {
+	background-color: #bb3241;
+	-webkit-box-shadow: 0px 0px 0px 1px #dd4356 inset, 0px 1px 0px 0px #8d1b27, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #dd4356 inset, 0px 1px 0px 0px #8d1b27, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #dd4356 inset, 0px 1px 0px 0px #8d1b27, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #dd4356 inset, 0px 1px 0px 0px #8d1b27, 0px 3px 0px 0px rgba(0,0,0,.15);
+}
+.darkbg-pink .arrow {
+	border-color: transparent transparent transparent #dd4356;
+}
+/*Orange*/
+.darkbg-orange {
+	background-color: #e65440;
+	color: #ffdada;
+	-webkit-box-shadow: 0px 0px 0px 1px #ea624a inset, 0px 4px 0px 0px #a53c2e, 0px 5px 0px 0px #7e2e23, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #ea624a inset, 0px 4px 0px 0px #a53c2e, 0px 5px 0px 0px #7e2e23, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #ea624a inset, 0px 4px 0px 0px #a53c2e, 0px 5px 0px 0px #7e2e23, 0px 8px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #ea624a inset, 0px 4px 0px 0px #a53c2e, 0px 5px 0px 0px #7e2e23, 0px 8px 0px 0px rgba(0,0,0,.15);
+}
+.darkbg-orange:hover {
+	background-color: #f15843;
+}
+.darkbg-orange:active {
+	background-color: #d54e3b;
+	-webkit-box-shadow: 0px 0px 0px 1px #ea624a inset, 0px 1px 0px 0px #a53c2e, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #ea624a inset, 0px 1px 0px 0px #a53c2e, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #ea624a inset, 0px 1px 0px 0px #a53c2e, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #ea624a inset, 0px 1px 0px 0px #a53c2e, 0px 3px 0px 0px rgba(0,0,0,.15);
+}
+.darkbg-orange .arrow {
+	border-color: transparent transparent transparent #ea624a;
+}
+/*Green*/
+.darkbg-green {
+	background-color: #78896d;
+	color: #e2f1d8;
+	-webkit-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+}
+.darkbg-green:hover {
+	background-color: #8b9f7f;
+}
+.darkbg-green:active {
+	background-color: #68775f;
+	-webkit-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	-ie-box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+	box-shadow: 0px 0px 0px 1px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+}
+.darkbg-green .arrow {
+	border-color: transparent transparent transparent #87977a;
+}
+</style>

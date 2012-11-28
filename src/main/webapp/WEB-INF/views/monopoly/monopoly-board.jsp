@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -13,680 +11,591 @@
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link href="resources/images/favicon.ico" rel="shortcut icon" />
 
-
-
+<!-- Fancy Buttons & Tips -->
+<link rel="stylesheet" href="resources/css/fancy-button.css" type="text/css">
+<link rel="stylesheet" href="resources/css/fancy-tip.css" type="text/css">
+<!-- Twitter Bootstrap -->
 <link rel="stylesheet" href="resources/css/bootstrap.css" type="text/css">
-<link rel="stylesheet" href="resources/css/bootstrap-responsive.css">
-<link type="text/css" rel="stylesheet" href="resources/css/chatroom_style.css" />
-<link rel="stylesheet" href="resources/css/gameBoard.css">
-<link rel="stylesheet" href="resources/css/jquery-ui-1.9.1.custom.css">
+<link rel="stylesheet" href="resources/css/bootstrap-responsive.css" type="text/css">
+<!-- Game styles -->
+<!-- <link rel="stylesheet" href="resources/css/chatroom_style.css" type="text/css"/> -->
+<link rel="stylesheet" href="resources/css/monopoly-board.css" type="text/css">
 
-<script type="text/javascript" src="resources/js/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="resources/js/jquery-ui-1.9.1.custom.js"></script>
+<link rel="stylesheet" href="resources/css/jquery-ui-1.9.1.custom.css" type="text/css">
+<!-- Fonts DONT FORGER TO DOWNLOAD THEM TO USE LOCAL -->
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Archivo+Narrow' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Bubblegum+Sans' rel='stylesheet' type='text/css'>
+</head>
+<!-- NO MORE GREEN BACKGROUND COLORS -->
+<!-- <body bgcolor="#CCE7D0"> --> 
+<body>
+	<!-- <div id="main-container"> -->
+	<div class="container" style=" width: 1230px; ">
+		<table id="game-table" border="1" rules="all">
+			<tr>
+				<td class="northwest" id="cell21">
+					<center>
+						<img src="resources/img/board/city/sign_left.svg">
+					</center>
+				</td>
+				<td id="cell22" class="north">
+					<div class="north">
+						<div class="owner"></div>
+						<div class="town-image">
+							<img src="resources/img/board/city/fort.svg">
+						</div>
+						<div class="house red">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td id="cell23" class="north">
+					<img src="resources/img/board/city/tree11.svg" alt="" width="75">
+				</td>
+				<td id="cell24" class="north">
+					<div class="north">
+						<div class="owner"></div>
+						<div class="town-image">
+							<img src="resources/img/board/city/city.svg">
+						</div>
+						<div class="house red">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td id="cell25" class="north">
+					<div class="north">
+						<div class="owner"></div>
+						<div class="town-image">
+							<img src="resources/img/board/city/fortress.svg">
+						</div>
+						<div class="house red">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td id="cell26" class="north tip">
+					<span class="bottom">
+						<img src="resources/img/board/city/magic_stones.svg" width="300">
+						<p class="tip-header"><strong class="active">Stonehenge star</strong><hr></p>
+						<ul class="tip-content">
+							<li>Collect them all to get ultimate power.</li>
+						</ul>
+						<span class="nub"></span>
+					</span> 
+					<div class="north">
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/magic_stones.svg" alt=""></div>
+					</div>
+				</td>
+				<td id="cell27" class="north">
+					<div class="north">
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/obelisk.svg" alt=""></div>
+						<div class="house yellow">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td id="cell28" class="north">
+					<div class="north">
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/arch.svg" alt=""></div>
+						<div class="house yellow">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td id="cell29" class="north">
+					<img src="resources/img/board/city/mountain4.svg" alt="" width="75">
+				</td>
+				<td id="cell30" class="north">
+					<div class="north"> 
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/maze.svg" alt=""></div>
+						<div class="house yellow">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td class="northeast" id="cell31">
+					<!-- <div class="town-image"> -->
+					<center>
+						<img src="resources/img/board/city/sign_crossroad.svg">
+					</center>
+					<!-- </div> -->
+				</td>
+			</tr>
+			<tr>
+				<td class="west" id="cell20">
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/graveyard.svg">
+					</div>
+					<div class="house orange">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+				<td id = "cell41" colspan="9" rowspan="9">
+					<!-- ............ -->
+					<!--  center cell -->
+					<!-- ............ -->
+					<div class="container well" id="center">
+						<div class="tabbable">
+							<ul id="myTab" class="nav nav-tabs">
+								<li><a href="#minimap-tab" data-toggle="tab">Mini-map</a></li>
+								<li><a href="#chat-tab" data-toggle="tab">Chat</a></li>
+								<!-- <li><a href="#settings" data-toggle="tab">Settings</a></li> -->
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade in active" id="minimap-tab">
+									<!-- ************** -->
+									<!-- [Info seciton] -->
+									<!-- ************** -->
+									<!-- <h3>Mini-map</h3> -->
+									<div id="info">
+										<table id="info-table-1">
+											<tr>
+												<td class="mini brown" id="miniCell2"><img src="" alt=""/></td>
+												<td class="mini brown" id="miniCell4"></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini azure" id="miniCell7"><img src="" alt=""/></td>
+												<td class="mini azure" id="miniCell9"><img src="" alt=""/></td>
+												<td class="mini azure" id="miniCell10"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini lightred" id="miniCell12"><img src="" alt=""/></td>
+												<td class="mini lightred" id="miniCell14"><img src="" alt=""/></td>
+												<td class="mini lightred" id="miniCell15"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini orange" id="miniCell17"><img src="" alt=""/></td>
+												<td class="mini orange" id="miniCell19"><img src="" alt=""/></td>
+												<td class="mini orange" id="miniCell20"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini red" id="miniCell22"><img src="" alt=""/></td>
+												<td class="mini red" id="miniCell24"><img src="" alt=""/></td>
+												<td class="mini red" id="miniCell25"><img src="" alt=""/></td>
+											</tr>
+										</table>
+										<table id="info-table-2">
+											<tr>
+												<td class="mini yellow" id="miniCell27"><img src="" alt=""/></td>
+												<td class="mini yellow" id="miniCell28"><img src="" alt=""/></td>
+												<td class="mini yellow" id="miniCell30"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini green" id="miniCell32"><img src="" alt=""/></td>
+												<td class="mini green" id="miniCell33"><img src="" alt=""/></td>
+												<td class="mini green" id="miniCell35"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini blue" id="miniCell38"><img src="" alt=""/></td>
+												<td class="mini blue" id="miniCell40"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini gray" id="miniCell6"><img src="" alt=""/></td>
+												<td class="mini gray" id="miniCell16"><img src="" alt=""/></td>
+												<td class="mini gray" id="miniCell26"><img src="" alt=""/></td>
+												<td class="mini gray" id="miniCell36"><img src="" alt=""/></td>
+											</tr>
+										</table>
+										<div id="money">
+											<span class="label color-player-1" id="money-player-1" >0$</span>
+											<span class="label color-player-2" id="money-player-2" >0$</span>
+											<span class="label color-player-3" id="money-player-3" >0$</span>
+											<span class="label color-player-4" id="money-player-4" >0$</span>							
+										</div>
+										<!-- ************* -->
+										<!-- [Roll dices]  -->
+										<!-- ************* -->
+										<div id="roll-dice">
+											<img id="diceImg1" class="dice" src="resources/img/board/die1.gif" width="50px"
+											height="50px"> </img> <img id="diceImg2" class="dice"
+											src="resources/img/board/die1.gif" width="50px" height="50px">
+										</img>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade in " id="chat-tab">		
+								<div id="chat-log">
+									<ul id="chat">
+									</ul>
+									<form name="message" action="" class="tip">
+										<input type="text" id="usermsg" size=100 placeholder="Enter your message here..."> 
+										<a class="btn btn-primary btn-medium tip" id="send">Send</a>
+									</form>
+								</div>
+							</div>
+							</div>
+						</div>
+
+
+
+
+						<!-- ************** -->
+						<!-- [Menu buttons] -->
+						<!-- ************** -->
+						<div class="" id="button-menu">
+								<div class="well" id="controls">
+									<button class="square-button" id="roll">roll</button>
+									<button class="square-button" id="buy">buy</button>
+									<button class="square-button" id="pay">pay</button>
+									<button class="square-button" id="mortage">mortage</button>
+									<button class="square-button" id="unmortage">unmortage</button>
+									<button class="square-button" id="build">build</button>
+									<button class="square-button" id="sell">sell</button>
+									<button class="square-button" id="auction">auction</button>
+								</div>
+								<div class="well" id="menu">
+								    <a href="javascript:void(0);" id="ready" class="button lightbg-green clearfix"><span>ready</span>
+								    </a>
+								    <a href="javascript:void(0);" id="start" class="button lightbg-orange clearfix"><span>start</span>
+									    <div class="icon">
+									      <div class="arrow"></div>
+									    </div>
+								    </a>
+								    <a href="javascript:void(0);" id="done" class="button lightbg-blue clearfix"><span>done</span>
+								    </a>
+								</div>
+						</div>
+					</div>
+					<!-- ............ -->
+					<!-- /center cell -->
+					<!-- ............ -->
+				</td>
+				<td class="east" id="cell32">
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/mine.svg" alt="">
+					</div>
+					<div class="house green">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="west" id="cell19">
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/monastery.svg">
+					</div>
+					<div class="house orange">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+				<td class="east" id="cell33">
+					<div class="owner"></div>
+					<div class="town-image"><img src="resources/img/board/city/hunter.svg" alt=""></div>
+					<div class="house green">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="west" id="cell18">
+					<center>
+						<!-- <div class="town-image"> -->
+							<img src="resources/img/board/city/caravan_wreck.svg" alt="" width="80">
+						<!-- </div> -->
+					</center>
+				</td>
+				<td class="east" id="cell34">
+					<!-- <div class="town-image"> -->
+					<center>
+						<img src="resources/img/board/city/tree02.svg" alt="" width="80">
+					</center>
+					<!-- </div> -->
+				</td>
+			</tr>
+			<tr>
+				<td class="west" id="cell17">
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/cathedral.svg" 
+							onclick="this.src='resources/img/board/city/cathedral_outline.svg'">
+					</div>
+					<div class="house orange">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+				<td class="east" id="cell35">
+					<div class="owner"></div>
+					<div class="town-image"><img src="resources/img/board/city/blacksmith.svg" alt=""></div>
+					<div class="house green">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="west" id="cell16">
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/magic_stones.svg">
+					</div>
+				</td>
+				<td class="east" id="cell36">
+					<div class="owner"></div>
+					<div class="town-image"><img src="resources/img/board/city/magic_stones.svg" alt=""></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="west tip" id="cell15" >
+					<span class="right">
+						<img src="resources/img/board/city/farm.svg" width="300">
+						<p class="tip-header">Initial cost: 4 000$ <small class="label label-info">owner</small></p>
+
+						<ul class="tip-content">
+							<li>1 houses : 25 $$</li>
+							<li>2 houses : 45 $$</li>
+							<li>3 houses : 75 $$</li>
+							<li>4 houses : 185 $$</li>
+							<li>Hotel: 25 $$</li>
+						</ul>
+						<center>
+							<a href="#" class="btn btn-info">mortage</a>
+							<a href="#" class="btn btn-succes">build</a>
+						</center>
+						<span class="nub"></span>
+					</span> 
+					<div class="owner"></div>
+					<!-- I KNOW ITS BAD, BUT WANT CAN I DO AGAINST POWER OF HTML -->
+					<div class="town-image" style=" margin-top: -10px; ">
+						<img src="resources/img/board/city/farm.svg">
+					</div>
+					<div class="house lightred">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+				<td class="east" id="cell37">
+					<!-- <div class="town-image"> -->
+					<center>
+						<img src="resources/img/board/city/bridge_stone2.svg" width="80">
+					</center>
+					<!-- </div> -->
+				</td>
+			</tr>
+			<tr>
+				<td class="west tip" id="cell14">
+					<span class="right">
+						<p class="tip-header">Fishery house || Rent: 30$$: </p>
+						<p class="tip-header">Cost: 40000$ -- Rent with: </p>
+						<ul class="tip-content">
+							<li>1 houses : 25$</li>
+							<li>2 houses : 45$</li>
+							<li>3 houses : 75$</li>
+							<li>4 houses : 185$</li>
+							<li>Hotel: 25$</li>
+						</ul>
+						<span class="nub"></span>
+					</span> 
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/fishery.svg">
+					</div>
+					<div class="house lightred">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+				<td class="east" id="cell38">
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/tower_square.svg">
+					</div>
+					<div class="house blue">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="west tip" id="cell13">
+					<span class="right">
+						<img src="resources/img/board/city/shipwreck.svg" width="300" height="300">
+						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
+						<span class="nub"></span>
+					</span> 
+					<center>
+						<!-- <div class="town-image"> -->
+							<img src="resources/img/board/city/shipwreck.svg" width="80">
+						<!-- </div> -->
+					</center>
+				</td>
+				<td class="east" id="cell39">
+					<!-- <div class="town-image"> -->
+						<center>
+							<img src="resources/img/board/city/sword_in_the_stone.svg" alt="" width="75">
+						</center>
+					<!-- </div> -->
+				</td>
+			</tr>
+			<tr>
+				<td class="west tip" id="cell12">
+					<span class="right">
+						<center>
+							<img src="resources/img/board/city/windmill.svg" width="300">
+							<p class="tip-header">Winmill || Rent: 30$$: </p>
+						</center>
+						<p class="tip-header">Cost: 40000$ -- Rent with: </p>
+						<ul class="tip-content">
+							25$ -> 45$ -> 75$ -> 185$
+						</ul>
+						<span class="nub"></span>
+					</span> 
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/windmill.svg">
+					</div>
+					<div class="house lightred">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+				<td class="east tip" id="cell40">
+					<span class="left">
+						<img src="resources/img/board/city/tower_round.svg" width="300">
+						<p class="tip-header">Defence tower ;)</p>
+						<p class="tip-header">Cost: 40000$ -- Rent with: </p>
+						<ul class="tip-content">
+							<li>1 houses : 25$</li>
+							<li>2 houses : 45$</li>
+							<li>3 houses : 75$</li>
+							<li>4 houses : 185$</li>
+							<li>Hotel: 25$</li>
+						</ul>
+						<span class="nub"></span>
+					</span> 
+					<div class="owner"></div>
+					<div class="town-image">
+						<img src="resources/img/board/city/tower_round.svg">
+					</div>
+					<div class="house blue">
+						<img src="resources/img/board/emptyhouse.png">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="southwest" id="cell11">
+					<center>
+						<!-- <div class="town-image"> -->
+							<img src="resources/img/board/city/jailhouse.svg" alt="">
+						<!-- </div> -->
+					</center>
+				</td>
+				<td class="south" id="cell10">
+					<div class="south">
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/university.svg" alt=""></div>
+						<div class="house azure">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td class="south" id="cell9">
+					<div class="south">
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/fountain.svg" alt=""></div>
+						<div class="house azure">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td class="south" id="cell8">
+					<img src="resources/img/board/city/wishing_well.svg" alt="" width="75">
+				</td>
+				<td class="south" id="cell7">
+					<div class="south">
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/pond.svg" alt=""></div>
+						<div class="house azure">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td class="south" id="cell6">
+					<div class="south">
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/magic_stones.svg" alt=""></div>
+					</div>
+				</td>
+				<td class="south" id="cell5">
+					<img src="resources/img/board/city/statue.svg" alt="" width="75">
+				</td>
+				<td class="south" id="cell4">
+					<div class="south">
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/circus.svg" alt=""></div>
+						<div class="house brown">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td class="south" id="cell3">
+					<img src="resources/img/board/city/ruins.svg" alt="" width="75">
+				</td>
+				<td class="south" id="cell2">
+					<div class="south tip">
+						<span class="top">
+							<img src="resources/img/board/city/tent.svg" alt="">
+							<p class="tip-header">Cost: 40$</p>
+							<ul class="tip-content">
+								<li>1 houses : 25$</li>
+								<li class="active">2 houses : 45$</li>
+								<li>3 houses : 75$</li>
+								<li>4 houses : 185$</li>
+								<li>Hotel: 25$</li>
+							</ul>
+							<span class="nub"></span>
+						</span> 
+						<div class="owner"></div>
+						<div class="town-image"><img src="resources/img/board/city/tent.svg" alt=""></div>
+						<div class="house brown">
+							<img class="north_position_house" src="resources/img/board/emptyhouse.png"></img>
+						</div>
+					</div>
+				</td>
+				<td class="southeast" id="cell1">
+					<img id="player1" src="resources/img/board/player-1.png"></img>
+					<img id="player2" src="resources/img/board/player-2.png"></img>
+					<img id="player3" src="resources/img/board/player-3.png"></img>
+					<img id="player4" src="resources/img/board/player-4.png"></img>
+				</td>
+			</tr>
+		</table>
+	</div>
+
 
 <!-- @herbion -->
+<!-- JQuery + ui -->
+<script type="text/javascript" src="resources/js/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="resources/js/jquery-ui-1.9.1.custom.js"></script>
+<!-- LESS -->
+<script type="text/javascript" src="resources/js/less.js"></script>
+<!-- Bootstrap JS -->
 <script type="text/javascript" src="resources/js/bootstrap-transition.js"></script>
 <script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>
 <script type="text/javascript" src="resources/js/bootstrap-modal.js"></script>
 <script type="text/javascript" src="resources/js/bootstrap-dropdown.js"></script>
 <script type="text/javascript" src="resources/js/bootstrap-tooltip.js"></script>
 <script type="text/javascript" src="resources/js/bootstrap-popover.js"></script>
-<!-- @herbion -->
-
+<script type="text/javascript" src="resources/js/bootstrap-tab.js"></script>
+<!-- Game-js engine -->
 <script src="resources/js/monopoly/monopoly.js" type="text/javascript"></script>
 
-
-
-</head>
-<!-- NO MORE GREEN BACKGROUND COLORS -->
-<!-- <body bgcolor="#CCE7D0"> -->
-<body>
-	<div id="board">
-
-		<table id="table" border="1" rules="all">
-
-			<tr>
-				<td class="northwest" id="cell21"></td>
-
-				<td class="south_north" id="cell22">
-					<div style="position: absolute;">
-						<img class="north_position_house" id="house_cell22"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell22" class="ownerNorth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell23"></td>
-
-				<td class="south_north" id="cell24">
-					<div style="position: absolute;">
-						<img class="north_position_house" id="house_cell24"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell24" class="ownerNorth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell25">
-					<div style="position: absolute;">
-						<img class="north_position_house" id="house_cell25"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell25" class="ownerNorth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell26">
-					<div class="cityPosition">
-						<div id="ownerCell26" class="ownerNorth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell27">
-					<div style="position: absolute;">
-						<img class="north_position_house" id="house_cell27"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell27" class="ownerNorth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell28">
-					<div style="position: absolute;">
-						<img class="north_position_house" id="house_cell28"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell28" class="ownerNorth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell29"></td>
-
-				<td class="south_north" id="cell30">
-					<div style="position: absolute;">
-						<img class="north_position_house" id="house_cell30"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell30" class="ownerNorth"></div>
-					</div>
-				</td>
-
-				<td class="northeast" id="cell31"></td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell20">
-					<div style="position: absolute;">
-						<img class="west_position_house" id="house_cell20"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell20" class="ownerWest"></div>
-					</div>
-				</td>
-				<td id = "cell41" colspan="9" rowspan="9">
-					<div id="roolDice">
-						<img id="diceImg1" src="resources/img/board/die1.gif" width="50px"
-							height="50px"> </img> <img id="diceImg2"
-							src="resources/img/board/die1.gif" width="50px" height="50px">
-						</img>
-					</div>
-							<!-- Create buttons -->
-					<div class="playerButton">
-							<div class="well" id="controls">
-								<button class="btn btn-primary" id="roll">roll</button>
-								<button class="btn btn-primary" id="buy">buy</button>
-								<button class="btn btn-primary" id="pay">pay</button>
-								<button class="btn btn-primary" id="mortage">mortage</button>
-								<button class="btn btn-primary" id="unmortage">unmortage</button>
-								<button class="btn btn-primary" id="build">build</button>
-								<button class="btn btn-primary" id="sell">sell</button>
-								<button class="btn btn-primary" id="auction">auction</button>
-							</div>
-							<div class="well" id="menu">
-								<button class="btn btn-primary" id="done">done</button>
-								<button class="btn btn-primary" id="start">start</button>
-								<button class="btn btn-primary" id="ready">ready</button>
-							</div>
-					</div>
-				</td>
-
-				<td class="west_east" id="cell32">
-					<div style="position: absolute;">
-						<img class="east_position_house" id="house_cell32"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell32" class="ownerEast"></div>
-					</div>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell19">
-					<div style="position: absolute;">
-						<img class="west_position_house" id="house_cell19"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell19" class="ownerWest"></div>
-					</div>
-				</td>
-
-				<td class="west_east" id="cell33">
-					<div style="position: absolute;">
-						<img class="east_position_house" id="house_cell33"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell33" class="ownerEast"></div>
-					</div>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell18"></td>
-				<td class="west_east" id="cell34"></td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell17">
-					<div style="position: absolute;">
-						<img class="west_position_house" id="house_cell17"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell17" class="ownerWest"></div>
-					</div>
-				</td>
-				<td class="west_east" id="cell35">
-					<div style="position: absolute;">
-						<img class="east_position_house" id="house_cell35"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell35" class="ownerEast"></div>
-					</div>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell16">
-					<div class="cityPosition">
-						<div id="ownerCell16" class="ownerWest"></div>
-					</div>
-				</td>
-				<td class="west_east" id="cell36">
-					<div class="cityPosition">
-						<div id="ownerCell36" class="ownerEast"></div>
-					</div>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell15">
-					<div style="position: absolute;">
-						<img class="west_position_house" id="house_cell15"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell15" class="ownerWest"></div>
-					</div>
-				</td>
-
-				<td class="west_east" id="cell37"></td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell14">
-					<div style="position: absolute;">
-						<img class="west_position_house" id="house_cell14"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell14" class="ownerWest"></div>
-					</div>
-				</td>
-
-				<td class="west_east" id="cell38">
-					<div style="position: absolute;">
-						<img class="east_position_house" id="house_cell38"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell38" class="ownerEast"></div>
-					</div>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell13"></td>
-				<td class="west_east" id="cell39"></td>
-			</tr>
-
-			<tr>
-				<td class="west_east" id="cell12">
-					<div style="position: absolute;">
-						<img class="west_position_house" id="house_cell12"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell12" class="ownerWest"></div>
-					</div>
-				</td>
-
-				<td class="west_east" id="cell40">
-					<div style="position: absolute;">
-						<img class="east_position_house" id="house_cell40"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell40" class="ownerEast"></div>
-					</div>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="southwest" id="cell11"></td>
-
-				<td class="south_north" id="cell10">
-					<div style="position: absolute;">
-						<img class="south_position_house" id="house_cell10"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell10" class="ownerSouth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell9">
-					<div style="position: absolute;">
-						<img class="south_position_house" id="house_cell9"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell9" class="ownerSouth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell8"></td>
-
-				<td class="south_north" id="cell7">
-					<div style="position: absolute;">
-						<img class="south_position_house" id="house_cell7"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell7" class="ownerSouth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell6">
-
-					<div class="cityPosition">
-						<div id="ownerCell6" class="ownerSouth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell5"></td>
-
-				<td class="south_north" id="cell4">
-					<div style="position: absolute;">
-						<img class="south_position_house" id="house_cell4"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-					<div class="cityPosition">
-						<div id="ownerCell4" class="ownerSouth"></div>
-					</div>
-				</td>
-
-				<td class="south_north" id="cell3"></td>
-
-				<td class="south_north" id="cell2">
-
-					<div style="position: absolute;">
-						<img class="south_position_house" id="house_cell2"
-							src="resources/img/board/emptyhouse.png"></img>
-					</div>
-
-					<div class="cityPosition">
-						<div id="ownerCell2" class="ownerSouth"></div>
-					</div>
-				</td>
-
-				<td class="southeast" id="cell1">
-
-					<div id="divPlayer1" style="position: relative;">
-						<img id="player1" src="resources/img/board/player-1.png"
-							style="position: absolute; left: 20%; top: +30%;"></img>
-					</div>
-					<div id="divPlayer2" style="position: relative;">
-						<img id="player2" src="resources/img/board/player-2.png"
-							style="position: absolute; left: 40%; top: -65%;"></img>
-					</div>
-					<div id="divPlayer3" style="position: relative;">
-						<img id="player3" src="resources/img/board/player-3.png"
-							style="position: absolute; left: 20%; top: -20%;"></img>
-					</div>
-					<div id="divPlayer4" style="position: relative;">
-						<img id="player4" src="resources/img/board/player-4.png"
-							style="position: absolute; left: 40%; top: -120%;"></img>
-					</div>
-				</td>
-			</tr>
-
-		</table>
-
-	<!-- Block about player's information -->
-		<div id="playerInfo">
-			<div id="accordion">
-				<h3>Player1 </h3>
-				<div id="infoPlayer1">
-
-					<table id="firstInfoTable" width="100px" height="200px">
-						<tr>
-							<td class="brownMini" id="firstMiniCell2"></td>
-							<td class="brownMini" id="firstMiniCell4"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="azureMini" id="firstMiniCell7"></td>
-							<td class="azureMini" id="firstMiniCell9"></td>
-							<td class="azureMini" id="firstMiniCell10"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="lightredMini" id="firstMiniCell12"></td>
-							<td class="lightredMini" id="firstMiniCell14"></td>
-							<td class="lightredMini" id="firstMiniCell15"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="orangeMini" id="firstMiniCell17"></td>
-							<td class="orangeMini" id="firstMiniCell19"></td>
-							<td class="orangeMini" id="firstMiniCell20"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="redMini" id="firstMiniCell22"></td>
-							<td class="redMini" id="firstMiniCell24"></td>
-							<td class="redMini" id="firstMiniCell25"></td>
-						</tr>
-					</table>
-
-					<table id="secondInfoTable" width="130px" height="160px">
-						<tr>
-							<td class="yellowMini" id="firstMiniCell27"></td>
-							<td class="yellowMini" id="firstMiniCell28"></td>
-							<td class="yellowMini" id="firstMiniCell30"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="greenMini" id="firstMiniCell32"></td>
-							<td class="greenMini" id="firstMiniCell33"></td>
-							<td class="greenMini" id="firstMiniCell35"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="blueMini" id="firstMiniCell38"></td>
-							<td class="blueMini" id="firstMiniCell40"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="grayMini" id="firstMiniCell6"></td>
-							<td class="grayMini" id="firstMiniCell16"></td>
-							<td class="grayMini" id="firstMiniCell26"></td>
-							<td class="grayMini" id="firstMiniCell36"></td>
-						</tr>
-					</table>
-					<h3 id="MoneyPlayer1"> M 1000</h3>
-				</div>
-				<h3>Player2</h3>
-				<div id="infoPlayer2">
-				<table id="thirdInfoTable" width="100px" height="200px">
-						<tr>
-							<td class="brownMini" id="secondMiniCell2"></td>
-							<td class="brownMini" id="secondMiniCell4"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="azureMini" id="secondMiniCell7"></td>
-							<td class="azureMini" id="secondMiniCell9"></td>
-							<td class="azureMini" id="secondMiniCell10"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="lightredMini" id="secondMiniCell12"></td>
-							<td class="lightredMini" id="secondMiniCell14"></td>
-							<td class="lightredMini" id="secondMiniCell15"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="orangeMini" id="secondMiniCell17"></td>
-							<td class="orangeMini" id="secondMiniCell19"></td>
-							<td class="orangeMini" id="secondMiniCell20"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="redMini" id="secondMiniCell22"></td>
-							<td class="redMini" id="secondMiniCell24"></td>
-							<td class="redMini" id="secondMiniCell25"></td>
-						</tr>
-					</table>
-
-					<table id="fourInfoTable" width="130px" height="160px">
-						<tr>
-							<td class="yellowMini" id="secondMiniCell27"></td>
-							<td class="yellowMini" id="secondMiniCell28"></td>
-							<td class="yellowMini" id="secondMiniCell30"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="greenMini" id="secondMiniCell32"></td>
-							<td class="greenMini" id="secondMiniCell33"></td>
-							<td class="greenMini" id="secondMiniCell35"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="blueMini" id="secondMiniCell38"></td>
-							<td class="blueMini" id="secondMiniCell40"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="grayMini" id="secondMiniCell6"></td>
-							<td class="grayMini" id="secondMiniCell16"></td>
-							<td class="grayMini" id="secondMiniCell26"></td>
-							<td class="grayMini" id="secondMiniCell36"></td>
-						</tr>
-					</table>
-					<h3 id="MoneyPlayer2"> M 1000</h3>
-				</div>
-				<h3>Player3</h3>
-					<div id="infoPlayer3">
-				<table id="fifthInfoTable" width="100px" height="200px">
-						<tr>
-							<td class="brownMini" id="thirdMiniCell2"></td>
-							<td class="brownMini" id="thirdMiniCell4"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="azureMini" id="thirdMiniCell7"></td>
-							<td class="azureMini" id="thirdMiniCell9"></td>
-							<td class="azureMini" id="thirdMiniCell10"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="lightredMini" id="thirdMiniCell12"></td>
-							<td class="lightredMini" id="thirdMiniCell14"></td>
-							<td class="lightredMini" id="thirdMiniCell15"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="orangeMini" id="thirdMiniCell17"></td>
-							<td class="orangeMini" id="thirdMiniCell19"></td>
-							<td class="orangeMini" id="thirdMiniCell20"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="redMini" id="thirdMiniCell22"></td>
-							<td class="redMini" id="thirdMiniCell24"></td>
-							<td class="redMini" id="thirdMiniCell25"></td>
-						</tr>
-					</table>
-
-					<table id="sixthInfoTable" width="130px" height="160px">
-						<tr>
-							<td class="yellowMini" id="thirdMiniCell27"></td>
-							<td class="yellowMini" id="thirdMiniCell28"></td>
-							<td class="yellowMini" id="thirdMiniCell30"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="greenMini" id="thirdMiniCell32"></td>
-							<td class="greenMini" id="thirdMiniCell33"></td>
-							<td class="greenMini" id="thirdMiniCell35"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="blueMini" id="thirdMiniCell38"></td>
-							<td class="blueMini" id="thirdMiniCell40"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="grayMini" id="thirdMiniCell6"></td>
-							<td class="grayMini" id="thirdMiniCell16"></td>
-							<td class="grayMini" id="thirdMiniCell26"></td>
-							<td class="grayMini" id="thirddMiniCell36"></td>
-						</tr>
-					</table>
-					<h3 id="MoneyPlayer3"> M 1000</h3>
-				</div>
-					
-				<h3>Player4</h3>
-				<div id="infoPlayer2">
-				<table id="seventhInfoTable" width="100px" height="200px">
-						<tr>
-							<td class="brownMini" id="fourMiniCell2"></td>
-							<td class="brownMini" id="fourdMiniCell4"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="azureMini" id="fourMiniCell7"></td>
-							<td class="azureMini" id="fourMiniCell9"></td>
-							<td class="azureMini" id="fourMiniCell10"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="lightredMini" id="fourMiniCell12"></td>
-							<td class="lightredMini" id="fourMiniCell14"></td>
-							<td class="lightredMini" id="fourMiniCell15"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="orangeMini" id="fourMiniCell17"></td>
-							<td class="orangeMini" id="fourMiniCell19"></td>
-							<td class="orangeMini" id="fourMiniCell20"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="redMini" id="fourMiniCell22"></td>
-							<td class="redMini" id="fourMiniCell24"></td>
-							<td class="redMini" id="fourMiniCell25"></td>
-						</tr>
-					</table>
-
-					<table id="eighthInfoTable" width="130px" height="160px">
-						<tr>
-							<td class="yellowMini" id="fourMiniCell27"></td>
-							<td class="yellowMini" id="fourMiniCell28"></td>
-							<td class="yellowMini" id="fourMiniCell30"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="greenMini" id="fourMiniCell32"></td>
-							<td class="greenMini" id="fourMiniCell33"></td>
-							<td class="greenMini" id="fourMiniCell35"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="blueMini" id="fourMiniCell38"></td>
-							<td class="blueMini" id="fourMiniCell40"></td>
-						</tr>
-						<tr height="5px"></tr>
-						<tr>
-							<td class="grayMini" id="fourMiniCell6"></td>
-							<td class="grayMini" id="fourMiniCell16"></td>
-							<td class="grayMini" id="fourMiniCell26"></td>
-							<td class="grayMini" id="fourMiniCell36"></td>
-						</tr>
-					</table>
-					<h3 id="MoneyPlayer4"> M 1000</h3>
-				</div>			
-				
-				</div>
-
-		</div>
-
-
-
-
-
-		<div id="upChat">
-			<!--  buttons
-			<div class="container" align="center">
-				<div class="span6 well" id="controls">
-					<button class="btn btn-primary" id="roll">roll</button>
-					<button class="btn btn-primary" id="buy">buy</button>
-					<button class="btn btn-primary" id="pay">pay</button>
-					<button class="btn btn-primary" id="mortage">mortage</button>
-					<button class="btn btn-primary" id="unmortage">unmortage</button>
-					<button class="btn btn-primary" id="build">build</button>
-					<button class="btn btn-primary" id="sell">sell</button>
-					<button class="btn btn-primary" id="auction">auction</button>
-				</div>
-				<div class="span4 well" id="menu">
-					<button class="btn btn-primary" id="done">done</button>
-					<button class="btn btn-primary" id="start">start</button>
-					<button class="btn btn-primary" id="ready">ready</button>
-				</div>
-			</div>
- 			-->
-			
-			<ul id="chat">
-			</ul>
-			<!-- TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST -->
-			<!-- world chat and room list -->
-			<div class="container">
-				<p></p>
-				<div class="row-fluid">
-					<div class="span8">
-						<div class="well">
-							<h1>Chat</h1>
-							<div id="chatBox"></div>
-							<form name="message" action="">
-								<input type="text" id="usermsg" size=100
-									placeholder="Enter your message here..."> <a
-									class="btn btn-primary btn-medium" id="send">Send</a>
-							</form>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			<!-- world chat and room list -->
-		</div>
-
-	</div>
-
-
-
-
+<script type="text/javascript">
+	$('#myTab a').click(function(e) {
+	    e.preventDefault();
+	    $(this).tab('show');
+	});
+	$('#myTab a:first').tab('show');
+</script>
 </body>
 </html>

@@ -46,11 +46,6 @@ public class MonoWebSocketHandler extends WebSocketHandler {
 			this.connection = connection;
 			this.connection.setMaxIdleTime((int) TimeUnit.MINUTES.toMillis(60));
 			webSockets.add(this);
-			try {
-				connection.sendMessage("[Server] Connected succesfully");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 
 		@Override
