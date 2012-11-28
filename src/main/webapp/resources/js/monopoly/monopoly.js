@@ -1,65 +1,6 @@
 /*jslint browser: true*/
 /*global jQuery, $, WebSocket, BOARD, console, prompt, bootbox*/
-var normalizeOffset = function(who, cellId) {
-    var offset = $('#cell' + cellId).offset();
-
-    var offsetMap = {
-        BROWN : {
-            bottom: function(offset) {
-                offset.top += 35;
-            },
-            left: function() {
-                offset.left += 35;
-            },
-            up: function() {
-                offset.top += 35;
-            }, 
-            right: function() {
-                offset.left += 35;
-            }, 
-            corner: function() {
-                offset.top += 30;
-                offset.left += 30;
-            }
-        }
-    };
-
-    if (cellId > 1 && cellId < 11) {
-        offsetMap[who].bottom(offset);
-    } else if (cellId > 11 && cellId < 21) {
-        offsetMap[who].left(offset);
-    } else if (cellId > 21 && cellId < 31) {
-        offsetMap[who].up(offset);
-    } else if (cellId > 31 && cellId <= 40) {
-        offsetMap[who].right(offset);
-    } else if (cellId % 10 == 1) {
-        offsetMap[who].corner(offset);
-    } else {
-        console.error('Unknown cell position, cant move there.');
-    }
-
-    return offset;
-};
-
-var goTo = function(who, from, offset) {
-    var COLOR_TO_NUMBER = {
-        'BROWN': '1',
-        'GREEN': '2',
-        'RED': '3',
-        'VIOLET': '4'
-    };
-    var cellOffset;
-
-    var $player = $('#player' + COLOR_TO_NUMBER[who]);
-    console.log('Player selector: ' + '#player' + COLOR_TO_NUMBER[who]);
-
-    while (offset-- >= 0) {   
-        $player.animate(normalizeOffset(who, from++ % 41), 500);        
-        console.log('Moving to cell: ' + '#cell' + ((from - 1) % 41));
-    }
-};
-
-
+var BOARD = {};
 
 $(document).ready(
 
@@ -74,7 +15,7 @@ function() {
         ui = {};
     ui = {
         minOpacityToButtons: function() {
-            $("#controls .btn").each(
+            $("#controls button").each(
 
             function(i, btn) {
                 $(btn).animate({
@@ -130,7 +71,7 @@ function() {
             color: '',
             game_status: "",
             position: 0,
-            price:0
+            price: 0
         },
         transport: {
             socket: null,
@@ -175,12 +116,17 @@ function() {
             },
             onMessage: function(event) {
                 console.log("Received message: ", event.data);
-                var json = JSON.parse(event.data);
-                if(typeof MONO.events.handle[json.type] === 'undefined') {
-                    console.error('No handlers for ' + json.type + ' defined');
-                } else {
-                    MONO.events.handle[json.type](json);
+                try {
+                    var json = $.parseJSON(event.data);
+                    if(typeof MONO.events.handle[json.type] === 'undefined') {
+                        console.error('No handlers for ' + json.type + ' defined');
+                    } else {
+                        MONO.events.handle[json.type](json);
+                    }
+                } catch(err) {
+                    console.error('Not object Received');
                 }
+
             },
             handle: {
                 'undefined': function(json) {
@@ -244,10 +190,10 @@ function() {
                     var pos, buttons;
                     buttons = json.game_state.buttons;
                     MONO.animate.money(json.player, json.player_money);
-                    if (json.player === MONO.config.color) {
-                        ui.refreshButtons(buttons);                        
-                    } 
-                    if (json.position && json.player) {
+                    if(json.player === MONO.config.color) {
+                        ui.refreshButtons(buttons);
+                    }
+                    if(json.position && json.player) {
                         draw(json.position, json.player);
                     }
                     if(json.player === MONO.config.color && list) {
@@ -258,7 +204,7 @@ function() {
                         if(json.message) {
                             chat.append("server: " + json.message);
                         }
-                    }                    
+                    }
                 },
                 'mortage': function(json) {
                     console.log('[mortage] event');
@@ -276,15 +222,15 @@ function() {
                     console.log('[sell] event');
                     MONO.events.handle.handler(json, BOARD.draw.sell, MONO.animate.sell, json.sell_list);
                 },
-                'auction':function(json){
-                	console.log('[auction] event');
-                	var price;
-                	price = parseInt(prompt('set price' ));
-                	if (price) {
-                	MONO.transport.send('auction', {
-                	price: price
-                	});
-                	}
+                'auction': function(json) {
+                    console.log('[auction] event');
+                    var price;
+                    price = parseInt(prompt('set price'));
+                    if(price) {
+                        MONO.transport.send('auction', {
+                            price: price
+                        });
+                    }
                 },
                 'init': function(json) {
                     console.log('[init] event');
@@ -316,7 +262,7 @@ function() {
                 },
                 'turn': function(json) {
                     chat.append(json.player + ' turn=true');
-                    $('.btn').animate({
+                    $('button').animate({
                         "opacity": "0.5"
                     }, 100);
                     if(json.player === MONO.config.color) {
@@ -336,7 +282,7 @@ function() {
                 log('Animating [move]');
                 console.log('Moving to: ' + (d1 + d2));
                 chat.append('Moving ' + who + ' to offset: ' + (d1 + d2));
-                BOARD.animate.stepOnBoard(who, d1, d2, was);
+                BOARD.animate.move(who, d1, d2, was);
             },
             buy: function(who, position) {
                 log('Animating [buy]');
@@ -366,6 +312,7 @@ function() {
         init: function() {
             MONO.transport.init();
             chat.init();
+            // each player to first cell
 
             var hideAfterClick = {
                 pay: true,
@@ -388,162 +335,137 @@ function() {
         }
     };
 
-    /*global MONO */
-
-    var BOARD = {};
-
     BOARD = {
-
-        CONSTANT: { /* Value of shift in MOVE methods */
-            SHIFT: {
-                LEFT_BIG_SHIFT: '-=70%',
-                LEFT_SMALL_SHIFT: '-=51%',
-                TOP_BIG_SHIFT: '-=550%',
-                TOP_SMALL_SHIFT: '-=370%',
-                RIGHT_BIG_SHIFT: '+=70%',
-                RIGHT_SMALL_SHIFT: '+=51%',
-                DOWN_BIG_SHIFT: '+=550%',
-                DOWN_SMALL_SHIFT: '+=370%'
-            },
-            /* Value of shift in JUMP methods */
-            JUMP: {
-                LEFT_BIG_JUMP: '-=100%',
-                LEFT_SMALL_JUMP: '-=74%',
-                TOP_BIG_JUMP: '-=110%',
-                TOP_SMALL_JUMP: '-=74%',
-                RIGHT_BIG_JUMP: '+=100%',
-                RIGHT_SMALL_JUMP: '+=74%',
-                DOWN_BIG_JUMP: '+=110%',
-                DOWN_SMALL_JUMP: '+=74%'
-            },
+        CONST: {
             DURATION: 200,
             COLOR_TO_NUMBER: {
                 'BROWN': '1',
                 'GREEN': '2',
                 'RED': '3',
                 'VIOLET': '4'
+            },
+            OFFSET_MAP: {
+                BROWN: {
+                    bottom: function(offset) {
+                        offset.top += 35;
+                    },
+                    left: function(offset) {
+                        offset.left += 35;
+                    },
+                    up: function(offset) {
+                        offset.top += 35;
+                    },
+                    right: function(offset) {
+                        offset.left += 35;
+                    },
+                    corner: function(offset) {
+                        offset.top += 30;
+                        offset.left += 30;
+                    }
+                },
+                GREEN: {
+                    bottom: function(offset) {
+                        offset.top += 83;
+                        offset.left += 60;
+                    },
+                    left: function(offset) {
+                        offset.top += 45;
+                        offset.left += 124;
+                    },
+                    up: function(offset) {
+                        offset.top += 85;
+                        offset.left += 60;
+                    },
+                    right: function(offset) {
+                        offset.top += 45;
+                        offset.left += 120;
+                    },
+                    corner: function(offset) {
+                        offset.top += 80;
+                        offset.left += 80;
+                    }
+                },
+                RED: {
+                    bottom: function(offset) {
+                        offset.top += 30;
+                        offset.left += 80;
+                    },
+                    left: function(offset) {
+                        offset.left += 35;
+                    },
+                    up: function(offset) {
+                        offset.top += 35;
+                    },
+                    right: function(offset) {
+                        offset.left += 35;
+                    },
+                    corner: function(offset) {
+                        offset.top += 30;
+                        offset.left += 80;
+                    }
+                },
+                VIOLET: {
+                    bottom: function(offset) {
+                        offset.top += 83;
+                        offset.left += 60;
+                    },
+                    left: function(offset) {
+                        offset.top += 45;
+                        offset.left += 124;
+                    },
+                    up: function(offset) {
+                        offset.top += 85;
+                        offset.left += 60;
+                    },
+                    right: function(offset) {
+                        offset.top += 45;
+                        offset.left += 120;
+                    },
+                    corner: function(offset) {
+                        offset.top += 80;
+                        offset.left += 80;
+                    }
+                }
+                // to be continued...
             }
         },
-        animate: { /**** Player move on the left or on the right ***/
-            playerLeftAnimate: function(player, shift) {
-                $(player).animate({
-                    left: shift
-                }, BOARD.CONSTANT.DURATION);
-            },
-            /**** Player move on the top or on the down ***/
-            playerTopAnimate: function(player, shift) {
-                $(player).animate({
-                    top: shift
-                }, BOARD.CONSTANT.DURATION);
-            },
-            /**** Player jump on the left or on the right ***/
-            playerLeftJump: function(player, shift) {
-                $(player).css({
-                    left: shift
-                });
-            },
-            /**** Player jump on the top or on the down ***/
-            playerTopJump: function(player, shift) {
-                $(player).css({
-                    top: shift
-                });
-            },
-            /* Move the player */
-            stepOnBoard: function(playerColor, dice1, dice2, startCell) {
-                var start = startCell;
-                var DICE = dice1 + dice2;
-                var player = '#player' + BOARD.colorToIndex(playerColor);
-                for(var i = 0; i < DICE; i++) {
-                    if(start >= 1 && start < 11) {
-                        if(start == 1) {
-                            BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_BIG_SHIFT);
-                        } else if(start == 10) {
-                            BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_BIG_SHIFT);
-                        } else {
-                            BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.LEFT_SMALL_SHIFT);
-                        }
-                    } else if(start >= 11 && start < 21) {
-                        if(start == 11) {
-                            BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_BIG_SHIFT);
-                        } else if(start == 20) {
-                            BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_BIG_SHIFT);
-                        } else {
-                            BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.TOP_SMALL_SHIFT);
-                        }
+        animate: {
+            normalizeOffset: function(who, cellId) {
+                var offset = $('#cell' + cellId).offset();
 
-                    } else if(start >= 21 && start < 31) {
-                        if(start == 21) {
-                            BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_BIG_SHIFT);
-                        } else if(start == 30) {
-                            BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_BIG_SHIFT);
-                        } else {
-                            BOARD.animate.playerLeftAnimate(player, BOARD.CONSTANT.SHIFT.RIGHT_SMALL_SHIFT);
-                        }
-                    } else {
-                        if(start == 31) {
-                            BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_BIG_SHIFT);
-                        } else if(start == 40) {
-                            BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_BIG_SHIFT);
-                        } else {
-                            BOARD.animate.playerTopAnimate(player, BOARD.CONSTANT.SHIFT.DOWN_SMALL_SHIFT);
-                        }
-                    }
+                if(cellId > 1 && cellId < 11) {
+                    BOARD.CONST.OFFSET_MAP[who].bottom(offset);
+                } else if(cellId > 11 && cellId < 21) {
+                    BOARD.CONST.OFFSET_MAP[who].left(offset);
+                } else if(cellId > 21 && cellId < 31) {
+                    BOARD.CONST.OFFSET_MAP[who].up(offset);
+                } else if(cellId > 31 && cellId <= 40) {
+                    BOARD.CONST.OFFSET_MAP[who].right(offset);
+                } else if(cellId % 10 == 1) {
+                    BOARD.CONST.OFFSET_MAP[who].corner(offset);
+                } else {
+                    console.error('Unknown cell position, cant move there.');
+                }
 
-                    start++;
-                    if(start > 40) start -= 40;
+                return offset;
+            },
+            goTo: function(who, from, offset) {
+                var $player = $('#player' + BOARD.CONST.COLOR_TO_NUMBER[who]);
+
+                while(offset-- >= 0) {
+                    $player.animate(BOARD.animate.normalizeOffset(who, from++ % 41), BOARD.CONST.DURATION);
                 }
             },
-            /* JUMP the player */
-            jumpOnBoard: function(playerColor, dice1, dice2, startCell) {
-                var start = startCell;
-                var DICE = dice1 + dice2;
-                var player = '#player' + BOARD.colorToIndex(playerColor);
+            move: function(playerColor, dice1, dice2, startCell) {
+                var offset = dice1 + dice2;
+                BOARD.animate.goTo(playerColor, startCell, offset);
 
-                for(var i = 0; i < DICE; i++) {
-                    if(start >= 1 && start < 11) {
-                        if(start == 1) {
-                            BOARD.animate.playerLeftJump(player, BOARD.CONSTANT.JUMP.LEFT_BIG_JUMP);
-                        } else if(start == 10) {
-                            BOARD.animate.playerLeftJump(player, BOARD.CONSTANT.JUMP.LEFT_BIG_JUMP);
-                        } else {
-                            BOARD.animate.playerLeftJump(player, BOARD.CONSTANT.JUMP.LEFT_SMALL_JUMP);
-                        }
-                    } else if(start >= 11 && start < 21) {
-                        if(start == 11) {
-                            BOARD.animate.playerTopJump(player, BOARD.CONSTANT.JUMP.TOP_BIG_JUMP);
-                        } else if(start == 20) {
-                            BOARD.animate.playerTopJump(player, BOARD.CONSTANT.JUMP.TOP_BIG_JUMP);
-                        } else {
-                            BOARD.animate.playerTopJump(player, BOARD.CONSTANT.JUMP.TOP_SMALL_JUMP);
-                        }
-
-                    } else if(start >= 21 && start < 31) {
-                        if(start == 21) {
-                            BOARD.animate.playerLeftJump(player, BOARD.CONSTANT.JUMP.RIGHT_BIG_JUMP);
-                        } else if(start == 30) {
-                            BOARD.animate.playerLeftJump(player, BOARD.CONSTANT.JUMP.RIGHT_BIG_JUMP);
-                        } else {
-                            BOARD.animate.playerLeftJump(player, BOARD.CONSTANT.JUMP.RIGHT_SMALL_JUMP);
-                        }
-                    } else {
-                        if(start == 31) {
-                            BOARD.animate.playerTopJump(player, BOARD.CONSTANT.JUMP.DOWN_BIG_JUMP);
-                        } else if(start == 40) {
-                            BOARD.animate.playerTopJump(player, BOARD.CONSTANT.JUMP.DOWN_BIG_JUMP);
-                        } else {
-                            BOARD.animate.playerTopJump(player, BOARD.CONSTANT.JUMP.DOWN_SMALL_JUMP);
-                        }
-                    }
-
-                    start++;
-                    if(start > 40) start -= 40;
-                }
             },
-            setPlayerPosition:function(player, cell){
-				
-				var dice = cell;
-				BOARD.animate.jumpOnBoard(player, dice,0,1);
-			}
+            jumpOnBoard: function(playerColor, dice1, dice2, startCell) {},
+            setPlayerPosition: function(player, cell) {
+                var dice = cell;
+                BOARD.animate.jumpOnBoard(player, dice, 0, 1);
+            }
 
         },
         houseManipulation: { /**** Build the house ****/
@@ -574,7 +496,7 @@ function() {
             }
         },
         sellAll: function(player, cell) {
-             var houseCell = "#house_cell" + cell;
+            var houseCell = "#house_cell" + cell;
             var ownerCell = "#ownerCell" + cell;
             var playerNumber = BOARD.colorToIndex(player);
             var miniCell = cell;
@@ -588,21 +510,21 @@ function() {
             } else if($(houseCell).attr('src') == "resources/img/board/house1.png") {
                 $(houseCell).attr('src', "resources/img/board/emptyhouse.png");
             } else {
-                $(ownerCell).removeClass("setColorPlayer" + playerNumber);
+                $(ownerCell).removeClass("color-player" + playerNumber);
                 $(number + "MiniCell" + miniCell).removeClass("setMiniImagePlayer" + playerNumber);
 
             }
         },
         hightlightCells: function(cellArr, player, _class) {
-            $.each(cellArr, function (i, e) {
+            $.each(cellArr, function(i, e) {
                 $('#miniCell' + e).addClass(_class);
             });
         },
-        _handler: function(player, messages, messageType, visibleClass) {
+        handler: function(player, messages, messageType, visibleClass) {
             BOARD.hightlightCells(Object.keys(messages), player, visibleClass);
 
-            $.each(messages, function (index, message) {
-                var id = '#miniCell' + index, 
+            $.each(messages, function(index, message) {
+                var id = '#miniCell' + index,
                     $cell = $(id);
                 $cell.unbind('click');
                 ui.attachTooltip(id, message);
@@ -630,28 +552,30 @@ function() {
             });
         },
         mortage: function(cellArr, player, messages) {
-            BOARD._handler(player, messages, 'mortage', 'visibleCell');
+            BOARD.handler(player, messages, 'mortage', 'visibleCell');
         },
         unmortage: function(cellArr, player, messages) {
-            BOARD._handler(player, messages, 'unmortage', 'unmortageSelected');
+            BOARD.handler(player, messages, 'unmortage', 'unmortageSelected');
         },
         build: function(cellArr, player, messages) {
-            BOARD._handler(player, messages, 'build', 'visibleCell');
+            BOARD.handler(player, messages, 'build', 'visibleCell');
         },
         sell: function(cellArr, player, messages) {
-            BOARD._handler(player, messages, 'sell', 'visibleCell');
+            BOARD.handler(player, messages, 'sell', 'visibleCell');
         },
         rollDice: function(dice1, dice2) {
             $("#diceImg1").attr("src", "resources/img/board/die" + dice1 + ".gif");
             $("#diceImg2").attr("src", "resources/img/board/die" + dice2 + ".gif");
         },
-        buy: function(player, cell) {
-            var playerNumber = BOARD.colorToIndex(player);
-            $('#cell' + cell + ' .owner').addClass("setColorPlayer" + playerNumber, 1000);
-            $('#miniCell' + cell).addClass("setMiniImagePlayer" + playerNumber);
+        buy: function(player, cellId) {
+            var playerNumber = BOARD.colorToIndex(player), 
+                $bigCell = $('#cell' + cellId + ' .owner'), 
+                $miniCell = $('#miniCell' + cellId);
+            $bigCell.addClass("color-player-" + playerNumber, 1000);
+            $miniCell.find('img').attr('src', 'resources/img/board/miniPlayer' + playerNumber + '.png');
         },
         colorToIndex: function(player) {
-            return BOARD.CONSTANT.COLOR_TO_NUMBER[player];
+            return BOARD.CONST.COLOR_TO_NUMBER[player];
         },
 
         draw: {
@@ -659,23 +583,28 @@ function() {
                 var index = BOARD.colorToIndex(player);
                 $('#miniCell' + cell).addClass('setMortageCell').removeClass("setMiniImagePlayer" + index);
             },
-            unmortage: function (cell, player) {
-				var index = BOARD.colorToIndex(player); 
-				$('#miniCell' + cell).removeClass('setMortageCell').addClass("setMiniImagePlayer" + index);
+            unmortage: function(cell, player) {
+                var index = BOARD.colorToIndex(player);
+                $('#miniCell' + cell).removeClass('setMortageCell').addClass("setMiniImagePlayer" + index);
             },
-            build:function(cell){
-				BOARD.houseManipulation.buildHouse(cell);
-        	},
-        	sell:function(cell, player){
-        		BOARD.sellAll(player,cell);
+            build: function(cell) {
+                BOARD.houseManipulation.buildHouse(cell);
+            },
+            sell: function(cell, player) {
+                BOARD.sellAll(player, cell);
 
-        	},
+            },
             updateMoney: function(who, money) {
                 $("#money-player-" + BOARD.colorToIndex(who)).html(money + "$");
             },
         },
 
-        init: function() { 
+        init: function() {
+            console.log('Init -> Board');
+            $.each(['BROWN', 'GREEN'], function(i, who) {
+                BOARD.animate.goTo(who, 1, 0);
+            });
+
             $(function() {
                 $("#accordion").accordion();
             });
@@ -689,4 +618,3 @@ function() {
     BOARD.init();
     MONO.init();
 });
-

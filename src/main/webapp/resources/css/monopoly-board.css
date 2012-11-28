@@ -8,16 +8,23 @@ body {
     box-shadow: 1px 0px 1px #203891,0px 1px 1px #3852B1,2px 1px 1px #203891,1px 2px 1px #3852B1,3px 2px 1px #203891,2px 3px 1px #3852B1,4px 3px 1px #203891,3px 4px 1px #3852B1,5px 4px 1px #203891,4px 5px 1px #3852B1,6px 5px 1px #203891;
 }
 
+#center div.tabbable {
+  height: 350px;
+  padding: 20px;
+  border: 1px dashed;
+}
+#mini-map {
+  border: 1px dashed;
+}
+
 #chat {
   overflow-y: scroll;
-  height: 650px;
+  height: 200px;
+  border: 1px solid;
 }
 #chat-log {
+  text-align: left;
   margin: 10px;
-  margin-top: 20px;
-  height: 700px;
-  width: 288px;
-  float: right;
   background-color: rgba(255, 255, 255, 0.4);
 
   -moz-box-shadow:    0px 0px 10px #888;
@@ -34,50 +41,60 @@ body {
 /* ******************* */
 /* center-cell section */
 /* ******************* */
-#center {
-  width: 650px;
-  height: 650px;
-  margin: 0 auto;
-  text-align: center;
-  background-image: url("../img/board/bg-info.png")
-  border-radius: 5px;
-  /*border: 3px #eee dashed;*/
-}
-#button-menu {
-  text-align: center;
+  #center {
+    width: 650px;
+    height: 650px;
+    margin: 0 auto;
+    text-align: center;
+    background-image: url("../img/board/bg-info.png")
+    border-radius: 5px;
+    /*border: 3px #eee dashed;*/
+  }
+  #roll-dice {
+    margin: 30px;
+    text-align: center;
+  }
+  #button-menu {
+    text-align: center;
 
-  margin-top: 126px;
-  margin-bottom: 0px;
-}
-#info {
-  background: #eee;
-}
-  #info td:hover {
-    -moz-box-shadow:    0px 0px 10px #000;
-    -webkit-box-shadow: 0px 0px 10px #000;
-    box-shadow:         0px 0px 10px #000;
+    margin-top: 50px;
+    margin-bottom: 0px;
   }
-  #info-table-1 {
-    width: 100px;
-    height: 200px;
-    float: left;
-    margin-right: 15px;
+  #info {
+    background: #eee;
   }
-  #info-table-2 {
-    width: 130px;
-    height: 160px;
-    float: left;
-    margin-right: 15px;
+    #info td:hover {
+      -moz-box-shadow:    0px 0px 10px #000;
+      -webkit-box-shadow: 0px 0px 10px #000;
+      box-shadow:         0px 0px 10px #000;
+    }
+    #info-table-1 {
+      width: 100px;
+      height: 200px;
+      float: left;
+      margin-right: 15px;
+    }
+    #info-table-2 {
+      width: 130px;
+      height: 160px;
+      float: left;
+      margin-right: 15px;
+    }
+  #money {
+    float: right;
   }
-#money {
-  float: right;
-}
+
 /* ****************** */
 /* game-table section */
 /* ****************** */
   #game-table {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    width: 1230px;
+
     border: 3px #000 solid;
-    margin: 20px;
+    /*margin: 20px;*/
     background-color: #eee;
 
     -moz-box-shadow:    0px 0px 10px #000;
@@ -127,7 +144,7 @@ body {
       height: 74px;
       position: absolute;
       margin-top: 30px;
-      margin-left: 0px;      
+      margin-left: 6px;      
     }
 
   /* down cells */
@@ -155,7 +172,7 @@ body {
       height: 74px;
       position: absolute;
       margin-top: 30px;
-      margin-left: 0px;      
+      margin-left: 6px;      
     }
 
 
@@ -182,23 +199,11 @@ body {
     margin-left: -23px;
   }
   .west .town-image {
-/*##----1----##*/
-/*    width: 74px;
-    height: 74px;
-    margin-left: 35px;
-    position: absolute; */
-/*##----2----##*/
-/*    width: 88px;
-    height: 74px;
-    float: left;
-    margin-top: -24px;
-    margin-left: 1px;*/
-/*##----3----##*/
     width: 100px;
     height: 74px;
     position: absolute;
     margin-top: -24px;
-    margin-left: 29px;
+    margin-left: 45px;
   }
 
   /* >>> right cells */
@@ -227,81 +232,27 @@ body {
     width: 100px;
     height: 74px;
     position: absolute;
-    margin-top: -24px;
-    margin-left: 30px;
+    margin-top: -15px;
+    margin-left: 45px;
   }
 
-/* fixed cells w*h needed to corect display images */
-#info-table-1 td, #info-table-2 td {
-  width: 30px;
-  height: 30px;
-}
+/*!-- ************** --*/
+/*!-- [Info seciton] --*/
+/*!-- ************** --*/
+  /* fixed cells w*h needed to corect display images */
+  #info-table-1 td, #info-table-2 td {
+    width: 30px;
+    height: 30px;
+  }
+
 /* <<<<< <<<<<<<< <<<<< */
 /* <<<<< @herbion <<<<< */
 /* <<<<< <<<<<<<< <<<<< */
 
+/* Corner cells */
 .northwest,.northeast,.southwest,.southeast {
-  /* @herbion*/
   width: 160px; 
   height: 145px;
-/*
-  width: 145px; 
-  height: 145px;
-*/
-}
-
-.south_north {
-  width: 71px;
-}
-
-.ownerNorth {
-  height: 25px;
-  margin-bottom: 120px;
-  background-color: #ffffff;
-}
-
-.ownerSouth {
-  position: absolute;
-  top: 45px;
-  left: 10px;
-  width: 50px;
-  height: 14px;
-  background-color: #ffffff;
-}
-
-.ownerWest {
-  position: absolute;
-  top: -25px;
-  left: 15px;
-  width: 14px;
-  height: 50px;
-  background-color: #ffffff;
-}
-
-.ownerEast {
-  position: absolute;
-  top: -25px;
-  left: 115px;
-  width: 14px;
-  height: 50px;
-  background-color: #ffffff;
-}
-
-.cityPosition {
-  position: relative;
-}
-
-#divPlayer1,#divPlayer2,#divPlayer3,#divPlayer4 {
-  height: 20px;
-}
-
-#playerInfo {
-  position: absolute;
-  left: 1100px;
-  top: 25px;
-  width: 40%;
-  margin-right: 30px;
-  padding-right: 30px;
 }
 
 /*!
@@ -349,59 +300,13 @@ body {
   zoom: 1;
 }
 
-.playerButton {
-  margin-bottom: 0px;
-  text-align: center;
-  margin-top: 75%;
-}
 
-.playerButton .well {
-  background-color: rgba(255, 255, 255, 0.5);
-  margin: 0px;
-}
-
-#upChat {
-  position: absolute;
-  left: 1100px;
-  top: 500px;
-}
-
-#roolDice {
-  margin: 30px;
-  text-align: center;
-}
-
-#feedback {
-  font-size: 1.4em;
-}
 
 #selectable .ui-selecting {
   background: #FECA40;
 }
 
-#selectable .ui-selected {
-  background: #F39814;
-  color: white;
-}
-
-#selectable {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 450px;
-}
-
-#selectable li {
-  margin: 3px;
-  padding: 1px;
-  float: left;
-  width: 100px;
-  height: 80px;
-  font-size: 4em;
-  text-align: center;
-}
-
-#firstInfoTable,#secondInfoTable,#thirdInfoTable,#fourInfoTable,#fifthInfoTable,#sixthInfoTable,#seventhInfoTable,#eighthInfoTable
+#firstInfoTable,#secondInfoTable
   {
   float: left;
   margin-right: 15px;
@@ -417,88 +322,54 @@ body {
   border-style: solid;
   border-width: 2px;
 }
-.brown {   /*border-color: */
+.brown {   
   background-color: #955438;
 }
-.azure {   /*border-color: */
+.azure {   
   background-color: #A9E1FA;
 }
 
-.lightred {   /*border-color: */
+.lightred {   
   background-color: #D83996;
 }
 
-.orange {   /*border-color: */
+.orange {   
   background-color: orange;
 }
 
-.red {   /*border-color: */
+.red {   
   background-color: red;
 }
 
-.yellow {   /*border-color: */
+.yellow {   
   background-color: yellow;
 }
 
-.green {   /*border-color: */
+.green {   
   background-color: green;
 }
 
-.blue {   /*border-color: */
+.blue {   
   background-color: blue;
 }
 
-.gray {   /*border-color: */
+.gray {   
   background-color: gray;
 }
 
-.disableButton {
-  opacity: 0.5;
-}
-
-.south_position_house {
-  position: relative;
-  left: -2px;
-  top: -75px;
-}
-
-.east_position_house {
-  position: relative;
-  left: -25px;
-  top: -13px;
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.west_position_house {
-  position: relative;
-  
-  left: 95px;
-  top: -13px;
-
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.setColorPlayer1 {
+.color-player-1 {
   background-color: #BB7E3D;
 }
 
-.setColorPlayer2 {
+.color-player-2 {
   background-color: #B2B73D;
 }
 
-.setColorPlayer3 {
+.color-player-3 {
   background-color: #742630;
 }
 
-.setColorPlayer4 {
+.color-player-4 {
   background-color: #A13AB2;
 }
 
@@ -534,13 +405,10 @@ body {
   background: url("../img/board/miniPlayer4.png") no-repeat center center;
 }
 
-#table {
-  float: left;
-  border: 3px solid;
-  margin: 20px;
-  background-color: #eee;
+#player1, #player2, #player3, #player4 {
+  position: absolute;
+} 
 
-  -moz-box-shadow:    0px 0px 10px #888;
-  -webkit-box-shadow: 0px 0px 10px #888;
-  box-shadow:         0px 0px 10px #888;
+.disableButton {
+  opacity: 0.5;
 }

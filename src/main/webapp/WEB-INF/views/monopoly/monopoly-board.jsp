@@ -31,7 +31,7 @@
 <!-- <body bgcolor="#CCE7D0"> --> 
 <body>
 	<!-- <div id="main-container"> -->
-	<div class="container">
+	<div class="container" style=" width: 1230px; ">
 		<table id="game-table" border="1" rules="all">
 			<tr>
 				<td class="northwest" id="cell21">
@@ -51,7 +51,7 @@
 					</div>
 				</td>
 				<td id="cell23" class="north">
-					<div class="town-image"><img src="resources/img/board/city/tree11.svg" alt=""></div>
+					<img src="resources/img/board/city/tree11.svg" alt="" width="75">
 				</td>
 				<td id="cell24" class="north">
 					<div class="north">
@@ -108,7 +108,7 @@
 					</div>
 				</td>
 				<td id="cell29" class="north">
-					<div class="town-image"><img src="resources/img/board/city/mountain4.svg" alt=""></div>
+					<img src="resources/img/board/city/mountain4.svg" alt="" width="75">
 				</td>
 				<td id="cell30" class="north">
 					<div class="north"> 
@@ -142,84 +142,104 @@
 					<!--  center cell -->
 					<!-- ............ -->
 					<div class="container well" id="center">
-						<!-- ************** -->
-						<!-- [Info seciton] -->
-						<!-- ************** -->
-							<div id="accordion">
-								<h3>Mini-map</h3>
-								<div id="info">
-									<table id="info-table-1">
-										<tr>
-											<td class="mini brown" id="miniCell2"><img src="" alt=""/></td>
-											<td class="mini brown" id="miniCell4"></td>
-										</tr>
-										<tr height="5px"></tr>
-										<tr>
-											<td class="mini azure" id="miniCell7"><img src="" alt=""/></td>
-											<td class="mini azure" id="miniCell9"><img src="" alt=""/></td>
-											<td class="mini azure" id="miniCell10"><img src="" alt=""/></td>
-										</tr>
-										<tr height="5px"></tr>
-										<tr>
-											<td class="mini lightred" id="miniCell12"><img src="" alt=""/></td>
-											<td class="mini lightred" id="miniCell14"><img src="" alt=""/></td>
-											<td class="mini lightred" id="miniCell15"><img src="" alt=""/></td>
-										</tr>
-										<tr height="5px"></tr>
-										<tr>
-											<td class="mini orange" id="miniCell17"><img src="" alt=""/></td>
-											<td class="mini orange" id="miniCell19"><img src="" alt=""/></td>
-											<td class="mini orange" id="miniCell20"><img src="" alt=""/></td>
-										</tr>
-										<tr height="5px"></tr>
-										<tr>
-											<td class="mini red" id="miniCell22"><img src="" alt=""/></td>
-											<td class="mini red" id="miniCell24"><img src="" alt=""/></td>
-											<td class="mini red" id="miniCell25"><img src="" alt=""/></td>
-										</tr>
-									</table>
-									<table id="info-table-2">
-										<tr>
-											<td class="mini yellow" id="miniCell27"><img src="" alt=""/></td>
-											<td class="mini yellow" id="miniCell28"><img src="" alt=""/></td>
-											<td class="mini yellow" id="miniCell30"><img src="" alt=""/></td>
-										</tr>
-										<tr height="5px"></tr>
-										<tr>
-											<td class="mini green" id="miniCell32"><img src="" alt=""/></td>
-											<td class="mini green" id="miniCell33"><img src="" alt=""/></td>
-											<td class="mini green" id="miniCell35"><img src="" alt=""/></td>
-										</tr>
-										<tr height="5px"></tr>
-										<tr>
-											<td class="mini blue" id="miniCell38"><img src="" alt=""/></td>
-											<td class="mini blue" id="miniCell40"><img src="" alt=""/></td>
-										</tr>
-										<tr height="5px"></tr>
-										<tr>
-											<td class="mini gray" id="miniCell6"><img src="" alt=""/></td>
-											<td class="mini gray" id="miniCell16"><img src="" alt=""/></td>
-											<td class="mini gray" id="miniCell26"><img src="" alt=""/></td>
-											<td class="mini gray" id="miniCell36"><img src="" alt=""/></td>
-										</tr>
-									</table>
-									<div id="money">
-										<span class="label label-info" id="money-player-1">1000$</span>
-										<span class="label label-warning" id="money-player-2">1000$</span>
-										<span class="label" id="money-player-3">1000$</span>
-										<span class="label" id="money-player-4">1000$</span>										
-									</div>
-									<!-- ************* -->
-									<!-- [Roll dices]  -->
-									<!-- ************* -->
-									<div id="roolDice">
-										<img id="diceImg1" class="dice" src="resources/img/board/die1.gif" width="50px"
+						<div class="tabbable">
+							<ul id="myTab" class="nav nav-tabs">
+								<li><a href="#minimap-tab" data-toggle="tab">Mini-map</a></li>
+								<li><a href="#chat-tab" data-toggle="tab">Chat</a></li>
+								<!-- <li><a href="#settings" data-toggle="tab">Settings</a></li> -->
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade in active" id="minimap-tab">
+									<!-- ************** -->
+									<!-- [Info seciton] -->
+									<!-- ************** -->
+									<!-- <h3>Mini-map</h3> -->
+									<div id="info">
+										<table id="info-table-1">
+											<tr>
+												<td class="mini brown" id="miniCell2"><img src="" alt=""/></td>
+												<td class="mini brown" id="miniCell4"></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini azure" id="miniCell7"><img src="" alt=""/></td>
+												<td class="mini azure" id="miniCell9"><img src="" alt=""/></td>
+												<td class="mini azure" id="miniCell10"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini lightred" id="miniCell12"><img src="" alt=""/></td>
+												<td class="mini lightred" id="miniCell14"><img src="" alt=""/></td>
+												<td class="mini lightred" id="miniCell15"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini orange" id="miniCell17"><img src="" alt=""/></td>
+												<td class="mini orange" id="miniCell19"><img src="" alt=""/></td>
+												<td class="mini orange" id="miniCell20"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini red" id="miniCell22"><img src="" alt=""/></td>
+												<td class="mini red" id="miniCell24"><img src="" alt=""/></td>
+												<td class="mini red" id="miniCell25"><img src="" alt=""/></td>
+											</tr>
+										</table>
+										<table id="info-table-2">
+											<tr>
+												<td class="mini yellow" id="miniCell27"><img src="" alt=""/></td>
+												<td class="mini yellow" id="miniCell28"><img src="" alt=""/></td>
+												<td class="mini yellow" id="miniCell30"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini green" id="miniCell32"><img src="" alt=""/></td>
+												<td class="mini green" id="miniCell33"><img src="" alt=""/></td>
+												<td class="mini green" id="miniCell35"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini blue" id="miniCell38"><img src="" alt=""/></td>
+												<td class="mini blue" id="miniCell40"><img src="" alt=""/></td>
+											</tr>
+											<tr height="5px"></tr>
+											<tr>
+												<td class="mini gray" id="miniCell6"><img src="" alt=""/></td>
+												<td class="mini gray" id="miniCell16"><img src="" alt=""/></td>
+												<td class="mini gray" id="miniCell26"><img src="" alt=""/></td>
+												<td class="mini gray" id="miniCell36"><img src="" alt=""/></td>
+											</tr>
+										</table>
+										<div id="money">
+											<span class="label color-player-1" id="money-player-1" >0$</span>
+											<span class="label color-player-2" id="money-player-2" >0$</span>
+											<span class="label color-player-3" id="money-player-3" >0$</span>
+											<span class="label color-player-4" id="money-player-4" >0$</span>							
+										</div>
+										<!-- ************* -->
+										<!-- [Roll dices]  -->
+										<!-- ************* -->
+										<div id="roll-dice">
+											<img id="diceImg1" class="dice" src="resources/img/board/die1.gif" width="50px"
 											height="50px"> </img> <img id="diceImg2" class="dice"
 											src="resources/img/board/die1.gif" width="50px" height="50px">
 										</img>
 									</div>
-								</div>			
+								</div>
 							</div>
+							<div class="tab-pane fade in " id="chat-tab">		
+								<div id="chat-log">
+									<ul id="chat">
+									</ul>
+									<form name="message" action="" class="tip">
+										<input type="text" id="usermsg" size=100 placeholder="Enter your message here..."> 
+										<a class="btn btn-primary btn-medium tip" id="send">Send</a>
+									</form>
+								</div>
+							</div>
+							</div>
+						</div>
+
 
 
 
@@ -330,7 +350,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell15">
+				<td class="west tip" id="cell15" >
 					<span class="right">
 						<img src="resources/img/board/city/farm.svg" width="300">
 						<p class="tip-header">Initial cost: 4 000$ <small class="label label-info">owner</small></p>
@@ -349,7 +369,8 @@
 						<span class="nub"></span>
 					</span> 
 					<div class="owner"></div>
-					<div class="town-image">
+					<!-- I KNOW ITS BAD, BUT WANT CAN I DO AGAINST POWER OF HTML -->
+					<div class="town-image" style=" margin-top: -10px; ">
 						<img src="resources/img/board/city/farm.svg">
 					</div>
 					<div class="house lightred">
@@ -412,7 +433,7 @@
 				<td class="east" id="cell39">
 					<!-- <div class="town-image"> -->
 						<center>
-							<img src="resources/img/board/city/sword_in_the_stone.svg" alt="" width="74">
+							<img src="resources/img/board/city/sword_in_the_stone.svg" alt="" width="75">
 						</center>
 					<!-- </div> -->
 				</td>
@@ -488,7 +509,7 @@
 					</div>
 				</td>
 				<td class="south" id="cell8">
-					<div class="town-image"><img src="resources/img/board/city/wishing_well.svg" alt=""></div>
+					<img src="resources/img/board/city/wishing_well.svg" alt="" width="75">
 				</td>
 				<td class="south" id="cell7">
 					<div class="south">
@@ -506,7 +527,7 @@
 					</div>
 				</td>
 				<td class="south" id="cell5">
-					<div class="town-image"><img src="resources/img/board/city/statue.svg" alt=""></div>
+					<img src="resources/img/board/city/statue.svg" alt="" width="75">
 				</td>
 				<td class="south" id="cell4">
 					<div class="south">
@@ -518,7 +539,7 @@
 					</div>
 				</td>
 				<td class="south" id="cell3">
-					<div class="town-image"><img src="resources/img/board/city/ruins.svg" alt=""></div>
+					<img src="resources/img/board/city/ruins.svg" alt="" width="75">
 				</td>
 				<td class="south" id="cell2">
 					<div class="south tip">
@@ -542,35 +563,15 @@
 					</div>
 				</td>
 				<td class="southeast" id="cell1">
-					<!-- <div id="divPlayer1" style="position: relative;"> -->
-						<img id="player1" src="resources/img/board/player-1.png"
-							style="position: absolute;"></img>
-					<!-- </div> -->
-					<!-- <div id="divPlayer2" style="position: relative;"> -->
-						<img id="player2" src="resources/img/board/player-2.png"
-							style="position: absolute;"></img>
-					<!-- </div> -->
-					<!-- <div id="divPlayer3" style="position: relative;"> -->
-						<img id="player3" src="resources/img/board/player-3.png"
-							style="position: absolute;"></img>
-					<!-- </div> -->
-					<!-- <div id="divPlayer4" style="position: relative;"> -->
-						<img id="player4" src="resources/img/board/player-4.png"
-							style="position: absolute;"></img>
-					<!-- </div> -->
+					<img id="player1" src="resources/img/board/player-1.png"></img>
+					<img id="player2" src="resources/img/board/player-2.png"></img>
+					<img id="player3" src="resources/img/board/player-3.png"></img>
+					<img id="player4" src="resources/img/board/player-4.png"></img>
 				</td>
 			</tr>
 		</table>
 	</div>
-<!-- 		<div id="chat-log">
-			<ul id="chat">
-			</ul>
-			<form name="message" action="" class="tip">
-				<input type="text" id="usermsg" size=100 placeholder="Enter your message here..."> 
-				<a class="btn btn-primary btn-medium tip" id="send">Send</a>
-				<span class="left">redtube.com :3<span class="nub"></span></span>
-			</form>
-		</div> -->
+
 
 <!-- @herbion -->
 <!-- JQuery + ui -->
@@ -585,7 +586,16 @@
 <script type="text/javascript" src="resources/js/bootstrap-dropdown.js"></script>
 <script type="text/javascript" src="resources/js/bootstrap-tooltip.js"></script>
 <script type="text/javascript" src="resources/js/bootstrap-popover.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap-tab.js"></script>
 <!-- Game-js engine -->
 <script src="resources/js/monopoly/monopoly.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	$('#myTab a').click(function(e) {
+	    e.preventDefault();
+	    $(this).tab('show');
+	});
+	$('#myTab a:first').tab('show');
+</script>
 </body>
 </html>
