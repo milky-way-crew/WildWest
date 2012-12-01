@@ -7,12 +7,13 @@ $(document).ready(
 function() {
     "use strict";
 
-    var log = function(message) {
-            console.log('[DEBUG] ' + message);
-        },
+    var log = null, 
         chat = {},
         MONO = {},
         ui = {};
+    log = function(message) {
+        console.log('[DEBUG] ' + message);
+    };
     ui = {
         minOpacityToButtons: function() {
             $("#controls button").each(
@@ -124,9 +125,8 @@ function() {
                         MONO.events.handle[json.type](json);
                     }
                 } catch(err) {
-                    console.error('Not object Received');
+                    console.error('Not object Received', err);
                 }
-
             },
             handle: {
                 'undefined': function(json) {
@@ -156,21 +156,20 @@ function() {
                     MONO.animate.move(color, dice1, dice2, json.was);
                     ui.clearTooltipsIn('#board [rel=tooltip]');
 
+                    // if chance or so on
+                    if (typeof json.game_state.dice1 !== 'undefined') {
+                        log('bonus moving, chance, jail, etc');
+                        BOARD.animate.goTo(color, MONO.config.position, json.game_state.dice1);
+                    }
+
                     // this player moves
                     if(MONO.config.color === color) {
                         ui.refreshButtons(buttons);
                         if(message) {
                             chat.append("server: " + message);
                             ui.attachTooltip('#cell' + MONO.config.position, message);
-
-                            // $('#cell' + MONO.config.position).tooltip({'placement' : 'bottom'});
-                            // $('#cell' + MONO.config.position).tooltip('destroy');
                             $('#cell' + MONO.config.position).tooltip('show');
                         }
-                        // experimental feature
-                        $("#accordion").accordion({
-                            active: BOARD.colorToIndex(color) - 1
-                        });
                     }
 
                     // chat.append("player[" + color + "] is on cell: " + json.cell.name);
@@ -312,11 +311,10 @@ function() {
         init: function() {
             MONO.transport.init();
             chat.init();
-            // each player to first cell
 
             var hideAfterClick = {
-                pay: true,
-                buy: true,
+                // pay: true,
+                // buy: true,
                 start: true
                 // done : true
             },
@@ -331,13 +329,18 @@ function() {
                     });
                 };
             $('#controls button').each(initButton);
+            $('#controls2 button').each(initButton);
             $('#menu a').each(initButton);
+
+            $('#buy').click(function() {
+                $(this).animate({"opacity": "0.5"}, 1000);
+            });
         }
     };
 
     BOARD = {
         CONST: {
-            DURATION: 200,
+            DURATION: 500,
             COLOR_TO_NUMBER: {
                 'BROWN': '1',
                 'GREEN': '2',
@@ -444,7 +447,7 @@ function() {
                 } else if(cellId % 10 == 1) {
                     BOARD.CONST.OFFSET_MAP[who].corner(offset);
                 } else {
-                    console.error('Unknown cell position, cant move there.');
+                    console.error('Unknown cell position, cant move there ->', cellId);
                 }
 
                 return offset;
@@ -461,12 +464,10 @@ function() {
                 BOARD.animate.goTo(playerColor, startCell, offset);
 
             },
-            jumpOnBoard: function(playerColor, dice1, dice2, startCell) {},
-            setPlayerPosition: function(player, cell) {
-                var dice = cell;
-                BOARD.animate.jumpOnBoard(player, dice, 0, 1);
-            }
-
+            jump: function(whoColor,  whereCell) {
+                // instant
+                BOARD.animate.goTo(whoColor, whereCell, 0);
+            },
         },
         houseManipulation: { /**** Build the house ****/
             buildHouse: function(houseCell) {
@@ -569,10 +570,27 @@ function() {
         },
         buy: function(player, cellId) {
             var playerNumber = BOARD.colorToIndex(player), 
-                $bigCell = $('#cell' + cellId + ' .owner'), 
+                $bigCell = $('#cell' + cellId), 
                 $miniCell = $('#miniCell' + cellId);
-            $bigCell.addClass("color-player-" + playerNumber, 1000);
+            // change color of big cell
+            $bigCell.find('.owner').addClass("color-player-" + playerNumber, 1000);
+            // add img to mini-map
             $miniCell.find('img').attr('src', 'resources/img/board/miniPlayer' + playerNumber + '.png');
+            // change owner if popup-tip 
+            // TODO: Implement getnick by color
+            $bigCell.find('.tip-header .tip-owner').html('bought by: ' + player);
+            // show mortage and build buttons
+            $bigCell.find('.tip-controls').show(100);
+            
+            $bigCell.find('.tip-controls .mortage').unbind('click');
+            $bigCell.find('.tip-controls .mortage').click(function() {
+                var pos = parseInt($bigCell.attr('id').match(/\d+$/)[0], 10);
+
+                MONO.transport.send('mortage', {
+                    position: pos
+                });
+
+            });
         },
         colorToIndex: function(player) {
             return BOARD.CONST.COLOR_TO_NUMBER[player];
@@ -580,12 +598,27 @@ function() {
 
         draw: {
             mortage: function(cell, player) {
-                var index = BOARD.colorToIndex(player);
+                var index = BOARD.colorToIndex(player), 
+                    mortageBtn = $('#cell' + cell + ' .tip-controls .mortage');
                 $('#miniCell' + cell).addClass('setMortageCell').removeClass("setMiniImagePlayer" + index);
+                // for player who owner of mortaged property change buttons
+                mortageBtn.removeClass('btn-info');
+                mortageBtn.addClass('btn-success', 1000);
+                mortageBtn.html('unmortage');
+                // change outline
+                BOARD.draw.changeOutline(cell, 'sketch');
+
             },
             unmortage: function(cell, player) {
-                var index = BOARD.colorToIndex(player);
+                var index = BOARD.colorToIndex(player),
+                            unmortageBtn = $('#cell' + cell + ' .tip-controls .mortage');
                 $('#miniCell' + cell).removeClass('setMortageCell').addClass("setMiniImagePlayer" + index);
+
+                unmortageBtn.removeClass('btn-success');
+                unmortageBtn.addClass('btn-info', 1000);
+                unmortageBtn.html('mortage');
+                // change outline
+                BOARD.draw.changeOutline(cell, 'full');
             },
             build: function(cell) {
                 BOARD.houseManipulation.buildHouse(cell);
@@ -597,21 +630,34 @@ function() {
             updateMoney: function(who, money) {
                 $("#money-player-" + BOARD.colorToIndex(who)).html(money + "$");
             },
+            changeOutline: function(cell, mode) {
+                // change outline of img in cell & tip
+                var $imgTown = $('#cell' + cell + ' .town-image img'),
+                    $imgTip = $('#cell' + cell + ' span img'),
+                    path = $imgTown.attr('src');
+
+                console.log('changing outline');
+                if (mode === 'sketch') {
+                    if (path.indexOf('_outline.svg') == -1) {
+                        path = path.replace('.svg', '_outline.svg');
+                    }
+                } else if (mode === 'full') {                      
+                    path = path.replace('_outline.svg', '.svg');
+                } else {
+                    console.log('Unknown outline mode, aborting');
+                    return;
+                }
+                $imgTown.fadeOut(300, function() {
+                    $imgTown.attr('src', path);
+                    $imgTown.fadeIn(300);
+                });
+            }
         },
 
         init: function() {
             console.log('Init -> Board');
             $.each(['BROWN', 'GREEN'], function(i, who) {
                 BOARD.animate.goTo(who, 1, 0);
-            });
-
-            $(function() {
-                $("#accordion").accordion();
-            });
-            $(function() {
-                $("input[type=submit]").button().click(function(event) {
-                    event.preventDefault();
-                });
             });
         }
     };

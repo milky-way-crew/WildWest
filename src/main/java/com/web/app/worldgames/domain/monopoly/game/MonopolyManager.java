@@ -703,12 +703,16 @@ public class MonopolyManager {
 		response.put("color", getPlayerById(idPlayer).getColor());
 		response.put("money", getPlayerById(idPlayer).getMoney());
 		response.put("isCreator", getCreator().getId() == idPlayer);
+		response.put("board", monopolyGame.refreshBoard());
+		response.put("players", monopolyGame.refreshPlayers());
 		transport.sendMessage(idPlayer, response);
+
 		Map<String, Object> welcome = new HashMap<String, Object>();
 		welcome.put("type", "chat");
 		welcome.put("message", "Welcome " + getPlayerById(idPlayer).getName());
-		monopolyGame.refreshBoard();
-		monopolyGame.refreshPlayers();
+		
+		// monopolyGame.refreshBoard();
+		// monopolyGame.refreshPlayers();
 		broadcast(welcome);
 	}
 
