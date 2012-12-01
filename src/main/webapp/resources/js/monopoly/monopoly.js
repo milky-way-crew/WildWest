@@ -267,11 +267,14 @@ function() {
                     }, 100);
                     if(json.player === MONO.config.color) {
                         $('#done').html('done');
+                        $('#done').removeClass('wait');
+
                         $('#roll').animate({
                             "opacity": "1"
                         }, 100);
                     } else {
                         $('#done').html('wait <img src="resources/img/board/busy.gif"/>');
+                        $('#done').addClass('wait');
                     }
                 }
             }
@@ -453,6 +456,9 @@ function() {
                     BOARD.CONST.OFFSET_MAP[who].right(offset);
                 } else if(cellId % 10 == 1) {
                     BOARD.CONST.OFFSET_MAP[who].corner(offset);
+                } else if (cellId == 0) {
+                    offset = $('#cell40').offset();
+                    BOARD.CONST.OFFSET_MAP[who].right(offset);
                 } else {
                     console.error('Unknown cell position, cant move there ->', cellId);
                 }
@@ -463,7 +469,7 @@ function() {
                 var $player = $('#player' + BOARD.CONST.COLOR_TO_NUMBER[who]);
 
                 while(offset-- >= 0) {
-                    $player.animate(BOARD.animate.normalizeOffset(who, from++ % 41), BOARD.CONST.DURATION);
+                    $player.animate(BOARD.animate.normalizeOffset(who, from++ % 40), BOARD.CONST.DURATION);
                 }
             },
             move: function(playerColor, dice1, dice2, startCell) {
@@ -478,7 +484,7 @@ function() {
         },
         houseManipulation: { /**** Build the house ****/
             buildHouse: function(houseCell) {
-                $houseCell = $("#cell" + houseCell + ' img');
+                $houseCell = $("#cell" + houseCell + ' .house img');
                 if($houseCell.attr('src') == "resources/img/board/emptyhouse.png") {
                     $houseCell.attr('src', 'resources/img/board/house1.png');
                 } else if($houseCell.attr('src') == "resources/img/board/house1.png") {
@@ -491,7 +497,7 @@ function() {
             },
             /**** Sell the house ****/
             sellHouse: function(houseCell) {
-                $houseCell = $("#cell" + houseCell + ' img');
+                $houseCell = $("#cell" + houseCell + ' .house img');
                 if($houseCell.attr('src') == "resources/img/board/big_hotel.png") {
                     $houseCell.attr('src', 'resources/img/board/house3.png');
                 } else if($houseCell.attr('src') == "resources/img/board/house3.png") {
@@ -504,8 +510,8 @@ function() {
             }
         },
         sellAll: function(player, cell) {
-            var houseCell = "#house_cell" + cell;
-            var ownerCell = "#ownerCell" + cell;
+            var houseCell = "#cell" + cell + " .house img";
+            var ownerCell = "#cell" + cell + " .owner";
             var playerNumber = BOARD.colorToIndex(player);
             var miniCell = cell;
 
@@ -519,8 +525,8 @@ function() {
                 $(houseCell).attr('src', "resources/img/board/emptyhouse.png");
             } else {
                 $(ownerCell).removeClass("color-player" + playerNumber);
-                $(number + "MiniCell" + miniCell).removeClass("setMiniImagePlayer" + playerNumber);
-
+                $('#miniCell' + cell + ' img').attr(src, '');
+                // $(number + "MiniCell" + miniCell).removeClass("setMiniImagePlayer" + playerNumber);
             }
         },
         hightlightCells: function(cellArr, player, _class) {
@@ -587,17 +593,20 @@ function() {
             // TODO: Implement getnick by color
             $bigCell.find('.tip-header .tip-owner').html('bought by: ' + player);
             // show mortage and build buttons
-            $bigCell.find('.tip-controls').show(100);
-            
-            $bigCell.find('.tip-controls .mortage').unbind('click');
-            $bigCell.find('.tip-controls .mortage').click(function() {
-                var pos = parseInt($bigCell.attr('id').match(/\d+$/)[0], 10);
+            if (MONO.config.color === player) {
+                $bigCell.find('.tip-controls').show(100);
+                $bigCell.find('.tip-controls .mortage').unbind('click');
+                $bigCell.find('.tip-controls .build').unbind('click');
+                var notifier = function() {
+                    var pos = parseInt($bigCell.attr('id').match(/\d+$/)[0], 10);
 
-                MONO.transport.send($(this).html(), {
-                    position: pos
-                });
-
-            });
+                    MONO.transport.send($(this).html(), {
+                        position: pos
+                    });
+                };
+                $bigCell.find('.tip-controls .mortage').click(notifier);
+                $bigCell.find('.tip-controls .build').click(notifier);
+            }
         },
         colorToIndex: function(player) {
             return BOARD.CONST.COLOR_TO_NUMBER[player];
@@ -607,7 +616,8 @@ function() {
             mortage: function(cell, player) {
                 var index = BOARD.colorToIndex(player), 
                     mortageBtn = $('#cell' + cell + ' .tip-controls .mortage');
-                $('#miniCell' + cell).addClass('setMortageCell').removeClass("setMiniImagePlayer" + index);
+                $('#miniCell' + cell).find('img').attr('src', '');
+                $('#miniCell' + cell).addClass('setMortageCell');
                 // for player who owner of mortaged property change buttons
                 mortageBtn.removeClass('btn-info');
                 mortageBtn.addClass('btn-success');
@@ -619,7 +629,8 @@ function() {
             unmortage: function(cell, player) {
                 var index = BOARD.colorToIndex(player),
                             unmortageBtn = $('#cell' + cell + ' .tip-controls .mortage');
-                $('#miniCell' + cell).removeClass('setMortageCell').addClass("setMiniImagePlayer" + index);
+                $('#miniCell' + cell).find('img').attr('src', 'resources/img/board/miniPlayer' + index + '.png');
+                $('#miniCell' + cell).removeClass('setMortageCell');
 
                 unmortageBtn.removeClass('btn-success');
                 unmortageBtn.addClass('btn-info');
