@@ -172,7 +172,34 @@ public class GameAction {
 				player.setPosition(end);
 				Cell chanceCell = CardFactory.chooseCard(player);
 				if (chanceCell instanceof RailCard) {
-//					
+					log.info(" CARD IS RAIL");
+					RailCard rail = (RailCard) chanceCell;
+					try {
+						rail.effectOnPlayer(player);
+						if (!player.equals(rail.getOwner())
+								&& rail.getOwner() != null && !rail.isMortage()) {
+							// if (!player.equals(rail.getOwner()) &&
+							// !rail.getOwner().equals(null)) {
+							buttons.put(ButtonsLabel.BUY, false);
+							messages = "Pay rent $"
+									+ rail.getRent(player, rail.getOwner())
+									+ " to " + rail.getOwner().getName();
+							state.put("owner", rail.getOwner().getColor());
+							state.put("owner_money", rail.getOwner().getMoney());
+						} else {
+							buttons.put(ButtonsLabel.BUY, rail.canBuy(player));
+						}
+						if (player.equals(rail.getOwner())) {
+							messages = "You are owner!";
+						}
+						if (rail.getOwner() == null) {
+							buttons.put(ButtonsLabel.AUCTION, true);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					buttons.put(ButtonsLabel.PAY, false);
+				
 				} else if (chanceCell instanceof JailCard) {
 					
 				} else {
