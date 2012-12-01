@@ -22,7 +22,6 @@ public class Game {
 	private boolean end = false;
 	private Player currentPlayer = null;
 	private Map<Integer, Map<String, Object>> gameBoard = new HashMap<Integer, Map<String, Object>>();
-	private Map<String, Map<String, Object>> players = new HashMap<String, Map<String, Object>>();
 
 	public List<Player> playerList = new ArrayList<Player>();
 	public List<Player> loserList = new ArrayList<Player>();
@@ -216,6 +215,7 @@ public class Game {
 	}
 
 	public Map<String, Map<String, Object>> refreshPlayers() {
+		Map<String, Map<String, Object>> players = new HashMap<String, Map<String, Object>>();
 		Map<String, Object> temp = new HashMap<String, Object>();
 		for (Player player : playerList) {
 			temp.put("color", player.getColor());

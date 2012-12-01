@@ -143,6 +143,7 @@ public class GameAction {
 				state.put("was", start);
 				state.put("dice1", dice1);
 				state.put("dice2", 0);
+				player.setPosition(end);
 			} else if (cell instanceof CommunityChestCard) {
 				cell.effectOnPlayer(player);
 				messages = "You have a community chest: "
