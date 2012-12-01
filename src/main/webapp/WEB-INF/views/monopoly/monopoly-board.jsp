@@ -54,7 +54,29 @@
 					<img src="resources/img/board/city/tree11.svg" alt="" width="75">
 				</td>
 				<td id="cell24" class="north">
-					<div class="north">
+					<div class="north tip">
+						<span class="town-title">City</span>
+						<span class="bottom">
+							<img src="resources/img/board/city/city.svg" width="300">
+							<hr>
+							<div class="tip-header">
+								<p>Initial cost/rent: 400$ : 25$</p>
+								<small class="tip-owner label label-info">No one property</small>
+							</div>
+							<hr>
+							<ul class="tip-content">
+								<li>1 houses : 25 $$</li>
+								<li>2 houses : 45 $$</li>
+								<li>3 houses : 75 $$</li>
+								<li>4 houses : 185 $$</li>
+								<li>Castle: 2500 $$</li>
+							</ul>
+							<div class="tip-controls">
+								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
+								<a href="javascript:void(0);" class="build btn btn-succes">build</a>
+							</div>
+							<span class="nub"></span>
+						</span>
 						<div class="owner"></div>
 						<div class="town-image">
 							<img src="resources/img/board/city/city.svg">

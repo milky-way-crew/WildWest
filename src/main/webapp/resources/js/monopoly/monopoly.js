@@ -159,7 +159,7 @@ function() {
                     // if chance or so on
                     if (typeof json.game_state.dice1 !== 'undefined') {
                         log('bonus moving, chance, jail, etc');
-                        BOARD.animate.goTo(color, MONO.config.position, json.game_state.dice1);
+                        BOARD.animate.goTo(color, json.game_state.was, json.game_state.dice1);
                     }
 
                     // this player moves
@@ -261,13 +261,17 @@ function() {
                 },
                 'turn': function(json) {
                     chat.append(json.player + ' turn=true');
+
                     $('button').animate({
                         "opacity": "0.5"
                     }, 100);
                     if(json.player === MONO.config.color) {
+                        $('#done').html('done');
                         $('#roll').animate({
                             "opacity": "1"
                         }, 100);
+                    } else {
+                        $('#done').html('wait <img src="resources/img/board/busy.gif"/>');
                     }
                 }
             }
@@ -333,6 +337,9 @@ function() {
             $('#menu a').each(initButton);
 
             $('#buy').click(function() {
+                $(this).animate({"opacity": "0.5"}, 1000);
+            });
+            $('#pay').click(function() {
                 $(this).animate({"opacity": "0.5"}, 1000);
             });
         }
@@ -586,7 +593,7 @@ function() {
             $bigCell.find('.tip-controls .mortage').click(function() {
                 var pos = parseInt($bigCell.attr('id').match(/\d+$/)[0], 10);
 
-                MONO.transport.send('mortage', {
+                MONO.transport.send($(this).html(), {
                     position: pos
                 });
 
@@ -603,7 +610,7 @@ function() {
                 $('#miniCell' + cell).addClass('setMortageCell').removeClass("setMiniImagePlayer" + index);
                 // for player who owner of mortaged property change buttons
                 mortageBtn.removeClass('btn-info');
-                mortageBtn.addClass('btn-success', 1000);
+                mortageBtn.addClass('btn-success');
                 mortageBtn.html('unmortage');
                 // change outline
                 BOARD.draw.changeOutline(cell, 'sketch');
@@ -615,7 +622,7 @@ function() {
                 $('#miniCell' + cell).removeClass('setMortageCell').addClass("setMiniImagePlayer" + index);
 
                 unmortageBtn.removeClass('btn-success');
-                unmortageBtn.addClass('btn-info', 1000);
+                unmortageBtn.addClass('btn-info');
                 unmortageBtn.html('mortage');
                 // change outline
                 BOARD.draw.changeOutline(cell, 'full');
