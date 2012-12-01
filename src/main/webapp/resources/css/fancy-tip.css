@@ -97,7 +97,7 @@
 .tip span.top {
   top: 0px;
   left: 4px;
-  width: 150px;
+  /*width: 150px;*/
 }
 .tip span.top .nub {
   left: 20%;
@@ -168,5 +168,5 @@
   right: -193px;
 }
 .tip:hover span.top {
-  top: -150px; /* was -60px */
+  top: -370px; /* was -60px */
 }

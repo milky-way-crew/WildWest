@@ -301,4 +301,8 @@
 .darkbg-green .arrow {
 	border-color: transparent transparent transparent #87977a;
 }
-</style>
+
+.wait {
+	background-color: white;
+	color: black;
+}
