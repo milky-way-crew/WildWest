@@ -158,7 +158,8 @@
   -transition-delay: 0.1s;
 }
 .tip:hover span.bottom {
-  bottom: -260px;
+  /*margin-top: 500px;*/
+  bottom: -350px;
 }
 .tip:hover span.left {
   left: -193px;
