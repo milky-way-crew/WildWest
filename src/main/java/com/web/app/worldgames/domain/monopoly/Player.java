@@ -1,14 +1,10 @@
 package com.web.app.worldgames.domain.monopoly;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.log4j.Logger;
@@ -25,7 +21,7 @@ public class Player {
 	private int money;
 	private String color;
 	private int numberFreeCard = 0;
-	private  static Random randDice = new Random();
+	private static Random randDice = new Random();
 	private int numberOfRails = 0;
 	private boolean rolled;
 	private int circleInJail = 0;
@@ -513,6 +509,14 @@ public class Player {
 			}
 		}
 		return forUnMortage;
+	}
+
+	public Map<String, Object> currentPlayerState() {
+		Map<String, Object> temp = new HashMap<String, Object>();
+		temp.put("color", this.getColor());
+		temp.put("position", this.getPosition());
+		temp.put("money", this.getMoney());
+		return temp;
 	}
 
 	public boolean canMortage() {

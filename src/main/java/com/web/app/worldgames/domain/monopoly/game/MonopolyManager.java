@@ -27,6 +27,7 @@ import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 public class MonopolyManager {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	private Game monopolyGame;
+	private GameAction action;
 	private User creator;
 	private Player auctionWinner;
 	private int auctionPrice = 0;
@@ -605,9 +606,7 @@ public class MonopolyManager {
 								+ CardFactory.chooseCard(currentPlayer).info());
 						response.put("dice1", currentPlayer.getDiceOne());
 						response.put("dice2", currentPlayer.getDiceTwo());
-						response.put("game_state", GameAction.action(
-								CardFactory.chooseCard(currentPlayer),
-								currentPlayer));
+						response.put("game_state", GameAction.action(CardFactory.chooseCard(currentPlayer), currentPlayer));
 					}
 				} else {
 					log.info("------------------------CAN ROLL------------PLAYER----"
