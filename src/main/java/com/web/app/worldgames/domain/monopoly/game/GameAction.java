@@ -40,6 +40,7 @@ public class GameAction {
 		Map<String, Object> state = new HashMap<String, Object>();
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		String messages = null;
+		boolean move = false;
 		if (cell instanceof SellableCard) {
 			if (cell instanceof CityCard) {
 				try {
@@ -72,7 +73,7 @@ public class GameAction {
 				try {
 
 					if (!player.equals(rail.getOwner())
-							&& rail.getOwner() != null&&!rail.isMortage()) {
+							&& rail.getOwner() != null && !rail.isMortage()) {
 						// if (!player.equals(rail.getOwner()) &&
 						// !rail.getOwner().equals(null)) {
 						buttons.put(ButtonsLabel.BUY, false);
@@ -104,9 +105,9 @@ public class GameAction {
 			} else if (cell instanceof JailCard) {
 				cell.effectOnPlayer(player);
 				messages = ((JailCard) cell).getMsg();
-				 buttons.put(ButtonsLabel.ROLL, true);
+				buttons.put(ButtonsLabel.ROLL, true);
 				if (player.isInJail()) {
-//					buttons.put(ButtonsLabel.ROLL, true);
+					// buttons.put(ButtonsLabel.ROLL, true);
 					buttons.put(ButtonsLabel.PAY,
 							((JailCard) cell).canPayRansom(player));
 					messages = "You may pay a ransom or roll dices";
@@ -120,6 +121,8 @@ public class GameAction {
 			} else if (cell instanceof GoToJailCard) {
 				cell.effectOnPlayer(player);
 				messages = "You are going to jail";
+				move = true;
+				state.put("move", move);
 				state.put("was", CellPositions.GO_TO_JAIL);
 				state.put("dice1", (CELL_NUMBER - CellPositions.GO_TO_JAIL)
 						+ CellPositions.JAIL);
@@ -127,6 +130,7 @@ public class GameAction {
 			} else if (cell instanceof ChanceCard) {
 				cell.effectOnPlayer(player);
 				messages = ((ChanceCard) cell).getInformation();
+				move = true;
 				int start = player.getPosition();
 				int end = ((ChanceCard) cell).getMovePosition();
 				int dice1 = 0;
@@ -135,6 +139,7 @@ public class GameAction {
 				} else if (start > end) {
 					dice1 = (CELL_NUMBER - start) + end;
 				}
+				state.put("move", move);
 				state.put("was", start);
 				state.put("dice1", dice1);
 				state.put("dice2", 0);
