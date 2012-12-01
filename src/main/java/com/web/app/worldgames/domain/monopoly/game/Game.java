@@ -14,6 +14,7 @@ import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.PlayerColors;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
+import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class Game {
@@ -21,9 +22,6 @@ public class Game {
 	private boolean started = false;
 	private boolean end = false;
 	private Player currentPlayer = null;
-	private Map<Integer, Map<String, Object>> gameBoard = new HashMap<Integer, Map<String, Object>>();
-	private Map<String, Map<String, Object>> players = new HashMap<String, Map<String, Object>>();
-
 	public List<Player> playerList = new ArrayList<Player>();
 	public List<Player> loserList = new ArrayList<Player>();
 	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
@@ -74,9 +72,9 @@ public class Game {
 		this.currentPlayer = currentPlayer;
 	}
 
-	public Map<Integer, Map<String, Object>> getGameBoard() {
-		return gameBoard;
-	}
+//	public Map<Integer, Map<String, Object>> getGameBoard() {
+//		return gameBoard;
+//	}
 
 	public int getAuctionPrice() {
 		return auctionPrice;
@@ -201,27 +199,23 @@ public class Game {
 	}
 
 	public Map<Integer, Map<String, Object>> refreshBoard() {
-		Map<String, Object> temp = new HashMap<String, Object>();
+		Map<Integer, Map<String, Object>> gameBoard = new HashMap<Integer, Map<String, Object>>();
 		for (SellableCard card : activeBoard) {
-			temp.put("position", card.getPosition());
-			temp.put("owner", card.getOwner().getColor());
-			temp.put("mortage", card.isMortage());
 			if (card instanceof CityCard) {
-				temp.put("houses", ((CityCard) card).getNumbersOfHouses());
-				temp.put("hotel", ((CityCard) card).isHotel());
+				gameBoard.put(card.getPosition(),
+						((CityCard) card).currentCityState());
+			} else if (card instanceof RailCard) {
+				gameBoard.put(card.getPosition(),
+						((RailCard) card).currentRailState());
 			}
-			gameBoard.put(card.getPosition(), temp);
 		}
 		return gameBoard;
 	}
 
 	public Map<String, Map<String, Object>> refreshPlayers() {
-		Map<String, Object> temp = new HashMap<String, Object>();
+		Map<String, Map<String, Object>> players = new HashMap<String, Map<String, Object>>();
 		for (Player player : playerList) {
-			temp.put("color", player.getColor());
-			temp.put("money", player.getMoney());
-			temp.put("position", player.getPosition());
-			players.put(player.getColor(), temp);
+			players.put(player.getColor(), player.currentPlayerState());
 		}
 		return players;
 	}

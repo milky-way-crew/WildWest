@@ -193,10 +193,9 @@ public class CityCard extends SellableCard {
 
 	/**
 	 * The execute method builds houses and hotels
+	 * 
 	 * @param player
-	 * @return map:
-	 * key=position	
-	 * value=number of buildings 
+	 * @return map: key=position value=number of buildings
 	 */
 	public Map<Integer, Integer> build(Player player) {
 		Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
@@ -242,10 +241,10 @@ public class CityCard extends SellableCard {
 					this.getRent(player, this.getOwner()));
 			log.info("[OWNER]: money" + this.getOwner().getMoney());
 			log.info("[PLAYER]: money" + player.getMoney());
-		} 
-//		else if (player.equals(this.getOwner())) {
-//			log.info("[OWNER]: You are owner");
-//		}
+		}
+		// else if (player.equals(this.getOwner())) {
+		// log.info("[OWNER]: You are owner");
+		// }
 	}
 
 	@Override
@@ -305,7 +304,7 @@ public class CityCard extends SellableCard {
 		log.info("[BUY::: OWNER]: " + this.getOwner());
 		player.addRegions(player);
 		player.addBuildAvailable();
-		//log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
+		// log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
 		log.info("[REGIONS LIST]: " + player.listRegions(player));
 
 	}
@@ -346,21 +345,32 @@ public class CityCard extends SellableCard {
 			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
 			player.addRegions(player);
 			player.addBuildAvailable();
-			//log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
+			// log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
 			log.info("[REGIONS LIST:::AUCTION]: " + player.listRegions(player));
 		}
-//		else {
-//			log.info("is owner");
-//		}
+		// else {
+		// log.info("is owner");
+		// }
 
 	}
+
+	public Map<String, Object> currentCityState() {
+		Map<String, Object> temp = new HashMap<String, Object>();
+		temp.put("position", this.getPosition());
+		temp.put("owner", this.getOwner().getColor());
+		temp.put("mortage", this.isMortage());
+		temp.put("houses", this.getNumbersOfHouses());
+		temp.put("hotel", this.isHotel());
+		return temp;
+	}
+
 	@Override
 	public boolean canMortage(Player player) {
 		// return (this.numbersOfHouses == 0 && !this.isHotel && this.getOwner()
 		// == player) ? true
 		// : false;
-		return this.numbersOfHouses == 0 && !this.isHotel && this.getOwner()
-				.equals(player);
+		return this.numbersOfHouses == 0 && !this.isHotel
+				&& this.getOwner().equals(player);
 	}
 
 	@Override

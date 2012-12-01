@@ -1,5 +1,8 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.CardPrices;
@@ -165,6 +168,14 @@ public class RailCard extends SellableCard {
 //		else {
 //			log.info("is owner");
 //		}
+	}
+	
+	public Map<String, Object> currentRailState() {
+		Map<String, Object> temp = new HashMap<String, Object>();
+		temp.put("position", this.getPosition());
+		temp.put("owner", this.getOwner().getColor());
+		temp.put("mortage", this.isMortage());
+		return temp;
 	}
 	@Override
 	public boolean canMortage(Player player) {
