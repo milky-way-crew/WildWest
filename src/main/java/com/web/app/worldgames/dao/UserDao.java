@@ -147,23 +147,6 @@ public class UserDao implements IUserDao {
 
 	}
 
-	// TODO
-	@Override
-	public int insertEmptyStatistics() {
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		final String query = "INSERT INTO userStatistics VALUES()";
-		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(
-					Connection connection) throws SQLException {
-				PreparedStatement ps = connection.prepareStatement(query,
-						Statement.RETURN_GENERATED_KEYS);
-				//
-				return ps;
-			}
-		}, keyHolder);
-		return keyHolder.getKey().intValue();
-	}
-
 	/*** change user's login ***/
 	@Override
 	public boolean changeUserLogin(int userId, String login) {

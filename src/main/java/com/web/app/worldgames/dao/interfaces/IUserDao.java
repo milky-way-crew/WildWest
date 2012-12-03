@@ -3,7 +3,7 @@ package com.web.app.worldgames.dao.interfaces;
 import com.web.app.worldgames.domain.User;
 
 public interface IUserDao {
-	
+
 	/*** find user by id ***/
 	User findUserById(int id);
 
@@ -21,9 +21,6 @@ public interface IUserDao {
 
 	/*** insert user into table ***/
 	int insertUser(final User user);
-
-	/*** insert empty user's statistics ***/
-	int insertEmptyStatistics();
 
 	boolean changeUserLogin(int userId, String login);
 
