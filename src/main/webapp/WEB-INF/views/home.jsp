@@ -52,6 +52,7 @@
 					<a href="./chatRooms" class="btn btn-primary">Link to game
 						rooms</a>
 				</p>
+				<p><a href="./personal" class="btn btn-large">&#9500; Personal</a></p>
 				<p>
 					<a href="./logout" class="btn btn-danger">Logout</a>
 				</p>

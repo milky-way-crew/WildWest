@@ -1,0 +1,123 @@
+@CHARSET "UTF-8";
+
+ 
+a {
+	font: 1px;
+	width: 100px;
+	height: 15px;
+	color: #0000FF;
+	text-decoration: none;
+}
+label {
+	color: #FFFFFF;
+}
+table {
+	color: #FFFFFF;
+}
+ #editAvatar{
+width: 300px;
+}
+
+#modal1 {
+	 color: #000000;
+	 margin-left: 25px;
+}
+ #editInf{
+width: 400px;
+}
+#tableInfo {
+	   -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+  #tableInfo:hover {
+    background-color: #fc3;
+    -webkit-transform: rotate(360deg) scale(2);
+    -moz-transform: rotate(360deg) scale(2);
+    -o-transform: rotate(360deg) scale(2);
+    -ms-transform: rotate(360deg) scale(2);
+    transform: rotate(360deg) scale(2);
+  }
+#chatRoom {
+	width: 200px;
+}
+#editInformation{
+	width: 200px;
+	margin-top: 15px;
+}
+#edit {
+	width: 100px;
+	height: 20px;
+}
+
+#previous {
+	width: 50px;
+	height: 20px
+}
+
+#next {
+	width: 50px;
+	height: 20px;
+}
+
+#setAvatar {
+	width: 50px;
+	height: 20px;
+}
+
+#back {
+	width: 100px;
+	height: 20px;
+}
+
+#number {
+	width: 50px;
+	height: 20px;
+}
+
+#logout {
+	width: 70px;
+	height: 20px;
+	float: right;
+}
+
+#avatarka {
+	width: 150px;
+	height: 150px;
+	display: block;
+    margin: 0 0 20px 0;
+    background: rgba(215, 215, 215, 0.5);
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+#avatar {
+	text-align: center;
+    height: 150px;
+    line-height: 150px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+}
+#avatarka:hover #avatar {
+    margin-top: -22px;
+}
+#avatarka: hover #hope {
+	opacity: 1;
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -o-transform: rotate(0);
+}
+#hope {
+	color: #FFFFFF;
+	background: rgba(0, 0, 0, 0.7);
+	height: 20px;
+    padding: 1px;
+    -webkit-transition: all 0.4s linear;
+    -moz-transition: all 0.4s linear;
+    -o-transition: all 0.4s linear; 
+    cursor: pointer;
+}
+
