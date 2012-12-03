@@ -138,10 +138,10 @@ public class MonopolyManager {
 			if (dataBlock.has("message")) {
 				String message = dataBlock.path("message").getTextValue();
 				response.put("type", ButtonsLabel.CHAT);
-				response.put("[ " + currentPlayer.getName() + " ]: ", message);
-				broadcast(response);
+				response.put("message","[ " + currentPlayer.getName() + " ]: "+ message);
 			}
 		}
+		broadcast(response);
 	}
 
 	private void onAuction(int idPlayer, String type,
