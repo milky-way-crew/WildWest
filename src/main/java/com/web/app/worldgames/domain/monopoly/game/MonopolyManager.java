@@ -543,6 +543,7 @@ public class MonopolyManager {
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+		boolean move = false;
 		String messages = null;
 		if (!monopolyGame.isEnd()) {
 			if (currentPlayer.getId() == idPlayer) {
@@ -558,6 +559,7 @@ public class MonopolyManager {
 						log.info("[Dice1: ]" + currentPlayer.getDiceOne());
 						log.info("[Dice2: ]" + currentPlayer.getDiceTwo());
 					} else {
+						move=true;
 						response.put("type", ButtonsLabel.ROLL);
 						response.put("was", currentPlayer.getPosition());
 						currentPlayer.rollDicesAndMove();
@@ -567,6 +569,7 @@ public class MonopolyManager {
 								+ CardFactory.chooseCard(currentPlayer).info());
 						response.put("dice1", currentPlayer.getDiceOne());
 						response.put("dice2", currentPlayer.getDiceTwo());
+						response.put("move", move);
 						response.put("game_state", GameAction.action(CardFactory.chooseCard(currentPlayer), currentPlayer));
 					}
 				} else {
@@ -578,7 +581,9 @@ public class MonopolyManager {
 							+ currentPlayer.canContinueGame() + ": "
 							+ currentPlayer.getColor());
 					if (currentPlayer.canContinueGame()) {
+						move=false;
 						response.put("type", ButtonsLabel.ROLL);
+						response.put("move", move);
 						buttons.put(ButtonsLabel.DONE, true);
 						buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
 						buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());

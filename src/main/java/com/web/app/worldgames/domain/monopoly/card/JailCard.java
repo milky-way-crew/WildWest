@@ -72,7 +72,6 @@ public class JailCard extends Cell {
 		boolean move = false;
 		if (player.doublePoints() || player.getCircleInJail() == 3) {
 			log.info("[CIRCLE IN JAIL] : " + player.getCircleInJail());
-			log.info("[PLAYER POSITION AFTER JAIL] : " + player.getPosition());
 			player.setCircleInJail(0);
 			player.setInJail(false);
 			move = true;
@@ -85,6 +84,7 @@ public class JailCard extends Cell {
 			message = "You are going from jail";
 			buttons.put(ButtonsLabel.PAY, false);
 			player.setPosition(dicePoint);
+			log.info("[PLAYER POSITION AFTER JAIL] : " + player.getPosition());
 		} else {
 			player.setPosition(CellPositions.JAIL);
 			player.setInJail(true);
