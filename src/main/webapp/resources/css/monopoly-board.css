@@ -30,6 +30,7 @@ body {
 #auction-tab small {
   font-size: 16px;
 }
+
 #auction-tab img {
   width: 100%;
 }
@@ -49,24 +50,34 @@ body {
 }
 #chat {
   overflow-y: scroll;
-  height: 200px;
-  border: 1px solid;
+  height: 220px;
+  padding: 10px;
+  margin: 0;
+
+  border: none;
 }
+  ul#chat > li {
+    border-bottom: 1px dashed blueviolet;
+    font-size: 20px;
+  }
 #chat-log {
+  font-family: 'Bubblegum sans', 'Helvetica', 'Arial';
   text-align: left;
-  margin: 10px;
   background-color: rgba(255, 255, 255, 0.4);
 
-  -moz-box-shadow:    0px 0px 10px #888;
+  border: 2px solid #eee;
+  padding: 5px;
+/*  -moz-box-shadow:    0px 0px 10px #888;
   -webkit-box-shadow: 0px 0px 10px #888;
-  box-shadow:         0px 0px 10px #888;
+  box-shadow:         0px 0px 10px #888;*/
 }
   #chat-log input {
-    width: 175px;
+    width: 485px;
     margin: 0px;
   }
   #chat-log form {
     margin-left: 10px;
+    margin-bottom: 10px;
   }
 /* ******************* */
 /* center-cell section */
@@ -252,7 +263,7 @@ body {
     width: 100px;
     height: 74px;
     position: absolute;
-    margin-top: -30px;
+    margin-top: -15px;
     margin-left: 45px;
   }
   .west .town-title {
@@ -289,7 +300,7 @@ body {
     width: 100px;
     height: 74px;
     position: absolute;
-    margin-top: -30px;
+    margin-top: -15px;
     margin-left: 45px;
   }
   .east .town-title {
@@ -474,4 +485,39 @@ body {
 
 .disableButton {
   opacity: 0.5;
+}
+
+@font-face {
+  font-family: 'Lobster Two';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lobster Two'), local('LobsterTwo'), url(../font/LobsterTwo.woff) format('woff'),
+  url(http://themes.googleusercontent.com/static/fonts/lobstertwo/v4/Law3VVulBOoxyKPkrNsAaIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+/*****************************************/
+/*                :font:                 */
+/*****************************************/
+
+@font-face {
+  font-family: 'Bubblegum Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Bubblegum Sans Regular'), local('BubblegumSans-Regular'), url('../font/Bubblegum Sans.woff') format('woff'), 
+  url(http://themes.googleusercontent.com/static/fonts/bubblegumsans/v2/Y9iTUUNz6lbl6TrvV4iws3XDLzkeTJI1q7uv6LMmp4I.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Archivo Narrow';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Archivo Narrow Regular'), local('ArchivoNarrow-Regular'), url('../font/ArchivoNarrow-Regular.woff') format('woff'),
+  url(http://themes.googleusercontent.com/static/fonts/archivonarrow/v1/DsLzC9scoPnrGiwYYMQXphdbPw3QSf9R-kE0EsQUn2A.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yanone Kaffeesatz Regular'), local('YanoneKaffeesatz-Regular'), url('../font/YanoneKaffeesatz-Regular.woff') format('woff'), 
+  url(http://themes.googleusercontent.com/static/fonts/yanonekaffeesatz/v4/YDAoLskQQ5MOAgvHUQCcLRTHiN2BPBirwIkMLKUspj4.woff) format('woff');
 }
