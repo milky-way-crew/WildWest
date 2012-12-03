@@ -548,13 +548,13 @@ public class Player {
 
 	public boolean canRollDices() {
 		boolean roll = false;
+		log.info(" getMoney>=0: "+(this.getMoney()>=0));
+		log.info(" double points: "+this.doublePoints());
+		log.info(" is rolled: "+this.isRolled());
 		if (this.getMoney() >= 0 && this.doublePoints() && this.isRolled()) {
-			log.info(" getMoney: "+this.getMoney());
-			log.info(" double points: "+this.doublePoints());
-			log.info(" is rolled: "+this.isRolled());
 			roll = true;
 		} else if (this.getMoney() >= 0 && !this.isRolled()) {
-			log.info(" getMoney: "+this.getMoney());
+			log.info(" getMoney>=0: "+(this.getMoney()>=0));
 			log.info(" is rolled: "+this.isRolled());
 			roll = true;
 		}
