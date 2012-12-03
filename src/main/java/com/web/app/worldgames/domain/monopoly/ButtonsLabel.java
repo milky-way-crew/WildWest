@@ -17,4 +17,5 @@ public interface ButtonsLabel {
 	String TURN = "turn";
 	String INIT = "init";
 	String AUCTION = "auction";
+	String LOGIC = "logic";
 }
