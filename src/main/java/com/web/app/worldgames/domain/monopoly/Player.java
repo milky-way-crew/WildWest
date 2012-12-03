@@ -43,6 +43,7 @@ public class Player {
 	private int numberOfBuildings = 0;
 	private boolean isAuctionCreator;
 	private boolean canCreateAuction;
+	private int auctionRates;
 
 	public boolean isCanCreateAuction() {
 		return canCreateAuction;
@@ -202,6 +203,14 @@ public class Player {
 
 	public void setWinner(boolean isWinner) {
 		this.isWinner = isWinner;
+	}
+
+	public int getAuctionRates() {
+		return auctionRates;
+	}
+
+	public void setAuctionRates(int auctionRates) {
+		this.auctionRates = auctionRates;
 	}
 
 	@Override

@@ -122,6 +122,7 @@ public class MonopolyManager {
 			Map<String, Object> response, String data) {
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
+		Map<String, Object> rates = new HashMap<String, Object>();
 		String messages = null;
 		ObjectMapper objectMapper = new ObjectMapper();
 		Player currentPlayer = getPlayerById(idPlayer);
@@ -141,6 +142,8 @@ public class MonopolyManager {
 //				+ auctionCreator.isCanCreateAuction());
 		response.put("type", ButtonsLabel.AUCTION);
 		response.put("invoker", auctionCreator);
+		rates.put("player", currentPlayer.getColor());
+		rates.put("rates", currentPlayer.getAuctionRates());
 		if (card.isAuctionStarted() && currentPlayer.equals(auctionCreator)
 				&& auctionCreator.isCanCreateAuction()) {
 			auctionCreator.setCanCreateAuction(false);
@@ -175,11 +178,14 @@ public class MonopolyManager {
 		if (dataBlock.has("price")) {
 			int price = dataBlock.path("price").getIntValue();
 			if (price > monopolyGame.getAuctionPrice()) {
+				currentPlayer.setAuctionRates(price);
 				log.info("-----AUCTION START PRICE------"+ monopolyGame.getAuctionPrice());
 				monopolyGame.setAuctionPrice(price);
 				log.info("-----AUCTION START PRICE----NEXT--"+ getAuctionPrice());
-				response.put("player", currentPlayer.getColor());
+				//response.put("player", currentPlayer.getColor());
 				response.put("auction_price", getMaxAuctionPrice());
+				rates.put("player", currentPlayer.getColor());
+				rates.put("rates", currentPlayer.getAuctionRates());
 				if (currentPlayer.canAuction(monopolyGame.getAuctionPrice())) {
 					setAuctionPrice(price);
 					setMaxAuctionPrice(getAuctionPrice());
@@ -209,6 +215,7 @@ public class MonopolyManager {
 		buttons.put(ButtonsLabel.BUY, false);
 		state.put("buttons", buttons);
 		state.put("messages", messages);
+		response.put("rates", rates);
 		response.put("player_winner", getAuctionWinner().getColor());
 		response.put("player_money", getAuctionWinner().getMoney());
 		response.put("game_state", state);
