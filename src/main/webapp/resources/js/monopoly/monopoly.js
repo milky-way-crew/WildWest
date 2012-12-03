@@ -265,12 +265,7 @@ function() {
                         BOARD.animate.jump(color, stats.position);
                         MONO.animate.money(color, stats.money);
                     });
-                    $.each(json, board, function(pos, stats) {
-                        BOARD.buy(stats.owner, stats.position);
-                        if (stats.mortage) {
-                            BOARD.draw.mortage(stats.position, stats.owner);
-                        }
-                    });
+
                     MONO.animate.money(json.color, json.money);
 
                     if(MONO.config.isCreator) {
@@ -278,6 +273,13 @@ function() {
                     } else {
                         $('#start').hide(100);
                     }
+
+                    $.each(json.board, function(pos, stats) {
+                        BOARD.buy(stats.owner, stats.position);
+                        if (stats.mortage) {
+                            BOARD.draw.mortage(stats.position, stats.owner);
+                        }
+                    });
                 },
                 'chat': function(json) {
                     chat.append(json.message);
