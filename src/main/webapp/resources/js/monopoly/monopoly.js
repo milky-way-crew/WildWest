@@ -419,6 +419,12 @@ function() {
                 }
             };
             $('#send').click(sendChatMessage);
+            $("#usermsg").keypress(function(event) {
+                if ( event.which == 13 ) {
+                    sendChatMessage();
+                    event.preventDefault();
+                }
+            });
         }
     };
 
