@@ -117,16 +117,17 @@ function() {
             },
             onMessage: function(event) {
                 console.log("Received message: ", event.data);
-                // try {
+                try {
                     var json = $.parseJSON(event.data);
-                    if(typeof MONO.events.handle[json.type] === 'undefined') {
-                        console.error('No handlers for ' + json.type + ' defined');
-                    } else {
-                        MONO.events.handle[json.type](json);
-                    }
-                // } catch(err) {
-                //     console.error('Not object Received', err);
-                // }
+                } catch(err) {
+                    console.error('Not object Received', err);
+                    return;
+                }
+                if(typeof MONO.events.handle[json.type] === 'undefined') {
+                    console.error('No handlers for ' + json.type + ' defined');
+                } else {
+                    MONO.events.handle[json.type](json);
+                }
             },
             handle: {
                 'undefined': function(json) {
@@ -273,13 +274,15 @@ function() {
                     } else {
                         $('#start').hide(100);
                     }
-
-                    $.each(json.board, function(pos, stats) {
-                        BOARD.buy(stats.owner, stats.position);
-                        if (stats.mortage) {
-                            BOARD.draw.mortage(stats.position, stats.owner);
-                        }
-                    });
+                    if (!$.isEmptyObject(json.board)) {
+                        $.each(json.board, function(pos, stats) {
+                            BOARD.buy(stats.owner, stats.position);
+                            if (stats.mortage) {
+                                BOARD.draw.mortage(stats.position, stats.owner);
+                            }
+                        });                        
+                    }
+                    
                 },
                 'chat': function(json) {
                     chat.append(json.message);
@@ -416,6 +419,12 @@ function() {
                 }
             };
             $('#send').click(sendChatMessage);
+            $("#usermsg").keypress(function(event) {
+                if ( event.which == 13 ) {
+                    sendChatMessage();
+                    event.preventDefault();
+                }
+            });
         }
     };
 
