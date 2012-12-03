@@ -64,10 +64,45 @@ public class DataBaseDao implements IDataBaseDao {
 		
 		sql.append("INSERT INTO userStatistics ");
 		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('chess', 1)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('gibbet', 1)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('drow&guess', 1)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
 		sql.append(" VALUES('monopoly', 2)");
 		jdbcTemplate.update(sql.toString());
 		sql.delete(0, sql.length());
 
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('chess', 2)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('gibbet', 2)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('drow&guess', 2)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
 	}
 
 	public void fillUser() {

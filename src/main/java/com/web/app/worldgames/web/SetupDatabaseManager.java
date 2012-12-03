@@ -19,7 +19,7 @@ public class SetupDatabaseManager {
 		log.info("Finished creating tables");
 		tableManager.fillUser();
 		tableManager.fillStatistics();
-		tableManager.fillStatistics();
+
 		
 		
 	}
