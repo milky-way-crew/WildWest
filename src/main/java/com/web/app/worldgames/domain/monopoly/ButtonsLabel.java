@@ -18,4 +18,5 @@ public interface ButtonsLabel {
 	String INIT = "init";
 	String AUCTION = "auction";
 	String LOGIC = "logic";
+	String CHAT = "chat";
 }

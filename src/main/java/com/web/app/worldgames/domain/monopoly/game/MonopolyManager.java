@@ -93,6 +93,9 @@ public class MonopolyManager {
 			if ($(type).equals(ButtonsLabel.BUY)) {
 				onBuy(idPlayer, type, response);
 			}
+			if ($(type).equals(ButtonsLabel.CHAT)) {
+				onChat(idPlayer, type, response, data);
+			}
 			if ($(type).equals(ButtonsLabel.PAY)) {
 				onPay(idPlayer, type, response);
 			}
@@ -118,8 +121,29 @@ public class MonopolyManager {
 		return response;
 	}
 
-	
-	
+	private void onChat(int idPlayer, String type,
+			Map<String, Object> response, String data) {
+		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (currentPlayer.getId() == idPlayer) {
+			JsonNode tree = null;
+			try {
+				tree = objectMapper.readTree(data);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			JsonNode dataBlock = tree.path("date");
+			if (dataBlock.has("message")) {
+				String message = dataBlock.path("message").getTextValue();
+				response.put("type", ButtonsLabel.CHAT);
+				response.put("[ " + currentPlayer.getName() + " ]: ", message);
+				broadcast(response);
+			}
+		}
+	}
+
 	private void onAuction(int idPlayer, String type,
 			Map<String, Object> response, String data) {
 		Map<String, Object> buttons = new HashMap<String, Object>();
