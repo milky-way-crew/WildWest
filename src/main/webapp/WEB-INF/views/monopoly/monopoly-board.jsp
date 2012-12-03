@@ -34,12 +34,12 @@
 	<div class="container" style=" width: 1230px; ">
 		<table id="game-table" border="1" rules="all">
 			<tr>
-				<td class="northwest" id="cell21">
+				<td class="cell northwest" id="cell21">
 					<center>
 						<img src="resources/img/board/city/sign_left.svg">
 					</center>
 				</td>
-				<td id="cell22" class="north">
+				<td id="cell22" class="cell north">
 					<div class="north">
 						<div class="owner"></div>
 						<div class="town-image">
@@ -50,10 +50,10 @@
 						</div>
 					</div>
 				</td>
-				<td id="cell23" class="north">
+				<td id="cell23" class="cell north">
 					<img src="resources/img/board/city/tree11.svg" alt="" width="75">
 				</td>
-				<td id="cell24" class="north">
+				<td id="cell24" class="cell north">
 					<div class="north tip">
 						<span class="town-title">City</span>
 						<span class="bottom">
@@ -86,7 +86,7 @@
 						</div>
 					</div>
 				</td>
-				<td id="cell25" class="north">
+				<td id="cell25" class="cell north">
 					<div class="north tip">
 						<span class="town-title">Fortress</span>
 						<span class="bottom">
@@ -119,7 +119,7 @@
 						</div>
 					</div>
 				</td>
-				<td id="cell26" class="north">
+				<td id="cell26" class="cell north">
 					<div class="north tip">
 					<span class="bottom">
 						<img src="resources/img/board/city/magic_stones.svg" width="300">
@@ -133,7 +133,7 @@
 						<div class="town-image"><img src="resources/img/board/city/magic_stones.svg" alt=""></div>
 					</div>
 				</td>
-				<td id="cell27" class="north">
+				<td id="cell27" class="cell north">
 					<div class="north">
 						<div class="owner"></div>
 						<div class="town-image"><img src="resources/img/board/city/obelisk.svg" alt=""></div>
@@ -142,7 +142,7 @@
 						</div>
 					</div>
 				</td>
-				<td id="cell28" class="north">
+				<td id="cell28" class="cell north">
 					<div class="north">
 						<div class="owner"></div>
 						<div class="town-image"><img src="resources/img/board/city/arch.svg" alt=""></div>
@@ -151,10 +151,10 @@
 						</div>
 					</div>
 				</td>
-				<td id="cell29" class="north">
+				<td id="cell29" class="cell north">
 					<img src="resources/img/board/city/mountain4.svg" alt="" width="75">
 				</td>
-				<td id="cell30" class="north">
+				<td id="cell30" class="cell north">
 					<div class="north tip">
  						<span class="town-title">Maze</span>
 						<span class="bottom">
@@ -185,7 +185,7 @@
 						</div>
 					</div>
 				</td>
-				<td class="northeast" id="cell31">
+				<td class="cell northeast" id="cell31">
 					<!-- <div class="town-image"> -->
 					<center>
 						<img src="resources/img/board/city/sign_crossroad.svg">
@@ -194,7 +194,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell20">
+				<td class="cell west tip" id="cell20">
 					<span class="town-title badge badge-info">Graveyard</span>
 					<div class="owner"></div>
 					<div class="town-image">
@@ -370,7 +370,7 @@
 					<!-- /center cell -->
 					<!-- ............ -->
 				</td>
-				<td class="east tip" id="cell32">
+				<td class="cell east tip" id="cell32">
 					<span class="town-title">Mine</span>
 					<span class="left">
 						<img src="resources/img/board/city/mine.svg" width="300">
@@ -403,7 +403,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell19">
+				<td class="cell west tip" id="cell19">
 					<span class="town-title badge badge-info">Monastery</span>
 
 					<div class="owner"></div>
@@ -414,7 +414,7 @@
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
-				<td class="east tip" id="cell33">
+				<td class="cell east tip" id="cell33">
 					<span class="town-title">Hunter</span>
 					<span class="left">
 						<img src="resources/img/board/city/hunter.svg" width="300">
@@ -445,7 +445,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell18">
+				<td class="cell west tip" id="cell18">
 					<span class="town-title badge badge-info">Caravan wreck</span>
 					<span class="right">
 						<img src="resources/img/board/city/caravan_wreck.svg" width="300">
@@ -464,7 +464,7 @@
 						<!-- </div> -->
 					</center>
 				</td>
-				<td class="east tip" id="cell34">
+				<td class="cell east tip" id="cell34">
 					<span class="town-title">Tree?!</span>
 					<span class="left">
 						<img src="resources/img/board/city/tree02.svg" width="300">
@@ -484,7 +484,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell17">
+				<td class="cell west tip" id="cell17">
 					<span class="town-title badge badge-info">Cathedral</span>
 					<span class="right">
 						<img src="resources/img/board/city/cathedral.svg" width="300">
@@ -515,7 +515,7 @@
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
-				<td class="east tip" id="cell35">
+				<td class="cell east tip" id="cell35">
 					<span class="town-title badge badge-info">Blacksmith</span>
 					<span class="left">
 						<img src="resources/img/board/city/blacksmith.svg" width="300">
@@ -546,7 +546,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell16">
+				<td class="cell west tip" id="cell16">
 					<span class="town-title badge badge-info">Community chest</span>
 					<span class="right">
 						<img src="resources/img/board/city/magic_stones.svg" width="300">
@@ -563,7 +563,7 @@
 						<img src="resources/img/board/city/magic_stones.svg">
 					</div>
 				</td>
-				<td class="east tip" id="cell36">
+				<td class="cell east tip" id="cell36">
 					<span class="town-title badge badge-info">Blacksmith</span>
 					<span class="left">
 						<img src="resources/img/board/city/magic_stones.svg" width="300">
@@ -591,7 +591,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell15" >
+				<td class="cell west tip" id="cell15" >
 					<span class="town-title">Little Farm</span>
 					<span class="right">
 						<img src="resources/img/board/city/farm.svg" width="300">
@@ -623,7 +623,7 @@
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
-				<td class="east tip" id="cell37">
+				<td class="cell east tip" id="cell37">
 					<!-- <div class="town-image"> -->
 					<center>
 						<img src="resources/img/board/city/bridge_stone2.svg" width="80">
@@ -632,7 +632,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell14">
+				<td class="cell west tip" id="cell14">
 					<span class="town-title ">Fishery</span>
 					<span class="right">
 						<img src="resources/img/board/city/fishery.svg" width="300">
@@ -664,7 +664,7 @@
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
-				<td class="east tip" id="cell38">
+				<td class="cell east tip" id="cell38">
 					<span class="town-title badge badge-info">Square Tower</span>
 					<span class="left">
 						<img src="resources/img/board/city/tower_square.svg" width="300">
@@ -697,7 +697,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell13">
+				<td class="cell west tip" id="cell13">
 					<span class="town-title badge badge-info">some-name</span>
 					<span class="right">
 						<img src="resources/img/board/city/shipwreck.svg" width="300" height="300">
@@ -710,7 +710,7 @@
 						<!-- </div> -->
 					</center>
 				</td>
-				<td class="east tip" id="cell39">
+				<td class="cell east tip" id="cell39">
 					<!-- <div class="town-image"> -->
 						<center>
 							<img src="resources/img/board/city/sword_in_the_stone.svg" alt="" width="75">
@@ -719,7 +719,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="west tip" id="cell12">
+				<td class="cell west tip" id="cell12">
 					<span class="town-title badge badge-info">Windmill</span>
 					<span class="right">
 						<img src="resources/img/board/city/windmill.svg" width="150" height="150">
@@ -752,7 +752,7 @@
 						<img src="resources/img/board/emptyhouse.png">
 					</div>
 				</td>
-				<td class="east tip" id="cell40">
+				<td class="cell east tip" id="cell40">
 					<span class="left">
 						<img src="resources/img/board/city/tower_round.svg" width="300">
 						<p class="tip-header">Defence tower ;)</p>
@@ -776,14 +776,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="southwest" id="cell11">
+				<td class="cell southwest" id="cell11">
 					<center>
 						<!-- <div class="town-image"> -->
 							<img src="resources/img/board/city/jailhouse.svg" alt="">
 						<!-- </div> -->
 					</center>
 				</td>
-				<td class="south" id="cell10">
+				<td class="cell south" id="cell10">
 					<div class="south">
 						<div class="owner"></div>
 						<div class="town-image"><img src="resources/img/board/city/university.svg" alt=""></div>
@@ -792,7 +792,7 @@
 						</div>
 					</div>
 				</td>
-				<td class="south" id="cell9">
+				<td class="cell south" id="cell9">
 					<div class="south">
 						<div class="owner"></div>
 						<div class="town-image"><img src="resources/img/board/city/fountain.svg" alt=""></div>
@@ -801,10 +801,10 @@
 						</div>
 					</div>
 				</td>
-				<td class="south" id="cell8">
+				<td class="cell south" id="cell8">
 					<img src="resources/img/board/city/wishing_well.svg" alt="" width="75">
 				</td>
-				<td class="south" id="cell7">
+				<td class="cell south" id="cell7">
 					<div class="south tip">
 						<span class="town-title badge badge-info">Pond</span>
 						<span class="top">
@@ -835,16 +835,16 @@
 						</div>
 					</div>
 				</td>
-				<td class="south" id="cell6">
+				<td class="cell south" id="cell6">
 					<div class="south">
 						<div class="owner"></div>
 						<div class="town-image"><img src="resources/img/board/city/magic_stones.svg" alt=""></div>
 					</div>
 				</td>
-				<td class="south" id="cell5">
+				<td class="cell south" id="cell5">
 					<img src="resources/img/board/city/statue.svg" alt="" width="75">
 				</td>
-				<td class="south" id="cell4">
+				<td class="cell south" id="cell4">
 					<div class="south tip">
 						<span class="town-title badge badge-info">Circus</span>
 						<span class="top">
@@ -875,10 +875,10 @@
 						</div>
 					</div>
 				</td>
-				<td class="south" id="cell3">
+				<td class="cell south" id="cell3">
 					<img src="resources/img/board/city/ruins.svg" alt="" width="75">
 				</td>
-				<td class="south" id="cell2">
+				<td class="cell south" id="cell2">
 					<div class="south tip">
 						<span class="town-title badge badge-info">Tent</span>
 						<span class="top">
@@ -909,7 +909,7 @@
 						</div>
 					</div>
 				</td>
-				<td class="southeast" id="cell1">
+				<td class="cell southeast" id="cell1">
 					<img id="player1" src="resources/img/board/player-1.png"></img>
 					<img id="player2" src="resources/img/board/player-2.png"></img>
 					<img id="player3" src="resources/img/board/player-3.png"></img>

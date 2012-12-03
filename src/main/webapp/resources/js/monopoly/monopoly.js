@@ -154,11 +154,12 @@ function() {
                     log('Starting animation of roll event');
                     BOARD.rollDice(dice1, dice2);
                     MONO.animate.move(color, dice1, dice2, json.was);
-                    ui.clearTooltipsIn('#board [rel=tooltip]');
-                    $('[rel=tooltip]').tooltip('destroy'); // nasty but working
-                    аz
+                    ui.clearTooltipsIn('#game-table .cell[rel=tooltip]');
+                    // $('[rel=tooltip]').tooltip('destroy'); // nasty but working
+
                     // if chance or so on
                     if (typeof json.game_state.dice1 !== 'undefined') {
+                        MONO.config.position = (MONO.config.position + json.game_state.dice1) % 40;
                         log('bonus moving, chance, jail, etc');
                         BOARD.animate.goTo(color, json.game_state.was, json.game_state.dice1);
                     }
@@ -525,7 +526,6 @@ function() {
             var houseCell = "#cell" + cell + " .house img";
             var ownerCell = "#cell" + cell + " .owner";
             var playerNumber = BOARD.colorToIndex(player);
-            var miniCell = cell;
 
             if($(houseCell).attr('src') == "resources/img/board/big_hotel.png") {
                 $(houseCell).attr('src', 'resources/img/board/house3.png');
@@ -536,7 +536,7 @@ function() {
             } else if($(houseCell).attr('src') == "resources/img/board/house1.png") {
                 $(houseCell).attr('src', "resources/img/board/emptyhouse.png");
             } else {
-                $(ownerCell).removeClass("color-player" + playerNumber);
+                $(ownerCell).removeClass("color-player-" + playerNumber);
                 $('#miniCell' + cell + ' img').attr(src, '');
                 // $(number + "MiniCell" + miniCell).removeClass("setMiniImagePlayer" + playerNumber);
             }
@@ -655,7 +655,6 @@ function() {
             },
             sell: function(cell, player) {
                 BOARD.sellAll(player, cell);
-
             },
             updateMoney: function(who, money) {
                 $("#money-player-" + BOARD.colorToIndex(who)).html(money + "$");
