@@ -450,8 +450,8 @@
 									<img src="resources/img/board/city/house.svg" alt="" >
 								</div> 
 								<div class="row auction-controls">
-									<a href="#" id="up10" class="button lightbg-pink clearfix">up by 50$</a>
-									<a href="#" id="up50" class="button lightbg-orange clearfix">up by 10$</a>
+									<a href="javascript:void(0);" id="up10" class="button lightbg-pink clearfix">up by 50$</a>
+									<a href="javascript:void(0);" id="up50" class="button lightbg-orange clearfix">up by 10$</a>
 								</div>
 							</div>
 							</div>
