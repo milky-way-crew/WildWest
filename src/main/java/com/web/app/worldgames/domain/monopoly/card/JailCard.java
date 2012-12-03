@@ -35,6 +35,7 @@ public class JailCard extends Cell {
 			player.setNumberFreeCard((player.getNumberFreeCard()) - 1);
 			this.setMsg("You had a free card and you are going from jail");
 		}
+		player.setRolled(false);
 	}
 
 	/**
@@ -54,6 +55,7 @@ public class JailCard extends Cell {
 		player.setMoney(player.getMoney() - CardPrices.RANSOM_FROM_JAIL);
 		this.setMsg("You paid ransom");
 		player.setInJail(false);
+		player.setRolled(false);
 	}
 
 	/**
@@ -76,11 +78,13 @@ public class JailCard extends Cell {
 			player.setInJail(false);
 			move = true;
 			response.put("was", CellPositions.JAIL);
+//			response.put("dice1", player.getDiceOne());
+//			response.put("dice2", player.getDiceTwo());
 			response.put("dice1", dicePoint);
 			response.put("dice2", 0);
 			response.put("move", move);
 			message = "You are going from jail";
-			log.info("[JAIL_MESSAGE] : you are going from jail");
+			buttons.put(ButtonsLabel.PAY, false);
 		} else {
 			player.setPosition(CellPositions.JAIL);
 			player.setInJail(true);
@@ -91,6 +95,7 @@ public class JailCard extends Cell {
 			buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
 			buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
 			buttons.put(ButtonsLabel.SELL, player.canSell());
+			buttons.put(ButtonsLabel.PAY, false);
 		}
 		buttons.put(ButtonsLabel.DONE, true);
 		response.put("buttons", buttons);
