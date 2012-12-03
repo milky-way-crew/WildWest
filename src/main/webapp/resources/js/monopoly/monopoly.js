@@ -261,6 +261,10 @@ function() {
                     MONO.config.color = json.color;
                     MONO.config.money = json.money;
                     MONO.config.isCreator = json.isCreator;
+                    $.each(json.players, function(color, stats) {
+                        BOARD.animate.jump(color, stats.position);
+                        MONO.animate.money(color, stats.money);
+                    });
 
                     MONO.animate.money(json.color, json.money);
 
@@ -269,6 +273,13 @@ function() {
                     } else {
                         $('#start').hide(100);
                     }
+
+                    $.each(json.board, function(pos, stats) {
+                        BOARD.buy(stats.owner, stats.position);
+                        if (stats.mortage) {
+                            BOARD.draw.mortage(stats.position, stats.owner);
+                        }
+                    });
                 },
                 'chat': function(json) {
                     chat.append(json.message);
@@ -395,6 +406,16 @@ function() {
                     });                    
                 }
             });
+            var sendChatMessage = function() {
+                var msg = $('#usermsg').val();
+                if (msg.length > 0) {
+                    $('#usermsg').val('');
+                    MONO.transport.send('chat', {
+                        "message": msg
+                    });   
+                }
+            };
+            $('#send').click(sendChatMessage);
         }
     };
 
