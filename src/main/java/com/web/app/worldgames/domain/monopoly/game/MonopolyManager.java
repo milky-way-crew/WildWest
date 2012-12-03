@@ -118,6 +118,8 @@ public class MonopolyManager {
 		return response;
 	}
 
+	
+	
 	private void onAuction(int idPlayer, String type,
 			Map<String, Object> response, String data) {
 		Map<String, Object> buttons = new HashMap<String, Object>();
