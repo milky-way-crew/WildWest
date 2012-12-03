@@ -155,7 +155,8 @@ function() {
                     BOARD.rollDice(dice1, dice2);
                     MONO.animate.move(color, dice1, dice2, json.was);
                     ui.clearTooltipsIn('#board [rel=tooltip]');
-
+                    $('[rel=tooltip]').tooltip('destroy'); // nasty but working
+                    аz
                     // if chance or so on
                     if (typeof json.game_state.dice1 !== 'undefined') {
                         log('bonus moving, chance, jail, etc');
@@ -436,7 +437,7 @@ function() {
                     },
                     corner: function(offset) {
                         offset.top += 80;
-                        offset.left += 80;
+                        offset.left += 30;
                     }
                 }
                 // to be continued...
@@ -482,31 +483,42 @@ function() {
                 BOARD.animate.goTo(whoColor, whereCell, 0);
             },
         },
-        houseManipulation: { /**** Build the house ****/
+        houseManipulation: {
             buildHouse: function(houseCell) {
-                $houseCell = $("#cell" + houseCell + ' .house img');
+                var $houseCell = $("#cell" + houseCell + ' .house img'),
+                    newHouse = "resources/img/board/emptyhouse.png";
+                // '(\\d+)\\..{2,4}$' regex for cath index of house, TODO rewrite
                 if($houseCell.attr('src') == "resources/img/board/emptyhouse.png") {
-                    $houseCell.attr('src', 'resources/img/board/house1.png');
+                    newHouse = 'resources/img/board/house1.png';
                 } else if($houseCell.attr('src') == "resources/img/board/house1.png") {
-                    $houseCell.attr('src', 'resources/img/board/house2.png');
+                    newHouse = 'resources/img/board/house2.png';
                 } else if($houseCell.attr('src') == "resources/img/board/house2.png") {
-                    $houseCell.attr('src', 'resources/img/board/house3.png');
+                    newHouse = 'resources/img/board/house3.png';
                 } else {
-                    $houseCell.attr('src', 'resources/img/board/big_hotel.png');
+                    newHouse = 'resources/img/board/big_hotel.png';
                 }
+                $houseCell.fadeOut(300, function() {
+                    $houseCell.attr('src', newHouse);
+                    $houseCell.fadeIn(300);
+                });
             },
             /**** Sell the house ****/
             sellHouse: function(houseCell) {
-                $houseCell = $("#cell" + houseCell + ' .house img');
+                var $houseCell = $("#cell" + houseCell + ' .house img'),
+                    newHouse = "resources/img/board/emptyhouse.png";
                 if($houseCell.attr('src') == "resources/img/board/big_hotel.png") {
-                    $houseCell.attr('src', 'resources/img/board/house3.png');
+                    newHouse = 'resources/img/board/house3.png';
                 } else if($houseCell.attr('src') == "resources/img/board/house3.png") {
-                    $houseCell.attr('src', 'resources/img/board/house2.png');
+                    newHouse = 'resources/img/board/house2.png';
                 } else if($houseCell.attr('src') == "resources/img/board/house2.png") {
-                    $houseCell.attr('src', 'resources/img/board/house1.png');
+                    newHouse = 'resources/img/board/house1.png';
                 } else if($houseCell.attr('src') == "resources/img/board/house1.png") {
-                    $houseCell.attr('src', "resources/img/board/emptyhouse.png");
+                    newHouse = "resources/img/board/emptyhouse.png";
                 }
+                $houseCell.fadeOut(300, function() {
+                    $houseCell.attr('src', newHouse);
+                    $houseCell.fadeIn(300);
+                });
             }
         },
         sellAll: function(player, cell) {
@@ -674,9 +686,11 @@ function() {
 
         init: function() {
             console.log('Init -> Board');
-            $.each(['BROWN', 'GREEN'], function(i, who) {
+            $.each(['BROWN', 'GREEN', 'RED', 'VIOLET'], function(i, who) {
                 BOARD.animate.goTo(who, 1, 0);
             });
+
+            $('#myTab [href=#chat-tab]').tab('show');
         }
     };
     BOARD.init();

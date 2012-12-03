@@ -214,7 +214,13 @@
 								<li><a href="#minimap-tab" data-toggle="tab">Mini-map</a></li>
 								<li><a href="#chat-tab" data-toggle="tab">Chat</a></li>
 								<li><a href="#auction-tab" data-toggle="tab">Auction</a></li>
-								<li><a href="#settings" data-toggle="tab">Settings</a></li>
+<!-- 								<li><a href="#settings" data-toggle="tab">Settings</a></li> -->
+										<div id="money">
+											<span class="label color-player-1" id="money-player-1" >0$</span>
+											<span class="label color-player-2" id="money-player-2" >0$</span>
+											<span class="label color-player-3" id="money-player-3" >0$</span>
+											<span class="label color-player-4" id="money-player-4" >0$</span>							
+										</div>
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane fade in active" id="minimap-tab">
@@ -278,12 +284,7 @@
 												<td class="mini gray" id="miniCell36"><img src="" alt=""/></td>
 											</tr>
 										</table>
-										<div id="money">
-											<span class="label color-player-1" id="money-player-1" >0$</span>
-											<span class="label color-player-2" id="money-player-2" >0$</span>
-											<span class="label color-player-3" id="money-player-3" >0$</span>
-											<span class="label color-player-4" id="money-player-4" >0$</span>							
-										</div>
+
 										<!-- ************* -->
 										<!-- [Roll dices]  -->
 										<!-- ************* -->
@@ -737,8 +738,8 @@
 							<li>Castle: 2500 $$</li>
 						</ul>
 						<div class="tip-controls">
-							<a href="#" class="btn btn-info">mortage</a>
-							<a href="#" class="btn btn-succes">build</a>
+							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
+							<a href="javascript:void(0);" class="build btn btn-succes">build</a>
 						</div>
 						<span class="nub"></span>
 					</span>
@@ -879,18 +880,28 @@
 				</td>
 				<td class="south" id="cell2">
 					<div class="south tip">
+						<span class="town-title badge badge-info">Tent</span>
 						<span class="top">
-							<img src="resources/img/board/city/tent.svg" alt="">
-							<p class="tip-header">Cost: 40$</p>
+							<img src="resources/img/board/city/tent.svg" width="300">
+							<hr>
+							<div class="tip-header">
+								<p>Initial cost/rent: 400$ : 25$</p>
+								<small class="tip-owner label label-info">No one property</small>
+							</div>
+							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25$</li>
-								<li class="active">2 houses : 45$</li>
-								<li>3 houses : 75$</li>
-								<li>4 houses : 185$</li>
-								<li>Hotel: 25$</li>
+								<li>1 houses : 25 $$</li>
+								<li>2 houses : 45 $$</li>
+								<li>3 houses : 75 $$</li>
+								<li>4 houses : 185 $$</li>
+								<li>Castle: 2500 $$</li>
 							</ul>
+							<div class="tip-controls">
+								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
+								<a href="javascript:void(0);" class="build btn btn-succes">build</a>
+							</div>
 							<span class="nub"></span>
-						</span> 
+						</span>
 						<div class="owner"></div>
 						<div class="town-image"><img src="resources/img/board/city/tent.svg" alt=""></div>
 						<div class="house brown">

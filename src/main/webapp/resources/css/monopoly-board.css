@@ -30,6 +30,7 @@ body {
 #auction-tab small {
   font-size: 16px;
 }
+
 #auction-tab img {
   width: 100%;
 }
@@ -49,24 +50,34 @@ body {
 }
 #chat {
   overflow-y: scroll;
-  height: 200px;
-  border: 1px solid;
+  height: 220px;
+  padding: 10px;
+  margin: 0;
+
+  border: none;
 }
+  ul#chat > li {
+    border-bottom: 1px dashed blueviolet;
+    font-size: 20px;
+  }
 #chat-log {
+  font-family: 'Bubblegum sans', 'Helvetica', 'Arial';
   text-align: left;
-  margin: 10px;
   background-color: rgba(255, 255, 255, 0.4);
 
-  -moz-box-shadow:    0px 0px 10px #888;
+  border: 2px solid #eee;
+  padding: 5px;
+/*  -moz-box-shadow:    0px 0px 10px #888;
   -webkit-box-shadow: 0px 0px 10px #888;
-  box-shadow:         0px 0px 10px #888;
+  box-shadow:         0px 0px 10px #888;*/
 }
   #chat-log input {
-    width: 175px;
+    width: 485px;
     margin: 0px;
   }
   #chat-log form {
     margin-left: 10px;
+    margin-bottom: 10px;
   }
 /* ******************* */
 /* center-cell section */
