@@ -152,20 +152,27 @@ function() {
                     log('position on board [now] -> ' + MONO.config.position);
 
                     log('Starting animation of roll event');
-                    BOARD.rollDice(dice1, dice2);
+                    if (typeof dice1 !== 'undefined' && typeof dice2 !== 'undefined') {
+                        BOARD.rollDice(dice1, dice2);
+                    } 
                     if (json.move && json.move == true) {
                         MONO.animate.move(color, dice1, dice2, json.was);
+                        // if chance or so on
+                        if (typeof json.game_state.dice1 !== 'undefined') {
+                            log('bonus moving, chance, jail, etc');
+                            var d1 = json.game_state.dice1 || 0 , 
+                                d2 = json.game_state.dice2 || 0 ;
+
+                            MONO.config.position = (MONO.config.position + d1 + d2) % 40;
+
+                            BOARD.animate.goTo(color, json.game_state.was, d1 + d2);
+                            if (d1 > 0 && d2 > 0) {
+                                BOARD.rollDice(d1, d2);
+                            }
+                        }
                     }
                     ui.clearTooltipsIn('#game-table .cell[rel=tooltip]');
                     // $('[rel=tooltip]').tooltip('destroy'); // nasty but working
-
-                    // if chance or so on
-                    if (typeof json.game_state.dice1 !== 'undefined' && json.move && json.move == true) {
-                        MONO.config.position = (MONO.config.position + json.game_state.dice1) % 40;
-                        log('bonus moving, chance, jail, etc');
-                        BOARD.animate.goTo(color, json.game_state.was, json.game_state.dice1);
-                    }
-
                     // this player moves
                     if(MONO.config.color === color) {
                         ui.refreshButtons(buttons);
@@ -230,13 +237,24 @@ function() {
                 },
                 'auction': function(json) {
                     console.log('[auction] event');
-                    var price;
-                    price = parseInt(prompt('set price'));
-                    if(price) {
-                        MONO.transport.send('auction', {
-                            price: price
+                    $('#myTab a:last').tab('show');
+
+                    if (json.invoker) {
+                        $('#auction-tab .invoker').html(json.invoker);
+                    }
+
+                    if (json.rates) {
+                        $.each(rates, function(color, money) {
+                            var index = BOARD.CONST.COLOR_TO_NUMBER(color);
+                            $('#auction-tab .rates .label.color-player-' + index).html(money);
                         });
                     }
+
+                    if (json.highest) {
+                        $('.label.price').html(json.highest.price);
+                        $('.label.price-caller').html(json.highest.by);
+                    }
+
                 },
                 'init': function(json) {
                     console.log('[init] event');
@@ -261,6 +279,7 @@ function() {
                     if(json.game_status === "start") {
                         $('#ready').hide(100);
                         $('#start').hide(100);
+                        $('#roll').animate({"opacity":"1"}, 1000);
                     }
                 },
                 'ready': function(json) {
@@ -272,8 +291,13 @@ function() {
                     $('button').animate({
                         "opacity": "0.5"
                     }, 100);
+
                     if(json.player === MONO.config.color) {
-                        ui.refreshButtons(json.game_state.buttons);
+                        if (json.game_state && json.game_state.buttons) {
+                            ui.refreshButtons(json.game_state.buttons);
+                        } else {
+                            $('#roll').animate({"opacity":"1"}, 1000);
+                        }
                         $('#done').html('done');
                         $('#done').removeClass('wait');
                     } else {
@@ -348,6 +372,28 @@ function() {
             });
             $('#pay').click(function() {
                 $(this).animate({"opacity": "0.5"}, 1000);
+            });
+
+            $('#up10').click(function() {
+                var price = $('#auction-tab .rates .label.color-player-' 
+                    + MONO.config.color).html();
+                var newPrice = parseInt(price, 10) + 10;
+                if (newPrice) {
+                    MONO.transport.send('auction', {
+                        price: newPrice
+                    });                    
+                }
+            });
+
+            $('#up50').click(function() {
+                var price = $('#auction-tab .rates .label.color-player-' 
+                    + MONO.config.color).html();
+                var newPrice = parseInt(price, 10) + 50;
+                if (newPrice) {
+                    MONO.transport.send('auction', {
+                        price: newPrice
+                    });                    
+                }
             });
         }
     };
