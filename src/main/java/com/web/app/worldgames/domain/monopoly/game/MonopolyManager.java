@@ -175,7 +175,7 @@ public class MonopolyManager {
 		if (dataBlock.has("price")) {
 			int price = dataBlock.path("price").getIntValue();
 			if (price > monopolyGame.getAuctionPrice()) {
-				log.info("-----AUCTION START PRICE------"+ getAuctionPrice());
+				log.info("-----AUCTION START PRICE------"+ monopolyGame.getAuctionPrice());
 				monopolyGame.setAuctionPrice(price);
 				log.info("-----AUCTION START PRICE----NEXT--"+ getAuctionPrice());
 				response.put("player", currentPlayer.getColor());
