@@ -486,3 +486,38 @@ body {
 .disableButton {
   opacity: 0.5;
 }
+
+@font-face {
+  font-family: 'Lobster Two';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lobster Two'), local('LobsterTwo'), url(../font/LobsterTwo.woff) format('woff'),
+  url(http://themes.googleusercontent.com/static/fonts/lobstertwo/v4/Law3VVulBOoxyKPkrNsAaIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+/*****************************************/
+/*                :font:                 */
+/*****************************************/
+
+@font-face {
+  font-family: 'Bubblegum Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Bubblegum Sans Regular'), local('BubblegumSans-Regular'), url('../font/Bubblegum Sans.woff') format('woff'), 
+  url(http://themes.googleusercontent.com/static/fonts/bubblegumsans/v2/Y9iTUUNz6lbl6TrvV4iws3XDLzkeTJI1q7uv6LMmp4I.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Archivo Narrow';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Archivo Narrow Regular'), local('ArchivoNarrow-Regular'), url('../font/ArchivoNarrow-Regular.woff') format('woff'),
+  url(http://themes.googleusercontent.com/static/fonts/archivonarrow/v1/DsLzC9scoPnrGiwYYMQXphdbPw3QSf9R-kE0EsQUn2A.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yanone Kaffeesatz Regular'), local('YanoneKaffeesatz-Regular'), url('../font/YanoneKaffeesatz-Regular.woff') format('woff'), 
+  url(http://themes.googleusercontent.com/static/fonts/yanonekaffeesatz/v4/YDAoLskQQ5MOAgvHUQCcLRTHiN2BPBirwIkMLKUspj4.woff) format('woff');
+}

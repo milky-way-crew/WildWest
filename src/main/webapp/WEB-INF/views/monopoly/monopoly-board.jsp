@@ -23,9 +23,9 @@
 
 <link rel="stylesheet" href="resources/css/jquery-ui-1.9.1.custom.css" type="text/css">
 <!-- Fonts DONT FORGER TO DOWNLOAD THEM TO USE LOCAL -->
-<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
+<!-- <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Archivo+Narrow' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Bubblegum+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Bubblegum+Sans' rel='stylesheet' type='text/css'> -->
 </head>
 <!-- NO MORE GREEN BACKGROUND COLORS -->
 <!-- <body bgcolor="#CCE7D0"> --> 
