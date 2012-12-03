@@ -19,8 +19,8 @@ public class User {
 		avatar = new String();
 	}
 
-	public User(int id, String login, String password, String nickname,
-			String email, String avatar, Timestamp userDate) {
+	public User(int id, String login, String password, String email, String nickname,
+			 String avatar, Timestamp userDate) {
 		super();
 		this.id = id;
 		this.login = login;
@@ -37,8 +37,8 @@ public class User {
 		this.id = id;
 		this.login = login;
 		this.password = password;
-		this.nickname = nickname;
 		this.email = email;
+		this.nickname = nickname;
 		this.avatar = avatar;
 
 	}
