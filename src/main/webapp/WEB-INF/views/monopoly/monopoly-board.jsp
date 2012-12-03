@@ -34,7 +34,8 @@
 	<div class="container" style=" width: 1230px; ">
 		<table id="game-table" border="1" rules="all">
 			<tr>
-				<td class="cell northwest" id="cell21">
+				<td class="cell northwest tip" id="cell21">
+					<span class="label label-info" style=" top: 0px; text-align: center; ">Free Station</span>
 					<center>
 						<img src="resources/img/board/city/sign_left.svg">
 					</center>
@@ -282,8 +283,9 @@
 						</div>
 					</div>
 				</td>
-				<td class="cell northeast" id="cell31">
+				<td class="cell northeast tip" id="cell31">
 					<!-- <div class="town-image"> -->
+					<span class="label label-info" style=" top: 0px; text-align: center; ">Go to Jail</span>
 					<center>
 						<img src="resources/img/board/city/sign_crossroad.svg">
 					</center>
@@ -450,8 +452,11 @@
 									<img src="resources/img/board/city/house.svg" alt="" >
 								</div> 
 								<div class="row auction-controls">
-									<a href="javascript:void(0);" id="up10" class="button lightbg-pink clearfix">up by 10$</a>
-									<a href="javascript:void(0);" id="up50" class="button lightbg-orange clearfix">up by 50$</a>
+									<button id="up50" class="btn btn-primary">up by 50$</button>
+									<button id="up10" class="btn btn-primary">up by 10$</button>
+
+									<!-- <a href="javascript:void(0);" id="up10" class="button lightbg-pink clearfix">up by 10$</a> -->
+									<!-- <a href="javascript:void(0);" id="up50" class="button lightbg-orange clearfix">up by 50$</a> -->
 								</div>
 							</div>
 							</div>
@@ -904,19 +909,28 @@
 					</div>
 				</td>
 				<td class="cell east tip" id="cell40">
+					<span class="town-title badge badge-info">Tower round</span>
 					<span class="left">
 						<img src="resources/img/board/city/tower_round.svg" width="300">
-						<p class="tip-header">Defence tower ;)</p>
-						<p class="tip-header">Cost: 40000$ -- Rent with: </p>
+						<hr>
+						<div class="tip-header">
+							<p>Initial cost/rent: 400$ : 25$</p>
+							<small class="tip-owner label label-info">No one property</small>
+						</div>
+						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25$</li>
-							<li>2 houses : 45$</li>
-							<li>3 houses : 75$</li>
-							<li>4 houses : 185$</li>
-							<li>Hotel: 25$</li>
+							<li>1 houses : 25 $$</li>
+							<li>2 houses : 45 $$</li>
+							<li>3 houses : 75 $$</li>
+							<li>4 houses : 185 $$</li>
+							<li>Castle: 2500 $$</li>
 						</ul>
+						<div class="tip-controls">
+							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
+							<a href="javascript:void(0);" class="build btn btn-succes">build</a>
+						</div>
 						<span class="nub"></span>
-					</span> 
+					</span>
 					<div class="owner"></div>
 					<div class="town-image">
 						<img src="resources/img/board/city/tower_round.svg">
@@ -929,8 +943,8 @@
 			<tr>
 				<td class="cell southwest" id="cell11">
 					<center>
-						<!-- <div class="town-image"> -->
 							<img src="resources/img/board/city/jailhouse.svg" alt="">
+							<span class="label label-info">Jail</span>
 						<!-- </div> -->
 					</center>
 				</td>
@@ -1159,7 +1173,8 @@
 						</div>
 					</div>
 				</td>
-				<td class="cell southeast" id="cell1">
+				<td class="cell southeast" id="cell1" style=" text-align: center; ">
+					<span class="label label-info" style=" font-size: 26px; ">Start cell</span>
 					<img id="player1" src="resources/img/board/player-1.png"></img>
 					<img id="player2" src="resources/img/board/player-2.png"></img>
 					<img id="player3" src="resources/img/board/player-3.png"></img>

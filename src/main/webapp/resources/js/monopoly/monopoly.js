@@ -258,7 +258,7 @@ function() {
                         $('#auction-tab .rates .label.color-player-' + index).html(json.rates.rates + '$');
                     }
 
-                    if (json.highest) {
+                    if (json.highest && !$.isEmptyObject(json.highest)) {
                         var colorClass = 'color-player-' + BOARD.CONST.COLOR_TO_NUMBER[json.highest.who];
 
                         $.each([1,2,3,4], function(i, number) {
