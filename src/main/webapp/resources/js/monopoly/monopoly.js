@@ -117,16 +117,16 @@ function() {
             },
             onMessage: function(event) {
                 console.log("Received message: ", event.data);
-                try {
+                // try {
                     var json = $.parseJSON(event.data);
                     if(typeof MONO.events.handle[json.type] === 'undefined') {
                         console.error('No handlers for ' + json.type + ' defined');
                     } else {
                         MONO.events.handle[json.type](json);
                     }
-                } catch(err) {
-                    console.error('Not object Received', err);
-                }
+                // } catch(err) {
+                //     console.error('Not object Received', err);
+                // }
             },
             handle: {
                 'undefined': function(json) {
@@ -241,20 +241,18 @@ function() {
 
                     if (json.invoker) {
                         $('#auction-tab .invoker').html(json.invoker);
+                        $('#auction-tab .invoker').addClass('color-player-' + BOARD.CONST.COLOR_TO_NUMBER[json.invoker]);
                     }
 
                     if (json.rates) {
-                        $.each(rates, function(color, money) {
-                            var index = BOARD.CONST.COLOR_TO_NUMBER(color);
-                            $('#auction-tab .rates .label.color-player-' + index).html(money);
-                        });
+                        var index = BOARD.CONST.COLOR_TO_NUMBER[json.rates.player];
+                        $('#auction-tab .rates .label.color-player-' + index).html(json.rates.rates + '$');
                     }
-
                     if (json.player) {
                         $('.label.price-caller').html(json.player);
                     }
                     if (json.auction_price) {
-                        $('.label.price').html(json.highest.price);
+                        $('.label.price').html(json.auction_price);
                     }
 
                 },
@@ -378,22 +376,22 @@ function() {
 
             $('#up10').click(function() {
                 var price = $('#auction-tab .rates .label.color-player-' 
-                    + MONO.config.color).html();
+                    + BOARD.CONST.COLOR_TO_NUMBER[MONO.config.color]).html();
                 var newPrice = parseInt(price, 10) + 10;
                 if (newPrice) {
                     MONO.transport.send('auction', {
-                        price: newPrice
+                        "price": newPrice
                     });                    
                 }
             });
 
             $('#up50').click(function() {
                 var price = $('#auction-tab .rates .label.color-player-' 
-                    + MONO.config.color).html();
+                    + BOARD.CONST.COLOR_TO_NUMBER[MONO.config.color]).html();
                 var newPrice = parseInt(price, 10) + 50;
                 if (newPrice) {
                     MONO.transport.send('auction', {
-                        price: newPrice
+                        "price": newPrice
                     });                    
                 }
             });

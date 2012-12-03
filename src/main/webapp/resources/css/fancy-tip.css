@@ -171,3 +171,9 @@
 .tip:hover span.top {
   top: -370px;
 }
+.tip:hover span.top-small {
+  top: -260px;
+}
+.tip:hover span.bottom-small {
+  bottom: -260px;
+}
