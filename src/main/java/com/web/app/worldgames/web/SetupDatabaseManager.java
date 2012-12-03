@@ -14,12 +14,13 @@ public class SetupDatabaseManager {
 		log.info("Deleting tables");
 		tableManager.dropTables();
 		log.info("Starting creating tables");
-		tableManager.createUserStatisticsTable();
 		tableManager.createUserTable();
+		tableManager.createUserStatisticsTable();
 		log.info("Finished creating tables");
-		tableManager.fillStatistics();
-		tableManager.fillStatistics();
 		tableManager.fillUser();
+		tableManager.fillStatistics();
+		tableManager.fillStatistics();
+		
 		
 	}
 

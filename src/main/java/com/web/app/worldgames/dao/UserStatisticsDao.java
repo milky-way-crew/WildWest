@@ -27,72 +27,111 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-
-	public int getUserAllGames(int userId) {
+	
+				/****************************/
+				/** Statistics information **/
+				/****************************/
+	
+	/*** Get count of user's games any type of game ***/
+	public int getUserAllGames(int userId, String typeGame) {
 		int allGames = 0;
-		final String query = "SELECT userAllGames FROM users, userStatistics WHERE userId = ? AND userStat = statId";
-		allGames = jdbcTemplate.queryForInt(query, new Object[] { userId });
+		final String query = "SELECT userAllGames FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		allGames = jdbcTemplate.queryForInt(query, new Object[] { userId, typeGame });
 		return allGames;
 	}
-
-	public int getUserPoints(int userId) {
+	
+	/*** Get total count of user's games ***/
+	public int getUserTotalAllGames(int userId) {
+		int allGames = 0;
+		final String query = "SELECT SUM(userAllGames) FROM users, userStatistics WHERE userId = ? AND userId = idUser";
+		allGames = jdbcTemplate.queryForInt(query, new Object[] {userId});
+		return allGames;
+	}
+	
+	/*** Get count of user's win games any type of game ***/
+	public int getUserAllWinGames(int userId, String typeGame) {
+		int allWinGames = 0;
+		final String query = "SELECT userAllWinGames FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		allWinGames = jdbcTemplate.queryForInt(query, new Object[] { userId });
+		return allWinGames;
+	}
+	/*** Get total count of user's win games ***/
+	public int getUserTotalAllWinGames(int userId) {
+		int allWinGames = 0;
+		final String query = "SELECT SUM(userAllWinGames) FROM users, userStatistics WHERE userId = ? AND userId = idUser";
+		allWinGames = jdbcTemplate.queryForInt(query, new Object[] {userId});
+		return allWinGames;
+	}
+	
+	/*** Get count of user's points any type of game ***/
+	public int getUserPoints(int userId, String typeGame) {
 		int userPoints = 0;
-		final String query = "SELECT userPoints FROM users, userStatistics WHERE userId = ? AND userStat = statId";
-		userPoints = jdbcTemplate.queryForInt(query, new Object[] { userId });
+		final String query = "SELECT userPoints FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		userPoints = jdbcTemplate.queryForInt(query, new Object[] { userId, typeGame });
 		return userPoints;
 	}
 
-	public int getUserMoneyAmount(int userId) {
+	/*** Get total count of user's points ***/
+	public int getUserTotalPoints(int userId) {
+		int userPoints = 0;
+		final String query = "SELECT SUM(userPoints) FROM users, userStatistics WHERE userId = ? AND userId = idUser";
+		userPoints = jdbcTemplate.queryForInt(query, new Object[] { userId });
+		return userPoints;
+	}
+	
+	/*** Get count of money any type of game ***/
+	public int getUserMoneyAmount(int userId, String typeGame) {
 		int moneyAmount = 0;
-		final String query = "SELECT userMoneyAmount FROM users, userStatistics WHERE userId = ? AND userStat = statId";
+		final String query = "SELECT userMoneyAmount FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		moneyAmount = jdbcTemplate.queryForInt(query, new Object[] { userId, typeGame });
+		return moneyAmount;
+	}
+	
+	/*** Get total count of user's money ***/
+	public int getUserTotalMoneyAmount(int userId) {
+		int moneyAmount = 0;
+		final String query = "SELECT SUM(userMoneyAmount) FROM users, userStatistics WHERE userId = ? AND userId = idUser";
 		moneyAmount = jdbcTemplate.queryForInt(query, new Object[] { userId });
 		return moneyAmount;
 	}
 
-	public int getUserAllWinGames(int userId) {
-		int allWinGames = 0;
-		final String query = "SELECT userAllWinGames FROM users, userStatistics WHERE userId = ? AND userStat = statId";
-		allWinGames = jdbcTemplate.queryForInt(query, new Object[] { userId });
-		return allWinGames;
-	}
-	
-	
 
-	 public boolean updateStatistics(int userId, UserStatistics stat) {
-	 final String query =
-	 "UPDATE userStatistics, users SET userAllGames=userAllGames+?, userPoints=userpoints+?, userMoneyAmount=userAmount+?, userAllWinGames=userAllWinGames+? WHERE userId=? AND userStat=statId";
-	 int i = 0;
-	 i=jdbcTemplate.update(query, new Object[]{stat.getUserAllGames(),
-	 stat.getUserPoints(), stat.getUserMoneyAmount(),
-	 stat.getUserAllWinGames(), userId});
-	
-	 if (i>0){
-	 log.info("Statistics of user with id="+userId+" was update!");
-	 return true;
-	 }else
-	 return false;
-	 }
-	 
-	 
-//
-//	public int updateStatistics(final int userId, final UserStatistics stat) {
-//		final String query = "UPDATE userStatistics, users SET userAllGames=?, userPoints=?, userMoneyAmount=?, userAllWinGames=? WHERE userId=? AND userStat=statId";
-//		KeyHolder keyHolder = new GeneratedKeyHolder();
-//		jdbcTemplate.update(new PreparedStatementCreator() {
-//			@Override
-//			public PreparedStatement createPreparedStatement(
-//					Connection connection) throws SQLException {
-//				PreparedStatement ps = connection.prepareStatement(query,
-//						Statement.RETURN_GENERATED_KEYS);
-//				ps.setInt(1, stat.getUserAllGames());
-//				ps.setInt(2, stat.getUserPoints());
-//				ps.setInt(3, stat.getUserMoneyAmount());
-//				ps.setInt(4, stat.getUserAllWinGames());
-//				ps.setInt(5, userId);
-//				return ps;
-//			}
-//		}, keyHolder);
-//
-//		return keyHolder.getKey().intValue();
-//	}
+	public boolean updateStatistics(int userId, UserStatistics stat) {
+		final String query = "UPDATE userStatistics, users SET userAllGames=userAllGames+?, userPoints=userpoints+?, userMoneyAmount=userAmount+?, userAllWinGames=userAllWinGames+? WHERE userId=? AND userId=idUser";
+		int i = 0;
+		i = jdbcTemplate.update(query,
+				new Object[] { stat.getUserAllGames(), stat.getUserPoints(),
+						stat.getUserMoneyAmount(), stat.getUserAllWinGames(),
+						userId });
+
+		if (i > 0) {
+			log.info("Statistics of user with id=" + userId + " was update!");
+			return true;
+		} else
+			return false;
+	}
+
+	//
+	// public int updateStatistics(final int userId, final UserStatistics stat)
+	// {
+	// final String query =
+	// "UPDATE userStatistics, users SET userAllGames=?, userPoints=?, userMoneyAmount=?, userAllWinGames=? WHERE userId=? AND userStat=statId";
+	// KeyHolder keyHolder = new GeneratedKeyHolder();
+	// jdbcTemplate.update(new PreparedStatementCreator() {
+	// @Override
+	// public PreparedStatement createPreparedStatement(
+	// Connection connection) throws SQLException {
+	// PreparedStatement ps = connection.prepareStatement(query,
+	// Statement.RETURN_GENERATED_KEYS);
+	// ps.setInt(1, stat.getUserAllGames());
+	// ps.setInt(2, stat.getUserPoints());
+	// ps.setInt(3, stat.getUserMoneyAmount());
+	// ps.setInt(4, stat.getUserAllWinGames());
+	// ps.setInt(5, userId);
+	// return ps;
+	// }
+	// }, keyHolder);
+	//
+	// return keyHolder.getKey().intValue();
+	// }
 }

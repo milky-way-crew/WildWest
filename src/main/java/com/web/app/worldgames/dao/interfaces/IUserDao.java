@@ -3,67 +3,35 @@ package com.web.app.worldgames.dao.interfaces;
 import com.web.app.worldgames.domain.User;
 
 public interface IUserDao {
-
-	/**
-	 * Find user by its login
-	 * 
-	 * @param login
-	 *            - user login
-	 * @return User object
-	 * */
-	User findUserByLogin(final String login);
-
-	/**
-	 * Find user by its nickname
-	 * 
-	 * @param nickname
-	 *            - user nickname
-	 * @return User object
-	 * */
-	User findUserByNickname(final String nickname);
-
-	/**
-	 * Find user by its email
-	 * 
-	 * @param email
-	 *            - user email
-	 * @return User object
-	 * */
-	User findUserByEmail(final String email);
-
-	/**
-	 * Find user by its login and password
-	 * 
-	 * @param login
-	 *            - user login
-	 * @param password
-	 *            - user password
-	 * @return User object
-	 * */
-	User logInUser(final String login, final String password);
-
-	/**
-	 * Find user by its id
-	 * 
-	 * @param id
-	 *            - user login
-	 * @return User object
-	 * */
+	
+	/*** find user by id ***/
 	User findUserById(int id);
 
-	/**
-	 * Add new user
-	 * 
-	 * @param user
-	 *            - User object
-	 * @return id of User
-	 * */
+	/*** find user by login ***/
+	User findUserByLogin(final String login);
+
+	/*** find user by nickname ***/
+	User findUserByNickname(final String nickname);
+
+	/*** find user by email ***/
+	User findUserByEmail(final String email);
+
+	/*** find user by login and password ***/
+	User logInUser(final String login, final String password);
+
+	/*** insert user into table ***/
 	int insertUser(final User user);
 
-	/**
-	 * Add starting user's statistics
-	 * 
-	 * @return id of statistics
-	 * */
+	/*** insert empty user's statistics ***/
 	int insertEmptyStatistics();
+
+	boolean changeUserLogin(int userId, String login);
+
+	boolean changeUserPassword(int userId, String password);
+
+	boolean changeUserEmail(int userId, String email);
+
+	boolean changeUserNickname(int userId, String nickname);
+
+	boolean changeUserAvatar(int userId, String avatar);
 }
