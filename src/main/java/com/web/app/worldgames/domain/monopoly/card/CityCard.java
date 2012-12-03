@@ -334,6 +334,7 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public void auctionCityOrRail(Player player, int price) {
+		log.info("auctionn method");
 		if (this.getOwner() == null) {
 			this.setOwner(player);
 			player.addProperty(player);

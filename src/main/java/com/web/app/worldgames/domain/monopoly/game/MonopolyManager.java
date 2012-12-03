@@ -125,22 +125,23 @@ public class MonopolyManager {
 			Map<String, Object> response, String data) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		Player currentPlayer = getPlayerById(idPlayer);
-			JsonNode tree = null;
-			try {
-				tree = objectMapper.readTree(data);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			JsonNode dataBlock = tree.path("data");
-			//if (dataBlock.has("message")) {
-				String message = dataBlock.path("message").getTextValue();
-				response.put("type", ButtonsLabel.CHAT);
-				response.put("message","[ " + currentPlayer.getName() + " ]: "+ message);
-//			}
-			log.info("------------CHAT--------");
-			log.info(response);
+		JsonNode tree = null;
+		try {
+			tree = objectMapper.readTree(data);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JsonNode dataBlock = tree.path("data");
+		// if (dataBlock.has("message")) {
+		String message = dataBlock.path("message").getTextValue();
+		response.put("type", ButtonsLabel.CHAT);
+		response.put("message", "[ " + currentPlayer.getName() + " ]: "
+				+ message);
+		// }
+		log.info("------------CHAT--------");
+		log.info(response);
 		broadcast(response);
 	}
 
@@ -191,7 +192,9 @@ public class MonopolyManager {
 						if (getMaxAuctionPrice() != 0) {
 							card.auctionCityOrRail(getAuctionWinner(),
 									getMaxAuctionPrice());
-							getAuctionWinner().setAuctionRates(0);
+							for (Player players : monopolyGame.playerList) {
+								players.setAuctionRates(0);
+							}
 							monopolyGame.setAuctionPrice(0);
 						}
 						log.info("MAX PRICE === " + getMaxAuctionPrice());
@@ -212,12 +215,10 @@ public class MonopolyManager {
 				int price = dataBlock.path("price").getIntValue();
 				price = price + getAuctionPrice();
 				if (price > monopolyGame.getAuctionPrice()) {
-					currentPlayer.setAuctionRates(currentPlayer
-							.getAuctionRates() + price);
+					currentPlayer.setAuctionRates(price);
 					log.info("-----AUCTION START PRICE------"
 							+ monopolyGame.getAuctionPrice());
-					monopolyGame.setAuctionPrice(currentPlayer
-							.getAuctionRates());
+					monopolyGame.setAuctionPrice(price);
 					log.info("-----AUCTION START PRICE----NEXT--"
 							+ getAuctionPrice());
 					rates.put("player", currentPlayer.getColor());
