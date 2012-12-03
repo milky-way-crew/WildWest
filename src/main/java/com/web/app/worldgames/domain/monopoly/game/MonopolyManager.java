@@ -80,6 +80,10 @@ public class MonopolyManager {
 		if ($(type).equals("init")) {
 			onInit(idPlayer, response);
 		}
+		if ($(type).equals("chat")) {
+			// *********************************************************************************************
+			broadcast();
+		}
 		if ($(type).equals(ButtonsLabel.READY)) {
 			onReady(idPlayer, response);
 		}

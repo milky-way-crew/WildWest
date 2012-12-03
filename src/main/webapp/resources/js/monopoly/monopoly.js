@@ -262,6 +262,16 @@ function() {
                     MONO.config.money = json.money;
                     MONO.config.isCreator = json.isCreator;
 
+                    $.each(json.players, function(color, stats) {
+                        BOARD.animate.jump(color, stats.position);
+                        MONO.animate.money(color, stats.money);
+                    });
+                    $.each(json, board, function(pos, stats) {
+                        BOARD.buy(stats.owner, stats.position);
+                        if (stats.mortage) {
+                            BOARD.draw.mortage(stats.position, stats.owner);
+                        }
+                    });
                     MONO.animate.money(json.color, json.money);
 
                     if(MONO.config.isCreator) {
@@ -395,6 +405,18 @@ function() {
                     });                    
                 }
             });
+
+            var sendChatMessage = function() {
+                var msg = $('#usermsg').val();
+                if (msg.length > 0) {
+                    $('#usermsg').val('');
+                    MONO.transport.send('chat', {
+                        "message": msg
+                    });   
+                }
+            };
+            $('#send').click(sendChatMessage);
+            // add on key press
         }
     };
 
@@ -515,21 +537,21 @@ function() {
 
                 return offset;
             },
-            goTo: function(who, from, offset) {
+            goTo: function(who, from, offset, duration) {
                 var $player = $('#player' + BOARD.CONST.COLOR_TO_NUMBER[who]);
 
                 while(offset-- >= 0) {
-                    $player.animate(BOARD.animate.normalizeOffset(who, from++ % 40), BOARD.CONST.DURATION);
+                    $player.animate(BOARD.animate.normalizeOffset(who, from++ % 40), duration);
                 }
             },
             move: function(playerColor, dice1, dice2, startCell) {
                 var offset = dice1 + dice2;
-                BOARD.animate.goTo(playerColor, startCell, offset);
+                BOARD.animate.goTo(playerColor, startCell, offset, BOARD.CONST.DURATION);
 
             },
             jump: function(whoColor,  whereCell) {
                 // instant
-                BOARD.animate.goTo(whoColor, whereCell, 0);
+                BOARD.animate.goTo(whoColor, whereCell, 0, 0);
             },
         },
         houseManipulation: {
@@ -685,7 +707,6 @@ function() {
                 mortageBtn.html('unmortage');
                 // change outline
                 BOARD.draw.changeOutline(cell, 'sketch');
-
             },
             unmortage: function(cell, player) {
                 var index = BOARD.colorToIndex(player),
