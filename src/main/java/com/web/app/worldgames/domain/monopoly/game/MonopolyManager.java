@@ -77,6 +77,9 @@ public class MonopolyManager {
 		log.info("[RECIEVING MESSAGE] OF TYPE: " + type);
 		log.info("DATA: " + data);
 		Map<String, Object> response = new HashMap<String, Object>();
+		if ($(type).equals(ButtonsLabel.CHAT)) {
+			onChat(idPlayer, type, response, data);
+		}
 		if ($(type).equals("init")) {
 			onInit(idPlayer, response);
 		}
@@ -92,9 +95,6 @@ public class MonopolyManager {
 			}
 			if ($(type).equals(ButtonsLabel.BUY)) {
 				onBuy(idPlayer, type, response);
-			}
-			if ($(type).equals(ButtonsLabel.CHAT)) {
-				onChat(idPlayer, type, response, data);
 			}
 			if ($(type).equals(ButtonsLabel.PAY)) {
 				onPay(idPlayer, type, response);
@@ -123,9 +123,8 @@ public class MonopolyManager {
 
 	private void onChat(int idPlayer, String type,
 			Map<String, Object> response, String data) {
-		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 		ObjectMapper objectMapper = new ObjectMapper();
-		if (currentPlayer.getId() == idPlayer) {
+		Player currentPlayer = getPlayerById(idPlayer);
 			JsonNode tree = null;
 			try {
 				tree = objectMapper.readTree(data);
@@ -134,13 +133,14 @@ public class MonopolyManager {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			JsonNode dataBlock = tree.path("date");
-			if (dataBlock.has("message")) {
+			JsonNode dataBlock = tree.path("data");
+			//if (dataBlock.has("message")) {
 				String message = dataBlock.path("message").getTextValue();
 				response.put("type", ButtonsLabel.CHAT);
 				response.put("message","[ " + currentPlayer.getName() + " ]: "+ message);
-			}
-		}
+//			}
+			log.info("------------CHAT--------");
+			log.info(response);
 		broadcast(response);
 	}
 
