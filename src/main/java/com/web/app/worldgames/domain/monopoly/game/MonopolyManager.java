@@ -149,6 +149,7 @@ public class MonopolyManager {
 		response.put("invoker", auctionCreator.getColor());
 		rates.put("player", currentPlayer.getColor());
 		rates.put("rates", currentPlayer.getAuctionRates());
+		response.put("card", auctionCreator.getPosition());
 		if (card.isAuctionStarted() && currentPlayer.equals(auctionCreator)
 				&& auctionCreator.isCanCreateAuction()) {
 			auctionCreator.setCanCreateAuction(false);
@@ -190,9 +191,7 @@ public class MonopolyManager {
 					monopolyGame.setAuctionPrice(price);
 					log.info("-----AUCTION START PRICE----NEXT--"
 							+ getAuctionPrice());
-					// response.put("player", currentPlayer.getColor());
 					response.put("auction_price", getMaxAuctionPrice());
-					response.put("card", auctionCreator.getPosition());
 					rates.put("player", currentPlayer.getColor());
 					rates.put("rates", currentPlayer.getAuctionRates());
 					if (currentPlayer

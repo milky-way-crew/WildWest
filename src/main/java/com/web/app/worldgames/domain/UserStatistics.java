@@ -3,9 +3,9 @@ package com.web.app.worldgames.domain;
 public class UserStatistics {
 	private int statId;
 	private int userAllGames;
+	private int userAllWinGames;
 	private int userPoints;
 	private int userMoneyAmount;
-	private int userAllWinGames;
 	private String typeGame;
 	private int idUser;
 
@@ -13,15 +13,14 @@ public class UserStatistics {
 
 	}
 
-	public UserStatistics(int statId, int userAllGames, int userPoints,
-			int userMoneyAmount, int userAllWinGames, String typeGame,
-			int idUser) {
+	public UserStatistics(int statId, int userAllGames, int userAllWinGames,
+			int userPoints, int userMoneyAmount, String typeGame, int idUser) {
 		super();
 		this.statId = statId;
 		this.userAllGames = userAllGames;
+		this.userAllWinGames = userAllWinGames;
 		this.userPoints = userPoints;
 		this.userMoneyAmount = userMoneyAmount;
-		this.userAllWinGames = userAllWinGames;
 		this.typeGame = typeGame;
 		this.idUser = idUser;
 	}
