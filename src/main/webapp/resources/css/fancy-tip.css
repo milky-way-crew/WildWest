@@ -47,7 +47,7 @@
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	text-shadow: 0 0 0 #ffffff;
-	font-weight: 800;
+	/*font-weight: 800;*/
 	color: rgba(255, 255, 255, 0);
 	opacity: 0;
 	font-size: 16px;
@@ -81,6 +81,7 @@
   -ms-transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   z-index: 0;
+  
   -moz-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
   -o-transition: all 0.4s ease-in;
@@ -92,6 +93,7 @@
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
+  
 }
 
 .tip span.top {
@@ -158,8 +160,7 @@
   -transition-delay: 0.1s;
 }
 .tip:hover span.bottom {
-  /*margin-top: 500px;*/
-  bottom: -350px;
+  bottom: -370px;
 }
 .tip:hover span.left {
   left: -193px;
@@ -168,5 +169,5 @@
   right: -193px;
 }
 .tip:hover span.top {
-  top: -370px; /* was -60px */
+  top: -370px;
 }

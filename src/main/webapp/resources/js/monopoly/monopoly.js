@@ -153,12 +153,14 @@ function() {
 
                     log('Starting animation of roll event');
                     BOARD.rollDice(dice1, dice2);
-                    MONO.animate.move(color, dice1, dice2, json.was);
+                    if (json.move && json.move == true) {
+                        MONO.animate.move(color, dice1, dice2, json.was);
+                    }
                     ui.clearTooltipsIn('#game-table .cell[rel=tooltip]');
                     // $('[rel=tooltip]').tooltip('destroy'); // nasty but working
 
                     // if chance or so on
-                    if (typeof json.game_state.dice1 !== 'undefined') {
+                    if (typeof json.game_state.dice1 !== 'undefined' && json.move && json.move == true) {
                         MONO.config.position = (MONO.config.position + json.game_state.dice1) % 40;
                         log('bonus moving, chance, jail, etc');
                         BOARD.animate.goTo(color, json.game_state.was, json.game_state.dice1);
@@ -180,6 +182,9 @@ function() {
                     var msg = 'player= ' + json.player + ' bought cell with position= ' + MONO.config.position + ' now player money= ' + json.player_money;
                     chat.append(msg);
                     log(msg);
+                    if (json.player === MONO.config.color) {
+                        ui.refreshButtons(json.game_state.buttons);
+                    }
                     MONO.animate.buy(json.player, MONO.config.position);
                     MONO.animate.money(json.player, json.player_money);
                 },
@@ -268,12 +273,9 @@ function() {
                         "opacity": "0.5"
                     }, 100);
                     if(json.player === MONO.config.color) {
+                        ui.refreshButtons(json.game_state.buttons);
                         $('#done').html('done');
                         $('#done').removeClass('wait');
-
-                        $('#roll').animate({
-                            "opacity": "1"
-                        }, 100);
                     } else {
                         $('#done').html('wait <img src="resources/img/board/busy.gif"/>');
                         $('#done').addClass('wait');
@@ -537,7 +539,8 @@ function() {
                 $(houseCell).attr('src', "resources/img/board/emptyhouse.png");
             } else {
                 $(ownerCell).removeClass("color-player-" + playerNumber);
-                $('#miniCell' + cell + ' img').attr(src, '');
+                $('#miniCell' + cell + ' img').attr('src', '');
+                $('#miniCell' + cell + ' img').attr('alt', '');
                 // $(number + "MiniCell" + miniCell).removeClass("setMiniImagePlayer" + playerNumber);
             }
         },

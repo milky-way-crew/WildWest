@@ -329,53 +329,6 @@ body {
   height: 145px;
 }
 
-/*!
- * jQuery UI Accordion 1.9.1
- * http://jqueryui.com
- *
- * Copyright 2012 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Accordion#theming
- */
-.ui-accordion .ui-accordion-header {
-  display: block;
-  cursor: pointer;
-  position: relative;
-  margin-top: 2px;
-  padding: .5em .5em .5em .7em;
-  zoom: 1;
-}
-
-.ui-accordion .ui-accordion-icons {
-  padding-left: 2.2em;
-}
-
-.ui-accordion .ui-accordion-noicons {
-  padding-left: .7em;
-}
-
-.ui-accordion .ui-accordion-icons .ui-accordion-icons {
-  padding-left: 2.2em;
-}
-
-.ui-accordion .ui-accordion-header .ui-accordion-header-icon {
-  position: absolute;
-  left: .5em;
-  top: 50%;
-  margin-top: -8px;
-}
-
-.ui-accordion .ui-accordion-content {
-  padding: 1em 2.2em;
-  border-top: 0;
-  overflow: auto;
-  zoom: 1;
-}
-
-
-
 #selectable .ui-selecting {
   background: #FECA40;
 }
@@ -502,7 +455,7 @@ body {
   font-family: 'Bubblegum Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Bubblegum Sans Regular'), local('BubblegumSans-Regular'), url('../font/Bubblegum Sans.woff') format('woff'), 
+  src: url('../font/Bubblegum Sans.woff') format('woff'), 
   url(http://themes.googleusercontent.com/static/fonts/bubblegumsans/v2/Y9iTUUNz6lbl6TrvV4iws3XDLzkeTJI1q7uv6LMmp4I.woff) format('woff');
 }
 
@@ -510,7 +463,7 @@ body {
   font-family: 'Archivo Narrow';
   font-style: normal;
   font-weight: 400;
-  src: local('Archivo Narrow Regular'), local('ArchivoNarrow-Regular'), url('../font/ArchivoNarrow-Regular.woff') format('woff'),
+  src: url('../font/ArchivoNarrow-Regular.woff') format('woff'),
   url(http://themes.googleusercontent.com/static/fonts/archivonarrow/v1/DsLzC9scoPnrGiwYYMQXphdbPw3QSf9R-kE0EsQUn2A.woff) format('woff');
 }
 
