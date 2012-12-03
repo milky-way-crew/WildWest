@@ -149,8 +149,9 @@ public class MonopolyManager {
 			Map<String, Object> response, String data) {
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
+		Map<String, Object> rates = new HashMap<String, Object>();
+		Map<String, Object> highest = new HashMap<String, Object>();
 		try {
-			Map<String, Object> rates = new HashMap<String, Object>();
 			String messages = null;
 			ObjectMapper objectMapper = new ObjectMapper();
 			Player currentPlayer = getPlayerById(idPlayer);
@@ -230,11 +231,13 @@ public class MonopolyManager {
 						log.info("-----AUCTION START PRICE------"
 								+ getAuctionPrice());
 						setAuctionWinner(currentPlayer);
-						response.put("auction_price", getMaxAuctionPrice());
-						response.put("player_winner", getAuctionWinner()
-								.getColor());
-						response.put("player_money", getAuctionWinner()
-								.getMoney());
+						highest.put("who", getAuctionWinner().getColor());
+						highest.put("money", getMaxAuctionPrice());
+//						response.put("auction_price", getMaxAuctionPrice());
+//						response.put("player_winner", getAuctionWinner()
+//								.getColor());
+//						response.put("player_money", getAuctionWinner()
+//								.getMoney());
 					} else {
 						messages = "You cann't continue auction";
 						price = 0;
@@ -262,6 +265,7 @@ public class MonopolyManager {
 			state.put("buttons", buttons);
 			state.put("messages", messages);
 			response.put("rates", rates);
+			response.put("highest", highest);
 			response.put("game_state", state);
 			log.info("auction state " + response);
 		} catch (Exception e) {
