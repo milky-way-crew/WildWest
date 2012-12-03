@@ -335,6 +335,8 @@ public class MonopolyManager {
 
 	private void onDone(String type, Map<String, Object> response) {
 		Map<String, Object> turn = new HashMap<String, Object>();
+		Map<String, Object> buttons = new HashMap<String, Object>();
+		Map<String, Object> state = new HashMap<String, Object>();
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 		currentPlayer.setRolled(false);
 		log.info("[CURRENT PLAYER] : " + getMonopolyGame().getCurrentPlayer());
@@ -344,7 +346,14 @@ public class MonopolyManager {
 		log.info("[Player: ]" + currentPlayer.getName() + ":"
 				+ currentPlayer.getColor() + " can roll dice");
 		turn.put("type", ButtonsLabel.TURN);
+		buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+		buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+		buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+		buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+		buttons.put(ButtonsLabel.ROLL, currentPlayer.canRollDices());
 		turn.put("player", currentPlayer.getColor());
+		state.put("buttons", buttons);
+		turn.put("game_state", state);
 		broadcast(turn);
 	}
 
