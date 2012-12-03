@@ -42,9 +42,4 @@ public class UserServiceManager implements IUserServiceManager {
 		return userDao.findUserById(id);
 	}
 
-	@Override
-	public int insertEmptyStatistics() {
-		return userDao.insertEmptyStatistics();
-	}
-
 }

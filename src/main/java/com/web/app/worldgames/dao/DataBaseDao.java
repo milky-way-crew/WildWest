@@ -28,13 +28,11 @@ public class DataBaseDao implements IDataBaseDao {
 		sql.append("userPassword VARCHAR(80) NOT NULL, ");
 		sql.append("userEmail VARCHAR(100) NOT NULL UNIQUE, ");
 		sql.append("userNickname VARCHAR(80) NOT NULL UNIQUE, ");
-		sql.append("userStat INT(10) UNSIGNED NOT NULL UNIQUE, ");
 		sql.append("userImage VARCHAR(100) NOT NULL, ");
-		sql.append("userProf VARCHAR(45) NOT NULL DEFAULT 'player', ");
 		sql.append("userDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, ");
-		sql.append("PRIMARY KEY (userId), ");
-		sql.append("INDEX (userStat), ");
-		sql.append("FOREIGN KEY (userStat) REFERENCES userStatistics(statId)");
+		sql.append("PRIMARY KEY (userId)");
+/*		sql.append("INDEX (userId), ");
+		sql.append("FOREIGN KEY (userId) REFERENCES userStatistics(idUser)");*/
 		sql.append(") ENGINE=INNODB");
 		jdbcTemplate.execute(sql.toString());
 	}
@@ -48,38 +46,85 @@ public class DataBaseDao implements IDataBaseDao {
 		sql.append("userPoints INT(15) UNSIGNED DEFAULT NULL, ");
 		sql.append("userMoneyAmount INT(15) UNSIGNED DEFAULT NULL, ");
 		sql.append("userAllWinGames INT(10) UNSIGNED DEFAULT NULL, ");
-		sql.append("PRIMARY KEY (statId)");
+		sql.append("gameType VARCHAR(100) NOT NULL, ");
+		sql.append("idUser INT(10) UNSIGNED NOT NULL, ");
+		sql.append("PRIMARY KEY (statId), ");
+		sql.append("INDEX (idUser), ");
+		sql.append("FOREIGN KEY (idUser) REFERENCES users(userId)");
 		sql.append(") ENGINE=INNODB");
 		jdbcTemplate.execute(sql.toString());
 	}
-	
+
 	public void fillStatistics() {
 		StringBuilder sql = new StringBuilder("INSERT INTO userStatistics ");
-		//sql.append("(userAllGames, userPoints, userMoneyAmount, userAllWinGAmes) ");
-		sql.append(" VALUES()");
-		jdbcTemplate.update(sql.toString());
-		sql.delete(0, sql.length());
-			
-	}
-	public void fillUser() {
-		StringBuilder sql = new StringBuilder("INSERT INTO users ");
-		sql.append("(userLogin, userPassword, userEmail, userNickname, userStat, userImage) ");
-		sql.append(" VALUES('test', 'test', 'test@gmail.com', 'test', 1, '/img')");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('monopoly', 1)");
 		jdbcTemplate.update(sql.toString());
 		sql.delete(0, sql.length());
 		
-		sql.append("INSERT INTO users ");
-		sql.append("(userLogin, userPassword, userEmail, userNickname, userStat, userImage) ");
-		sql.append(" VALUES('doggi', 'doggi', 'doggi@doggi.doggi', 'doggi', 2, '/img')");
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('chess', 1)");
 		jdbcTemplate.update(sql.toString());
 		sql.delete(0, sql.length());
-			
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('gibbet', 1)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('drow&guess', 1)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('monopoly', 2)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('chess', 2)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('gibbet', 2)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+		
+		sql.append("INSERT INTO userStatistics ");
+		sql.append("(gameType, idUser) ");
+		sql.append(" VALUES('drow&guess', 2)");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+	}
+
+	public void fillUser() {
+		StringBuilder sql = new StringBuilder("INSERT INTO users ");
+		sql.append("(userLogin, userPassword, userEmail, userNickname, userImage) ");
+		sql.append(" VALUES('test', 'test', 'test@gmail.com', 'test', '/img')");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+
+		sql.append("INSERT INTO users ");
+		sql.append("(userLogin, userPassword, userEmail, userNickname, userImage) ");
+		sql.append(" VALUES('doggi', 'doggi', 'doggi@doggi.doggi', 'doggi', '/img')");
+		jdbcTemplate.update(sql.toString());
+		sql.delete(0, sql.length());
+
 	}
 
 	public void dropTables() {
 		log.info("Dropping tables");
-		jdbcTemplate.execute("drop table if exists users");
 		jdbcTemplate.execute("drop table if exists userStatistics");
+		jdbcTemplate.execute("drop table if exists users");
+		
 	}
 
 }
