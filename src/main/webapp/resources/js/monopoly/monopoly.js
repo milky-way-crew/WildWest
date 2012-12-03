@@ -240,6 +240,14 @@ function() {
                     console.log('[auction] event');
                     $('#myTab a:last').tab('show');
 
+                    if (json.card) {
+                        var auctionImage = $('#auction-tab img').attr('src');
+                        var receivedImage = $('#cell' + json.card + ' .town-image img').attr('src');
+                        if (auctionImage != receivedImage) {
+                            $('#auction-tab img').attr('src', receivedImage);
+                        }
+                    }
+
                     if (json.invoker) {
                         $('#auction-tab .invoker').html(json.invoker);
                         $('#auction-tab .invoker').addClass('color-player-' + BOARD.CONST.COLOR_TO_NUMBER[json.invoker]);
@@ -249,11 +257,26 @@ function() {
                         var index = BOARD.CONST.COLOR_TO_NUMBER[json.rates.player];
                         $('#auction-tab .rates .label.color-player-' + index).html(json.rates.rates + '$');
                     }
+
+                    if (json.highest) {
+                        var colorClass = 'color-player-' + BOARD.CONST.COLOR_TO_NUMBER[json.highest.who];
+
+                        $.each([1,2,3,4], function(i, number) {
+                            $('.label.price-caller').removeClass('color-player-' + number);
+                            $('.label.price').removeClass('color-player-' + number);
+                        });
+
+                        $('.label.price-caller').addClass(colorClass);
+                        $('.label.price').addClass(colorClass); 
+
+                        $('.label.price-caller').html(json.highest.who);
+                        $('.label.price').html(json.highest.money + '$');                       
+
+                    }
                     if (json.player) {
                         $('.label.price-caller').html(json.player);
                     }
                     if (json.auction_price) {
-                        $('.label.price').html(json.auction_price);
                     }
 
                 },
