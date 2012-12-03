@@ -250,9 +250,11 @@ function() {
                         });
                     }
 
-                    if (json.highest) {
+                    if (json.player) {
+                        $('.label.price-caller').html(json.player);
+                    }
+                    if (json.auction_price) {
                         $('.label.price').html(json.highest.price);
-                        $('.label.price-caller').html(json.highest.by);
                     }
 
                 },
