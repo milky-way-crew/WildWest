@@ -359,7 +359,7 @@ function() {
                     if (json.loser) {
                         chat.appendWithColor('>> Player' + ui.makeLabel(json.loser.toLowerCase(), json.loser)
                             + ' loose the game, so sad :(', '#08C');
-                    }
+                    } 
                     if (json.winner) {
                         chat.appendWithColor('>> And we have a winner! Its a ' 
                             + ui.makeLabel(json.winner.toLowerCase(), json.winner)
