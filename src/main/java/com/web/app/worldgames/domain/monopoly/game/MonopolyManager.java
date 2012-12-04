@@ -744,7 +744,7 @@ public class MonopolyManager {
 		// welcome.put("type", ButtonsLabel.CHAT);
 		// welcome.put("message", "Welcome " +
 		// getPlayerById(idPlayer).getName());
-		ButtonsAction.buttonsAction(getPlayerById(idPlayer));
+		response.put("buttons", ButtonsAction.buttonsAction(getPlayerById(idPlayer)));
 		Map<String, Object> connect = new HashMap<String, Object>();
 		connect.put("type", ButtonsLabel.LOGIC);
 		connect.put("subType", ButtonsLabel.CONNECT);
