@@ -167,8 +167,8 @@ public class MonopolyManager {
 			}
 			response.put("type", ButtonsLabel.AUCTION);
 			response.put("invoker", auctionCreator.getColor());
-			rates.put("player", currentPlayer.getColor());
-			rates.put("rates", currentPlayer.getAuctionRates());
+//			rates.put("player", currentPlayer.getColor());
+//			rates.put("rates", currentPlayer.getAuctionRates());
 			response.put("card", auctionCreator.getPosition());
 			if (card.isAuctionStarted() && currentPlayer.equals(auctionCreator)
 					&& auctionCreator.isCanCreateAuction()) {
