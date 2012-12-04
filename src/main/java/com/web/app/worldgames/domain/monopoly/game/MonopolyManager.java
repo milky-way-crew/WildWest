@@ -750,20 +750,29 @@ public class MonopolyManager {
 
 	private void onInit(int idPlayer, Map<String, Object> response) {
 		WebSocketTransport transport = WebSocketTransport.getInstance();
+		Map<String, Object> status = new HashMap<String, Object>();
 		response.put("type", ButtonsLabel.INIT);
 		response.put("color", getPlayerById(idPlayer).getColor());
 		response.put("money", getPlayerById(idPlayer).getMoney());
 		response.put("isCreator", getCreator().getId() == idPlayer);
 		response.put("board", monopolyGame.refreshBoard());
 		response.put("players", monopolyGame.refreshPlayers());
+		status.put("game_started", monopolyGame.isStarted());
+		status.put("game_isEnd", monopolyGame.isEnd());
+		response.put("game_status", status);
 		transport.sendMessage(idPlayer, response);
-
 		Map<String, Object> welcome = new HashMap<String, Object>();
-		welcome.put("type", "chat");
+		welcome.put("type", ButtonsLabel.CHAT);
 		welcome.put("message", "Welcome " + getPlayerById(idPlayer).getName());
 
-		// monopolyGame.refreshBoard();
-		// monopolyGame.refreshPlayers();
+		Map<String, Object> connect = new HashMap<String, Object>();
+		connect.put("type", ButtonsLabel.LOGIC);
+		connect.put("subType", ButtonsLabel.CONNECT);
+		connect.put("player", getPlayerById(idPlayer).getColor());
+		connect.put("position", getPlayerById(idPlayer).getPosition());
+		connect.put("money", getPlayerById(idPlayer).getMoney());
+		connect.put("nick", getPlayerById(idPlayer).getName());
+		broadcast(connect);
 		broadcast(welcome);
 	}
 
