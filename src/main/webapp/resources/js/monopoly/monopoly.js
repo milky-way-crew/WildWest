@@ -317,8 +317,12 @@ function() {
                         ui.attachTooltip('#money .label.color-player-' 
                             + BOARD.colorToIndex(color), 'nick-name -> ' + stats.nick);
                     });
-
+                    
                     MONO.animate.money(json.color, json.money);
+
+                    if (json.buttons) {
+                        ui.refreshButtons(json.buttons);
+                    }
 
                     if(MONO.config.isCreator && json.game_state && !json.game_state.game_started) {
                         $('#start').show(300);
@@ -361,6 +365,8 @@ function() {
                     if (json.subType === 'connect') {
                         playerIndex = BOARD.colorToIndex(json.player);
                         BOARD.draw.updateMoney(json.player, json.money);
+                        ui.attachTooltip('#money .label.color-player-' 
+                            + playerIndex, 'nick-name: ' + json.nick);
                         $('#player' + playerIndex).show(300);
                         chat.appendWithColor('>> Whoa, someone with nick ' 
                             + ui.makeLabel(json.nick, json.player) 
@@ -441,8 +447,6 @@ function() {
             chat.init();
 
             var hideAfterClick = {
-                // pay: true,
-                // buy: true,
                 start: true
                 // done : true
             },
