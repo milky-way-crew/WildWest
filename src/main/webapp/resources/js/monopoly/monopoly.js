@@ -50,8 +50,10 @@ function() {
             $(area).attr('data-original-title', '');
             $(area).tooltip('hide');
         },
-        makeLabel: function(content, playerColor) {
-            return '<span class="label color-player-'+ BOARD.colorToIndex(playerColor) + '">' + content + '</span>';
+        makeLabel: function(content, playerColor, color) {
+            return '<span' + (color ? (' style="background-color:' + color + ';"') : '') 
+                + ' class="label color-player-'+ BOARD.colorToIndex(playerColor) 
+                + '">' + content + '</span>';
         }
     };
     chat = {
@@ -312,14 +314,18 @@ function() {
                     $.each(json.players, function(color, stats) {
                         BOARD.animate.jump(color, stats.position);
                         MONO.animate.money(color, stats.money);
+                        ui.attachTooltip('#money .label.color-player-' 
+                            + BOARD.colorToIndex(color), 'nick-name -> ' + stats.nick);
                     });
 
                     MONO.animate.money(json.color, json.money);
 
-                    if(MONO.config.isCreator) {
-                        $('#start').show(100);
+                    if(MONO.config.isCreator && json.game_state && !json.game_state.game_started) {
+                        $('#start').show(300);
+                        $('#ready').show(300);
                     } else {
-                        $('#start').hide(100);
+                        $('#start').hide(300);
+                        $('#ready').hide(300);
                     }
                     if (!$.isEmptyObject(json.board)) {
                         $.each(json.board, function(pos, stats) {
@@ -329,12 +335,12 @@ function() {
                             }
                         });                        
                     }
-                    
                 },
                 'chat': function(json) {
                     chat.append(json.message);
                 },
                 'logic': function(json) {
+                    var playerIndex;
                     log('game-status:' + json.game_status);
                     MONO.config.game_status = json.game_status;
                     if(json.game_status === "start") {
@@ -347,11 +353,18 @@ function() {
                         chat.appendWithColor('>> Player' + ui.makeLabel(json.loser.toLowerCase(), json.loser)
                             + ' loose the game, so sad :(', '#08C');
                     }
-
                     if (json.winner) {
                         chat.appendWithColor('>> And we have a winner! Its a ' 
                             + ui.makeLabel(json.winner.toLowerCase(), json.winner)
                             + ' Woohoo! :)', '#08C');
+                    }
+                    if (json.subType === 'connect') {
+                        playerIndex = BOARD.colorToIndex(json.player);
+                        BOARD.draw.updateMoney(json.player, json.money);
+                        $('#player' + playerIndex).show(300);
+                        chat.appendWithColor('>> Whoa, someone with nick ' 
+                            + ui.makeLabel(json.nick, json.player) 
+                            + ' connected.', '#095');
                     }
                 },
                 'ready': function(json) {
@@ -390,7 +403,7 @@ function() {
                 chat.appendWithColor('>> {debug?} now <span class="label label-info color-player-' 
                         + BOARD.colorToIndex(who) 
                         +'">' + who.toLowerCase() + '</span>'
-                        + ' money is - ' + ui.makeLabel(money + '$', ''), '#08C');
+                        + ' money is - ' + ui.makeLabel(money + '$', '', '#095'), '#08C');
                 console.log('Setting money to', money, 'player=', who);
                 BOARD.draw.updateMoney(who, money);
             },
@@ -807,7 +820,12 @@ function() {
                 BOARD.sellAll(player, cell);
             },
             updateMoney: function(who, money) {
-                $("#money-player-" + BOARD.colorToIndex(who)).html(money + "$");
+                $("#money-player-" + BOARD.colorToIndex(who))
+                    .fadeOut(300)
+                    .html(money + "$")
+                    .css({'display':'inline'})
+                    .fadeIn(300)
+                ;
             },
             changeOutline: function(cell, mode) {
                 // change outline of img in cell & tip
