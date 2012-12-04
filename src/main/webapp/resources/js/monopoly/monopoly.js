@@ -318,19 +318,22 @@ function() {
                             + BOARD.colorToIndex(color), 'nick-name -> ' + stats.nick);
                     });
                     
-                    MONO.animate.money(json.color, json.money);
+                    // MONO.animate.money(json.color, json.money);
 
                     if (json.buttons) {
                         ui.refreshButtons(json.buttons);
                     }
 
-                    if(MONO.config.isCreator && json.game_state && !json.game_state.game_started) {
-                        $('#start').show(300);
+                    if(json.game_state && !json.game_state.game_started) {
+                        if (MONO.config.isCreator) {
+                            $('#start').show(300);
+                        }
                         $('#ready').show(300);
-                    } else {
+                    } else if (json.game_state && json.game_state.game_started === true) {
                         $('#start').hide(300);
                         $('#ready').hide(300);
-                    }
+                    } 
+
                     if (!$.isEmptyObject(json.board)) {
                         $.each(json.board, function(pos, stats) {
                             BOARD.buy(stats.owner, stats.position);
