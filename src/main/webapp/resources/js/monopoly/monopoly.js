@@ -324,12 +324,12 @@ function() {
                         ui.refreshButtons(json.buttons);
                     }
 
-                    if(json.game_state && !json.game_state.game_started) {
+                    if(json.game_status && !json.game_status.game_started) {
                         if (MONO.config.isCreator) {
-                            $('#start').show(300);
+                            $('#start').show(300).css({'display':'inline-block'});
                         }
-                        $('#ready').show(300);
-                    } else if (json.game_state && json.game_state.game_started === true) {
+                        $('#ready').show(300).css({'display':'inline-block'});
+                    } else if (json.game_status && json.game_status.game_started === true) {
                         $('#start').hide(300);
                         $('#ready').hide(300);
                     } 
