@@ -16,6 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
+import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 import com.web.app.worldgames.domain.monopoly.card.CardFactory;
@@ -71,6 +72,12 @@ public class MonopolyManager {
 		this.creator = creator;
 		log.info("[CREATOR] " + creator);
 		getMonopolyGame().addPlayers(creator);
+	}
+
+	public String protect(String message) {
+		message = message.replaceAll(">", "&gt;");
+		message = message.replaceAll("<", "&lt;");
+		return message;
 	}
 
 	public Map<String, ? extends Object> onMessage(int idPlayer, String type,
@@ -137,6 +144,7 @@ public class MonopolyManager {
 		}
 		JsonNode dataBlock = tree.path("data");
 		String message = dataBlock.path("message").getTextValue();
+		message = protect(message);
 		response.put("type", ButtonsLabel.CHAT);
 		response.put("message", "[ " + currentPlayer.getName() + " ]: "
 				+ message);
@@ -151,8 +159,6 @@ public class MonopolyManager {
 		Map<String, Object> highest = new HashMap<String, Object>();
 		try {
 			String messages = null;
-			auction = new Thread(new Auction(this));
-			auction.start();
 			ObjectMapper objectMapper = new ObjectMapper();
 			Player currentPlayer = getPlayerById(idPlayer);
 			currentPlayer.setAuctionRates(getMaxAuctionPrice());
@@ -169,45 +175,46 @@ public class MonopolyManager {
 			}
 			response.put("type", ButtonsLabel.AUCTION);
 			response.put("invoker", auctionCreator.getColor());
-			// rates.put("player", currentPlayer.getColor());
-			// rates.put("rates", currentPlayer.getAuctionRates());
+			rates.put("player", currentPlayer.getColor());
+			rates.put("rates", currentPlayer.getAuctionRates());
 			response.put("card", auctionCreator.getPosition());
 
 			// -************************************
 
-			// if (card.isAuctionStarted() &&
-			// currentPlayer.equals(auctionCreator)
-			// && auctionCreator.isCanCreateAuction()) {
-			// auctionCreator.setCanCreateAuction(false);
-			// Timer timer = new Timer();
-			// timer.schedule(new TimerTask() {
-			// @Override
-			// public void run() {
-			// Map<String, Object> response = new HashMap<String, Object>();
-			// SellableCard card = (SellableCard) CardFactory
-			// .chooseCard(monopolyGame.getCurrentPlayer());
-			// log.info("---------- card AUCTION----" + card.getName());
-			// log.info("----AUCTION ENDED----");
-			// log.info("--------- CHECK------"
-			// + (getAuctionPrice() != 0));
-			// if (getAuctionPrice() != 0) {
-			// card.auctionCityOrRail(getAuctionWinner(),
-			// getAuctionPrice());
-			// for (Player players : monopolyGame.playerList) {
-			// players.setAuctionRates(0);
-			// }
-			// auctionEnd = true;
-			// setMaxAuctionPrice(0);
-			// setAuctionPrice(0);
-			// }
-			// if (auctionEnd) {
-			// log.info("------------------------- MAP RETURN------");
-			// response.put("price", 0);
-			// }
-			// broadcast(response);
-			// }
-			// }, 60000);
-			// }
+			if (card.isAuctionStarted() && currentPlayer.equals(auctionCreator)
+					&& auctionCreator.isCanCreateAuction()) {
+				auctionCreator.setCanCreateAuction(false);
+				auction = new Thread(new Auction(this, card));
+				auction.start();
+				// Timer timer = new Timer();
+				// timer.schedule(new TimerTask() {
+				// @Override
+				// public void run() {
+				// Map<String, Object> response = new HashMap<String, Object>();
+				// SellableCard card = (SellableCard) CardFactory
+				// .chooseCard(monopolyGame.getCurrentPlayer());
+				// log.info("---------- card AUCTION----" + card.getName());
+				// log.info("----AUCTION ENDED----");
+				// log.info("--------- CHECK------"
+				// + (getAuctionPrice() != 0));
+				// if (getAuctionPrice() != 0) {
+				// card.auctionCityOrRail(getAuctionWinner(),
+				// getAuctionPrice());
+				// for (Player players : monopolyGame.playerList) {
+				// players.setAuctionRates(0);
+				// }
+				// auctionEnd = true;
+				// setMaxAuctionPrice(0);
+				// setAuctionPrice(0);
+				// }
+				// if (auctionEnd) {
+				// log.info("------------------------- MAP RETURN------");
+				// response.put("price", 0);
+				// }
+				// broadcast(response);
+				// }
+				// }, 60000);
+			}
 
 			// -************************************
 
@@ -876,4 +883,8 @@ public class MonopolyManager {
 			monopolyGame.setEnd(true);
 		}
 	}
+	// public static void main(String[] args) {
+	// CityCard c = new CityCard(Cities.ATHENS);
+	// Thread t = new Thread(new Auction(new MonopolyManager(monopolyGame), c));
+	// }
 }
