@@ -526,6 +526,7 @@ public class Player {
 		temp.put("color", this.getColor());
 		temp.put("position", this.getPosition());
 		temp.put("money", this.getMoney());
+		temp.put("nick", this.getName());
 		return temp;
 	}
 
