@@ -4,6 +4,9 @@
 body {
   background-image: url("../img/board/bg_wood.jpg");
 }
+#money .label {
+  display: none;
+}
 #cell41 {
   background-image: url("../img/board/bg_wood.jpg");
   border: 2px solid;
