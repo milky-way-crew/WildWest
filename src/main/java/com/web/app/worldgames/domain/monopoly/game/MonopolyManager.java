@@ -33,6 +33,7 @@ public class MonopolyManager {
 	private int auctionPrice;
 	private boolean auctionEnd = false;
 	private int maxAuctionPricePrice = 0;
+	private Thread auction = null;
 
 	public Player getAuctionWinner() {
 		return auctionWinner;
@@ -150,6 +151,8 @@ public class MonopolyManager {
 		Map<String, Object> highest = new HashMap<String, Object>();
 		try {
 			String messages = null;
+			auction = new Thread(new Auction(this));
+			auction.start();
 			ObjectMapper objectMapper = new ObjectMapper();
 			Player currentPlayer = getPlayerById(idPlayer);
 			currentPlayer.setAuctionRates(getMaxAuctionPrice());
@@ -166,41 +169,48 @@ public class MonopolyManager {
 			}
 			response.put("type", ButtonsLabel.AUCTION);
 			response.put("invoker", auctionCreator.getColor());
-//			rates.put("player", currentPlayer.getColor());
-//			rates.put("rates", currentPlayer.getAuctionRates());
+			// rates.put("player", currentPlayer.getColor());
+			// rates.put("rates", currentPlayer.getAuctionRates());
 			response.put("card", auctionCreator.getPosition());
-			if (card.isAuctionStarted() && currentPlayer.equals(auctionCreator)
-					&& auctionCreator.isCanCreateAuction()) {
-				auctionCreator.setCanCreateAuction(false);
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						Map<String, Object> response = new HashMap<String, Object>();
-						SellableCard card = (SellableCard) CardFactory
-								.chooseCard(monopolyGame.getCurrentPlayer());
-						log.info("---------- card AUCTION----" + card.getName());
-						log.info("----AUCTION ENDED----");
-						log.info("--------- CHECK------"
-								+ (getAuctionPrice() != 0));
-						if (getAuctionPrice() != 0) {
-							card.auctionCityOrRail(getAuctionWinner(),
-									getAuctionPrice());
-							for (Player players : monopolyGame.playerList) {
-								players.setAuctionRates(0);
-							}
-							auctionEnd = true;
-							setMaxAuctionPrice(0);
-							setAuctionPrice(0);
-						}
-						if (auctionEnd) {
-							log.info("------------------------- MAP RETURN------");
-							response.put("price", 0);
-						}
-						broadcast(response);
-					}
-				}, 60000);
-			}
+
+			// -************************************
+
+			// if (card.isAuctionStarted() &&
+			// currentPlayer.equals(auctionCreator)
+			// && auctionCreator.isCanCreateAuction()) {
+			// auctionCreator.setCanCreateAuction(false);
+			// Timer timer = new Timer();
+			// timer.schedule(new TimerTask() {
+			// @Override
+			// public void run() {
+			// Map<String, Object> response = new HashMap<String, Object>();
+			// SellableCard card = (SellableCard) CardFactory
+			// .chooseCard(monopolyGame.getCurrentPlayer());
+			// log.info("---------- card AUCTION----" + card.getName());
+			// log.info("----AUCTION ENDED----");
+			// log.info("--------- CHECK------"
+			// + (getAuctionPrice() != 0));
+			// if (getAuctionPrice() != 0) {
+			// card.auctionCityOrRail(getAuctionWinner(),
+			// getAuctionPrice());
+			// for (Player players : monopolyGame.playerList) {
+			// players.setAuctionRates(0);
+			// }
+			// auctionEnd = true;
+			// setMaxAuctionPrice(0);
+			// setAuctionPrice(0);
+			// }
+			// if (auctionEnd) {
+			// log.info("------------------------- MAP RETURN------");
+			// response.put("price", 0);
+			// }
+			// broadcast(response);
+			// }
+			// }, 60000);
+			// }
+
+			// -************************************
+
 			JsonNode tree = null;
 			try {
 				tree = objectMapper.readTree(data);
@@ -415,7 +425,7 @@ public class MonopolyManager {
 		state.put("buttons", buttons);
 		turn.put("game_state", state);
 		// }
-		 broadcast(turn);
+		broadcast(turn);
 	}
 
 	private void onMortage(int idPlayer, String type,
@@ -738,7 +748,8 @@ public class MonopolyManager {
 		status.put("game_started", monopolyGame.isStarted());
 		status.put("game_isEnd", monopolyGame.isEnd());
 		response.put("game_status", status);
-		response.put("buttons", ButtonsAction.buttonsAction(getPlayerById(idPlayer)));
+		response.put("buttons",
+				ButtonsAction.buttonsAction(getPlayerById(idPlayer)));
 		transport.sendMessage(idPlayer, response);
 		// Map<String, Object> welcome = new HashMap<String, Object>();
 		// welcome.put("type", ButtonsLabel.CHAT);
