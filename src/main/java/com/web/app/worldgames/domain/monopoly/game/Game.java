@@ -25,7 +25,7 @@ public class Game {
 	public List<Player> playerList = new ArrayList<Player>();
 	public List<Player> loserList = new ArrayList<Player>();
 	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
-	private int auctionPrice;
+	//private int auctionPrice;
 
 	private static final Logger log = Logger.getLogger(Game.class);
 
@@ -76,13 +76,13 @@ public class Game {
 //		return gameBoard;
 //	}
 
-	public int getAuctionPrice() {
-		return auctionPrice;
-	}
-
-	public void setAuctionPrice(int auctionPrice) {
-		this.auctionPrice = auctionPrice;
-	}
+//	public int getAuctionPrice() {
+//		return auctionPrice;
+//	}
+//
+//	public void setAuctionPrice(int auctionPrice) {
+//		this.auctionPrice = auctionPrice;
+//	}
 
 	public List<SellableCard> getActiveBoard() {
 		return activeBoard;

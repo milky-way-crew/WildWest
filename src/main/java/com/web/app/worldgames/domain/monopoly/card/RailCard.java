@@ -165,6 +165,7 @@ public class RailCard extends SellableCard {
 			player.listPropertyForSell();
 			player.setMoney(player.getMoney() - price);
 			player.addNumberOfRails();
+			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
 		} 
 //		else {
 //			log.info("is owner");

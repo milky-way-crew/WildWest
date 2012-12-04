@@ -30,7 +30,8 @@ public class MonopolyManager {
 	private Game monopolyGame;
 	private User creator;
 	private Player auctionWinner;
-	private int auctionPrice = 0;
+	private int auctionPrice;
+	private boolean auctionEnd = false;
 	private int maxAuctionPricePrice = 0;
 
 	public Player getAuctionWinner() {
@@ -134,31 +135,32 @@ public class MonopolyManager {
 			e.printStackTrace();
 		}
 		JsonNode dataBlock = tree.path("data");
-		// if (dataBlock.has("message")) {
 		String message = dataBlock.path("message").getTextValue();
 		response.put("type", ButtonsLabel.CHAT);
 		response.put("message", "[ " + currentPlayer.getName() + " ]: "
 				+ message);
-		// }
-		log.info("------------CHAT--------");
-		log.info(response);
 		broadcast(response);
 	}
 
 	private void onAuction(int idPlayer, String type,
 			Map<String, Object> response, String data) {
+		// int priceAuction=0;
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
 		Map<String, Object> rates = new HashMap<String, Object>();
 		Map<String, Object> highest = new HashMap<String, Object>();
 		try {
+
 			String messages = null;
 			ObjectMapper objectMapper = new ObjectMapper();
 			Player currentPlayer = getPlayerById(idPlayer);
+			currentPlayer.setAuctionRates(getMaxAuctionPrice());
 			SellableCard card = (SellableCard) CardFactory
 					.chooseCard(monopolyGame.getCurrentPlayer());
 			Player auctionCreator = monopolyGame.getCurrentPlayer();
 			auctionCreator.setAuctionCreator(true);
+			log.info(" ---------------player-------" + currentPlayer.getColor()
+					+ "set start rate:::::" + currentPlayer.getAuctionRates());
 			// System.out.println("info::"
 			// + (currentPlayer.equals(auctionCreator) && !card
 			// .isAuctionStarted()));
@@ -180,25 +182,31 @@ public class MonopolyManager {
 					&& auctionCreator.isCanCreateAuction()) {
 				auctionCreator.setCanCreateAuction(false);
 				Timer timer = new Timer();
-				// long start = new Date().getTime();
-				// response.put("start_Auction_time",);
 				timer.schedule(new TimerTask() {
-
 					@Override
 					public void run() {
+						Map<String, Object> response = new HashMap<String, Object>();
 						SellableCard card = (SellableCard) CardFactory
 								.chooseCard(monopolyGame.getCurrentPlayer());
 						log.info("---------- card AUCTION----" + card.getName());
 						log.info("----AUCTION ENDED----");
-						if (getMaxAuctionPrice() != 0) {
+						log.info("--------- CHECK------"
+								+ (getAuctionPrice() != 0));
+						if (getAuctionPrice() != 0) {
 							card.auctionCityOrRail(getAuctionWinner(),
-									getMaxAuctionPrice());
+									getAuctionPrice());
 							for (Player players : monopolyGame.playerList) {
 								players.setAuctionRates(0);
 							}
-							monopolyGame.setAuctionPrice(0);
+							auctionEnd = true;
+							setMaxAuctionPrice(0);
+							setAuctionPrice(0);
 						}
-						log.info("MAX PRICE === " + getMaxAuctionPrice());
+						if (auctionEnd) {
+							log.info("------------------------- MAP RETURN------");
+							response.put("price", 0);
+						}
+						broadcast(response);
 					}
 				}, 60000);
 			}
@@ -214,47 +222,40 @@ public class MonopolyManager {
 
 			if (dataBlock.has("price")) {
 				int price = dataBlock.path("price").getIntValue();
-				price = price + getAuctionPrice();
-				if (price > monopolyGame.getAuctionPrice()) {
-					currentPlayer.setAuctionRates(price);
-					log.info("-----AUCTION START PRICE------"
-							+ monopolyGame.getAuctionPrice());
-					monopolyGame.setAuctionPrice(price);
-					log.info("-----AUCTION START PRICE----NEXT--"
-							+ getAuctionPrice());
+				// setMaxAuctionPrice(price);
+				setAuctionPrice(price);
+				log.info("auction price::::" + getAuctionPrice());
+				log.info("check:::::::::::::::::::::::"
+						+ (currentPlayer.getAuctionRates() > getAuctionPrice()));
+				if (currentPlayer.getAuctionRates() > getAuctionPrice()) {
+					setMaxAuctionPrice(currentPlayer.getAuctionRates() + 50);
+					log.info("max::::" + getMaxAuctionPrice());
+					currentPlayer.setAuctionRates(getMaxAuctionPrice());
+					log.info("rate:::::player"
+							+ currentPlayer.getAuctionRates() + ":::"
+							+ currentPlayer.getColor());
 					rates.put("player", currentPlayer.getColor());
 					rates.put("rates", currentPlayer.getAuctionRates());
-					if (currentPlayer
-							.canAuction(monopolyGame.getAuctionPrice())) {
-						// monopolyGame.setAuctionPrice(currentPlayer.getAuctionRates());
-						setMaxAuctionPrice(getAuctionPrice());
-						log.info("-----AUCTION START PRICE------"
-								+ getAuctionPrice());
+					log.info("chect can auction:::"
+							+ (currentPlayer.canAuction(getMaxAuctionPrice())));
+//					if (currentPlayer.canAuction(getMaxAuctionPrice())) {
 						setAuctionWinner(currentPlayer);
 						highest.put("who", getAuctionWinner().getColor());
 						highest.put("money", getMaxAuctionPrice());
-//						response.put("auction_price", getMaxAuctionPrice());
-//						response.put("player_winner", getAuctionWinner()
-//								.getColor());
-//						response.put("player_money", getAuctionWinner()
-//								.getMoney());
-					} else {
-						messages = "You cann't continue auction";
-						price = 0;
-					}
-					log.info(" NOW PRICE======"
-							+ monopolyGame.getAuctionPrice());
-				} else {
-					monopolyGame
-							.setAuctionPrice(monopolyGame.getAuctionPrice());
-					log.info("PRICE IS LESS=========");
-					messages = "If you want to continue auction set high price";
+//					}
+					// else {
+					// messages = "You cann't continue auction";
+					// price = 0;
+					// }
+				} else if (currentPlayer.getAuctionRates() <= getAuctionPrice()) {
+					setMaxAuctionPrice(price);
 				}
+				log.info(" NOW PRICE======" + getMaxAuctionPrice());
 			} else {
 				messages = "No player wants to buy this object";
 				log.info("no price: ");
-				// response.put("", value)
 				setMaxAuctionPrice(0);
+				setAuctionPrice(0);
 			}
 			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
 			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
@@ -284,7 +285,6 @@ public class MonopolyManager {
 		if (currentPlayer.getId() == idPlayer) {
 			if (currentPlayer.canBuild()) {
 				response.put("type", ButtonsLabel.BUILD);
-				// response.put("player_money", currentPlayer.getMoney());
 				JsonNode tree = null;
 				try {
 					tree = objectMapper.readTree(data);
