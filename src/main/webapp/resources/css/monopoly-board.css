@@ -4,8 +4,11 @@
 body {
   background-image: url("../img/board/bg_wood.jpg");
 }
-#money .label {
+#ready, #start {
   display: none;
+}
+#money .label {
+  display: inline;
 }
 #cell41 {
   background-image: url("../img/board/bg_wood.jpg");
