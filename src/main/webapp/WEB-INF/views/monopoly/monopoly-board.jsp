@@ -30,7 +30,16 @@
 <!-- NO MORE GREEN BACKGROUND COLORS -->
 <!-- <body bgcolor="#CCE7D0"> --> 
 <body>
-	<!-- <div id="main-container"> -->
+	<div class="navbar navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="./home">#home</a>
+			<ul class="nav">
+				<li class="active"><a href="#"></a></li>
+				<li><a href="./chess">Chess rooms</a></li>
+				<li><a href="#">Blablabla</a></li>
+			</ul>
+		</div>
+	</div>
 	<div class="container" style=" width: 1230px; ">
 		<table id="game-table" border="1" rules="all">
 			<tr>
@@ -353,7 +362,7 @@
 										<table id="info-table-1">
 											<tr>
 												<td class="mini brown" id="miniCell2"><img src="" alt=""/></td>
-												<td class="mini brown" id="miniCell4"></td>
+												<td class="mini brown" id="miniCell4"><img src="" alt=""/></td>
 											</tr>
 											<tr height="5px"></tr>
 											<tr>
@@ -405,16 +414,6 @@
 												<td class="mini gray" id="miniCell36"><img src="" alt=""/></td>
 											</tr>
 										</table>
-
-										<!-- ************* -->
-										<!-- [Roll dices]  -->
-										<!-- ************* -->
-										<div id="roll-dice">
-											<img id="diceImg1" class="dice" src="resources/img/board/die1.gif" width="50px"
-											height="50px"> </img> <img id="diceImg2" class="dice"
-											src="resources/img/board/die1.gif" width="50px" height="50px">
-										</img>
-									</div>
 								</div>
 							</div>
 							<div class="tab-pane fade in " id="chat-tab">		
@@ -461,6 +460,17 @@
 							</div>
 							</div>
 						</div>
+
+										<!-- ************* -->
+										<!-- [Roll dices]  -->
+										<!-- ************* -->
+										<div id="roll-dice">
+											<img id="diceImg1" class="dice" src="resources/img/board/die1.gif" width="50px"
+											height="50px"> </img> <img id="diceImg2" class="dice"
+											src="resources/img/board/die1.gif" width="50px" height="50px">
+										</img>
+									</div>
+
 						<!-- ************** -->
 						<!-- [Menu buttons] -->
 						<!-- ************** -->
@@ -1173,8 +1183,8 @@
 						</div>
 					</div>
 				</td>
-				<td class="cell southeast" id="cell1" style=" text-align: center; ">
-					<span class="label label-info" style=" font-size: 26px; ">Start cell</span>
+				<td class="cell southeast" id="cell1">
+					<span class="label label-info" style=" font-size: 65px;  ">Start</span>
 					<img id="player1" src="resources/img/board/player-1.png"></img>
 					<img id="player2" src="resources/img/board/player-2.png"></img>
 					<img id="player3" src="resources/img/board/player-3.png"></img>

@@ -1,6 +1,6 @@
 /*jslint browser: true*/
 /*global jQuery, $, WebSocket, BOARD, console, prompt, bootbox*/
-var BOARD = {};
+var BOARD;
 
 $(document).ready(
 
@@ -49,6 +49,9 @@ function() {
         clearTooltipsIn: function(area) {
             $(area).attr('data-original-title', '');
             $(area).tooltip('hide');
+        },
+        makeLabel: function(content, playerColor) {
+            return '<span class="label color-player-'+ BOARD.colorToIndex(playerColor) + '">' + content + '</span>';
         }
     };
     chat = {
@@ -58,7 +61,23 @@ function() {
             chat.$chat = $('#chat');
         },
         append: function(what) {
+            chat.checkNewMessages();
             chat.$chat.prepend('<li>' + what + '</li>');
+        },
+        appendWithColor: function(what, color) {
+            chat.checkNewMessages();
+            chat.$chat.prepend('<li style="color:' + color + ';">' + what + "</li>");
+        },
+        checkNewMessages: function() {
+            if (!$('a[href=#chat-tab]').parent().hasClass('active')) {
+                var title = $('a[href=#chat-tab]').html(),
+                    newTitle = 1;
+                title = title.replace(new RegExp('\\D', 'g'),'');
+                if (title.length > 0) {
+                    newTitle = parseInt(title, 10) + 1;
+                }
+                $('a[href=#chat-tab]').html('Chat ' + ui.makeLabel(newTitle, '')   );
+            }
         }
     };
     MONO = {
@@ -117,8 +136,9 @@ function() {
             },
             onMessage: function(event) {
                 console.log("Received message: ", event.data);
+                var json;
                 try {
-                    var json = $.parseJSON(event.data);
+                    json = $.parseJSON(event.data);
                 } catch(err) {
                     console.error('Not object Received', err);
                     return;
@@ -141,7 +161,9 @@ function() {
                         buttons = json.game_state.buttons,
                         color = json.game_state.player,
                         money = json.game_state.player_money,
-                        message = json.game_state.messages;
+                        message = json.game_state.messages,
+                        d1 = json.game_state.dice1 || 0, 
+                        d2 = json.game_state.dice2 || 0;
                     // Think about go-card
                     log('Was money=' + MONO.config.money);
                     log('After move money=' + money);
@@ -152,20 +174,23 @@ function() {
                     log('position on board [was] -> ' + json.was);
                     log('position on board [now] -> ' + MONO.config.position);
 
+                    chat.appendWithColor('>> ' + ui.makeLabel(color.toLowerCase(), color) 
+                        + ' rolled [' + dice1 + ' : ' + dice2 
+                        + '] and moving to ' 
+                        + ui.makeLabel($('#cell' + MONO.config.position + ' .town-title').html(), '') 
+                        + ' on position #' + MONO.config.position
+                    ,'#08C');
+
                     log('Starting animation of roll event');
                     if (typeof dice1 !== 'undefined' && typeof dice2 !== 'undefined') {
                         BOARD.rollDice(dice1, dice2);
                     } 
-                    if (json.move && json.move == true) {
+                    if (json.move && json.move === true) {
                         MONO.animate.move(color, dice1, dice2, json.was);
                         // if chance or so on
                         if (typeof json.game_state.dice1 !== 'undefined') {
                             log('bonus moving, chance, jail, etc');
-                            var d1 = json.game_state.dice1 || 0 , 
-                                d2 = json.game_state.dice2 || 0 ;
-
                             MONO.config.position = (MONO.config.position + d1 + d2) % 40;
-
                             BOARD.animate.goTo(color, json.game_state.was, d1 + d2);
                             if (d1 > 0 && d2 > 0) {
                                 BOARD.rollDice(d1, d2);
@@ -173,7 +198,6 @@ function() {
                         }
                     }
                     ui.clearTooltipsIn('#game-table .cell[rel=tooltip]');
-                    // $('[rel=tooltip]').tooltip('destroy'); // nasty but working
                     // this player moves
                     if(MONO.config.color === color) {
                         ui.refreshButtons(buttons);
@@ -183,13 +207,16 @@ function() {
                             $('#cell' + MONO.config.position).tooltip('show');
                         }
                     }
-
-                    // chat.append("player[" + color + "] is on cell: " + json.cell.name);
                 },
                 'buy': function(json) {
-                    var msg = 'player= ' + json.player + ' bought cell with position= ' + MONO.config.position + ' now player money= ' + json.player_money;
-                    chat.append(msg);
-                    log(msg);
+                    var cellTitle = $('#cell' + MONO.config.position + ' .town-title').html();
+
+                    chat.appendWithColor('>> Player <span class="label label-info color-player-' 
+                        + BOARD.colorToIndex(json.player) 
+                        +'">' + json.player.toLowerCase() + '</span>'
+                        + ' bought '+ ui.makeLabel(cellTitle, '') 
+                        +' on cell#' + MONO.config.position, '#08C');
+
                     if (json.player === MONO.config.color) {
                         ui.refreshButtons(json.game_state.buttons);
                     }
@@ -201,7 +228,7 @@ function() {
                     MONO.animate.pay(json.player, json.player_money);
                 },
                 'handler': function(json, draw, animate, list) {
-                    var pos, buttons;
+                    var pos, buttons, onlyNumbers;
                     buttons = json.game_state.buttons;
                     MONO.animate.money(json.player, json.player_money);
                     if(json.player === MONO.config.color) {
@@ -211,7 +238,7 @@ function() {
                         draw(json.position, json.player);
                     }
                     if(json.player === MONO.config.color && list) {
-                        var onlyNumbers = $.map(Object.keys(list), function(e) {
+                        onlyNumbers = $.map(Object.keys(list), function(e) {
                             return parseInt(e, 10);
                         });
                         animate(json.player, onlyNumbers, list);
@@ -238,28 +265,28 @@ function() {
                 },
                 'auction': function(json) {
                     console.log('[auction] event');
+                    var auctionImage, receivedImage, colorClass;
                     $('#myTab a:last').tab('show');
 
                     if (json.card) {
-                        var auctionImage = $('#auction-tab img').attr('src');
-                        var receivedImage = $('#cell' + json.card + ' .town-image img').attr('src');
-                        if (auctionImage != receivedImage) {
+                        auctionImage = $('#auction-tab img').attr('src');
+                        receivedImage = $('#cell' + json.card + ' .town-image img').attr('src');
+                        if (auctionImage !== receivedImage) {
                             $('#auction-tab img').attr('src', receivedImage);
                         }
                     }
 
                     if (json.invoker) {
                         $('#auction-tab .invoker').html(json.invoker);
-                        $('#auction-tab .invoker').addClass('color-player-' + BOARD.CONST.COLOR_TO_NUMBER[json.invoker]);
+                        $('#auction-tab .invoker').addClass('color-player-' + BOARD.colorToIndex(json.invoker));
                     }
 
                     if (json.rates) {
-                        var index = BOARD.CONST.COLOR_TO_NUMBER[json.rates.player];
-                        $('#auction-tab .rates .label.color-player-' + index).html(json.rates.rates + '$');
+                        $('#auction-tab .rates .label.color-player-' + BOARD.colorToIndex(json.rates.player)).html(json.rates.rates + '$');
                     }
 
                     if (json.highest && !$.isEmptyObject(json.highest)) {
-                        var colorClass = 'color-player-' + BOARD.CONST.COLOR_TO_NUMBER[json.highest.who];
+                        colorClass = 'color-player-' + BOARD.CONST.COLOR_TO_NUMBER[json.highest.who];
 
                         $.each([1,2,3,4], function(i, number) {
                             $('.label.price-caller').removeClass('color-player-' + number);
@@ -276,9 +303,6 @@ function() {
                     if (json.player) {
                         $('.label.price-caller').html(json.player);
                     }
-                    if (json.auction_price) {
-                    }
-
                 },
                 'init': function(json) {
                     console.log('[init] event');
@@ -317,13 +341,30 @@ function() {
                         $('#ready').hide(100);
                         $('#start').hide(100);
                         $('#roll').animate({"opacity":"1"}, 1000);
+                        chat.appendWithColor('>> Sooo, game is started. Good-luck to all!', '#08A');
+                    }
+                    if (json.loser) {
+                        chat.appendWithColor('>> Player' + ui.makeLabel(json.loser.toLowerCase(), json.loser)
+                            + ' loose the game, so sad :(', '#08C');
+                    }
+
+                    if (json.winner) {
+                        chat.appendWithColor('>> And we have a winner! Its a ' 
+                            + ui.makeLabel(json.winner.toLowerCase(), json.winner)
+                            + ' Woohoo! :)', '#08C');
                     }
                 },
                 'ready': function(json) {
-                    chat.append(json.player + ' is ready=' + json.ready);
+                    chat.appendWithColor('>> Player <span class="label label-info color-player-' 
+                        + BOARD.colorToIndex(json.player) 
+                        +'">' + json.player.toLowerCase() + '</span>'
+                        + ' is ready to start.', '#08C');
                 },
                 'turn': function(json) {
-                    chat.append(json.player + ' turn=true');
+                    chat.appendWithColor('>> ' //It is a turn of player with color - '
+                        +' <span class="label label-info color-player-' 
+                        + BOARD.colorToIndex(json.player) 
+                        +'">' + json.player.toLowerCase() + '</span> hey its your turn.', '#08C');
 
                     $('button').animate({
                         "opacity": "0.5"
@@ -338,7 +379,7 @@ function() {
                         $('#done').html('done');
                         $('#done').removeClass('wait');
                     } else {
-                        $('#done').html('wait <img src="resources/img/board/busy.gif"/>');
+                        $('#done').html(json.player + ' moving <img src="resources/img/board/busy.gif"/>');
                         $('#done').addClass('wait');
                     }
                 }
@@ -346,13 +387,15 @@ function() {
         },
         animate: {
             money: function(who, money) {
+                chat.appendWithColor('>> {debug?} now <span class="label label-info color-player-' 
+                        + BOARD.colorToIndex(who) 
+                        +'">' + who.toLowerCase() + '</span>'
+                        + ' money is - ' + ui.makeLabel(money + '$', ''), '#08C');
                 console.log('Setting money to', money, 'player=', who);
                 BOARD.draw.updateMoney(who, money);
             },
             move: function(who, d1, d2, was) {
                 log('Animating [move]');
-                console.log('Moving to: ' + (d1 + d2));
-                chat.append('Moving ' + who + ' to offset: ' + (d1 + d2));
                 BOARD.animate.move(who, d1, d2, was);
             },
             buy: function(who, position) {
@@ -399,6 +442,15 @@ function() {
                         }
                         MONO.transport.send(id, {});
                     });
+                },
+                sendChatMessage = function() {
+                    var msg = $('#usermsg').val();
+                    if (msg.length > 0) {
+                        $('#usermsg').val('');
+                        MONO.transport.send('chat', {
+                            "message": msg
+                        });   
+                    }
                 };
             $('#controls button').each(initButton);
             $('#controls2 button').each(initButton);
@@ -413,8 +465,8 @@ function() {
 
             $('#up10').click(function() {
                 var price = $('#auction-tab .rates .label.color-player-' 
-                    + BOARD.CONST.COLOR_TO_NUMBER[MONO.config.color]).html();
-                var newPrice = parseInt(price, 10) + 10;
+                    + BOARD.CONST.COLOR_TO_NUMBER[MONO.config.color]).html(),
+                    newPrice = parseInt(price, 10) + 10;
                 if (newPrice) {
                     MONO.transport.send('auction', {
                         "price": newPrice
@@ -424,29 +476,25 @@ function() {
 
             $('#up50').click(function() {
                 var price = $('#auction-tab .rates .label.color-player-' 
-                    + BOARD.CONST.COLOR_TO_NUMBER[MONO.config.color]).html();
-                var newPrice = parseInt(price, 10) + 50;
+                    + BOARD.CONST.COLOR_TO_NUMBER[MONO.config.color]).html(),
+                    newPrice = parseInt(price, 10) + 50;
                 if (newPrice) {
                     MONO.transport.send('auction', {
                         "price": newPrice
                     });                    
                 }
             });
-            var sendChatMessage = function() {
-                var msg = $('#usermsg').val();
-                if (msg.length > 0) {
-                    $('#usermsg').val('');
-                    MONO.transport.send('chat', {
-                        "message": msg
-                    });   
-                }
-            };
+
             $('#send').click(sendChatMessage);
             $("#usermsg").keypress(function(event) {
-                if ( event.which == 13 ) {
+                if ( event.which === 13 ) {
                     sendChatMessage();
                     event.preventDefault();
                 }
+            });
+
+            $('a[href=#chat-tab]').click(function() {
+                $(this).html('Chat');
             });
         }
     };
@@ -557,9 +605,9 @@ function() {
                     BOARD.CONST.OFFSET_MAP[who].up(offset);
                 } else if(cellId > 31 && cellId <= 40) {
                     BOARD.CONST.OFFSET_MAP[who].right(offset);
-                } else if(cellId % 10 == 1) {
+                } else if(cellId % 10 === 1) {
                     BOARD.CONST.OFFSET_MAP[who].corner(offset);
-                } else if (cellId == 0) {
+                } else if (cellId === 0) {
                     offset = $('#cell40').offset();
                     BOARD.CONST.OFFSET_MAP[who].right(offset);
                 } else {
@@ -571,8 +619,10 @@ function() {
             goTo: function(who, from, offset) {
                 var $player = $('#player' + BOARD.CONST.COLOR_TO_NUMBER[who]);
 
-                while(offset-- >= 0) {
-                    $player.animate(BOARD.animate.normalizeOffset(who, from++ % 40), BOARD.CONST.DURATION);
+                while(offset >= 0) {
+                    $player.animate(BOARD.animate.normalizeOffset(who, from % 40), BOARD.CONST.DURATION);
+                    offset -= 1;
+                    from += 1;
                 }
             },
             move: function(playerColor, dice1, dice2, startCell) {
@@ -583,18 +633,18 @@ function() {
             jump: function(whoColor,  whereCell) {
                 // instant
                 BOARD.animate.goTo(whoColor, whereCell, 0);
-            },
+            }
         },
         houseManipulation: {
             buildHouse: function(houseCell) {
                 var $houseCell = $("#cell" + houseCell + ' .house img'),
                     newHouse = "resources/img/board/emptyhouse.png";
                 // '(\\d+)\\..{2,4}$' regex for cath index of house, TODO rewrite
-                if($houseCell.attr('src') == "resources/img/board/emptyhouse.png") {
+                if($houseCell.attr('src') === "resources/img/board/emptyhouse.png") {
                     newHouse = 'resources/img/board/house1.png';
-                } else if($houseCell.attr('src') == "resources/img/board/house1.png") {
+                } else if($houseCell.attr('src') === "resources/img/board/house1.png") {
                     newHouse = 'resources/img/board/house2.png';
-                } else if($houseCell.attr('src') == "resources/img/board/house2.png") {
+                } else if($houseCell.attr('src') === "resources/img/board/house2.png") {
                     newHouse = 'resources/img/board/house3.png';
                 } else {
                     newHouse = 'resources/img/board/big_hotel.png';
@@ -608,13 +658,13 @@ function() {
             sellHouse: function(houseCell) {
                 var $houseCell = $("#cell" + houseCell + ' .house img'),
                     newHouse = "resources/img/board/emptyhouse.png";
-                if($houseCell.attr('src') == "resources/img/board/big_hotel.png") {
+                if($houseCell.attr('src') === "resources/img/board/big_hotel.png") {
                     newHouse = 'resources/img/board/house3.png';
-                } else if($houseCell.attr('src') == "resources/img/board/house3.png") {
+                } else if($houseCell.attr('src') === "resources/img/board/house3.png") {
                     newHouse = 'resources/img/board/house2.png';
-                } else if($houseCell.attr('src') == "resources/img/board/house2.png") {
+                } else if($houseCell.attr('src') === "resources/img/board/house2.png") {
                     newHouse = 'resources/img/board/house1.png';
-                } else if($houseCell.attr('src') == "resources/img/board/house1.png") {
+                } else if($houseCell.attr('src') === "resources/img/board/house1.png") {
                     newHouse = "resources/img/board/emptyhouse.png";
                 }
                 $houseCell.fadeOut(300, function() {
@@ -624,31 +674,30 @@ function() {
             }
         },
         sellAll: function(player, cell) {
-            var houseCell = "#cell" + cell + " .house img";
-            var ownerCell = "#cell" + cell + " .owner";
-            var playerNumber = BOARD.colorToIndex(player);
+            var houseCell = "#cell" + cell + " .house img",
+                ownerCell = "#cell" + cell + " .owner",
+                playerNumber = BOARD.colorToIndex(player);
 
-            if($(houseCell).attr('src') == "resources/img/board/big_hotel.png") {
+            if($(houseCell).attr('src') === "resources/img/board/big_hotel.png") {
                 $(houseCell).attr('src', 'resources/img/board/house3.png');
-            } else if($(houseCell).attr('src') == "resources/img/board/house3.png") {
+            } else if($(houseCell).attr('src') === "resources/img/board/house3.png") {
                 $(houseCell).attr('src', 'resources/img/board/house2.png');
-            } else if($(houseCell).attr('src') == "resources/img/board/house2.png") {
+            } else if($(houseCell).attr('src') === "resources/img/board/house2.png") {
                 $(houseCell).attr('src', 'resources/img/board/house1.png');
-            } else if($(houseCell).attr('src') == "resources/img/board/house1.png") {
+            } else if($(houseCell).attr('src') === "resources/img/board/house1.png") {
                 $(houseCell).attr('src', "resources/img/board/emptyhouse.png");
             } else {
                 $(ownerCell).removeClass("color-player-" + playerNumber);
-                $('#miniCell' + cell + ' img').attr('src', '');
-                $('#miniCell' + cell + ' img').attr('alt', '');
-                // $(number + "MiniCell" + miniCell).removeClass("setMiniImagePlayer" + playerNumber);
+                $('#miniCell' + cell + ' img').attr({'src': '', 'alt':''});
             }
         },
-        hightlightCells: function(cellArr, player, _class) {
+        hightlightCells: function(cellArr, player, cls) {
             $.each(cellArr, function(i, e) {
-                $('#miniCell' + e).addClass(_class);
+                $('#miniCell' + e).addClass(cls);
             });
         },
         handler: function(player, messages, messageType, visibleClass) {
+            $('#myTab [href=#minimap-tab]').tab('show');
             BOARD.hightlightCells(Object.keys(messages), player, visibleClass);
 
             $.each(messages, function(index, message) {
@@ -667,7 +716,7 @@ function() {
                         });
 
                         $('.' + visibleClass).filter(function(i, e) {
-                            return $selected.attr('id') != $(e).attr('id');
+                            return $selected.attr('id') !== $(e).attr('id');
                         }).each(function(i, e) {
                             $(e).removeClass(visibleClass);
                         });
@@ -698,7 +747,8 @@ function() {
         buy: function(player, cellId) {
             var playerNumber = BOARD.colorToIndex(player), 
                 $bigCell = $('#cell' + cellId), 
-                $miniCell = $('#miniCell' + cellId);
+                $miniCell = $('#miniCell' + cellId),
+                notifier;
             // change color of big cell
             $bigCell.find('.owner').addClass("color-player-" + playerNumber, 1000);
             // add img to mini-map
@@ -711,7 +761,7 @@ function() {
                 $bigCell.find('.tip-controls').show(100);
                 $bigCell.find('.tip-controls .mortage').unbind('click');
                 $bigCell.find('.tip-controls .build').unbind('click');
-                var notifier = function() {
+                notifier = function() {
                     var pos = parseInt($bigCell.attr('id').match(/\d+$/)[0], 10);
 
                     MONO.transport.send($(this).html(), {
@@ -725,7 +775,6 @@ function() {
         colorToIndex: function(player) {
             return BOARD.CONST.COLOR_TO_NUMBER[player];
         },
-
         draw: {
             mortage: function(cell, player) {
                 var index = BOARD.colorToIndex(player), 
@@ -738,7 +787,6 @@ function() {
                 mortageBtn.html('unmortage');
                 // change outline
                 BOARD.draw.changeOutline(cell, 'sketch');
-
             },
             unmortage: function(cell, player) {
                 var index = BOARD.colorToIndex(player),
@@ -769,7 +817,7 @@ function() {
 
                 console.log('changing outline');
                 if (mode === 'sketch') {
-                    if (path.indexOf('_outline.svg') == -1) {
+                    if (path.indexOf('_outline.svg') === -1) {
                         path = path.replace('.svg', '_outline.svg');
                     }
                 } else if (mode === 'full') {                      
@@ -784,7 +832,11 @@ function() {
                 });
             }
         },
-
+        cancelAllEffects: function() {
+            $('.visibleCell').removeClass('visibleCell');
+            $('.unmortageSelect').removeClass('unmortageSelect');
+            $('#info td').unbind('click');
+        },
         init: function() {
             console.log('Init -> Board');
             $.each(['BROWN', 'GREEN', 'RED', 'VIOLET'], function(i, who) {
