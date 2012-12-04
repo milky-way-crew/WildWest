@@ -149,7 +149,6 @@ public class MonopolyManager {
 		Map<String, Object> rates = new HashMap<String, Object>();
 		Map<String, Object> highest = new HashMap<String, Object>();
 		try {
-
 			String messages = null;
 			ObjectMapper objectMapper = new ObjectMapper();
 			Player currentPlayer = getPlayerById(idPlayer);
@@ -739,12 +738,12 @@ public class MonopolyManager {
 		status.put("game_started", monopolyGame.isStarted());
 		status.put("game_isEnd", monopolyGame.isEnd());
 		response.put("game_status", status);
+		response.put("buttons", ButtonsAction.buttonsAction(getPlayerById(idPlayer)));
 		transport.sendMessage(idPlayer, response);
 		// Map<String, Object> welcome = new HashMap<String, Object>();
 		// welcome.put("type", ButtonsLabel.CHAT);
 		// welcome.put("message", "Welcome " +
 		// getPlayerById(idPlayer).getName());
-		response.put("buttons", ButtonsAction.buttonsAction(getPlayerById(idPlayer)));
 		Map<String, Object> connect = new HashMap<String, Object>();
 		connect.put("type", ButtonsLabel.LOGIC);
 		connect.put("subType", ButtonsLabel.CONNECT);
