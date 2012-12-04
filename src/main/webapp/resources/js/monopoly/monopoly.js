@@ -329,12 +329,12 @@ function() {
                             }
                         });                        
                     }
-                    
                 },
                 'chat': function(json) {
                     chat.append(json.message);
                 },
                 'logic': function(json) {
+                    var playerIndex;
                     log('game-status:' + json.game_status);
                     MONO.config.game_status = json.game_status;
                     if(json.game_status === "start") {
@@ -347,11 +347,19 @@ function() {
                         chat.appendWithColor('>> Player' + ui.makeLabel(json.loser.toLowerCase(), json.loser)
                             + ' loose the game, so sad :(', '#08C');
                     }
-
                     if (json.winner) {
                         chat.appendWithColor('>> And we have a winner! Its a ' 
                             + ui.makeLabel(json.winner.toLowerCase(), json.winner)
                             + ' Woohoo! :)', '#08C');
+                    }
+                    if (json.subtype === 'connect') {
+                        playerIndex = BOARD.colorToIndex(json.player);
+                        $('#money .label .color-player-' + playerIndex).html(json.money);
+                        $('#money .label .color-player-' + playerIndex).show(300);
+                        $('#player' + playerIndex).show(300);
+                        chat.appendWithColor('>> Whoa, ' 
+                            + ui.makeLabel(json.nick, json.player) 
+                            + ' connected.', '#08C');
                     }
                 },
                 'ready': function(json) {
