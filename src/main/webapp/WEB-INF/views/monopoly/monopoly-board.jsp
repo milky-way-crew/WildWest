@@ -346,10 +346,14 @@
 								<li><a href="#auction-tab" data-toggle="tab">Auction</a></li>
 <!-- 								<li><a href="#settings" data-toggle="tab">Settings</a></li> -->
 										<div id="money">
+											<span class="label" style="
+												display: inline;
+												background-color: #095;
+											">[money status]</span>
 											<span class="label color-player-1" id="money-player-1" >0$</span>
 											<span class="label color-player-2" id="money-player-2" >0$</span>
 											<span class="label color-player-3" id="money-player-3" >0$</span>
-											<span class="label color-player-4" id="money-player-4" >0$</span>							
+											<span class="label color-player-4" id="money-player-4" >0$</span>		
 										</div>
 							</ul>
 							<div class="tab-content">

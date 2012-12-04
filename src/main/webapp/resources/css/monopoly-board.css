@@ -4,13 +4,13 @@
 body {
   background-image: url("../img/board/bg_wood.jpg");
 }
+.tooltip-inner {
+  font-size: 15px;
+}
 #ready, #start, #money .label {
   display: none;
 }
-/*#money .label {
-  display: inline;
-}
-*/#cell41 {
+#cell41 {
   background-image: url("../img/board/bg_wood.jpg");
   border: 2px solid;
 }
