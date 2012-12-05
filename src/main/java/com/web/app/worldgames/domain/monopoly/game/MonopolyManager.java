@@ -16,6 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
+import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
@@ -157,6 +158,7 @@ public class MonopolyManager {
 		Map<String, Object> state = new HashMap<String, Object>();
 		Map<String, Object> rates = new HashMap<String, Object>();
 		Map<String, Object> highest = new HashMap<String, Object>();
+		int tempAuctionPrice = 0;
 		try {
 			String messages = null;
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -176,47 +178,17 @@ public class MonopolyManager {
 			response.put("type", ButtonsLabel.AUCTION);
 			response.put("invoker", auctionCreator.getColor());
 			rates.put("player", currentPlayer.getColor());
-			rates.put("rates", currentPlayer.getAuctionRates());
+			rates.put("rates", currentPlayer.getAuctionRates()+50);
+			buttons.put(ButtonsLabel.UP10, currentPlayer.canUpAuctionPrice(CardPrices.UP10_AUCTION_PRICE));
+			buttons.put(ButtonsLabel.UP50, currentPlayer.canUpAuctionPrice(CardPrices.UP50_AUCTION_PRICE+50));
 			response.put("card", auctionCreator.getPosition());
-
-			// -************************************
 
 			if (card.isAuctionStarted() && currentPlayer.equals(auctionCreator)
 					&& auctionCreator.isCanCreateAuction()) {
 				auctionCreator.setCanCreateAuction(false);
 				auction = new Thread(new Auction(this, card));
 				auction.start();
-				// Timer timer = new Timer();
-				// timer.schedule(new TimerTask() {
-				// @Override
-				// public void run() {
-				// Map<String, Object> response = new HashMap<String, Object>();
-				// SellableCard card = (SellableCard) CardFactory
-				// .chooseCard(monopolyGame.getCurrentPlayer());
-				// log.info("---------- card AUCTION----" + card.getName());
-				// log.info("----AUCTION ENDED----");
-				// log.info("--------- CHECK------"
-				// + (getAuctionPrice() != 0));
-				// if (getAuctionPrice() != 0) {
-				// card.auctionCityOrRail(getAuctionWinner(),
-				// getAuctionPrice());
-				// for (Player players : monopolyGame.playerList) {
-				// players.setAuctionRates(0);
-				// }
-				// auctionEnd = true;
-				// setMaxAuctionPrice(0);
-				// setAuctionPrice(0);
-				// }
-				// if (auctionEnd) {
-				// log.info("------------------------- MAP RETURN------");
-				// response.put("price", 0);
-				// }
-				// broadcast(response);
-				// }
-				// }, 60000);
 			}
-
-			// -************************************
 
 			JsonNode tree = null;
 			try {
@@ -230,13 +202,18 @@ public class MonopolyManager {
 
 			if (dataBlock.has("price")) {
 				int price = dataBlock.path("price").getIntValue();
-				// setMaxAuctionPrice(price);
+				tempAuctionPrice = getAuctionPrice();
+				log.info("temp::: " + tempAuctionPrice);
 				setAuctionPrice(price);
 				log.info("auction price::::" + getAuctionPrice());
 				log.info("check:::::::::::::::::::::::"
 						+ (currentPlayer.getAuctionRates() > getAuctionPrice()));
 				if (currentPlayer.getAuctionRates() > getAuctionPrice()) {
-					setMaxAuctionPrice(currentPlayer.getAuctionRates() + 50);
+					if ((getAuctionPrice() - tempAuctionPrice) == 50) {
+						setMaxAuctionPrice(currentPlayer.getAuctionRates() + 50);
+					} else if ((getAuctionPrice() - tempAuctionPrice) == 10) {
+						setMaxAuctionPrice(currentPlayer.getAuctionRates() + 10);
+					}
 					log.info("max::::" + getMaxAuctionPrice());
 					currentPlayer.setAuctionRates(getMaxAuctionPrice());
 					log.info("rate:::::player"
@@ -246,11 +223,11 @@ public class MonopolyManager {
 					rates.put("rates", currentPlayer.getAuctionRates());
 					log.info("chect can auction:::"
 							+ (currentPlayer.canAuction(getMaxAuctionPrice())));
-					if (currentPlayer.canAuction(getMaxAuctionPrice())) {
-						setAuctionWinner(currentPlayer);
-						highest.put("who", getAuctionWinner().getColor());
-						highest.put("money", getMaxAuctionPrice());
-					}
+					// if (currentPlayer.canAuction(getMaxAuctionPrice())) {
+					setAuctionWinner(currentPlayer);
+					highest.put("who", getAuctionWinner().getColor());
+					highest.put("money", getMaxAuctionPrice());
+					// }
 					// else {
 					// messages = "You cann't continue auction";
 					// price = 0;
