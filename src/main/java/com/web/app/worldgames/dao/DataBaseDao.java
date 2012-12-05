@@ -43,10 +43,10 @@ public class DataBaseDao implements IDataBaseDao {
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE userStatistics ( ");
 		sql.append("statId INT(10) UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE, ");
-		sql.append("userAllGames INT(10) UNSIGNED DEFAULT NULL, ");
-		sql.append("userPoints INT(15) UNSIGNED DEFAULT NULL, ");
-		sql.append("userMoneyAmount INT(15) UNSIGNED DEFAULT NULL, ");
-		sql.append("userAllWinGames INT(10) UNSIGNED DEFAULT NULL, ");
+		sql.append("userAllGames INT(10) UNSIGNED DEFAULT 0, ");
+		sql.append("userPoints INT(15) UNSIGNED DEFAULT 0, ");
+		sql.append("userMoneyAmount INT(15) UNSIGNED DEFAULT 0, ");
+		sql.append("userAllWinGames INT(10) UNSIGNED DEFAULT 0, ");
 		sql.append("gameType VARCHAR(100) NOT NULL, ");
 		sql.append("idUser INT(10) UNSIGNED NOT NULL, ");
 		sql.append("PRIMARY KEY (statId), ");
