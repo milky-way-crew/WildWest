@@ -118,7 +118,7 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	/*** Increment count of user's total games ***/
 	public boolean incrementUserAllGames(int userId, String gameType) {
 		final String query = "UPDATE userStatistics, users SET userAllGames=userAllGames+1 WHERE userId=? AND gameType=? AND userId=idUser";
-		int i = jdbcTemplate.update(query, new Object[] { userId, gameType });
+		int i = jdbcTemplate.update(query, new Object[] { userId, gameType});
 		if (i > 0) {
 			log.info("'AllGames' of user[" + userId + "] in game [" + gameType
 					+ "] was incremented");
@@ -160,7 +160,7 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	@Override
 	/*** Change points of user ***/
 	public boolean changeUserPoints(int userId, int points, String gameType) {
-		final String query = "UPDATE userStatistics, users SET userPoints=userPoints+? WHERE userId=? AND gameTypee=? AND userId=idUser";
+		final String query = "UPDATE userStatistics, users SET userPoints=userPoints+? WHERE userId=? AND gameType=? AND userId=idUser";
 		int i = jdbcTemplate.update(query, new Object[] { points, userId,
 				gameType });
 		if (i > 0) {
