@@ -39,11 +39,15 @@ boolean isEnd = false;
 					card.auctionCityOrRail(manager.getAuctionWinner(),
 							manager.getMaxAuctionPrice());
 					manager.setAuctionPrice(0);
+					log.info(":::::::::: auction price ::::: "+manager.getAuctionPrice());
 					manager.setMaxAuctionPrice(0);
+					log.info(":::::::::: max auction price::::: "+manager.getMaxAuctionPrice());
 					response.put("auction_status", isEnd);
 					response.put("auction_money", manager.getMaxAuctionPrice());
 					response.put("player",manager.getAuctionWinner().getColor() );
 					response.put("player_money",manager.getAuctionWinner().getMoney() );
+					log.info(":::::::::: response ::::: "+response);
+					manager.broadcast(response);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();

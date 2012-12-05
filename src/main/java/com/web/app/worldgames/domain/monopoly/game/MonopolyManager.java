@@ -177,9 +177,9 @@ public class MonopolyManager {
 			}
 			response.put("type", ButtonsLabel.AUCTION);
 			response.put("invoker", auctionCreator.getColor());
-//			rates.put("player", currentPlayer.getColor());
-//			rates.put("rates", currentPlayer.getAuctionRates()+50);
-			buttons.put(ButtonsLabel.UP10, currentPlayer.canUpAuctionPrice(CardPrices.UP10_AUCTION_PRICE));
+			rates.put("player", currentPlayer.getColor());
+			rates.put("rates", currentPlayer.getAuctionRates());
+			buttons.put(ButtonsLabel.UP10, currentPlayer.canUpAuctionPrice(CardPrices.UP10_AUCTION_PRICE+10));
 			buttons.put(ButtonsLabel.UP50, currentPlayer.canUpAuctionPrice(CardPrices.UP50_AUCTION_PRICE+50));
 			response.put("card", auctionCreator.getPosition());
 
@@ -188,8 +188,8 @@ public class MonopolyManager {
 				auctionCreator.setCanCreateAuction(false);
 				auction = new Thread(new Auction(this, card));
 				auction.start();
-				rates.put("player", currentPlayer.getColor());
-				rates.put("rates", currentPlayer.getAuctionRates());
+//				rates.put("player", currentPlayer.getColor());
+//				rates.put("rates", currentPlayer.getAuctionRates());
 			}
 
 			JsonNode tree = null;
