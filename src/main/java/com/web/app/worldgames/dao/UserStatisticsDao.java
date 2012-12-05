@@ -98,6 +98,7 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	}
 
 	@Override
+	/*** Update all user's statistics ***/
 	public boolean updateStatistics(int userId, UserStatistics stat) {
 		final String query = "UPDATE userStatistics, users SET userAllGames=userAllGames+?, userPoints=userPoints+?, userMoneyAmount=userMoneyAmount+?, userAllWinGames=userAllWinGames+? WHERE userId=? AND userId=idUser";
 		int i = 0;
@@ -107,10 +108,68 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 						userId });
 
 		if (i > 0) {
-			log.info("Statistics of user with id=" + userId + " was update!");
+			log.info("Statistics of user[" + userId + "] was update!");
 			return true;
 		} else
 			return false;
+	}
+
+	@Override
+	/*** Increment count of user's total games ***/
+	public boolean incrementUserAllGames(int userId, String gameType) {
+		final String query = "UPDATE userStatistics, users SET userAllGames=userAllGames+1 WHERE userId=? AND gameType=? AND userId=idUser";
+		int i = jdbcTemplate.update(query, new Object[] { userId, gameType});
+		if (i > 0) {
+			log.info("'AllGames' of user[" + userId + "] in game [" + gameType
+					+ "] was incremented");
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	/*** Increment count of user's total win games ***/
+	public boolean incrementUserAllWinGames(int userId, String gameType) {
+		final String query = "UPDATE userStatistics, users SET userAllWinGames=userAllWinGames+1 WHERE userId=? AND gameType=? AND userId=idUser";
+		int i = jdbcTemplate.update(query, new Object[] { userId, gameType });
+		if (i > 0) {
+			log.info("'AllWinGames' of user[" + userId + "] in game ["
+					+ gameType + "] was incremented");
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	/*** Change amount money of user ***/
+	public boolean changeUserMoneyAmount(int userId, int money, String gameType) {
+		final String query = "UPDATE userStatistics, users SET userMoneyAmount=? WHERE userId=? AND gameType=? AND userId=idUser";
+		int i = jdbcTemplate.update(query, new Object[] { money, userId,
+				gameType });
+		if (i > 0) {
+			log.info("'MoneyAmount' of user[" + userId + "] in game ["
+					+ gameType + "] was change");
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	/*** Change points of user ***/
+	public boolean changeUserPoints(int userId, int points, String gameType) {
+		final String query = "UPDATE userStatistics, users SET userPoints=userPoints+? WHERE userId=? AND gameType=? AND userId=idUser";
+		int i = jdbcTemplate.update(query, new Object[] { points, userId,
+				gameType });
+		if (i > 0) {
+			log.info("'Points' of user[" + userId + "] in game [" + gameType
+					+ "] was change");
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	//

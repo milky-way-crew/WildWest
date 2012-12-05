@@ -21,5 +21,13 @@ public interface IStatisticsServiceManager {
 	public int getUserTotalMoneyAmount(int userId);
 
 	public boolean updateStatistics(int userId, UserStatistics stat);
+	
+	public boolean incrementUserAllGames(int userId, String gameType);
+	
+	public boolean incrementUserAllWinGames(int userId, String gameType);
+	
+	public boolean changeUserMoneyAmount(int userId, int money, String gameType);
+	
+	public boolean changeUserPoints(int userId, int points, String gameType);
 
 }

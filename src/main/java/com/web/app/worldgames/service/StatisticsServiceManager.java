@@ -61,4 +61,24 @@ public class StatisticsServiceManager implements IStatisticsServiceManager {
 		return statisticsDao.getUserTotalMoneyAmount(userId);
 	}
 
+	@Override
+	public boolean incrementUserAllGames(int userId, String gameType) {
+		return statisticsDao.incrementUserAllGames(userId, gameType);
+	}
+
+	@Override
+	public boolean incrementUserAllWinGames(int userId, String gameType) {
+		return statisticsDao.incrementUserAllWinGames(userId, gameType);
+	}
+
+	@Override
+	public boolean changeUserMoneyAmount(int userId, int money, String gameType) {
+		return statisticsDao.changeUserMoneyAmount(userId, money, gameType);
+	}
+
+	@Override
+	public boolean changeUserPoints(int userId, int points, String gameType) {
+		return statisticsDao.changeUserPoints(userId, points, gameType);
+	}
+
 }
