@@ -92,8 +92,9 @@ function() {
             money: 0,
             color: '',
             game_status: "",
-            position: 0,
-            price: 0
+            position: 1,
+            price: 0,
+            positions: { 'RED': 1, 'GREEN':1, 'BROWN':1, 'VIOLET':1 }
         },
         transport: {
             socket: null,
@@ -172,7 +173,8 @@ function() {
                     MONO.config.money = money;
                     MONO.animate.money(color, money);
 
-                    MONO.config.position = (json.was + offset) % 40;
+                    MONO.config.position = (json.was + offset) % 40; // FIXME: nosure
+                    MONO.config.positions[color] = (json.was + offset) % 40;
                     log('position on board [was] -> ' + json.was);
                     log('position on board [now] -> ' + MONO.config.position);
 
@@ -192,7 +194,8 @@ function() {
                         // if chance or so on
                         if (typeof json.game_state.dice1 !== 'undefined') {
                             log('bonus moving, chance, jail, etc');
-                            MONO.config.position = (MONO.config.position + d1 + d2) % 40;
+                            MONO.config.position = (MONO.config.position + d1 + d2) % 40; // FIXME: nosure
+                            MONO.config.positions[color] = (MONO.config.positions[color] + d1 + d2) % 40;
                             BOARD.animate.goTo(color, json.game_state.was, d1 + d2);
                             if (d1 > 0 && d2 > 0) {
                                 BOARD.rollDice(d1, d2);
@@ -320,7 +323,7 @@ function() {
                         BOARD.animate.jump(color, stats.position);
                         MONO.animate.money(color, stats.money);
                         ui.attachTooltip('#money .label.color-player-' 
-                            + BOARD.colorToIndex(color), 'nick-name -> ' + stats.nick);
+                            + BOARD.colorToIndex(color), 'nick-name : ' + stats.nick);
                     });
                     
                     // MONO.animate.money(json.color, json.money);
@@ -521,6 +524,13 @@ function() {
             $('a[href=#chat-tab]').click(function() {
                 $(this).html('Chat');
             });
+
+            $(window).resize(function() {
+                console.log('resize');
+                $.each(MONO.config.positions, function(color, pos) {
+                    BOARD.animate.jump(color, pos);
+                });
+            });
         }
     };
 
@@ -641,23 +651,23 @@ function() {
 
                 return offset;
             },
-            goTo: function(who, from, offset) {
+            goTo: function(who, from, offset, duration) {
                 var $player = $('#player' + BOARD.CONST.COLOR_TO_NUMBER[who]);
 
                 while(offset >= 0) {
-                    $player.animate(BOARD.animate.normalizeOffset(who, from % 40), BOARD.CONST.DURATION);
+                    $player.animate(BOARD.animate.normalizeOffset(who, from % 40), duration);
                     offset -= 1;
                     from += 1;
                 }
             },
             move: function(playerColor, dice1, dice2, startCell) {
                 var offset = dice1 + dice2;
-                BOARD.animate.goTo(playerColor, startCell, offset);
+                BOARD.animate.goTo(playerColor, startCell, offset, BOARD.CONST.DURATION);
 
             },
             jump: function(whoColor,  whereCell) {
                 // instant
-                BOARD.animate.goTo(whoColor, whereCell, 0);
+                BOARD.animate.goTo(whoColor, whereCell, 0, 0);
             }
         },
         houseManipulation: {
