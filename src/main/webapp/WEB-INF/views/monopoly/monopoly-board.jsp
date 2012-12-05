@@ -428,7 +428,7 @@
 							</div>
 							<!-- <div class="tab-pane fade in " id="auction-tab">		 -->
 							<div class="tab-pane in  active" id="auction-tab">		
-								<div class="span6 well">
+								<div class="span4 well">
 									<div class="row">
 										<h3>Action invoked by:</h3> 
 											<strong class="label invoker">GREEN</strong> 
@@ -448,14 +448,13 @@
 									</div>
 								</div>
 								<div class="span3 well">
-									<img src="resources/img/board/city/house.svg" alt="" >
+									<h3 class="lot-name">lot #13</h3>
+									<span class="badge badge-info">60s</span>
+									<img class="lot-image" src="resources/img/board/city/house.svg" alt="">
 								</div> 
-								<div class="row auction-controls">
-									<button id="up50" class="btn btn-primary">up by 50$</button>
-									<button id="up10" class="btn btn-primary">up by 10$</button>
-
-									<!-- <a href="javascript:void(0);" id="up10" class="button lightbg-pink clearfix">up by 10$</a> -->
-									<!-- <a href="javascript:void(0);" id="up50" class="button lightbg-orange clearfix">up by 50$</a> -->
+								<div class="row well auction-controls">
+									<button id="up50" class="square-button">up by 50$</button>
+									<button id="up10" class="square-button">up by 10$</button>
 								</div>
 							</div>
 							</div>

@@ -7,10 +7,12 @@ body {
 #ready, #start, #money .label {
   display: none;
 }
-/*#money .label {
-  display: inline;
+.lot-image {
+  width: 160px;
+  height: 120px;
 }
-*/#cell41 {
+
+#cell41 {
   background-image: url("../img/board/bg_wood.jpg");
   border: 2px solid;
 }
@@ -32,7 +34,9 @@ body {
   padding: 20px;
   /*border: 1px dashed;*/
 }
-
+.well {
+  background-color: rgba(255, 255, 255, 0.7);
+}
 #auction-tab .row {
   text-align: left;
   margin-left: 10px;
@@ -40,7 +44,7 @@ body {
 #auction-tab h3 {
   text-align: left;
   display: inline-block;
-  font-family: 'Bubblegum sans', sans;
+  font-family: 'Yanone Kaffeesatz', 'Bubblegum sans', sans;
 }
 #auction-tab strong {
   font-size: 20px;
@@ -50,11 +54,27 @@ body {
   font-size: 16px;
 }
 
-#auction-tab img {
+/*#auction-tab img {
   width: 100%;
-}
+}*/
 #auction-tab .auction-controls {
+  /*margin-top: 10px;*/
+  margin-left: 0px;
   text-align: center;
+}
+#auction-tab .auction-controls button{
+  background: #64C;
+}
+#auction-tab .auction-controls button:hover{
+  background: #647;
+}
+
+#auction-tab .lot-name, #auction-tab .badge {
+  font-family: 'Yanone Kaffeesatz', 'Archivo Narrow', 'Helvetica';
+  font-size: 20px;
+}
+#auction-tab .lot-name {
+  display: inline-block;
 }
 #auction-tab a {
   margin: 10px;
