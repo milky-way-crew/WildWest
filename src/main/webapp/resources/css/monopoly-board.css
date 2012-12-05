@@ -4,6 +4,9 @@
 body {
   background-image: url("../img/board/bg_wood.jpg");
 }
+.tooltip-inner {
+  font-size: 15px;
+}
 #ready, #start, #money .label {
   display: none;
 }
@@ -11,7 +14,6 @@ body {
   width: 160px;
   height: 120px;
 }
-
 #cell41 {
   background-image: url("../img/board/bg_wood.jpg");
   border: 2px solid;
@@ -172,6 +174,7 @@ body {
     }
   #money {
     float: right;
+    font-family: 'Archivo Narrow', 'Helvetica';
     margin-top: 10px;
   }
 
