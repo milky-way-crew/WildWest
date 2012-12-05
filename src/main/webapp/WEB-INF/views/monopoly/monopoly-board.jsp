@@ -53,16 +53,15 @@
 							<img src="resources/img/board/city/fort.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
-								<small class="tip-owner label label-info">No one property</small>
+								<p>Initial cost: $220</p>
+								<p>rent: $150 : $170: $200</p>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $90</li>
+								<li>2 houses : $250</li>
+								<li>3 houses : $700</li>
+								<li>Castle: $1050</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -80,15 +79,19 @@
 					</div>
 				</td>
 				<td id="cell23" class="cell north tip">
-					<span class="town-title">Chance</span>
 					<span class="bottom bottom-small">
 						<img src="resources/img/board/city/tree11.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Chance</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
+						<ul class="tip-content">
+								<li>to go to free station</li>
+								<li>to go to jail</li>
+								<li>to go to Stonehenge star </li>
+							</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
 							<a href="javascript:void(0);" class="build btn btn-succes">build</a>
@@ -104,16 +107,16 @@
 							<img src="resources/img/board/city/city.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $220</p>
+								<p>rent: $150 : $170 : $200</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $90</li>
+								<li>2 houses : $250</li>
+								<li>3 houses : $700</li>
+								<li>Castle: $105</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -137,16 +140,16 @@
 							<img src="resources/img/board/city/fortress.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $240</p>
+								<p>rent: $170 : $190 : $210</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $100</li>
+								<li>2 houses : $300</li>
+								<li>3 houses : $750</li>
+								<li>Castle: $1100</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -165,12 +168,18 @@
 				</td>
 				<td id="cell26" class="cell north">
 					<div class="north tip">
-					<span class="town-title">Stonehenge</span>
+					<span class="town-title">Stonehenge star</span>
 					<span class="bottom bottom-small">
 						<img src="resources/img/board/city/magic_stones.svg" width="300">
-						<p class="tip-header"><strong class="active">Stonehenge star</strong><hr></p>
+						<p class="tip-header">
+						<p>Initial cost: $150</p>
+						<strong class="active">Stonehenge star</strong><hr></p>
 						<ul class="tip-content">
-							<li>Collect them all to get ultimate power.</li>
+						<p>Rent:</p>
+							<li>1 stonehenge: $50</li>
+							<li>2 stonehenge: $100</li>
+							<li>3 stonehenge: $150</li>
+							<li>4 stonehenge: $200</li>
 						</ul>
 						<span class="nub"></span>
 					</span> 
@@ -185,16 +194,16 @@
 							<img src="resources/img/board/city/obelisk.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $260</p>
+								<p>rent: $200 : $270 : $310</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $110</li>
+								<li>2 houses : $330</li>
+								<li>3 houses : $800</li>
+								<li>Castle: $1150</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -216,16 +225,16 @@
 							<img src="resources/img/board/city/arch.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $260</p>
+								<p>rent: $200 : $270 : $310</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $110</li>
+								<li>2 houses : $330</li>
+								<li>3 houses : $800</li>
+								<li>Castle: $1150</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -241,15 +250,20 @@
 					</div>
 				</td>
 				<td id="cell29" class="cell north tip">
-					<span class="town-title">Mountains</span>
+					<span class="town-title">Community chest</span>
 					<span class="bottom bottom-small">
 						<img src="resources/img/board/city/mountain4.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
-							<small class="tip-owner label label-info">No one property</small>
+							<p>Community chest</p>
 						</div>
 						<hr>
+						<p> You may:
+					<ul class="tip-content">
+					<li>win money</li>
+					<li>lost money</li>
+					<li>pay compulsory tax</li>
+					</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
 							<a href="javascript:void(0);" class="build btn btn-succes">build</a>
@@ -265,16 +279,16 @@
 							<img src="resources/img/board/city/maze.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $280</p>
+								<p>rent: $220 : $300 : $340</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $120</li>
+								<li>2 houses : $360</li>
+								<li>3 houses : $850</li>
+								<li>Castle: $1200</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -298,22 +312,21 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell20">
-					<span class="town-title badge badge-info">Graveyard</span>
 					<span class="right">
-<strong class="town-title">Name-here</strong>
+				<strong class="town-title">Graveyard</strong>
 						<img src="resources/img/board/city/graveyard.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $200</p>
+							<p>rent: $110 : $190 : $210</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $80</li>
+							<li>2 houses : $240</li>
+							<li>3 houses : $600</li>
+							<li>Castle: $1000</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -504,22 +517,21 @@
 					<!-- ............ -->
 				</td>
 				<td class="cell east tip" id="cell32">
-					<span class="town-title">Mine</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Mine</strong>
 						<img src="resources/img/board/city/mine.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $300 </p>
+							<p> rent: $260 : $300 : $350</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $130</li>
+							<li>2 houses : $390</li>
+							<li>3 houses : $900</li>
+							<li>Castle: $1280</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -538,22 +550,21 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell19">
-					<span class="town-title badge badge-info">Monastery</span>
 					<span class="right">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Monastery</strong>
 						<img src="resources/img/board/city/monastery.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $180 </p>
+							<p>rent: $100 : $170 : $190</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $70</li>
+							<li>2 houses : $200</li>
+							<li>3 houses : $550</li>
+							<li>Castle: $950</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -571,22 +582,21 @@
 					</div>
 				</td>
 				<td class="cell east tip" id="cell33">
-					<span class="town-title">Hunter</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
+		<strong class="town-title">Hunter</strong>
 						<img src="resources/img/board/city/hunter.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: 400$</p>
+							<p>rent: $260 : $300 : $350</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $130</li>
+							<li>2 houses : $390</li>
+							<li>3 houses : $900</li>
+							<li>Castle: $1280</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -603,17 +613,20 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell18">
-					<span class="town-title badge badge-info">Caravan wreck</span>
 					<span class="right">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Community chest</strong>
 						<img src="resources/img/board/city/caravan_wreck.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Chance card?</p>
-							<small class="tip-owner label label-info">No one property</small>
+							<p>Community chest</p>
 						</div>
 						<hr>
-
+						<p> You may:
+						<ul class="tip-content">
+							<li>win money</li>
+							<li>lost money</li>
+							<li>pay compulsory tax</li>
+						</ul>
 						<span class="nub"></span>
 					</span>
 						<!-- <div class="town-image"> -->
@@ -621,16 +634,19 @@
 						<!-- </div> -->
 				</td>
 				<td class="cell east tip" id="cell34">
-					<span class="town-title">Tree?!</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Community chest</strong>
 						<img src="resources/img/board/city/tree02.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
-							<small class="tip-owner label label-info">No one property</small>
+						<p>Community chest</p>
 						</div>
 						<hr>
+						<ul class="tip-content">
+						<li>win money</li>
+						<li>lost money</li>
+						<li>pay compulsory tax</li>
+						</ul>
 						<span class="nub"></span>
 					</span>
 					<!-- <div class="town-image"> -->
@@ -640,22 +656,21 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell17">
-					<span class="town-title badge badge-info">Cathedral</span>
 					<span class="right">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Cathedral</strong>
 						<img src="resources/img/board/city/cathedral.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $180</p>
+							<p>rent: $100 : $170 : $190</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $70</li>
+							<li>2 houses : $200</li>
+							<li>3 houses : $50</li>
+							<li>Castle: $950</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -672,22 +687,21 @@
 					</div>
 				</td>
 				<td class="cell east tip" id="cell35">
-					<span class="town-title badge badge-info">Blacksmith</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
+						<strong class="town-title">Blacksmith</strong>
 						<img src="resources/img/board/city/blacksmith.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $330</p>
+							<p>rent: $270 : $300 : $360</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $160</li>
+							<li>2 houses : $450</li>
+							<li>3 houses : $1000</li>
+							<li>Castle: $1300</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -705,15 +719,25 @@
 			<tr>
 				<td class="cell west tip" id="cell16">
 					<span class="right">
-<strong class="town-title">Name-here</strong>
-						<strong class="town-title">Community chest</strong>
+						<strong class="town-title">Stonehenge star</strong>
 						<img src="resources/img/board/city/magic_stones.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $100</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
+						<ul class="tip-content">
+						<p>Rent:</p>
+							<li>1 stonehenge: $50</li>
+							<li>2 stonehenge: $100</li>
+							<li>3 stonehenge: $150</li>
+							<li>4 stonehenge: $200</li>
+						</ul>
+						<div class="tip-controls">
+							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
+							<a href="javascript:void(0);" class="build btn btn-succes">build</a>
+						</div>
 						<span class="nub"></span>
 					</span>
 					<div class="owner"></div>
@@ -722,23 +746,21 @@
 					</div>
 				</td>
 				<td class="cell east tip" id="cell36">
-					<span class="town-title badge badge-info">Blacksmith</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Stonehenge star</strong>
 						<img src="resources/img/board/city/magic_stones.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $200</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+						<p>Rent:</p>
+							<li>1 stonehenge: $50</li>
+							<li>2 stonehenge: $100</li>
+							<li>3 stonehenge: $150</li>
+							<li>4 stonehenge: $200</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -752,22 +774,21 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell15" >
-					<span class="town-title">Little Farm</span>
 					<span class="right">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Little Farm</strong>
 						<img src="resources/img/board/city/farm.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost $160</p>
+							<p>rent: $90 : $100 : $160</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $60</li>
+							<li>2 houses : $180</li>
+							<li>3 houses : $500</li>
+							<li>Castle: $950</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -785,11 +806,19 @@
 					</div>
 				</td>
 				<td class="cell east tip" id="cell37">
-					<span class="town-title badge badge-info">Bridge stone</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Chance</strong>
 						<img src="resources/img/board/city/bridge_stone2.svg" width="300" height="300">
-						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
+						<div class="tip-header">
+							<p>Chance</p>
+						</div>
+						<hr>
+						<p>Your chance is:</p>
+						<ul class="tip-content">
+								<li>to go to free station</li>
+								<li>to go to jail</li>
+								<li>to go to Stonehenge star </li>
+							</ul>
 						<span class="nub"></span>
 					</span> 
 						<img src="resources/img/board/city/bridge_stone2.svg" width="80">
@@ -798,22 +827,21 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell14">
-					<span class="town-title ">Fishery</span>
 					<span class="right">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Fishery</strong>
 						<img src="resources/img/board/city/fishery.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $140</p>
+							<p>rent: $50 : $100 : $150</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $50</li>
+							<li>2 houses : $150</li>
+							<li>3 houses : $450</li>
+							<li>Castle: $750</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -831,22 +859,21 @@
 					</div>
 				</td>
 				<td class="cell east tip" id="cell38">
-					<span class="town-title badge badge-info">Square Tower</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
+						<strong class="town-title">Tower square</strong>
 						<img src="resources/img/board/city/tower_square.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $350</p>
+							<p>rent: $290: $310 : $400</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $180</li>
+							<li>2 houses : $500</li>
+							<li>3 houses : $1100</li>
+							<li>Castle: $1500</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -865,11 +892,19 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell13">
-					<span class="town-title badge badge-info">some-name</span>
 					<span class="right">
-<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/shipwreck.svg" width="300" height="300">
-						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
+						<hr>
+						<div class="tip-header">
+						<p>Community chest</p>
+						</div>
+						<hr>
+						<p> You may:
+					<ul class="tip-content">
+						<li>win money</li>
+						<li>lost money</li>
+						<li>pay compulsory tax</li>
+						</ul>
 						<span class="nub"></span>
 					</span> 
 						<!-- <div class="town-image"> -->
@@ -878,11 +913,12 @@
 				</td>
 				<td class="cell east tip" id="cell39">
 					<!-- <div class="town-image"> -->
-					<span class="town-title badge badge-info">Sword in the stone</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
+			<strong class="town-title">Tax</strong>
+			<ul class="tip-content">
+						</ul>
 						<img src="resources/img/board/city/sword_in_the_stone.svg" width="300" height="300">
-						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
+						<p class="tip-header">Pay tax : $150</p>
 						<span class="nub"></span>
 					</span> 
 							<img src="resources/img/board/city/sword_in_the_stone.svg" alt="" width="75">
@@ -891,23 +927,22 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell12">
-					<span class="town-title badge badge-info">Windmill</span>
 					<span class="right">
-<strong class="town-title">Name-here</strong>
+				<strong class="town-title">Windmill</strong>
 						<img src="resources/img/board/city/windmill.svg" width="150" height="150">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $140</p>
+							<p>rent: $50 : $100 : $150
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						 
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $50</li>
+							<li>2 houses : $150</li>
+							<li>3 houses : $450</li>
+							<li>Castle: $750</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -925,22 +960,21 @@
 					</div>
 				</td>
 				<td class="cell east tip" id="cell40">
-					<span class="town-title badge badge-info">Tower round</span>
 					<span class="left">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Tower round</strong>
 						<img src="resources/img/board/city/tower_round.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
+							<p>Initial cost: $400</p>
+							<p>rent: $300 : $330 : $410</p>
 							<small class="tip-owner label label-info">No one property</small>
 						</div>
 						<hr>
 						<ul class="tip-content">
-							<li>1 houses : 25 $$</li>
-							<li>2 houses : 45 $$</li>
-							<li>3 houses : 75 $$</li>
-							<li>4 houses : 185 $$</li>
-							<li>Castle: 2500 $$</li>
+							<li>1 houses : $200</li>
+							<li>2 houses : $600</li>
+							<li>3 houses : $1400</li>
+							<li>Castle: $2000</li>
 						</ul>
 						<div class="tip-controls">
 							<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -965,22 +999,21 @@
 				</td>
 				<td class="cell south" id="cell10">
 					<div class="south tip">
-						<span class="town-title badge badge-info">University</span>
 						<span class="top">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">University</strong>
 							<img src="resources/img/board/city/university.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $120</p>
+								<p>rent: $50 : $70 : $90</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $40</li>
+								<li>2 houses : $100</li>
+								<li>3 houses : $300</li>
+								<li>Castle: $600</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -997,22 +1030,21 @@
 				</td>
 				<td class="cell south" id="cell9">
 					<div class="south tip">
-						<span class="town-title badge badge-info">Fountain</span>
 						<span class="top">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Fountain</strong>
 							<img src="resources/img/board/city/fountain.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $100</p>
+								<p>rent: $40 : $60 : $90</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $30</li>
+								<li>2 houses : $90</li>
+								<li>3 houses : $270</li>
+								<li>Castle: $550</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -1028,37 +1060,40 @@
 					</div>
 				</td>
 				<td class="cell south tip" id="cell8">
-					<span class="town-title badge badge-info">Wishing</span>
 					<span class="top top-small">
-						<img src="resources/img/board/city/pond.svg" width="300">
+						<img src="resources/img/board/city/wishing_well.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
-							<small class="tip-owner label label-info">No one property</small>
+							<p>Chance</p>
 						</div>
 						<hr>
+						<p>Your chance is:</p>
+						<ul class="tip-content">
+								<li>to go to free station</li>
+								<li>to go to jail</li>
+								<li>to go to Stonehenge star </li>
+							</ul>
 						<span class="nub"></span>
 					</span>
 					<img src="resources/img/board/city/wishing_well.svg" alt="" width="75">
 				</td>
 				<td class="cell south" id="cell7">
 					<div class="south tip">
-						<span class="town-title badge badge-info">Pond</span>
 						<span class="top">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Pond</strong>
 							<img src="resources/img/board/city/pond.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $100:</p>
+								<p>rent: $40 : $60 : $90</p> 
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $30</li>
+								<li>2 houses : $90</li>
+								<li>3 houses : $270</li>
+								<li>Castle: $550</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -1075,22 +1110,21 @@
 				</td>
 				<td class="cell south" id="cell6">
 					<div class="south tip">
-						<span class="town-title badge badge-info">Stones</span>
 						<span class="top">
-<strong class="town-title">Name-here</strong>
+				<strong class="town-title">Stonehenge star</strong>
 							<img src="resources/img/board/city/magic_stones.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $50</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+							<p>Rent:</p>
+							<li>1 stonehenge: $50</li>
+							<li>2 stonehenge: $100</li>
+							<li>3 stonehenge: $150</li>
+							<li>4 stonehenge: $200</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -1103,13 +1137,12 @@
 					</div>
 				</td>
 				<td class="cell south tip" id="cell5">
-					<span class="town-title badge badge-info">Statue</span>
 					<span class="top top-small">
+					<strong class="town-title">Tax</strong>
 						<img src="resources/img/board/city/statue.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
-							<small class="tip-owner label label-info">No one property</small>
+							<p>Pay tax: $150</p>
 						</div>
 						<hr>
 						<span class="nub"></span>
@@ -1118,22 +1151,21 @@
 				</td>
 				<td class="cell south" id="cell4">
 					<div class="south tip">
-						<span class="town-title badge badge-info">Circus</span>
 						<span class="top">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Circus</strong>
 							<img src="resources/img/board/city/circus.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $60</p>
+								<p>rent: $20 : $30 : $50</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $30</li>
+								<li>2 houses : $80</li>
+								<li>3 houses : $190</li>
+								<li>Castle: $450</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
@@ -1149,37 +1181,40 @@
 					</div>
 				</td>
 				<td class="cell south tip" id="cell3">
-					<span class="town-title badge badge-info">Ruins</span>
 					<span class="top top-small">
 						<img src="resources/img/board/city/ruins.svg" width="300">
 						<hr>
 						<div class="tip-header">
-							<p>Initial cost/rent: 400$ : 25$</p>
-							<small class="tip-owner label label-info">No one property</small>
+							<p>Community chest</p>
 						</div>
 						<hr>
+						<p> You may:
+						<ul class="tip-content">
+								<li>win money</li>
+								<li>lost money</li>
+								<li>pay compulsory tax</li>
+							</ul>
 						<span class="nub"></span>
 					</span>
 					<img src="resources/img/board/city/ruins.svg" alt="" width="75">
 				</td>
 				<td class="cell south" id="cell2">
 					<div class="south tip">
-						<span class="town-title badge badge-info">Tent</span>
 						<span class="top">
-<strong class="town-title">Name-here</strong>
+<strong class="town-title">Tent</strong>
 							<img src="resources/img/board/city/tent.svg" width="300">
 							<hr>
 							<div class="tip-header">
-								<p>Initial cost/rent: 400$ : 25$</p>
+								<p>Initial cost: $50</p>
+								<p>rent: $20 : $30 : $50</p>
 								<small class="tip-owner label label-info">No one property</small>
 							</div>
 							<hr>
 							<ul class="tip-content">
-								<li>1 houses : 25 $$</li>
-								<li>2 houses : 45 $$</li>
-								<li>3 houses : 75 $$</li>
-								<li>4 houses : 185 $$</li>
-								<li>Castle: 2500 $$</li>
+								<li>1 houses : $20</li>
+								<li>2 houses : $60</li>
+								<li>3 houses : $180</li>
+								<li>Castle: $430</li>
 							</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
