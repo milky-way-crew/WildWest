@@ -16,10 +16,14 @@ table {
 }
  #editAvatar{
 width: 300px;
+background-image: url(../img/modal.jpg)
 }
 
+ #editInf{
+background-image: url(../img/modal1.jpg)
+}
 #modal1 {
-	 color: #000000;
+	 color: #FFFFFF;
 	 margin-left: 25px;
 }
  #editInf{
@@ -33,6 +37,22 @@ width: 400px;
     transition: all 1s ease-in-out;
 }
   #tableInfo:hover {
+    background-color: #fc3;
+    -webkit-transform: rotate(360deg) scale(2);
+    -moz-transform: rotate(360deg) scale(2);
+    -o-transform: rotate(360deg) scale(2);
+    -ms-transform: rotate(360deg) scale(2);
+    transform: rotate(360deg) scale(2);
+  }
+  
+  #tableStat {
+	   -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+  #tableStat:hover {
     background-color: #fc3;
     -webkit-transform: rotate(360deg) scale(2);
     -moz-transform: rotate(360deg) scale(2);
