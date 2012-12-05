@@ -42,4 +42,34 @@ public class UserServiceManager implements IUserServiceManager {
 		return userDao.findUserById(id);
 	}
 
+	@Override
+	public boolean changeUserLogin(int userId, String login) {
+
+		return userDao.changeUserLogin(userId, login);
+	}
+
+	@Override
+	public boolean changeUserPassword(int userId, String password) {
+
+		return userDao.changeUserLogin(userId, password);
+	}
+
+	@Override
+	public boolean changeUserEmail(int userId, String email) {
+
+		return userDao.changeUserLogin(userId, email);
+	}
+
+	@Override
+	public boolean changeUserNickname(int userId, String nickname) {
+
+		return userDao.changeUserLogin(userId, nickname);
+	}
+
+	@Override
+	public boolean changeUserAvatar(int userId, String avatar) {
+
+		return userDao.changeUserLogin(userId, avatar);
+	}
+
 }
