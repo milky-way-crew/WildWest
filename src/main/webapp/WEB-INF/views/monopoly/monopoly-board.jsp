@@ -34,7 +34,6 @@
 		<div class="navbar-inner">
 			<a class="brand" href="./home">#home</a>
 			<ul class="nav">
-				<li class="active"><a href="#"></a></li>
 				<li><a href="./chess">Chess rooms</a></li>
 				<li><a href="#">Blablabla</a></li>
 			</ul>
@@ -301,6 +300,7 @@
 				<td class="cell west tip" id="cell20">
 					<span class="town-title badge badge-info">Graveyard</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/graveyard.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -506,6 +506,7 @@
 				<td class="cell east tip" id="cell32">
 					<span class="town-title">Mine</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/mine.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -539,6 +540,7 @@
 				<td class="cell west tip" id="cell19">
 					<span class="town-title badge badge-info">Monastery</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/monastery.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -571,6 +573,7 @@
 				<td class="cell east tip" id="cell33">
 					<span class="town-title">Hunter</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/hunter.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -602,6 +605,7 @@
 				<td class="cell west tip" id="cell18">
 					<span class="town-title badge badge-info">Caravan wreck</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/caravan_wreck.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -619,6 +623,7 @@
 				<td class="cell east tip" id="cell34">
 					<span class="town-title">Tree?!</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/tree02.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -637,6 +642,7 @@
 				<td class="cell west tip" id="cell17">
 					<span class="town-title badge badge-info">Cathedral</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/cathedral.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -668,6 +674,7 @@
 				<td class="cell east tip" id="cell35">
 					<span class="town-title badge badge-info">Blacksmith</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/blacksmith.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -697,8 +704,9 @@
 			</tr>
 			<tr>
 				<td class="cell west tip" id="cell16">
-					<span class="town-title badge badge-info">Community chest</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
+						<strong class="town-title">Community chest</strong>
 						<img src="resources/img/board/city/magic_stones.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -716,6 +724,8 @@
 				<td class="cell east tip" id="cell36">
 					<span class="town-title badge badge-info">Blacksmith</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/magic_stones.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -744,6 +754,7 @@
 				<td class="cell west tip" id="cell15" >
 					<span class="town-title">Little Farm</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/farm.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -776,6 +787,7 @@
 				<td class="cell east tip" id="cell37">
 					<span class="town-title badge badge-info">Bridge stone</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/bridge_stone2.svg" width="300" height="300">
 						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
 						<span class="nub"></span>
@@ -788,6 +800,7 @@
 				<td class="cell west tip" id="cell14">
 					<span class="town-title ">Fishery</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/fishery.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -820,6 +833,7 @@
 				<td class="cell east tip" id="cell38">
 					<span class="town-title badge badge-info">Square Tower</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/tower_square.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -853,6 +867,7 @@
 				<td class="cell west tip" id="cell13">
 					<span class="town-title badge badge-info">some-name</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/shipwreck.svg" width="300" height="300">
 						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
 						<span class="nub"></span>
@@ -865,6 +880,7 @@
 					<!-- <div class="town-image"> -->
 					<span class="town-title badge badge-info">Sword in the stone</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/sword_in_the_stone.svg" width="300" height="300">
 						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
 						<span class="nub"></span>
@@ -877,6 +893,7 @@
 				<td class="cell west tip" id="cell12">
 					<span class="town-title badge badge-info">Windmill</span>
 					<span class="right">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/windmill.svg" width="150" height="150">
 						<hr>
 						<div class="tip-header">
@@ -910,6 +927,7 @@
 				<td class="cell east tip" id="cell40">
 					<span class="town-title badge badge-info">Tower round</span>
 					<span class="left">
+<strong class="town-title">Name-here</strong>
 						<img src="resources/img/board/city/tower_round.svg" width="300">
 						<hr>
 						<div class="tip-header">
@@ -949,6 +967,7 @@
 					<div class="south tip">
 						<span class="town-title badge badge-info">University</span>
 						<span class="top">
+<strong class="town-title">Name-here</strong>
 							<img src="resources/img/board/city/university.svg" width="300">
 							<hr>
 							<div class="tip-header">
@@ -980,6 +999,7 @@
 					<div class="south tip">
 						<span class="town-title badge badge-info">Fountain</span>
 						<span class="top">
+<strong class="town-title">Name-here</strong>
 							<img src="resources/img/board/city/fountain.svg" width="300">
 							<hr>
 							<div class="tip-header">
@@ -1025,6 +1045,7 @@
 					<div class="south tip">
 						<span class="town-title badge badge-info">Pond</span>
 						<span class="top">
+<strong class="town-title">Name-here</strong>
 							<img src="resources/img/board/city/pond.svg" width="300">
 							<hr>
 							<div class="tip-header">
@@ -1056,6 +1077,7 @@
 					<div class="south tip">
 						<span class="town-title badge badge-info">Stones</span>
 						<span class="top">
+<strong class="town-title">Name-here</strong>
 							<img src="resources/img/board/city/magic_stones.svg" width="300">
 							<hr>
 							<div class="tip-header">
@@ -1098,6 +1120,7 @@
 					<div class="south tip">
 						<span class="town-title badge badge-info">Circus</span>
 						<span class="top">
+<strong class="town-title">Name-here</strong>
 							<img src="resources/img/board/city/circus.svg" width="300">
 							<hr>
 							<div class="tip-header">
@@ -1143,6 +1166,7 @@
 					<div class="south tip">
 						<span class="town-title badge badge-info">Tent</span>
 						<span class="top">
+<strong class="town-title">Name-here</strong>
 							<img src="resources/img/board/city/tent.svg" width="300">
 							<hr>
 							<div class="tip-header">
