@@ -11,6 +11,7 @@ body {
   display: none;
 }
 .lot-image {
+  border: 3px dotted #eee;
   width: 160px;
   height: 120px;
 }

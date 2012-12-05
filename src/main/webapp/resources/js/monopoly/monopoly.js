@@ -271,11 +271,16 @@ function() {
                     $('#myTab a:last').tab('show');
 
                     if (json.card) {
+                        $('.lot-name').html('card #' + json.card);
                         auctionImage = $('#auction-tab img').attr('src');
                         receivedImage = $('#cell' + json.card + ' .town-image img').attr('src');
                         if (auctionImage !== receivedImage) {
                             $('#auction-tab img').attr('src', receivedImage);
                         }
+                    }
+
+                    if (json.seconds_left) {
+                        $('.lot-name+.badge').html(json.seconds_left + 's');
                     }
 
                     if (json.invoker) {
