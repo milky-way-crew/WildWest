@@ -5,30 +5,35 @@ import com.web.app.worldgames.domain.User;
 public interface IUserDao {
 
 	/*** find user by id ***/
-	User findUserById(int id);
+	public User findUserById(int id);
 
 	/*** find user by login ***/
-	User findUserByLogin(final String login);
+	public User findUserByLogin(final String login);
 
 	/*** find user by nickname ***/
-	User findUserByNickname(final String nickname);
+	public User findUserByNickname(final String nickname);
 
 	/*** find user by email ***/
-	User findUserByEmail(final String email);
+	public User findUserByEmail(final String email);
 
 	/*** find user by login and password ***/
-	User logInUser(final String login, final String password);
+	public User logInUser(final String login, final String password);
 
 	/*** insert user into table ***/
-	int insertUser(final User user);
+	public int insertUser(final User user);
 
-	boolean changeUserLogin(int userId, String login);
+	/*** change user's login ***/
+	public boolean changeUserLogin(int userId, String login);
 
-	boolean changeUserPassword(int userId, String password);
+	/*** change user's password ***/
+	public boolean changeUserPassword(int userId, String password);
 
-	boolean changeUserEmail(int userId, String email);
+	/*** change user's email ***/
+	public boolean changeUserEmail(int userId, String email);
 
-	boolean changeUserNickname(int userId, String nickname);
+	/*** change user's nickname ***/
+	public boolean changeUserNickname(int userId, String nickname);
 
-	boolean changeUserAvatar(int userId, String avatar);
+	/*** change user's avatar ***/
+	public boolean changeUserAvatar(int userId, String avatar);
 }

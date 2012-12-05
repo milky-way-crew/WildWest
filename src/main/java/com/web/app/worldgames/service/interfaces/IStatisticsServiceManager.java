@@ -1,8 +1,8 @@
-package com.web.app.worldgames.dao.interfaces;
+package com.web.app.worldgames.service.interfaces;
 
 import com.web.app.worldgames.domain.UserStatistics;
 
-public interface IUserStatisticsDao {
+public interface IStatisticsServiceManager {
 
 	public int getUserAllGames(int userId, String typeGame);
 
