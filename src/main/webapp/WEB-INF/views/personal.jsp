@@ -128,8 +128,8 @@
 <!-- -----------------------------end buttons---------------------------------- -->
 
 <!-- -----------------------------modal edit Avatar---------------------------------- -->
-	<center>
 		<div id="editAvatar" class="modal" style="display:none ;">
+	<center>
 		<p> <input type="text" id="number"> </p>
 			<div id="images" class="modal-header">
 				<img id="image" src="resources/img/avatar/emo1.gif" >
@@ -139,8 +139,8 @@
 			<a class="btn btn-large" id="next"><i class=" icon-arrow-right"></i></a></p>
 			<p><a href="#" class="btn btn-danger" data-dismiss="modal" id="back">Back
 			<i class=" icon-circle-arrow-left"></i></a></p>
-		</div>
 		</center>
+		</div>
 	<!-- -----------------------------end modal  edit Avatar---------------------------------- -->
 	
 	<!-- -----------------------------modal edit Info---------------------------------- -->

@@ -33,9 +33,6 @@ public class PersonalController {
 	public @ResponseBody
 	String setAvatar(HttpServletRequest request, @RequestParam("type") String type)   {
 		User user = (User) request.getSession().getAttribute("user");
-		if(type.toLowerCase().trim().equals("ava")){
-			return user.getAvatar();
-		}
 		log.info("Avatar is:  "+type);
 		user.setAvatar(type);
 		return type;

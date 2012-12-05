@@ -31,8 +31,6 @@ function previousImage() {
 }
 
 function setAvatar(){
-//	 document.getElementById('avatar').src = "resources/img/avatar/smile"+image+".jpg";
-	 
 			$.ajax({
 				url : "setAvatar",
 				type : "POST",
@@ -49,22 +47,6 @@ function setAvatar(){
 		
 }
 
-function avatar (){
-	$.ajax({
-		url : "setAvatar",
-		type : "POST",
-		data : {
-			type : "ava"
-		},
-		error : function() {
-//			alert("Update loser  ");
-		},
-		success : function(text) {
-//			 document.getElementById('avatar').src = text;
-			return text;
-		}
-	});
-}
 
 function editLogin() {
 	$.ajax({
