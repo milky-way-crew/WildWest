@@ -577,4 +577,8 @@ public class Player {
 	public boolean canAuction(int auctionPrice) {
 		return this.checkMoney(auctionPrice);
 	}
+	
+	public boolean canUpAuctionPrice(int upPrice){
+		return this.checkMoney(this.getAuctionRates()+upPrice);
+	}
 }
