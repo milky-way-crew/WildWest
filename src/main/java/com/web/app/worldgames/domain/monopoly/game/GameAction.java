@@ -104,28 +104,28 @@ public class GameAction {
 				RailCard rail = (RailCard) cell;
 				try {
 					rail.effectOnPlayer(player);
-					if (!player.equals(rail.getOwner())
-							&& rail.getOwner() != null && !rail.isMortage()) {
-						// if (!player.equals(rail.getOwner()) &&
-						// !rail.getOwner().equals(null)) {
-						buttons.put(ButtonsLabel.BUY, false);
-						messages = "Pay rent $"
-								+ rail.getRent(player, rail.getOwner())
-								+ " to " + rail.getOwner().getName();
-						state.put("owner", rail.getOwner().getColor());
-						state.put("owner_money", rail.getOwner().getMoney());
-					} else if (!player.equals(rail.getOwner())
-							&& rail.getOwner() != null && rail.isMortage()) {
-						buttons.put(ButtonsLabel.BUY, false);
-						messages = "Object is mortage";
-						state.put("owner", rail.getOwner().getColor());
-						state.put("owner_money", rail.getOwner().getMoney());
-					} else {
-						buttons.put(ButtonsLabel.BUY, rail.canBuy(player));
-					}
-					if (player.equals(rail.getOwner())) {
-						messages = "Owner " + player.getName();
-					}
+//					if (!player.equals(rail.getOwner())
+//							&& rail.getOwner() != null && !rail.isMortage()) {
+//						// if (!player.equals(rail.getOwner()) &&
+//						// !rail.getOwner().equals(null)) {
+//						buttons.put(ButtonsLabel.BUY, false);
+//						messages = "Pay rent $"
+//								+ rail.getRent(player, rail.getOwner())
+//								+ " to " + rail.getOwner().getName();
+//						state.put("owner", rail.getOwner().getColor());
+//						state.put("owner_money", rail.getOwner().getMoney());
+//					} else if (!player.equals(rail.getOwner())
+//							&& rail.getOwner() != null && rail.isMortage()) {
+//						buttons.put(ButtonsLabel.BUY, false);
+//						messages = "Object is mortage";
+//						state.put("owner", rail.getOwner().getColor());
+//						state.put("owner_money", rail.getOwner().getMoney());
+//					} else {
+//						buttons.put(ButtonsLabel.BUY, rail.canBuy(player));
+//					}
+//					if (player.equals(rail.getOwner())) {
+//						messages = "Owner " + player.getName();
+//					}
 					if (rail.getOwner() == null) {
 						buttons.put(ButtonsLabel.AUCTION, true);
 					}

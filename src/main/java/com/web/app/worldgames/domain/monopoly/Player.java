@@ -581,4 +581,33 @@ public class Player {
 	public boolean canUpAuctionPrice(int upPrice){
 		return this.checkMoney(this.getAuctionRates()+upPrice);
 	}
+	
+	public boolean canBuy(Player player, SellableCard card){
+		boolean buyState = false;
+		if(card instanceof RailCard){
+			RailCard rail = (RailCard) card;
+		if (!player.equals(rail.getOwner())
+				&& rail.getOwner() != null && !rail.isMortage()) {
+			buyState = false;
+//			buttons.put(ButtonsLabel.BUY, false);
+//			messages = "Pay rent $"
+//					+ rail.getRent(player, rail.getOwner())
+//					+ " to " + rail.getOwner().getName();
+//			state.put("owner", rail.getOwner().getColor());
+//			state.put("owner_money", rail.getOwner().getMoney());
+		} else if (!player.equals(rail.getOwner())
+				&& rail.getOwner() != null && rail.isMortage()) {
+//			buttons.put(ButtonsLabel.BUY, false);
+//			messages = "Object is mortage";
+//			state.put("owner", rail.getOwner().getColor());
+//			state.put("owner_money", rail.getOwner().getMoney());
+		} else {
+		//	buttons.put(ButtonsLabel.BUY, rail.canBuy(player));
+		}
+		if (player.equals(rail.getOwner())) {
+			//messages = "Owner " + player.getName();
+		}
+		}
+		return buyState;
+	}
 }
