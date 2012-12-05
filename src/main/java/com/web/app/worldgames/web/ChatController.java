@@ -28,6 +28,7 @@ public class ChatController {
     private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
 
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/ajax_chat", method = RequestMethod.POST)
     public @ResponseBody
     JSONObject onMessage(HttpServletRequest request,
@@ -57,13 +58,17 @@ public class ChatController {
 	sb.append(participant.getTextColor());
 	sb.append("' id=");
 	sb.append(participant.getParticipantId());
-	sb.append(">[");
+	sb.append(" name='");
+	sb.append(participant.getNickname());
+	sb.append("' >[");
 	sb.append(dateFormat.format(date));
 	sb.append("] ");
 	sb.append(manager.getChatRoomById(participant.getId_room())
 		.getRoomName());
 	sb.append(" / ");
+	sb.append("<a href='#' rel='tooltip' title='Click here to invite this User'>");
 	sb.append(participant.getNickname());
+	sb.append("</a>");
 	sb.append(" : ");
 	sb.append(data);
 	sb.append("</p>");

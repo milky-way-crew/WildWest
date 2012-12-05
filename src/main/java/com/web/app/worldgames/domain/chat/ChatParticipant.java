@@ -7,16 +7,20 @@ import com.web.app.worldgames.domain.User;
 
 public class ChatParticipant {
     private int id_participant;
+    private User user;
     private String nickname;
     private int id_room;
     private String status;
     private String textColor;
     private boolean chatFilter;
     private boolean redirectState;
+    private boolean inviteState;
+    private int id_invitator;
     public LinkedList<String> deliver = new LinkedList<String>();
 
     public ChatParticipant(User user) {
 	super();
+	this.setUser(user);
 	this.setParticipantId(user.getId());
 	this.setNickname(user.getNickname());
 	this.id_room = 0;
@@ -24,6 +28,7 @@ public class ChatParticipant {
 	this.status = "";
 	this.chatFilter = false;
 	this.redirectState = false;
+	this.inviteState = false;
     }
 
     public ChatParticipant() {
@@ -91,5 +96,29 @@ public class ChatParticipant {
 
     public void setRedirectState(boolean redirectState) {
 	this.redirectState = redirectState;
+    }
+
+    public User getUser() {
+	return user;
+    }
+
+    public void setUser(User user) {
+	this.user = user;
+    }
+
+    public boolean isInviteState() {
+	return inviteState;
+    }
+
+    public void setInviteState(boolean invite) {
+	this.inviteState = invite;
+    }
+
+    public int getId_invitator() {
+	return id_invitator;
+    }
+
+    public void setId_invitator(int id_invitator) {
+	this.id_invitator = id_invitator;
     }
 }

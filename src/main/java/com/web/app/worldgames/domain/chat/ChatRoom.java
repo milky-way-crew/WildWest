@@ -47,7 +47,7 @@ public class ChatRoom {
 	for (int i = 0; i < chatParticipants.size(); i++) {
 	    if (id == chatParticipants.get(i).getParticipantId()) {
 		log.debug("User " + chatParticipants.get(i).getNickname()
-			+ " deleted from room" + this.roomName);
+			+ " deleted from room " + this.roomName);
 		chatParticipants.remove(i);
 		break;
 	    }
@@ -97,6 +97,7 @@ public class ChatRoom {
     }
 
     public int getSize() {
+	this.size = chatParticipants.size();
 	return size;
     }
 
@@ -121,16 +122,16 @@ public class ChatRoom {
     }
 
     public int getMaxSize() {
-	if (this.type.toLowerCase().trim().equals(MONOPOLY)) {
+	if (this.getType().toLowerCase().trim().equals(MONOPOLY)) {
 	    this.maxSize = 4;
 	}
-	if (this.type.toLowerCase().trim().equals(CHESS)) {
+	if (this.getType().toLowerCase().trim().equals(CHESS)) {
 	    this.maxSize = 2;
 	}
-	if (this.type.toLowerCase().trim().equals(GIBBET)) {
+	if (this.getType().toLowerCase().trim().equals(GIBBET)) {
 	    this.maxSize = 2;
 	}
-	if (this.type.toLowerCase().trim().equals(DRAW)) {
+	if (this.getType().toLowerCase().trim().equals(DRAW)) {
 	    this.maxSize = 50;
 	}
 	return maxSize;

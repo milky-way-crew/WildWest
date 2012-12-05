@@ -1,10 +1,5 @@
 package com.web.app.worldgames.web;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -30,7 +25,7 @@ public class ChatRoomsController {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
 	if (!manager.isParticipantInAnyRoom(chatParticipant)) {
-	    generateTextColorForParticipant(chatParticipant);
+	    manager.generateTextColorForParticipant(chatParticipant);
 	    request.getSession().setAttribute("chatParticipant",
 		    chatParticipant);
 	    log.debug("Put ChatParticipant in session and in world particicipant list: "
@@ -39,6 +34,7 @@ public class ChatRoomsController {
 		    .addChatParticipant(chatParticipant);
 	} else {
 	    chatParticipant = getChatParticipantFromRequest(request);
+	    chatParticipant.setRedirectState(false);
 	    log.debug("ChatParticipant get from session "
 		    + chatParticipant.getNickname());
 	}
@@ -50,14 +46,6 @@ public class ChatRoomsController {
 
     public static ChatRoomServiceManager getManager() {
 	return manager;
-    }
-
-    private void generateTextColorForParticipant(ChatParticipant participant) {
-	List<String> colorList = new ArrayList<String>(Arrays.asList("red",
-		"green", "blue", "yellow", "violet", "brown", "black", "azure"));
-	Random rand = new Random();
-	participant
-		.setTextColor(colorList.get(rand.nextInt(colorList.size() - 1)));
     }
 
     public static ChatParticipant getChatParticipantFromRequest(

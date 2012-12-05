@@ -1,7 +1,9 @@
 package com.web.app.worldgames.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +15,7 @@ public class ChatRoomServiceManager {
     private static final int ID_WORLD_ROOM = 0;
     private static final Logger log = Logger
 	    .getLogger(ChatRoomServiceManager.class);
+
     private static List<ChatRoom> chatRooms = new ArrayList<ChatRoom>();
 
     public ChatRoomServiceManager() {
@@ -64,10 +67,18 @@ public class ChatRoomServiceManager {
     public void calculateRoomsSize() {
 	for (ChatRoom room : chatRooms) {
 	    room.setSize(room.getChatParticipants().size());
-	    log.debug(room.getRoomName() + " Size=" + room.getSize());
+	    log.debug(room.getRoomName() + " Size = " + room.getSize());
 	}
     }
 
+    public void generateTextColorForParticipant(ChatParticipant participant) {
+ 	List<String> colorList = new ArrayList<String>(Arrays.asList("red",
+ 		"green", "blue", "yellow", "violet", "brown", "black", "azure"));
+ 	Random rand = new Random();
+ 	participant
+ 		.setTextColor(colorList.get(rand.nextInt(colorList.size() - 1)));
+     }
+    
     public int getIdWorldRoom() {
 	return ID_WORLD_ROOM;
     }

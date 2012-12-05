@@ -24,7 +24,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="http://www.redtube.com/">redtube.com</a>
+				</a> <a class="brand" href="#">Milky-way Games</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="active"><a href="#">Home</a></li>
@@ -47,12 +47,13 @@
 				<div id="title" class="well">
 					<h1>Chat</h1>
 					<div id="chatBox"></div>
+					<div id="invMenu"></div>
 					<form name="message" action="">
 						<input type="text" id="usermsg"
 							placeholder="Enter your message here..."> <a
 							class="btn btn-primary btn-medium" id="send">Send <i
 							class="icon-white icon-envelope"></i></a>
-						<div id="chatOption"></div>
+						<div id="chatOption" class="btn-group"></div>
 					</form>
 				</div>
 			</div>
@@ -60,7 +61,7 @@
 			<!-- list -->
 			<div class="span4">
 				<div id="listTitle" class="well"></div>
-				<div class="well">
+				<div id="listBox" class="well">
 					<table id="list" class="table table-hover">
 					</table>
 					<div id="menu"></div>
@@ -72,6 +73,25 @@
 	</div>
 	<!-- world chat and room list -->
 
+	<!-- invite -->
+	<div class="container">
+		<div id="invite" class="modal" style="display: none;">
+			<img id="door" src="resources/img/door.gif">
+			<div id="invHeader" class="modal-header">
+				<h1>Invitation</h1>
+			</div>
+			<div id="invBody" class="modal-body">
+				<p></p>
+			</div>
+			<div class="modal-footer">
+				<a id="accept" href="#" class="btn btn-success" data-dismiss="modal">Accept
+					<i class="icon-white icon-share-alt"></i>
+				</a> <a id="reject" class="btn" data-dismiss="modal">Reject</a>
+			</div>
+		</div>
+	</div>
+	<!-- invite -->
+
 	<!-- modal window create room -->
 	<div class="container">
 		<div id="createRoomModal" class="modal" style="display: none;">
@@ -80,16 +100,18 @@
 			</div>
 			<div class="modal-body">
 				<p></p>
-				Enter room name: <input type="text" id="roomName" size=100
+				<input type="text" id="roomName" size=80
 					placeholder="Enter room name...">
 				<div class="btn-group">
-					<a id="info" class="btn dropdown-toggle btn-info" data-toggle="dropdown"
-						href="#">Choose Game <span class="caret"></span>
+					<a id="info" class="btn dropdown-toggle btn-info"
+						data-toggle="dropdown" href="#">Choose Game <span
+						class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a id="Monopoly" tabindex="-1" href="#">Monopoly</a></li>
 						<li><a id="Chess" tabindex="-1" href="#">Chess</a></li>
-						<li><a id="DrawAndGuess" tabindex="-1" href="#">Draw and Guess</a></li>
+						<li><a id="DrawAndGuess" tabindex="-1" href="#">Draw and
+								Guess</a></li>
 						<li><a id="Gibbet" tabindex="-1" href="#">Gibbet</a></li>
 					</ul>
 				</div>
@@ -97,7 +119,7 @@
 			<div class="modal-footer">
 				<a id="createRoom" href="#" class="btn btn-success"
 					data-dismiss="modal">Create <i class="icon-white icon-edit"></i>
-				</a> <a id="closeModal" class="btn" data-dismiss="modal">Close</a>
+				</a> <a id="closeModal" class="btn btn-medium" data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>

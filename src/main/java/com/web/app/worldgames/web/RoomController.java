@@ -28,6 +28,7 @@ public class RoomController {
     private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
 
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/ajax_room", method = RequestMethod.POST)
     public @ResponseBody
     JSONObject onMessage(HttpServletRequest request,
@@ -39,21 +40,11 @@ public class RoomController {
 
 	if (type.toLowerCase().trim().equals("lists")) {
 	    log.debug("Update lists from user: " + participant.getNickname());
-	    if (participant.getId_room() == manager.getIdWorldRoom()) {
-		json.put("roomList", updateRoomList(participant));
-	    } else {
-		json.put("userList", updateUserList(participant));
-		json.put("userRoom",
-			manager.getChatRoomById(participant.getId_room()));
-		json.put("creatorRedirect",
-			manager.getChatRoomById(participant.getId_room())
-				.getRoomCreator(participant).isRedirectState());
-		json.put("isCreator", isCreator(participant));
-		json.put("filter", participant.isChatFilter());
-		json.put("myRedirect", participant.isRedirectState());
-		if (activateStartButton(participant))
-		    json.put("startStatus", true);
-	    }
+	    json = updateChatRoomPage(participant);
+	    return json;
+	}
+	if (type.toLowerCase().trim().equals("invite")) {
+	    json = invite(Integer.parseInt(data), participant);
 	    return json;
 	}
 	if (type.toLowerCase().trim().equals("filteron")) {
@@ -78,7 +69,9 @@ public class RoomController {
 	}
 	if (type.toLowerCase().trim().equals("join")) {
 	    log.debug("User: " + participant.getNickname() + " joined to room");
-	    joinToRoom(participant, Integer.parseInt(data));
+	    json.put("joinStatus",
+		    joinToRoom(participant, Integer.parseInt(data)));
+	    return json;
 	}
 	if (type.toLowerCase().trim().equals("exit")) {
 	    log.debug("User: "
@@ -93,6 +86,82 @@ public class RoomController {
 		    + participant.getStatus());
 	    setReadyStatus(participant);
 	}
+	return null;
+    }
+
+    private ChatParticipant getChatParticipantById(int id) {
+	for (ChatRoom room : manager.getChatRooms()) {
+	    for (ChatParticipant participant : room.getChatParticipants()) {
+		if (participant.getParticipantId() == id) {
+		    return participant;
+		}
+	    }
+	}
+	return null;
+    }
+
+    private JSONObject updateChatRoomPage(ChatParticipant participant) {
+	JSONObject json = new JSONObject();
+	if (participant.getId_room() == manager.getIdWorldRoom()) {
+	    json = updateWorldRoomPage(participant);
+	} else {
+	    json = updateRoomPage(participant);
+	}
+	return json;
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject updateWorldRoomPage(ChatParticipant participant) {
+	JSONObject json = new JSONObject();
+	json.put("roomList", updateRoomList(participant));
+	if (participant.isInviteState()) {
+	    json.put("inviteStatus", participant.isInviteState());
+	    log.debug("User inviteState = " + participant.isInviteState());
+	    ChatParticipant invitator = getChatParticipantById(participant
+		    .getId_invitator());
+	    json.put("invitator", invitator.getNickname());
+	    log.debug("Invitator = " + invitator.getNickname());
+	    json.put("room", manager.getChatRoomById(invitator.getId_room()));
+	    log.debug("roomId = "
+		    + manager.getChatRoomById(invitator.getId_room())
+			    .getRoomId());
+	    participant.setInviteState(false);
+	}
+	return json;
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject updateRoomPage(ChatParticipant participant) {
+	JSONObject json = new JSONObject();
+	json.put("userList", updateUserList(participant));
+	json.put("userRoom", manager.getChatRoomById(participant.getId_room()));
+	json.put("creatorRedirect",
+		manager.getChatRoomById(participant.getId_room())
+			.getRoomCreator(participant).isRedirectState());
+	json.put("isCreator", isCreator(participant));
+	json.put("filter", participant.isChatFilter());
+	json.put("myRedirect", participant.isRedirectState());
+	json.put("startStatus", activateStartButton(participant));
+	return json;
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject invite(int idUser, ChatParticipant participant) {
+	JSONObject json = new JSONObject();
+	ChatParticipant invitedParticipant = getChatParticipantById(idUser);
+	log.debug("User: " + participant.getNickname() + " invite user - "
+		+ invitedParticipant.getNickname());
+	if (invitedParticipant.getParticipantId() == participant
+		.getParticipantId()) {
+	    json.put("inviteError", 1);
+	    return json;
+	}
+	if (invitedParticipant.getId_room() == participant.getId_room()) {
+	    json.put("inviteError", 0);
+	    return json;
+	}
+	invitedParticipant.setInviteState(true);
+	invitedParticipant.setId_invitator(participant.getParticipantId());
 	return json;
     }
 
@@ -104,22 +173,18 @@ public class RoomController {
     }
 
     private List<ChatRoom> updateRoomList(ChatParticipant participant) {
-	ChatRoomsController.getManager().calculateRoomsSize();
-	for (ChatRoom chatRoom : ChatRoomsController.getManager()
-		.getChatRooms()) {
+	manager.calculateRoomsSize();
+	for (ChatRoom chatRoom : manager.getChatRooms()) {
 	    if (chatRoom.getSize() == 0
-		    && chatRoom.getRoomId() != ChatRoomsController.getManager()
-			    .getIdWorldRoom()) {
-		ChatRoomsController.getManager().deleteRoomById(
-			chatRoom.getRoomId());
+		    && chatRoom.getRoomId() != manager.getIdWorldRoom()) {
+		manager.deleteRoomById(chatRoom.getRoomId());
 	    }
 	}
-	return ChatRoomsController.getManager().getChatRooms();
+	return manager.getChatRooms();
     }
 
     private List<ChatParticipant> updateUserList(ChatParticipant participant) {
-	return ChatRoomsController.getManager()
-		.getChatRoomById(participant.getId_room())
+	return manager.getChatRoomById(participant.getId_room())
 		.getChatParticipants();
     }
 
@@ -155,8 +220,8 @@ public class RoomController {
     }
 
     private boolean activateStartButton(ChatParticipant participant) {
-	if (participant.getStatus().toLowerCase().trim().equals(CREATOR)) {
-	    boolean flag = true;
+	boolean flag = true;
+	if (manager.getChatRoomById(participant.getId_room()).getSize() > 1) {
 	    for (ChatParticipant player : manager.getChatRoomById(
 		    participant.getId_room()).getChatParticipants()) {
 		if (participant.getParticipantId() != player.getParticipantId()
@@ -165,9 +230,10 @@ public class RoomController {
 		    flag = false;
 		}
 	    }
-	    return flag;
+	} else {
+	    flag = false;
 	}
-	return false;
+	return flag;
     }
 
     private void createRoom(ChatParticipant participant, String roomName,
@@ -183,11 +249,20 @@ public class RoomController {
 		participant);
     }
 
-    private void joinToRoom(ChatParticipant participant, int id) {
-	manager.getChatRoomById(participant.getId_room())
-		.deleteChatParticipantById(participant.getParticipantId());
-	manager.getChatRoomById(id).addChatParticipant(participant);
-	participant.setId_room(id);
-	participant.setStatus(NOT_READY_STATUS);
+    private boolean joinToRoom(ChatParticipant participant, int id) {
+	int roomSize = manager.getChatRoomById(id).getSize();
+	int maxRoomSize = manager.getChatRoomById(id).getMaxSize();
+	log.debug("roomSize = " + roomSize);
+	log.debug("roomMaxSize = " + maxRoomSize);
+	if (roomSize < maxRoomSize) {
+	    manager.getChatRoomById(participant.getId_room())
+		    .deleteChatParticipantById(participant.getParticipantId());
+	    manager.getChatRoomById(id).addChatParticipant(participant);
+	    participant.setId_room(id);
+	    participant.setStatus(NOT_READY_STATUS);
+	    return true;
+	} else {
+	    return false;
+	}
     }
 }
