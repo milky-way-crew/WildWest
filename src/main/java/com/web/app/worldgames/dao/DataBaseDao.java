@@ -19,6 +19,7 @@ public class DataBaseDao implements IDataBaseDao {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
+	@Override
 	public void createUserTable() {
 		log.debug("Executing create query");
 		StringBuilder sql = new StringBuilder();
@@ -36,7 +37,7 @@ public class DataBaseDao implements IDataBaseDao {
 		sql.append(") ENGINE=INNODB");
 		jdbcTemplate.execute(sql.toString());
 	}
-
+	@Override
 	public void createUserStatisticsTable() {
 		log.debug("Executing create query");
 		StringBuilder sql = new StringBuilder();
@@ -54,7 +55,7 @@ public class DataBaseDao implements IDataBaseDao {
 		sql.append(") ENGINE=INNODB");
 		jdbcTemplate.execute(sql.toString());
 	}
-
+	@Override
 	public void fillStatistics() {
 		StringBuilder sql = new StringBuilder("INSERT INTO userStatistics ");
 		sql.append("(gameType, idUser) ");
@@ -104,7 +105,7 @@ public class DataBaseDao implements IDataBaseDao {
 		jdbcTemplate.update(sql.toString());
 		sql.delete(0, sql.length());
 	}
-
+	@Override
 	public void fillUser() {
 		StringBuilder sql = new StringBuilder("INSERT INTO users ");
 		sql.append("(userLogin, userPassword, userEmail, userNickname, userImage) ");
@@ -119,7 +120,8 @@ public class DataBaseDao implements IDataBaseDao {
 		sql.delete(0, sql.length());
 
 	}
-
+	
+	@Override
 	public void dropTables() {
 		log.info("Dropping tables");
 		jdbcTemplate.execute("drop table if exists userStatistics");
