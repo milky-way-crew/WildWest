@@ -177,8 +177,8 @@ public class MonopolyManager {
 			}
 			response.put("type", ButtonsLabel.AUCTION);
 			response.put("invoker", auctionCreator.getColor());
-			rates.put("player", currentPlayer.getColor());
-			rates.put("rates", currentPlayer.getAuctionRates()+50);
+//			rates.put("player", currentPlayer.getColor());
+//			rates.put("rates", currentPlayer.getAuctionRates()+50);
 			buttons.put(ButtonsLabel.UP10, currentPlayer.canUpAuctionPrice(CardPrices.UP10_AUCTION_PRICE));
 			buttons.put(ButtonsLabel.UP50, currentPlayer.canUpAuctionPrice(CardPrices.UP50_AUCTION_PRICE+50));
 			response.put("card", auctionCreator.getPosition());
@@ -188,6 +188,8 @@ public class MonopolyManager {
 				auctionCreator.setCanCreateAuction(false);
 				auction = new Thread(new Auction(this, card));
 				auction.start();
+				rates.put("player", currentPlayer.getColor());
+				rates.put("rates", currentPlayer.getAuctionRates());
 			}
 
 			JsonNode tree = null;
@@ -214,13 +216,16 @@ public class MonopolyManager {
 					} else if ((getAuctionPrice() - tempAuctionPrice) == 10) {
 						setMaxAuctionPrice(currentPlayer.getAuctionRates() + 10);
 					}
+				} else if (currentPlayer.getAuctionRates() <= getAuctionPrice()) {
+					setMaxAuctionPrice(price);
+				}
 					log.info("max::::" + getMaxAuctionPrice());
 					currentPlayer.setAuctionRates(getMaxAuctionPrice());
 					log.info("rate:::::player"
 							+ currentPlayer.getAuctionRates() + ":::"
 							+ currentPlayer.getColor());
-					rates.put("player", currentPlayer.getColor());
-					rates.put("rates", currentPlayer.getAuctionRates());
+//					rates.put("player", currentPlayer.getColor());
+//					rates.put("rates", currentPlayer.getAuctionRates());
 					log.info("chect can auction:::"
 							+ (currentPlayer.canAuction(getMaxAuctionPrice())));
 					// if (currentPlayer.canAuction(getMaxAuctionPrice())) {
@@ -232,9 +237,7 @@ public class MonopolyManager {
 					// messages = "You cann't continue auction";
 					// price = 0;
 					// }
-				} else if (currentPlayer.getAuctionRates() <= getAuctionPrice()) {
-					setMaxAuctionPrice(price);
-				}
+				
 				log.info(" NOW PRICE======" + getMaxAuctionPrice());
 			} else {
 				messages = "No player wants to buy this object";
@@ -248,6 +251,8 @@ public class MonopolyManager {
 			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
 			buttons.put(ButtonsLabel.ROLL, currentPlayer.canRollDices());
 			buttons.put(ButtonsLabel.BUY, false);
+			rates.put("player", currentPlayer.getColor());
+			rates.put("rates", currentPlayer.getAuctionRates());
 			state.put("buttons", buttons);
 			state.put("messages", messages);
 			response.put("rates", rates);
