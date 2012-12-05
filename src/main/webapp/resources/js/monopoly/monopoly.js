@@ -458,7 +458,8 @@ function() {
             chat.init();
 
             var hideAfterClick = {
-                start: true
+                start: true,
+                ready: true
                 // done : true
             },
                 initButton = function() {
@@ -526,7 +527,6 @@ function() {
             });
 
             $(window).resize(function() {
-                console.log('resize');
                 $.each(MONO.config.positions, function(color, pos) {
                     BOARD.animate.jump(color, pos);
                 });

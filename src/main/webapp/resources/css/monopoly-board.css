@@ -7,6 +7,12 @@ body {
 .tooltip-inner {
   font-size: 15px;
 }
+.tabbable, #controls, #controls2 {
+    -moz-box-shadow:    0px 0px 10px #888;
+  -webkit-box-shadow: 0px 0px 10px #888;
+  box-shadow:         0px 0px 10px #888;
+}
+
 #ready, #start, #money .label {
   display: none;
 }
@@ -31,6 +37,7 @@ body {
 #menu {
   background: none;
   border: none;
+  box-shadow: none;
 }
 #center div.tabbable {
   height: 350px;
@@ -207,6 +214,23 @@ body {
   .town-image {
     text-align: center;
   }
+  .town-title {
+    font-family: 'Lobster Two';
+    font-size: 20px;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+/*text-shadow: 0 1px 0 #ccc,
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);*/
+  }
   /* resolution of cells */
   td.north, td.south {
     width: 75px;
@@ -246,11 +270,6 @@ body {
     .north .town-image img {
       height: 90px;
       width: 90px;
-    }
-    .north .town-title {
-      width: 90px;
-      text-align: center;
-      top: 0px;
     }
 
 
@@ -321,14 +340,13 @@ body {
     margin-top: -15px;
     margin-left: 45px;
   }
-  .west .town-title {
-    /*margin-left: 25px;*/
+/*  .west .town-title {
+    margin-left: 25px;
     font-size: 20px;
-    position: absolute;
     text-align: center;
     z-index: 1;
   }
-
+*/
   /* >>> right cells */
   .east .owner {
     width: 18%;
