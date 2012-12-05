@@ -45,9 +45,7 @@
 			<tr>
 				<td class="cell northwest tip" id="cell21">
 					<span class="label label-info" style=" top: 0px; text-align: center; ">Free Station</span>
-					<center>
 						<img src="resources/img/board/city/sign_left.svg">
-					</center>
 				</td>
 				<td id="cell22" class="cell north">
 					<div class="north tip">
@@ -295,9 +293,7 @@
 				<td class="cell northeast tip" id="cell31">
 					<!-- <div class="town-image"> -->
 					<span class="label label-info" style=" top: 0px; text-align: center; ">Go to Jail</span>
-					<center>
 						<img src="resources/img/board/city/sign_crossroad.svg">
-					</center>
 					<!-- </div> -->
 				</td>
 			</tr>
@@ -346,10 +342,14 @@
 								<li><a href="#auction-tab" data-toggle="tab">Auction</a></li>
 <!-- 								<li><a href="#settings" data-toggle="tab">Settings</a></li> -->
 										<div id="money">
+											<span class="label" style="
+												display: inline;
+												background-color: #095;
+											">[money status]</span>
 											<span class="label color-player-1" id="money-player-1" >0$</span>
 											<span class="label color-player-2" id="money-player-2" >0$</span>
 											<span class="label color-player-3" id="money-player-3" >0$</span>
-											<span class="label color-player-4" id="money-player-4" >0$</span>							
+											<span class="label color-player-4" id="money-player-4" >0$</span>		
 										</div>
 							</ul>
 							<div class="tab-content">
@@ -428,19 +428,19 @@
 							</div>
 							<!-- <div class="tab-pane fade in " id="auction-tab">		 -->
 							<div class="tab-pane in  active" id="auction-tab">		
-								<div class="span6 well">
+								<div class="span4 well">
 									<div class="row">
 										<h3>Action invoked by:</h3> 
-											<strong class="label invoker">GREEN</strong> 
+											<strong class="label invoker">-</strong> 
 									</div>
 									<div class="row">
 										<h3>Highest price is:</h3>
-										<strong class="label label-warning price">1000$</strong> by <small class="label price-caller">GREEN</small>
+										<strong class="label label-warning price">0$</strong> by <small class="label price-caller">-</small>
 									</div>
 									<div class="row rates">
 										<h3>rates &gt;&gt;</h3>
 										<h3 style=""> 
-										<small class="label color-player-1">10$</small>
+										<small class="label color-player-1">0$</small>
 										<small class="label color-player-2">0$</small>
 										<small class="label color-player-3">0$</small>
 										<small class="label color-player-4">0$</small>
@@ -448,14 +448,13 @@
 									</div>
 								</div>
 								<div class="span3 well">
-									<img src="resources/img/board/city/house.svg" alt="" >
+									<h3 class="lot-name">lot #13</h3>
+									<span class="badge badge-info">60s</span>
+									<img class="lot-image" src="resources/img/board/city/house.svg" alt="">
 								</div> 
-								<div class="row auction-controls">
-									<button id="up50" class="btn btn-primary">up by 50$</button>
-									<button id="up10" class="btn btn-primary">up by 10$</button>
-
-									<!-- <a href="javascript:void(0);" id="up10" class="button lightbg-pink clearfix">up by 10$</a> -->
-									<!-- <a href="javascript:void(0);" id="up50" class="button lightbg-orange clearfix">up by 50$</a> -->
+								<div class="row well auction-controls">
+									<button id="up50" class="square-button">up by 50$</button>
+									<button id="up10" class="square-button">up by 10$</button>
 								</div>
 							</div>
 							</div>
@@ -613,11 +612,9 @@
 
 						<span class="nub"></span>
 					</span>
-					<center>
 						<!-- <div class="town-image"> -->
 							<img src="resources/img/board/city/caravan_wreck.svg" alt="" width="80">
 						<!-- </div> -->
-					</center>
 				</td>
 				<td class="cell east tip" id="cell34">
 					<span class="town-title">Tree?!</span>
@@ -632,9 +629,7 @@
 						<span class="nub"></span>
 					</span>
 					<!-- <div class="town-image"> -->
-					<center>
 						<img src="resources/img/board/city/tree02.svg" alt="" width="80">
-					</center>
 					<!-- </div> -->
 				</td>
 			</tr>
@@ -785,9 +780,7 @@
 						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
 						<span class="nub"></span>
 					</span> 
-					<center>
 						<img src="resources/img/board/city/bridge_stone2.svg" width="80">
-					</center>
 					<!-- </div> -->
 				</td>
 			</tr>
@@ -864,11 +857,9 @@
 						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
 						<span class="nub"></span>
 					</span> 
-					<center>
 						<!-- <div class="town-image"> -->
 							<img src="resources/img/board/city/shipwreck.svg" width="80">
 						<!-- </div> -->
-					</center>
 				</td>
 				<td class="cell east tip" id="cell39">
 					<!-- <div class="town-image"> -->
@@ -878,9 +869,7 @@
 						<p class="tip-header">Shipwreck, was here you can get some bonuses.</p>
 						<span class="nub"></span>
 					</span> 
-						<center>
 							<img src="resources/img/board/city/sword_in_the_stone.svg" alt="" width="75">
-						</center>
 					<!-- </div> -->
 				</td>
 			</tr>
@@ -952,11 +941,9 @@
 			</tr>
 			<tr>
 				<td class="cell southwest" id="cell11">
-					<center>
 							<img src="resources/img/board/city/jailhouse.svg" alt="">
 							<span class="label label-info">Jail</span>
 						<!-- </div> -->
-					</center>
 				</td>
 				<td class="cell south" id="cell10">
 					<div class="south tip">

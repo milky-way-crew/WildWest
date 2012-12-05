@@ -13,6 +13,7 @@
 	font-size: 16px;
 	position: relative;
 }
+
 .square-button:hover, .square-button:focus {
 	color: white;
 	background: #3D57B4;
