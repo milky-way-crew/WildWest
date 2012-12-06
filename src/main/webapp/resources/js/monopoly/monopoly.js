@@ -536,10 +536,10 @@ function() {
                 $(this).toggleClass('hover');
             });
 
-            // $('.cell .tip').unbind('click');
-            // $('.cell .tip').hover(function() { 
-            //     $(this).toggleClass('hover');
-            // });
+            $('.cell .tip').unbind('click');
+            $('.cell .tip').hover(function() { 
+                $(this).toggleClass('hover');
+            });
         }
     };
 

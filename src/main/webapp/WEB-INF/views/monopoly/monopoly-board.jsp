@@ -79,6 +79,7 @@
 				</td>
 				<td id="cell23" class="cell north">
 					<div class="north tip">
+						<img class="town-image" src="resources/img/board/city/tree11.svg" alt="" width="90" style="position:initial;">
 						<span class="bottom bottom-small">
 							<strong class="town-title">Tree of chaos</strong>
 							<img src="resources/img/board/city/tree11.svg" width="170">
@@ -95,7 +96,6 @@
 							</div>
 							<span class="nub"></span>
 						</span>
-						<img class="town-image" src="resources/img/board/city/tree11.svg" alt="" width="90">
 					</div>
 				</td>
 				<td id="cell24" class="cell north">
