@@ -8,9 +8,10 @@
 	border-radius: 0;
 	color: white;
 	white-space: nowrap;
-	font-family: 'Bubblegum Sans', 'Gotham Rounded B', "proxima-nova-soft", sans-serif;
+	font-weight: bold;
+	font-family: 'Yanone Kaffeesatz', 'Gotham Rounded B', "proxima-nova-soft", sans-serif;
 	padding: 9px 16px;
-	font-size: 16px;
+	font-size: 20px;
 	position: relative;
 }
 

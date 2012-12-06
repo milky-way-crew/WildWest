@@ -4,23 +4,55 @@
 body {
   background-image: url("../img/board/bg_wood.jpg");
 }
+.label-money {
+  background-color: #095;
+  font-size: 16px;
+}
+.tip-content > li {
+  margin-bottom: 3px;
+  text-align: left;
+}
+.tip-owner {
+  margin-top: 3px;
+  display: block;
+}
+.dice {
+    box-shadow: 1px 0px 1px #203891,
+                0px 1px 1px #3852B1,
+                2px 1px 1px #203891,
+                1px 2px 1px #3852B1,
+                3px 2px 1px #203891,
+                2px 3px 1px #3852B1,
+                4px 3px 1px #203891,
+                3px 4px 1px #3852B1,
+                5px 4px 1px #203891,
+                4px 5px 1px #3852B1,
+                6px 5px 1px #203891;
+}
+.well {
+  background-color: rgba(255, 255, 255, 0.7);
+}
 .tooltip-inner {
   font-size: 15px;
-}
-.tabbable, #controls, #controls2 {
-    -moz-box-shadow:    0px 0px 10px #888;
-  -webkit-box-shadow: 0px 0px 10px #888;
-  box-shadow:         0px 0px 10px #888;
-}
-
-#ready, #start, #money .label {
-  display: none;
 }
 .lot-image {
   border: 3px dotted #eee;
   width: 160px;
   height: 120px;
 }
+.tabbable, #controls, #controls2 {
+  -moz-box-shadow:    0px 0px 10px #888;
+  -webkit-box-shadow: 0px 0px 10px #888;
+  box-shadow:         0px 0px 10px #888;
+}
+#controls, #controls2 {
+  font-size: 1.5em;
+}
+
+#ready, #start, #money .label {
+  display: none;
+}
+
 #cell41 {
   background-image: url("../img/board/bg_wood.jpg");
   border: 2px solid;
@@ -31,100 +63,91 @@ body {
   margin: 0px; 
   vertical-align: middle;
 }
-.dice {
-    box-shadow: 1px 0px 1px #203891,0px 1px 1px #3852B1,2px 1px 1px #203891,1px 2px 1px #3852B1,3px 2px 1px #203891,2px 3px 1px #3852B1,4px 3px 1px #203891,3px 4px 1px #3852B1,5px 4px 1px #203891,4px 5px 1px #3852B1,6px 5px 1px #203891;
-}
+
 #menu {
   background: none;
   border: none;
   box-shadow: none;
 }
-#center div.tabbable {
-  height: 350px;
-  padding: 20px;
-  /*border: 1px dashed;*/
-}
-.well {
-  background-color: rgba(255, 255, 255, 0.7);
-}
-#auction-tab .row {
-  text-align: left;
-  margin-left: 10px;
-}
-#auction-tab h3 {
-  text-align: left;
-  display: inline-block;
-  font-family: 'Yanone Kaffeesatz', 'Bubblegum sans', sans;
-}
-#auction-tab strong {
-  font-size: 20px;
-  margin-left: 10px;
-}
-#auction-tab small {
-  font-size: 16px;
-}
 
-/*#auction-tab img {
-  width: 100%;
-}*/
-#auction-tab .auction-controls {
-  /*margin-top: 10px;*/
-  margin-left: 0px;
-  text-align: center;
-}
-#auction-tab .auction-controls button{
-  background: #64C;
-}
-#auction-tab .auction-controls button:hover{
-  background: #647;
-}
+/* ******************* */
+/* center-cell section */
+/* ******************* */
+  #center div.tabbable {
+    height: 350px;
+    padding: 20px;
+  }
 
-#auction-tab .lot-name, #auction-tab .badge {
-  font-family: 'Yanone Kaffeesatz', 'Archivo Narrow', 'Helvetica';
-  font-size: 20px;
-}
-#auction-tab .lot-name {
-  display: inline-block;
-}
-#auction-tab a {
-  margin: 10px;
-  margin-top: 10px;
-}
-
-#mini-map {
-  border: 1px dashed;
-}
-#controls, #controls2 {
-  display: inline-block;
-}
-#chat {
-  overflow-y: scroll;
-  height: 220px;
-  padding: 10px;
-  margin: 0;
-  margin-bottom: 10px;
-  border: none;
-}
-  ul#chat > li {
-    border-bottom: 1px dashed blueviolet;
+  #auction-tab .row {
+    text-align: left;
+    margin-left: 10px;
+  }
+  #auction-tab h3 {
+    text-align: left;
+    display: inline-block;
+    font-family: 'Yanone Kaffeesatz', 'Bubblegum sans', sans;
+  }
+  #auction-tab strong {
     font-size: 20px;
-    font-family: 'Yanone Kaffeesatz', 'Archivo Narrow', 'Helvetica';
-    margin-bottom: 7px;
+    margin-left: 10px;
   }
-  ul#chat > li > .label {
-    font-size: 1em;
+  #auction-tab small {
+    font-size: 16px;
   }
-#chat-log {
-  font-family: 'Bubblegum sans', 'Helvetica', 'Arial';
-  text-align: left;
-  background-color: rgba(255, 255, 255, 0.4);
 
-  border: 2px solid #eee;
-  padding: 5px;
-/*  -moz-box-shadow:    0px 0px 10px #888;
-  -webkit-box-shadow: 0px 0px 10px #888;
-  box-shadow:         0px 0px 10px #888;*/
-}
+  #auction-tab .auction-controls {
+    margin-left: 0px;
+    text-align: center;
+  }
+  #auction-tab .auction-controls button {
+    background: #64C;
+  }
+  #auction-tab .auction-controls button:hover {
+    background: #647;
+  }
+
+  #auction-tab .lot-name, #auction-tab .badge {
+    font-family: 'Yanone Kaffeesatz', 'Archivo Narrow', 'Helvetica';
+    font-size: 20px;
+  }
+  #auction-tab .lot-name {
+    display: inline-block;
+  }
+  #auction-tab a {
+    margin: 10px;
+    margin-top: 10px;
+  }
+
+  #mini-map {
+    border: 1px dashed;
+  }
+  #controls, #controls2 {
+    display: inline-block;
+  }
+  #chat {
+    overflow-y: scroll;
+    height: 220px;
+    padding: 10px;
+    margin: 0;
+    margin-bottom: 10px;
+    border: none;
+  }
+    ul#chat > li {
+      border-bottom: 1px dashed blueviolet;
+      font-size: 20px;
+      font-family: 'Yanone Kaffeesatz', 'Archivo Narrow', 'Helvetica';
+      margin-bottom: 7px;
+    }
+    ul#chat > li > .label {
+      font-size: 1em;
+    }
+  #chat-log {
+    font-family: 'Bubblegum sans', 'Helvetica', 'Arial';
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 2px solid #eee;
+    padding: 5px;
+  }
   #chat-log input {
     width: 485px;
     margin: 0px;
@@ -133,9 +156,6 @@ body {
     margin-left: 10px;
     margin-bottom: 10px;
   }
-/* ******************* */
-/* center-cell section */
-/* ******************* */
   #center {
     width: 690px;
     height: 650px;
@@ -143,48 +163,14 @@ body {
     text-align: center;
     background-image: url("../img/board/bg-info.png")
     border-radius: 5px;
-    /*border: 3px #eee dashed;*/
   }
-  #roll-dice {
-    /*margin: 30px;*/
-    text-align: center;
-  }
-  #button-menu {
-    text-align: center;
 
+  #button-menu {
     margin-top: 20px;
     margin-bottom: 0px;
   }
-  #info {
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 350px;
-    height: 270px;
-    /*background: #eee;*/
-  }
-/*    #info td:hover {
-      -moz-box-shadow:    0px 0px 10px #000;
-      -webkit-box-shadow: 0px 0px 10px #000;
-      box-shadow:         0px 0px 10px #000;
-    }*/
-    #info-table-1 {
-      /*width: 100px;*/
-      /*height: 200px;*/
-      float: left;
-      margin-right: 15px;
-    }
-    #info-table-2 {
-      /*width: 130px;*/
-      /*height: 160px;*/
-      float: left;
-      margin-right: 15px;
-    }
-  #money {
-    float: right;
-    font-family: 'Archivo Narrow', 'Helvetica';
-    margin-top: 10px;
-  }
+
+
 
 /* ****************** */
 /* game-table section */
@@ -216,20 +202,8 @@ body {
   }
   .town-title {
     font-family: 'Lobster Two';
-    font-size: 20px;
+    font-size: 22px;
     text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
-/*text-shadow: 0 1px 0 #ccc,
-               0 2px 0 #c9c9c9,
-               0 3px 0 #bbb,
-               0 4px 0 #b9b9b9,
-               0 5px 0 #aaa,
-               0 6px 1px rgba(0,0,0,.1),
-               0 0 5px rgba(0,0,0,.1),
-               0 1px 3px rgba(0,0,0,.3),
-               0 3px 5px rgba(0,0,0,.2),
-               0 5px 10px rgba(0,0,0,.25),
-               0 10px 10px rgba(0,0,0,.2),
-               0 20px 20px rgba(0,0,0,.15);*/
   }
   /* resolution of cells */
   td.north, td.south {
@@ -255,7 +229,7 @@ body {
     }
     .north .house {
       position: absolute;
-      width: 98%; /*was 100%*/
+      width: 98%;
       height: 18%;
       left: 0px;
       bottom: 0px;
@@ -288,7 +262,7 @@ body {
     }
     .south .house {
       position: absolute;
-      width: 98%; /*was 100%*/
+      width: 98%;
       height: 18%;
       left: 0px;
       top: 0px;
@@ -298,17 +272,10 @@ body {
       height: 90px;
       position: absolute;
       bottom: 30px;
-      /*margin-top: 30px;*/
-      /*margin-left: 6px;      */
     }
     .south .town-image img {
       height: 90px;
       width: 90px;
-    }
-    .south .town-title {
-      width: 90px;
-      text-align: center;
-      bottom: 0;
     }
 
   /* <<< left cells */
@@ -340,13 +307,7 @@ body {
     margin-top: -15px;
     margin-left: 45px;
   }
-/*  .west .town-title {
-    margin-left: 25px;
-    font-size: 20px;
-    text-align: center;
-    z-index: 1;
-  }
-*/
+
   /* >>> right cells */
   .east .owner {
     width: 18%;
@@ -376,21 +337,33 @@ body {
     margin-top: -15px;
     margin-left: 45px;
   }
-  .east .town-title {
-    font-size: 20px;
-    position: absolute;
-    text-align: center;
-    z-index: 1;
-  }
 
 /*!-- ************** --*/
 /*!-- [Info seciton] --*/
 /*!-- ************** --*/
-  /* fixed cells w*h needed to corect display images */
-  #info-table-1 td, #info-table-2 td {
-    width: 40px;
-    height: 40px;
+  #info {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+    height: 270px;
   }
+    #info-table-1, #info-table-2 {
+      float: left;
+      margin-right: 15px;
+    }
+    /* fixed cells w*h needed to corect display images */
+    #info-table-1 td, #info-table-2 td {
+      width: 40px;
+      height: 40px;
+    }
+
+  #money {
+    float: right;
+    font-family: 'Archivo Narrow', 'Helvetica';
+    margin-top: 10px;
+  }
+
   #money > .label {
     font-size: 20px;
   }
@@ -403,16 +376,6 @@ body {
 .northwest,.northeast,.southwest,.southeast {
   width: 160px; 
   height: 145px;
-}
-
-#selectable .ui-selecting {
-  background: #FECA40;
-}
-
-#firstInfoTable,#secondInfoTable
-  {
-  float: left;
-  margin-right: 15px;
 }
 
 .city {
@@ -494,29 +457,17 @@ body {
   cursor: pointer;
 }
 
-.setMiniImagePlayer1 {
-  background: url("../img/board/miniPlayer1.png") no-repeat center center;
-}
-
-.setMiniImagePlayer2 {
-  background: url("../img/board/miniPlayer2.png") no-repeat center center;
-}
-
-.setMiniImagePlayer3 {
-  background: url("../img/board/miniPlayer3.png") no-repeat center center;
-}
-
-.setMiniImagePlayer4 {
-  background: url("../img/board/miniPlayer4.png") no-repeat center center;
-}
-
 #player1, #player2, #player3, #player4 {
   position: absolute;
+  display: none;
 } 
 
 .disableButton {
   opacity: 0.5;
 }
+/*****************************************/
+/*                :font:                 */
+/*****************************************/
 
 @font-face {
   font-family: 'Lobster Two';
@@ -524,17 +475,6 @@ body {
   font-weight: 400;
   src: local('Lobster Two'), local('LobsterTwo'), url(../font/LobsterTwo.woff) format('woff'),
   url(http://themes.googleusercontent.com/static/fonts/lobstertwo/v4/Law3VVulBOoxyKPkrNsAaIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
-}
-/*****************************************/
-/*                :font:                 */
-/*****************************************/
-
-@font-face {
-  font-family: 'Bubblegum Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../font/Bubblegum Sans.woff') format('woff'), 
-  url(http://themes.googleusercontent.com/static/fonts/bubblegumsans/v2/Y9iTUUNz6lbl6TrvV4iws3XDLzkeTJI1q7uv6LMmp4I.woff) format('woff');
 }
 
 @font-face {

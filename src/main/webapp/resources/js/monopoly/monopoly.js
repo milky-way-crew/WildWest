@@ -27,7 +27,7 @@ function() {
         refreshButtons: function(buttons) {
             ui.minOpacityToButtons();
             $.each(buttons, function(btnName) {
-                var opacityValue = buttons[btnName] ? "1" : "0.5";
+                var opacityValue = buttons[btnName.toLowerCase()] ? "1" : "0.5";
                 $('#' + btnName).animate({
                     "opacity": opacityValue
                 }, 100);
@@ -281,11 +281,12 @@ function() {
                             $('#auction-tab img').attr('src', receivedImage);
                         }
                     }
-
                     if (json.seconds_left) {
                         $('.lot-name+.badge').html(json.seconds_left + 's');
                     }
-
+                    if (json.buttons ) {
+                        ui.refreshButtons(json.buttons);
+                    }
                     if (json.invoker) {
                         $('#auction-tab .invoker').html(json.invoker);
                         $('#auction-tab .invoker').addClass('color-player-' + BOARD.colorToIndex(json.invoker));
@@ -320,14 +321,13 @@ function() {
                     MONO.config.money = json.money;
                     MONO.config.isCreator = json.isCreator;
                     $.each(json.players, function(color, stats) {
+                        $('#player' + BOARD.colorToIndex(color)).show(300);
                         BOARD.animate.jump(color, stats.position);
                         MONO.animate.money(color, stats.money);
                         ui.attachTooltip('#money .label.color-player-' 
                             + BOARD.colorToIndex(color), 'nick-name : ' + stats.nick);
                     });
                     
-                    // MONO.animate.money(json.color, json.money);
-
                     if (json.buttons) {
                         ui.refreshButtons(json.buttons);
                     }
@@ -531,6 +531,15 @@ function() {
                     BOARD.animate.jump(color, pos);
                 });
             });
+
+            $('.cell .tip').click(function() { 
+                $(this).toggleClass('hover');
+            });
+
+            // $('.cell .tip').unbind('click');
+            // $('.cell .tip').hover(function() { 
+            //     $(this).toggleClass('hover');
+            // });
         }
     };
 
@@ -663,7 +672,6 @@ function() {
             move: function(playerColor, dice1, dice2, startCell) {
                 var offset = dice1 + dice2;
                 BOARD.animate.goTo(playerColor, startCell, offset, BOARD.CONST.DURATION);
-
             },
             jump: function(whoColor,  whereCell) {
                 // instant
@@ -689,7 +697,6 @@ function() {
                     $houseCell.fadeIn(300);
                 });
             },
-            /**** Sell the house ****/
             sellHouse: function(houseCell) {
                 var $houseCell = $("#cell" + houseCell + ' .house img'),
                     newHouse = "resources/img/board/emptyhouse.png";
@@ -723,7 +730,9 @@ function() {
                 $(houseCell).attr('src', "resources/img/board/emptyhouse.png");
             } else {
                 $(ownerCell).removeClass("color-player-" + playerNumber);
-                $('#miniCell' + cell + ' img').attr({'src': '', 'alt':''});
+                $('#miniCell' + cell + ' img').hide(300, function() {
+                    $('#miniCell' + cell).html('<img/>');
+                });
             }
         },
         hightlightCells: function(cellArr, player, cls) {
@@ -821,7 +830,7 @@ function() {
                 mortageBtn.addClass('btn-success');
                 mortageBtn.html('unmortage');
                 // change outline
-                BOARD.draw.changeOutline(cell, 'sketch');
+                BOARD.draw.toggleOutline(cell, 'sketch');
             },
             unmortage: function(cell, player) {
                 var index = BOARD.colorToIndex(player),
@@ -833,7 +842,7 @@ function() {
                 unmortageBtn.addClass('btn-info');
                 unmortageBtn.html('mortage');
                 // change outline
-                BOARD.draw.changeOutline(cell, 'full');
+                BOARD.draw.toggleOutline(cell, 'full');
             },
             build: function(cell) {
                 BOARD.houseManipulation.buildHouse(cell);
@@ -849,7 +858,7 @@ function() {
                     .fadeIn(300)
                 ;
             },
-            changeOutline: function(cell, mode) {
+            toggleOutline: function(cell, mode) {
                 // change outline of img in cell & tip
                 var $imgTown = $('#cell' + cell + ' .town-image img'),
                     $imgTip = $('#cell' + cell + ' span img'),
@@ -867,8 +876,8 @@ function() {
                     return;
                 }
                 $imgTown.fadeOut(300, function() {
-                    $imgTown.attr('src', path);
-                    $imgTown.fadeIn(300);
+                    $imgTown.attr('src', path).fadeIn(300);
+                    $imgTip.attr('src', path).fadeIn(300);
                 });
             }
         },
@@ -882,8 +891,13 @@ function() {
             $.each(['BROWN', 'GREEN', 'RED', 'VIOLET'], function(i, who) {
                 BOARD.animate.goTo(who, 1, 0);
             });
-
-            $('#myTab [href=#chat-tab]').tab('show');
+            $(window).bind('beforeunload', function() {    
+                var msg = 'disconnected for some reasons.';
+                MONO.transport.send('chat', {
+                    "message": msg
+                });   
+            }); 
+            // $('#myTab [href=#chat-tab]').tab('show');
         }
     };
     BOARD.init();
