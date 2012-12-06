@@ -79,6 +79,7 @@
 				</td>
 				<td id="cell23" class="cell north">
 					<div class="north tip">
+						<img class="town-image" src="resources/img/board/city/tree11.svg" alt="" width="90" style="position:initial;">
 						<span class="bottom bottom-small">
 							<strong class="town-title">Tree of chaos</strong>
 							<img src="resources/img/board/city/tree11.svg" width="170">
@@ -95,7 +96,6 @@
 							</div>
 							<span class="nub"></span>
 						</span>
-						<img class="town-image" src="resources/img/board/city/tree11.svg" alt="" width="90">
 					</div>
 				</td>
 				<td id="cell24" class="cell north">
@@ -248,6 +248,7 @@
 				</td>
 				<td id="cell29" class="cell north">
 					<div class="north tip">
+						<img class="town-image" src="resources/img/board/city/mountain4.svg" alt="" width="100" style="position:initial;">
 						<span class="bottom bottom-small">
 							<strong class="town-title">Mountain of anger</strong>
 							<img src="resources/img/board/city/mountain4.svg" width="170">
@@ -268,7 +269,6 @@
 							</div>
 							<span class="nub"></span>
 						</span>
-						<img class="town-image" src="resources/img/board/city/mountain4.svg" alt="" width="100">
 					</div>
 				</td>
 				<td id="cell30" class="cell north">
@@ -1078,6 +1078,9 @@
 				</td>
 				<td class="cell south" id="cell8">
 					<div class="south tip">
+						<div class="town-image">
+							<img src="resources/img/board/city/wishing_well.svg" alt="" width="100">
+						</div>
 						<span class="top top-small">
 							<img src="resources/img/board/city/wishing_well.svg" width="170">
 							<hr>
@@ -1093,7 +1096,6 @@
 								</ul>
 							<span class="nub"></span>
 						</span>
-						<img class="town-image" src="resources/img/board/city/wishing_well.svg" alt="" width="100">
 					</div>
 				</td>
 				<td class="cell south" id="cell7">
@@ -1167,7 +1169,9 @@
 							<hr>
 							<span class="nub"></span>
 						</span>
-						<img class="town-image" src="resources/img/board/city/statue.svg" alt="" width="90">
+						<div class="town-image">
+							<img src="resources/img/board/city/statue.svg" alt="" width="90">
+						</div>
 					</div>
 				</td>
 				<td class="cell south" id="cell4">
@@ -1215,7 +1219,9 @@
 								</ul>
 							<span class="nub"></span>
 						</span>
-						<img class="town-image" src="resources/img/board/city/ruins.svg" alt="" width="90">
+						<div class="town-image">
+							<img src="resources/img/board/city/ruins.svg" alt="" width="90">
+						</div>
 					</div>
 				</td>
 				<td class="cell south" id="cell2">

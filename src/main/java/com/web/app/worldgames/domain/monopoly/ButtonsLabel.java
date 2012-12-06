@@ -12,8 +12,8 @@ public interface ButtonsLabel {
 	String AUCTION = "auction";
 	String READY = "ready";
 	String DONE = "done";
-	String UP10 = "Up10";
-	String UP50 = "Up50";
+	String UP10 = "up10";
+	String UP50 = "up50";
 	
 	String TURN = "turn";
 	String INIT = "init";
