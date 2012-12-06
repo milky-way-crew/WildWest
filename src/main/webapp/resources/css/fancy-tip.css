@@ -8,6 +8,13 @@
   position: relative;
   cursor: pointer;
 }
+.tip span > img {
+  border-radius: 15px;
+  background-color: #eee;);
+  box-shadow: 0px 0px 10px #fff;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 .tip .tip-header {
   margin: 0px;
   text-align: center;
@@ -43,23 +50,25 @@
 	position: absolute;
 	padding: 10px;
 	width: 190px;
+  text-shadow: 0 0 0 #ffffff;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0);
+  opacity: 0;
+  font-size: 16px;
+
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
-	text-shadow: 0 0 0 #ffffff;
-	/*font-weight: 800;*/
-	color: rgba(255, 255, 255, 0);
-	opacity: 0;
-	font-size: 16px;
+
 	-moz-transition: all 0.4s ease-in;
 	-webkit-transition: all 0.4s ease-in;
 	-o-transition: all 0.4s ease-in;
 	-webkit-transition: all 0.4s ease-in;
-	-webkit-transition-delay: 0.1s;
-	-moz-transition-delay: 0.1s;
-	-o-transition-delay: 0.1s;
-	-transition-delay: 0.1s;
-	z-index: 1;
+/*	-webkit-transition-delay: 0.1s;*/
+/*	-moz-transition-delay: 0.1s;*/
+/*	-o-transition-delay: 0.1s;*/
+/*	-transition-delay: 0.1s;*/
+	z-index: -777;
 }
 
 .tip span .nub {
@@ -86,10 +95,10 @@
   -webkit-transition: all 0.4s ease-in;
   -o-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
-  -webkit-transition-delay: 0.1s;
-  -moz-transition-delay: 0.1s;
-  -o-transition-delay: 0.1s;
-  -transition-delay: 0.1s;
+/*  -webkit-transition-delay: 0.1s;*/
+/*  -moz-transition-delay: 0.1s;*/
+/*  -o-transition-delay: 0.1s;*/
+/*  -transition-delay: 0.1s;*/
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
@@ -99,7 +108,6 @@
 .tip span.top {
   top: 0px;
   left: 4px;
-  /*width: 150px;*/
 }
 .tip span.top .nub {
   left: 20%;
@@ -129,13 +137,13 @@
   left: -8px;
   top: 20px;
   margin: 0 0 0 0;
-  -moz-transition: all 0.4s ease-in;
-  -webkit-transition: all 0.4s ease-in;
-  -o-transition: all 0.4s ease-in;
-  -webkit-transition: all 0.4s ease-in;
+/*  -moz-transition: all 0.4s ease-in;*/
+/*  -webkit-transition: all 0.4s ease-in;*/
+/*  -o-transition: all 0.4s ease-in;*/
+/*  -webkit-transition: all 0.4s ease-in;*/
 }
-.tip:hover span {
-  background: #73C2C0; /* TODO: change this auqa blue sucking color. WAS: #0099ff */ /*#73C2C0*/  /*#78896D*/
+.tip.hover span {
+  background: #144; /* TODO: change this auqa blue sucking color. WAS: #0099ff */ /*#73C2C0*/  /*#78896D*/
   height: auto;
   color: #fff;
   font-size: 16px;
@@ -144,36 +152,37 @@
   -webkit-transition: all 0.4s ease-in;
   -o-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
-  -webkit-transition-delay: 0.1s;
-  -moz-transition-delay: 0.1s;
-  -o-transition-delay: 0.1s;
-  -transition-delay: 0.1s;
+/*  -webkit-transition-delay: 0.1s;*/
+/*  -moz-transition-delay: 0.1s;*/
+/*  -o-transition-delay: 0.1s;*/
+/*  -transition-delay: 0.1s;*/
+  z-index: 3;
 }
-.tip:hover span .nub {
+.tip.hover span .nub {
   -moz-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
   -o-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
-  -webkit-transition-delay: 0.1s;
-  -moz-transition-delay: 0.1s;
-  -o-transition-delay: 0.1s;
-  -transition-delay: 0.1s;
+/*  -webkit-transition-delay: 0.1s;*/
+/*  -moz-transition-delay: 0.1s;*/
+/*  -o-transition-delay: 0.1s;*/
+/*  -transition-delay: 0.1s;*/
 }
-.tip:hover span.bottom {
-  bottom: -370px;
+.tip.hover span.bottom {
+  bottom: -400px;
 }
-.tip:hover span.left {
+.tip.hover span.left {
   left: -193px;
 }
-.tip:hover span.right {
+.tip.hover span.right {
   right: -193px;
 }
-.tip:hover span.top {
-  top: -370px;
+.tip.hover span.top {
+  top: -400px;
 }
-.tip:hover span.top-small {
-  top: -260px;
+.tip.hover span.top-small {
+  top: -350px;
 }
-.tip:hover span.bottom-small {
-  bottom: -260px;
+.tip.hover span.bottom-small {
+  bottom: -370px;
 }
