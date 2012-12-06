@@ -18,7 +18,7 @@ public class PersonalController {
 	private final static Logger log = Logger.getLogger(PersonalController.class);
 
 	@RequestMapping(value =  "/personal" )
-	public String home(HttpServletRequest request, HttpServletResponse responsce, Model model) {
+	public String home( HttpServletRequest request, HttpServletResponse responsce, Model model) {
 		User loginedUser = (User) request.getSession().getAttribute("user");
 		if (loginedUser == null) {
 			return "redirect:login";

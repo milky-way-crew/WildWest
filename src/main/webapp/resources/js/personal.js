@@ -7,7 +7,7 @@ function showEditInfo(){
 	$('#editInf').modal();
 }
 function nextImage() {
-	if(image>=45){
+	if(image>=65){
 		image=1;
 	}else{
 		image=image+1;
@@ -15,19 +15,19 @@ function nextImage() {
 	     img = new Image();
 	     img.src = "resources/img/avatar/emo"+image+".gif";
 	     document.getElementById('image').src = img.src;
-	     document.getElementById('number').value=image+"/45";
+	     document.getElementById('number').value=image+"/65";
 }
 
 function previousImage() {
 	if(image<=1){
-		image=45;
+		image=65;
 	}else{
 		image=image-1;
 	}
     img = new Image();
     img.src = "resources/img/avatar/emo"+image+".gif";
     document.getElementById('image').src = img.src;
-    document.getElementById('number').value=image+"/45";
+    document.getElementById('number').value=image+"/65";
 }
 
 function setAvatar(){

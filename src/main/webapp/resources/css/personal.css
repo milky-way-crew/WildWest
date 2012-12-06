@@ -1,6 +1,12 @@
 @CHARSET "UTF-8";
 
- 
+body{
+	background: url(../img/background.jpg) no-repeat center center fixed;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
+}
 a {
 	font: 1px;
 	width: 100px;
@@ -16,11 +22,12 @@ table {
 }
  #editAvatar{
 width: 300px;
-background-image: url(../img/modal.jpg)
+background-image: url(../img/123.jpg); 
+
 }
 
  #editInf{
-background-image: url(../img/modal1.jpg)
+background-image: url(../img/123.jpg);
 }
 #modal1 {
 	 color: #FFFFFF;
@@ -29,7 +36,7 @@ background-image: url(../img/modal1.jpg)
  #editInf{
 width: 400px;
 }
-#tableInfo {
+/* #tableInfo {
 	   -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
@@ -37,7 +44,7 @@ width: 400px;
     transition: all 1s ease-in-out;
 }
   #tableInfo:hover {
-    background-color: #fc3;
+    background-color: #000000;
     -webkit-transform: rotate(360deg) scale(2);
     -moz-transform: rotate(360deg) scale(2);
     -o-transform: rotate(360deg) scale(2);
@@ -53,13 +60,13 @@ width: 400px;
     transition: all 1s ease-in-out;
 }
   #tableStat:hover {
-    background-color: #fc3;
+    background-color: #000000;
     -webkit-transform: rotate(360deg) scale(2);
     -moz-transform: rotate(360deg) scale(2);
     -o-transform: rotate(360deg) scale(2);
     -ms-transform: rotate(360deg) scale(2);
     transform: rotate(360deg) scale(2);
-  }
+  } */
 #chatRoom {
 	width: 200px;
 }
@@ -141,3 +148,55 @@ width: 400px;
     cursor: pointer;
 }
 
+
+table.table3{
+    font-family:Arial;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    line-height: 1.7em;
+    text-align:center;
+    border-collapse:collapse;
+}
+
+.table3 tbody td{
+    padding:10px;
+}
+.table3 tbody td:nth-child(even){
+    background-color:#444;
+    color:#444;
+    border-bottom:1px solid #444;
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.39, rgb(189,189,189)),
+        color-stop(0.7, rgb(224,224,224))
+        );
+    background:-moz-linear-gradient(
+        center bottom,
+        rgb(189,189,189) 39%,
+        rgb(224,224,224) 70%
+        );
+    text-shadow:1px 1px 1px #fff;
+}
+.table3 tbody td:nth-child(odd){
+    background-color:#555;
+    color:#f0f0f0;
+    border-bottom:1px solid #444;
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.39, rgb(85,85,85)),
+        color-stop(0.7, rgb(105,105,105))
+        );
+    background:-moz-linear-gradient(
+        center bottom,
+        rgb(85,85,85) 39%,
+        rgb(105,105,105) 70%
+        );
+    text-shadow:1px 1px 1px #000;
+}

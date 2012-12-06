@@ -17,7 +17,7 @@
 <title>KaBoom</title>
 <style type="text/css">
 	body {
-		background-image: url(resources/img/wood.jpg);
+		/* background-image: url(resources/img/wood.jpg); */
 	}
 	.hero-unit {
 		background-color: rgba(255,255,255,0.7);
@@ -26,7 +26,7 @@
 </head>
 <body>
 	<div class="container ">
-	<div class="span10 well">
+	<div class="span10 ">
 		<!-- 
 		<h1>Oh, hi doggy.</h1>
 		 -->
@@ -48,17 +48,15 @@
     </a>
 			<!-- <p><a id="edit" class="btn btn-large">&#9829; Edit</a></p> -->
 	<label id="labelStat">My statistic</label>
-		<table border=2 cellspacing=3 cellpadding=3 align="center" id="tableStat">
+		<table  class="table3" border=2 cellspacing=3 cellpadding=3 align="center" id="tableStat">
 						<tr>
-							<td width=100><b>Game</b></td>
+							<td width=100><b>Name</b></td>
 							<td width=150><b>Game</b></td>
 							<td width=150><b>GameWin</b></td>
-							<td width=150><b>Money</b></td>
 							<td width=150><b>Point</b></td>
 						</tr>
 						<tr>
 							<td width=100><b>Monopoly</b></td>
-							<td width=150><b><c:out value="${user.login}" /></b></td>
 							<td width=150><b><c:out value="${user.login}" /></b></td>
 							<td width=150><b><c:out value="${user.login}" /></b></td>
 							<td width=150><b><c:out value="${user.login}" /></b></td>
@@ -67,22 +65,19 @@
 							<td width=100><b>Chess</b></td>
 							<td width=150><b><c:out value="${user.login}" /></b></td>
 							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b>NULL</b></td>
-							<td width=150><b>NULL</b></td>
+							<td width=150><b>0</b></td>
 						</tr>
 						<tr>
 							<td width=100><b>Gibbet</b></td>
 							<td width=150><b><c:out value="${user.email}" /></b></td>
 							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b>NULL</b></td>
-							<td width=150><b>NULL</b></td>
+							<td width=150><b>0</b></td>
 						</tr>
 						<tr>
 							<td width=100><b>Drow</b></td>
 							<td width=150><b><c:out value="${user.email}" /></b></td>
 							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b>NULL</b></td>
-							<td width=150><b>NULL</b></td>
+							<td width=150><b>0</b></td>
 						</tr>
 					</table>			
 		 </center> 
@@ -94,9 +89,10 @@
 		<div id="buttons"  class="span6">
 		<center> 
 		<label id="labelMyInfo">My information</label>
-		<table border=2 cellspacing=3 cellpadding=3 align="center" id="tableInfo">
+		<table class="table3" border=2 cellspacing=3 cellpadding=3 align="center" id="tableInfo">
+						<tbody>
 						<tr>
-							<td width=100><b>Login</b></td>
+							<td  width=100><b>Login</b></td>
 							<td id="userlogin" width=150><b><c:out value="${user.login}" /></b></td>
 						</tr>
 						<tr>
@@ -111,6 +107,7 @@
 							<td width=100><b>Registration</b></td>
 							<td width=150><b><c:out value="${user.userDate}" /></b></td>
 						</tr>
+						</tbody>
 					</table>
 				<p><a id="editInformation" class="btn btn-primary">&#9700; Edit My Information</a></p> 
 				<p>
