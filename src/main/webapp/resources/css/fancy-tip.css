@@ -64,11 +64,11 @@
 	-webkit-transition: all 0.4s ease-in;
 	-o-transition: all 0.4s ease-in;
 	-webkit-transition: all 0.4s ease-in;
-/*	-webkit-transition-delay: 0.1s;*/
-/*	-moz-transition-delay: 0.1s;*/
-/*	-o-transition-delay: 0.1s;*/
-/*	-transition-delay: 0.1s;*/
-	z-index: -777;
+	-webkit-transition-delay: 0.1s;
+	-moz-transition-delay: 0.1s;
+	-o-transition-delay: 0.1s;
+	-transition-delay: 0.1s;
+	z-index: -1;
 }
 
 .tip span .nub {
@@ -95,10 +95,10 @@
   -webkit-transition: all 0.4s ease-in;
   -o-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
-/*  -webkit-transition-delay: 0.1s;*/
-/*  -moz-transition-delay: 0.1s;*/
-/*  -o-transition-delay: 0.1s;*/
-/*  -transition-delay: 0.1s;*/
+  -webkit-transition-delay: 0.1s;
+  -moz-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  -transition-delay: 0.1s;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
@@ -137,10 +137,10 @@
   left: -8px;
   top: 20px;
   margin: 0 0 0 0;
-/*  -moz-transition: all 0.4s ease-in;*/
-/*  -webkit-transition: all 0.4s ease-in;*/
-/*  -o-transition: all 0.4s ease-in;*/
-/*  -webkit-transition: all 0.4s ease-in;*/
+  -moz-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
 }
 .tip.hover span {
   background: #144; /* TODO: change this auqa blue sucking color. WAS: #0099ff */ /*#73C2C0*/  /*#78896D*/
@@ -152,10 +152,10 @@
   -webkit-transition: all 0.4s ease-in;
   -o-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
-/*  -webkit-transition-delay: 0.1s;*/
-/*  -moz-transition-delay: 0.1s;*/
-/*  -o-transition-delay: 0.1s;*/
-/*  -transition-delay: 0.1s;*/
+  -webkit-transition-delay: 0.1s;
+  -moz-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  -transition-delay: 0.1s;
   z-index: 3;
 }
 .tip.hover span .nub {
@@ -163,10 +163,10 @@
   -webkit-transition: all 0.4s ease-in;
   -o-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
-/*  -webkit-transition-delay: 0.1s;*/
-/*  -moz-transition-delay: 0.1s;*/
-/*  -o-transition-delay: 0.1s;*/
-/*  -transition-delay: 0.1s;*/
+  -webkit-transition-delay: 0.1s;
+  -moz-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  -transition-delay: 0.1s;
 }
 .tip.hover span.bottom {
   bottom: -400px;
