@@ -32,7 +32,6 @@ public class Auction implements Runnable {
 		while (seconds >= 0) {
 			try {
 				TimeUnit.SECONDS.sleep(1);
-				// seconds = seconds--;
 				secondsLeft.put("type", ButtonsLabel.AUCTION);
 				secondsLeft.put("seconds_left", seconds--);
 				manager.broadcast(secondsLeft);
