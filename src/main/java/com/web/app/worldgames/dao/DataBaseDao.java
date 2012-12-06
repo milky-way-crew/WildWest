@@ -32,8 +32,6 @@ public class DataBaseDao implements IDataBaseDao {
 		sql.append("userImage VARCHAR(100) NOT NULL, ");
 		sql.append("userDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, ");
 		sql.append("PRIMARY KEY (userId)");
-/*		sql.append("INDEX (userId), ");
-		sql.append("FOREIGN KEY (userId) REFERENCES userStatistics(idUser)");*/
 		sql.append(") ENGINE=INNODB");
 		jdbcTemplate.execute(sql.toString());
 	}
