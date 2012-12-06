@@ -25,6 +25,7 @@ public class Auction implements Runnable {
 	public void run() {
 		Map<String, Object> secondsLeft = new HashMap<String, Object>();
 		Map<String, Object> buttons = new HashMap<String, Object>();
+		Map<String, Object> state = new HashMap<String, Object>();
 		Map<String, Object> response = new HashMap<String, Object>();
 		Map<String, Object> responseAuction = new HashMap<String, Object>();
 		int seconds = 60;
@@ -52,13 +53,16 @@ public class Auction implements Runnable {
 					responseAuction.put("auction_status", isEnd);
 					responseAuction.put("auction_money",
 							manager.getMaxAuctionPrice());
-					response.put("buttons", buttons);
+					responseAuction.put("auction_creator", manager.auctionCreator());
+					responseAuction.put("auction_creator_money", manager.auctionCreator().getMoney());
 					response.put("type", ButtonsLabel.BUY);
 					response.put("player", manager.getAuctionWinner()
 							.getColor());
 					response.put("player_money", manager.getAuctionWinner()
 							.getMoney());
 					buttons.putAll(ButtonsAction.buttonsAction(manager.getAuctionWinner()));
+					state.put("buttons",buttons);
+					response.put("game_state", state);
 					log.info(":::::::::: response ::::: " + response);
 					manager.broadcast(response);
 					manager.broadcast(responseAuction);

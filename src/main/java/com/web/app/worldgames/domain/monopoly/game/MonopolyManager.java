@@ -2,12 +2,9 @@ package com.web.app.worldgames.domain.monopoly.game;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
@@ -17,7 +14,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
-import com.web.app.worldgames.domain.monopoly.Cities;
 import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.StartGame;
 import com.web.app.worldgames.domain.monopoly.card.CardFactory;
@@ -26,6 +22,7 @@ import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
+import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 
 public class MonopolyManager {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
@@ -33,9 +30,11 @@ public class MonopolyManager {
 	private User creator;
 	private Player auctionWinner;
 	private int auctionPrice;
-	private boolean auctionEnd = false;
+	//private boolean auctionEnd = false;
 	private int maxAuctionPricePrice = 0;
 	private Thread auction = null;
+	
+	private  IStatisticsServiceManager userService;
 	
 	public Player getAuctionWinner() {
 		return auctionWinner;
@@ -712,6 +711,9 @@ public class MonopolyManager {
 		if (getMonopolyGame().isReadyToStart()
 				&& !getMonopolyGame().isStarted()) {
 			getMonopolyGame().start();
+//			for(Player player:monopolyGame.getAllPlayers()){
+//			userService.incrementUserAllGames(player.getId(), "monopoly");
+//			}
 			log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
 			response.put("game_status", "start");
 			turn = new HashMap<String, Object>();
@@ -823,6 +825,10 @@ public class MonopolyManager {
 			monopolyGame.setCurrentPlayer(monopolyGame.getPreventPlayer());
 			this.deleteLoserPlayer(monopolyGame.getAllPlayers(),
 					monopolyGame.getAllLosers(), player);
+			try{
+				
+				//userService.changeUserMoneyAmount(player.getId(), player.getMoney(), "monopoly");
+			}catch(Exception e){e.printStackTrace();}
 			log.info("[PLAYER LEAVE THIS GAME: ]" + player.getColor());
 			log.info("[PLAYER LIST ]" + monopolyGame.getAllPlayers());
 			log.info("[LOSER LIST ]" + monopolyGame.getAllLosers());
@@ -830,8 +836,6 @@ public class MonopolyManager {
 			for (SellableCard card : player.playerProperty()) {
 				index.add(card.getPosition());
 				if (card instanceof CityCard) {
-//					SellableCard city = game.boardCities().get(card
-//							.getPosition());
 					SellableCard city = StartGame.boardCities.get(card
 							.getPosition());
 					city.setOwner(null);
