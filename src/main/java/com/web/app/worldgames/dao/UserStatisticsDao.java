@@ -145,7 +145,7 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	@Override
 	/*** Change amount money of user ***/
 	public boolean changeUserMoneyAmount(int userId, int money, String gameType) {
-		final String query = "UPDATE userStatistics, users SET userMoneyAmount=? WHERE userId=? AND gameType=? AND userId=idUser";
+		final String query = "UPDATE userStatistics, users SET userMoneyAmount=userMoneyAmount+? WHERE userId=? AND gameType=? AND userId=idUser";
 		int i = jdbcTemplate.update(query, new Object[] { money, userId,
 				gameType });
 		if (i > 0) {
@@ -172,27 +172,5 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 		}
 	}
 
-	//
-	// public int updateStatistics(final int userId, final UserStatistics stat)
-	// {
-	// final String query =
-	// "UPDATE userStatistics, users SET userAllGames=?, userPoints=?, userMoneyAmount=?, userAllWinGames=? WHERE userId=? AND userStat=statId";
-	// KeyHolder keyHolder = new GeneratedKeyHolder();
-	// jdbcTemplate.update(new PreparedStatementCreator() {
-	// @Override
-	// public PreparedStatement createPreparedStatement(
-	// Connection connection) throws SQLException {
-	// PreparedStatement ps = connection.prepareStatement(query,
-	// Statement.RETURN_GENERATED_KEYS);
-	// ps.setInt(1, stat.getUserAllGames());
-	// ps.setInt(2, stat.getUserPoints());
-	// ps.setInt(3, stat.getUserMoneyAmount());
-	// ps.setInt(4, stat.getUserAllWinGames());
-	// ps.setInt(5, userId);
-	// return ps;
-	// }
-	// }, keyHolder);
-	//
-	// return keyHolder.getKey().intValue();
-	// }
+
 }
