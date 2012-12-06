@@ -25,7 +25,7 @@ public class ChatRoomsController {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
 	if (!manager.isParticipantInAnyRoom(chatParticipant)) {
-	    manager.generateTextColorForParticipant(chatParticipant);
+	   // manager.generateTextColorForParticipant(chatParticipant);
 	    request.getSession().setAttribute("chatParticipant",
 		    chatParticipant);
 	    log.debug("Put ChatParticipant in session and in world particicipant list: "

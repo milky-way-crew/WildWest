@@ -1,86 +1,78 @@
 @CHARSET "UTF-8";
 
 body {
-	font: 12px;
-	color: #222;
 	text-align: center;
 	padding: 35px;
 	margin-top: 30px;
-	background-image: url(../img/40.jpg);
+	background: url(../img/background.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
-.modal,.modal-footer {
-	background-image: url(../img/40.jpg);
+#listBox {
+	background: url(../img/list.jpg) no-repeat center;
+	height: 280px;
+	overflow: auto;
 }
 
-.modal-header {
-	color: #fff;
+#listTitle {
+	background: url(../img/title.jpg) no-repeat center;
 }
 
-#listTitle h2 {
-	font-size: 18pt;
+#menu {
+	background: url(../img/title.jpg) no-repeat center;
+	height: auto;
 }
 
-p {
-	cursor: ;
-}
-
-#listTitle, #listBox, #title{
-	background-image: url(../img/35.jpg);
+#listTitle,#listBox,#menu {
+	font-family: 'Margarine';
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	border-width: 0px;
 	border-radius: 10px;
+	background-color: transparent;
+	width: 370px;
+	text-align: center !important;
 	-moz-box-shadow: 0px 0px 10px #000;
 	-webkit-box-shadow: 0px 0px 10px #000;
 	box-shadow: 0px 0px 10px #000;
 }
 
-form,p,span {
-	padding: 0;
-}
-
-td {
-	text-align: center !important;
-}
-
-input {
-	font: 12px;
-}
-
-#menu a {
-	color: #fff;
-	text-decoration: none;
-	margin: 5px;
-}
-
-tr.hilite td {
-	background: #fff;
-}
-
-p.hilite p {
-	background: #CDC9C9;
+#title {
+	font-family: 'Margarine';
+	background: url(../img/chat.png) no-repeat top;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: 690px 570px;
+	border-width: 0px;
+	widht: 690px;
+	height: 570px;
 }
 
 #chatBox {
 	text-align: left;
-	margin: 0 auto;
-	margin-bottom: 10px;
+	margin: auto;
+	margin-bottom: 0px;
 	padding: 10px;
-	background: #FFFFE0;
+	background-color: transparent;
+	border: 1px solid none;
 	height: 350px;
 	width: 550px;
-	border: 1px solid #ACD8F0;
 	overflow: auto;
 }
 
 #usermsg {
-	width: 480px;
-	margin-top: 10px;
+	width: 400px;
+	margin-bottom: 20px;
 	border: 1px solid #ACD8F0;
-	background: #FFFFE0;
-}
-
-#chatOption { /*text-align: right !important;*/
-	float: right;
-	margin-right: 5px;
+	background: #FFFF99;
+	font-family: 'Scada';
+	font-size: 12pt;
 }
 
 #filter {
@@ -88,12 +80,88 @@ p.hilite p {
 }
 
 #send {
+	margin-bottom: 20px;
+}
+
+#chatOption {
+	float: right;
+	margin-bottom: 20px;
+}
+
+#chatAction {
+	text-align: center;
+}
+
+.modal,.modal-footer {
+	background: url(../img/modal.jpg) no-repeat top;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	font-family: 'Margarine';
+}
+
+.modal-header {
+	color: #fff;
+}
+
+.modal-body {
+	height: 180px;
+	width: auto;
+	text-align: center;
+}
+
+#roomName {
+	font-family: 'Scada';
+	font-size: 12pt;
+}
+
+#title h1,#listTitle h2 {
+	color: #003366;
+	font-size: 24pt;
+	margin-top: 10px;
+	text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px
+		rgba(0, 0, 0, 0.1), 0px 18px 23px rgba(0, 0, 0, 0.1);
+}
+
+#chatBox p,p a {
+	cursor: pointer;
+	font-family: 'Scada';
+	color: #003366;
+	font-size: 14pt;
+}
+
+form,p,span {
+	padding: 0;
+}
+
+td {
+	cursor: pointer;
+	text-align: center !important;
 	margin-right: 5px;
+	font-size: 14pt;
+	color: #003366;
+	border-width: 0px !important;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+	margin: 5px;
+	font-size: 18px !important;
+}
+
+tr.hilite td {
+	background: #FFF;
+}
+
+p.hilite p {
+	background: #CDC9C9;
 }
 
 #invMenu {
 	text-align: right !important;
-	margin-right: 5px;
+	margin-bottom: 5px;
 }
 
 #door {
@@ -103,14 +171,15 @@ p.hilite p {
 #invBody {
 	height: 100px;
 	text-align: center;
-	color: #fff;
-	font-size: 18pt;
+	font-family: 'Margarine';
 }
 
-.modal-body {
-	height: 170px;
-	width: auto;
-	text-align: center;
+#invBody p {
+	word-wrap: normal;
+	color: #003366;
+	margin-top: 3px;
+	margin-left: 50px;
+	font-size: 16pt;
 }
 
 .btn-group {
@@ -118,10 +187,12 @@ p.hilite p {
 }
 
 #list {
-	border: 2;
 	cellspacing: 3;
 	cellpadding: 3;
 	text-align: center;
+	background-color: #FFFF66;;
+	opacity: 0.7;
+	border-radius: 10px;
 }
 
 .error {

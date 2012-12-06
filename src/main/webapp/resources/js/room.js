@@ -140,6 +140,7 @@ function generateMainRoom(json) {
 
 function updateRoomList(json) {
 	$("#list").html("");
+	$("#list").append("<h1></h1>");
 	$("#list").append(
 			"<thead><tr><td><b>Room name</b></td>" + "<td><b>Game</b></td>"
 					+ "<td><b>Users</b></td></tr></thead>");
@@ -155,10 +156,9 @@ function updateRoomList(json) {
 
 function createInviteWindow(json) {
 	$("#invite").modal();
-	$("#invBody").html(
-			"<p>User " + json.invitator + " invite you to room by name "
-					+ json.room.roomName + ", game type is " + json.room.type
-					+ "</p>");
+	$("#invBody").html("<p>User " + json.invitator + " invite you</p>");
+	$("#invBody").append("<p>to room by name " + json.room.roomName + "</p>");
+	$("#invBody").append("<p>game type is " + json.room.type + "</p>");
 }
 
 function getInvitedUser(pElement) {
@@ -173,7 +173,7 @@ function generateRoom(json) {
 	$("#chatOption").html("");
 	$("#chatOption")
 			.html(
-					'<a id="filter" class="btn-small dropdown-toggle'
+					'<a id="filter" class="btn btn-medium dropdown-toggle'
 							+ ' btn-info" data-toggle="dropdown"'
 							+ ' href="#"><span class="caret"></span></a>'
 							+ ' <ul id="filterChoise" compact="compact" class="dropdown-menu">'
@@ -239,6 +239,7 @@ function getClientPanel(json) {
 
 function updateUserList(json) {
 	$("#list").html("");
+	$("#list").append("<h1></h1>");
 	$("#list").append(
 			"<thead><tr><td><b>User name</b></td>"
 					+ "<td><b>State</b></td></tr></thead>");

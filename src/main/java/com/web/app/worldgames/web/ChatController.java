@@ -54,9 +54,7 @@ public class ChatController {
 	DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 	Date date = new Date();
 	StringBuilder sb = new StringBuilder();
-	sb.append("<p style='color:");
-	sb.append(participant.getTextColor());
-	sb.append("' id=");
+	sb.append("<p id=");
 	sb.append(participant.getParticipantId());
 	sb.append(" name='");
 	sb.append(participant.getNickname());

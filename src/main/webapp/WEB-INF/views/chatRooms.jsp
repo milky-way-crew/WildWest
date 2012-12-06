@@ -13,6 +13,10 @@
 <link rel="stylesheet" href="resources/css/bootstrap-responsive.min.css">
 <link type="text/css" rel="stylesheet"
 	href="resources/css/chatroom_style.css" />
+<link href='http://fonts.googleapis.com/css?family=Scada'
+	rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Margarine'
+	rel='stylesheet' type='text/css'>
 <title>Welcome!</title>
 </head>
 <body>
@@ -48,7 +52,7 @@
 					<h1>Chat</h1>
 					<div id="chatBox"></div>
 					<div id="invMenu"></div>
-					<form name="message" action="">
+					<form id="chatAction" name="message" action="">
 						<input type="text" id="usermsg"
 							placeholder="Enter your message here..."> <a
 							class="btn btn-primary btn-medium" id="send">Send <i
@@ -64,8 +68,8 @@
 				<div id="listBox" class="well">
 					<table id="list" class="table table-hover">
 					</table>
-					<div id="menu"></div>
 				</div>
+				<div id="menu" class="well"></div>
 			</div>
 			<!-- list -->
 
