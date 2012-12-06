@@ -29,7 +29,7 @@ public abstract class SellableCard extends Cell {
 	 * @param price
 	 *            of purchase
 	 */
-	public abstract void auctionCityOrRail(Player player, int price);
+	public abstract void auctionCityOrRail(Player player, Player auctionCreator, int price);
 
 	/**
 	 * The execute method sell city, houses and hotel

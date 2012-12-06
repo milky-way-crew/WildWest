@@ -51,6 +51,12 @@ public class CityCard extends SellableCard {
 		setOwner(owner);
 	}
 
+	public CityCard(Cities cities, Player owner, boolean mortage) {
+		this(cities);
+		setOwner(owner);
+		setMortage(mortage);
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -231,7 +237,6 @@ public class CityCard extends SellableCard {
 	@Override
 	public void effectOnPlayer(Player player) {
 		if (this.getOwner() != null && !player.equals(this.getOwner())) {
-			// if (this.getOwner() != null && player != this.getOwner()) {
 			log.info("[OWNER before effect]: money"
 					+ this.getOwner().getMoney());
 			log.info("[PLAYER before effect]: money" + player.getMoney());
@@ -242,9 +247,6 @@ public class CityCard extends SellableCard {
 			log.info("[OWNER]: money" + this.getOwner().getMoney());
 			log.info("[PLAYER]: money" + player.getMoney());
 		}
-		// else if (player.equals(this.getOwner())) {
-		// log.info("[OWNER]: You are owner");
-		// }
 	}
 
 	@Override
@@ -333,7 +335,8 @@ public class CityCard extends SellableCard {
 	}
 
 	@Override
-	public void auctionCityOrRail(Player player, int price) {
+	public void auctionCityOrRail(Player player, Player auctionCreator,
+			int price) {
 		log.info("auctionn method");
 		if (this.getOwner() == null) {
 			this.setOwner(player);
@@ -341,17 +344,18 @@ public class CityCard extends SellableCard {
 			player.listPropertyForMortage();
 			player.listPropertyForSell();
 			log.info("[MESSAGE AUCTION]: You are owner now");
-			player.setMoney(player.getMoney() - price);
+			if (player.equals(auctionCreator)) {
+				player.setMoney(player.getMoney() - price);
+			} else {
+				player.setMoney(player.getMoney() - price);
+				auctionCreator.setMoney(auctionCreator.getMoney() + price);
+			}
 			log.info("[MONEY AUCTION]: " + player.getMoney());
 			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
 			player.addRegions(player);
 			player.addBuildAvailable();
-			// log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
 			log.info("[REGIONS LIST:::AUCTION]: " + player.listRegions(player));
 		}
-		// else {
-		// log.info("is owner");
-		// }
 
 	}
 
@@ -367,9 +371,6 @@ public class CityCard extends SellableCard {
 
 	@Override
 	public boolean canMortage(Player player) {
-		// return (this.numbersOfHouses == 0 && !this.isHotel && this.getOwner()
-		// == player) ? true
-		// : false;
 		return this.numbersOfHouses == 0 && !this.isHotel
 				&& this.getOwner().equals(player);
 	}
@@ -382,7 +383,5 @@ public class CityCard extends SellableCard {
 	@Override
 	public boolean canSell(Player player) {
 		return !this.isMortage() && this.getOwner().equals(player);
-		// return (!this.isMortage() && this.getOwner() == player) ? true :
-		// false;
 	}
 }

@@ -17,7 +17,7 @@ public class RailCard extends SellableCard {
 	Rails rails = null;
 
 	private final static Logger log = Logger.getLogger(RailCard.class);
-	
+
 	public RailCard(Rails rails) {
 		this.name = rails.getName();
 		this.price = rails.getPrice();
@@ -91,10 +91,10 @@ public class RailCard extends SellableCard {
 			log.info("[OWNER]:  money" + this.getOwner().getMoney());
 			log.info("[PLAYER]: money" + player.getMoney());
 			// }
-		} 
-//		else if (player.equals(this.getOwner())) {
-//			log.info("[OWNER]: You are owner");
-//		}
+		}
+		// else if (player.equals(this.getOwner())) {
+		// log.info("[OWNER]: You are owner");
+		// }
 	}
 
 	@Override
@@ -113,8 +113,7 @@ public class RailCard extends SellableCard {
 			player.setPosition(player.getPosition());
 			return 0;
 		} else {
-			log.info("Owner of this rail is: "
-					+ this.getOwner().getName());
+			log.info("Owner of this rail is: " + this.getOwner().getName());
 			int numberOfRails = owner.getNumberOfRails();
 			log.info("Number of rails are: " + numberOfRails);
 			if (numberOfRails == 1) {
@@ -140,8 +139,6 @@ public class RailCard extends SellableCard {
 		player.addNumberOfRails();
 	}
 
-	
-
 	@Override
 	public void sell(Player player) {
 		log.info("OWNER BEFORE SELL RAIL " + this.getOwner());
@@ -156,22 +153,28 @@ public class RailCard extends SellableCard {
 	}
 
 	@Override
-	public void auctionCityOrRail(Player player, int price) {
+	public void auctionCityOrRail(Player player, Player auctionCreator,
+			int price) {
 		log.info("auctionn method");
 		if (this.getOwner() == null) {
 			this.setOwner(player);
 			player.addProperty(player);
 			player.listPropertyForMortage();
 			player.listPropertyForSell();
-			player.setMoney(player.getMoney() - price);
+			if (player.equals(auctionCreator)) {
+				player.setMoney(player.getMoney() - price);
+			} else {
+				player.setMoney(player.getMoney() - price);
+				auctionCreator.setMoney(auctionCreator.getMoney() + price);
+			}
 			player.addNumberOfRails();
 			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
-		} 
-//		else {
-//			log.info("is owner");
-//		}
+		}
+		// else {
+		// log.info("is owner");
+		// }
 	}
-	
+
 	public Map<String, Object> currentRailState() {
 		Map<String, Object> temp = new HashMap<String, Object>();
 		temp.put("position", this.getPosition());
@@ -179,6 +182,7 @@ public class RailCard extends SellableCard {
 		temp.put("mortage", this.isMortage());
 		return temp;
 	}
+
 	@Override
 	public boolean canMortage(Player player) {
 		// return (this.getOwner() == player) ? true : false;

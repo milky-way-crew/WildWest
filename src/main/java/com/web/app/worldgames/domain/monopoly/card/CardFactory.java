@@ -10,13 +10,14 @@ import com.web.app.worldgames.domain.monopoly.StartGame;
  * @author Inna
  *
  */
+
 public class CardFactory {
 	private static final Logger log=Logger.getLogger(CardFactory.class);
 	public static Cell chooseCard(Player player) {
 		Cell cell = null;
-		if (StartGame.boardCities.containsKey(player.getPosition())) {
-			cell = StartGame.boardCities.get(player.getPosition());
-			//log.info("In card factory+++++++++++++++++++   "+ cell.info());
+			if (StartGame.boardCities.containsKey(player.getPosition())) {
+				cell = StartGame.boardCities.get(player.getPosition());
+			log.info("::::::::::In card factory:::::::::::   "+ cell.info());
 			return cell;
 		} else if ((player.getPosition() == CellPositions.TAX2)
 				|| (player.getPosition() == CellPositions.TAX1)) {
@@ -25,7 +26,7 @@ public class CardFactory {
 			return cell;
 		} else if (StartGame.boardRails.containsKey(player.getPosition())) {
 			cell = StartGame.boardRails.get(player.getPosition());
-			//log.info("In card factory+++++++++++++++++++   "+ cell.info());
+			log.info("::::::::::::In card factory:::::::::::::::  "+ cell.info());
 			cell.setName("Rail Card");
 			return cell;
 		} else if ((player.getPosition() == CellPositions.CHANCE1)
