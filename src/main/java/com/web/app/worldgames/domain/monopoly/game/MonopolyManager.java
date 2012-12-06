@@ -754,10 +754,6 @@ public class MonopolyManager {
 		response.put("buttons",
 				ButtonsAction.buttonsAction(getPlayerById(idPlayer)));
 		transport.sendMessage(idPlayer, response);
-		// Map<String, Object> welcome = new HashMap<String, Object>();
-		// welcome.put("type", ButtonsLabel.CHAT);
-		// welcome.put("message", "Welcome " +
-		// getPlayerById(idPlayer).getName());
 		Map<String, Object> connect = new HashMap<String, Object>();
 		connect.put("type", ButtonsLabel.LOGIC);
 		connect.put("subType", ButtonsLabel.CONNECT);
@@ -766,7 +762,6 @@ public class MonopolyManager {
 		connect.put("money", getPlayerById(idPlayer).getMoney());
 		connect.put("nick", getPlayerById(idPlayer).getName());
 		broadcast(connect);
-		// broadcast(welcome);
 	}
 
 	public void broadcast(Map<String, ? extends Object> message) {
@@ -776,6 +771,7 @@ public class MonopolyManager {
 			transport.sendMessage(player.getId(), message);
 		}
 		for (Player player : monopolyGame.getAllLosers()) {
+			log.info("Sending message to loser with id=" + player.getId());
 			transport.sendMessage(player.getId(), message);
 		}
 	}
