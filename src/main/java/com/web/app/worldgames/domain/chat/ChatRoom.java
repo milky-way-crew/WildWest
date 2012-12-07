@@ -9,7 +9,7 @@ public class ChatRoom {
     private static final Logger log = Logger.getLogger(ChatRoom.class);
     static final String MONOPOLY = "monopoly";
     static final String CHESS = "chess";
-    static final String DRAW = "drawandguess";
+    static final String DRAW = "guess";
     static final String GIBBET = "gibbet";
 
     private List<ChatParticipant> chatParticipants = new ArrayList<ChatParticipant>();

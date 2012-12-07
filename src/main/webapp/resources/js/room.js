@@ -101,22 +101,22 @@ $("#closeModal").click(function() {
 });
 
 $("#Monopoly").click(function() {
-	typeRoom = $(this).attr('id');
+	typeRoom = 'Monopoly';
 	$("#info").html('Monopoly <span class="caret"></span>');
 });
 
 $("#Chess").click(function() {
-	typeRoom = $(this).attr('id');
+	typeRoom = 'Chess';
 	$("#info").html('Chess <span class="caret"></span>');
 });
 
 $("#Gibbet").click(function() {
-	typeRoom = $(this).attr('id');
+	typeRoom = 'Gibbet';
 	$("#info").html('Gibbet <span class="caret"></span>');
 });
 
 $("#DrawAndGuess").click(function() {
-	typeRoom = $(this).attr('id');
+	typeRoom = 'Guess';
 	$("#info").html('Draw and Guess <span class="caret"></span>');
 });
 
@@ -201,7 +201,7 @@ function createRoomMenu(json) {
 		getClientPanel(json);
 	}
 	$("#menu").append(
-			'<a id="exit" ' + 'class="btn btn-danger btn-medium">Exit '
+			'<a id="exit" ' + 'class="btn btn-warning btn-medium">Exit '
 					+ '<i class="icon-white icon-share"></i></a>');
 	$("#menu").append('</form>');
 }

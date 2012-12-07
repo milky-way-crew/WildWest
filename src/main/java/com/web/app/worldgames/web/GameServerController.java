@@ -39,7 +39,7 @@ public class GameServerController {
 		.getType();
 	log.debug("Create game server for game: " + gameType + " by user: "
 		+ participantHost.getNickname());
-	return "redirect:/" + gameType.toLowerCase() + "/create";
+	return "redirect:/" + gameType.toLowerCase() + "-create";
     }
 
     @RequestMapping(value = "/connect")
@@ -53,6 +53,7 @@ public class GameServerController {
 	}
 	String gameType = manager.getChatRoomById(
 		participantClient.getId_room()).getType();
-	return "redirect:/" + gameType.toLowerCase() + "/connect";
+	int gameId = manager.getChatRoomById(participantClient.getId_room()).getGameId();
+	return "redirect:/" + gameType.toLowerCase() + "-connect?idServer="+gameId;
     }
 }

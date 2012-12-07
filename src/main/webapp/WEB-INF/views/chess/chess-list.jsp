@@ -19,7 +19,7 @@
 			<c:out value="${test}" />
 		</h1>
 		<p>
-			<a href="./chess/create">Create your own server</a>
+			<a href="./chess-create">Create your own server</a>
 		</p>
 	</div>
 	<div class="container">
@@ -28,7 +28,7 @@
 			<c:out value="Id: ${entry.key}" />
 			<p>
 				<a
-					href="<c:url value="chess/connect">  
+					href="<c:url value="chess-connect">  
 					<c:param name="idServer" value="${entry.key}"/>  
 				</c:url>">Connect</a>
 			</p>

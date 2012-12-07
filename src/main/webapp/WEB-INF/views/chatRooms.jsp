@@ -90,7 +90,7 @@
 			<div class="modal-footer">
 				<a id="accept" href="#" class="btn btn-success" data-dismiss="modal">Accept
 					<i class="icon-white icon-share-alt"></i>
-				</a> <a id="reject" class="btn" data-dismiss="modal">Reject</a>
+				</a> <a id="reject" class="btn btn-medium btn-warning" data-dismiss="modal">Reject</a>
 			</div>
 		</div>
 	</div>
@@ -123,7 +123,7 @@
 			<div class="modal-footer">
 				<a id="createRoom" href="#" class="btn btn-success"
 					data-dismiss="modal">Create <i class="icon-white icon-edit"></i>
-				</a> <a id="closeModal" class="btn btn-medium" data-dismiss="modal">Close</a>
+				</a> <a id="closeModal" class="btn btn-medium btn-warning" data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>
