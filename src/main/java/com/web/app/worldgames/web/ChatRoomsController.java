@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.app.worldgames.domain.User;
@@ -20,12 +19,12 @@ public class ChatRoomsController {
 
     private static ChatRoomServiceManager manager = new ChatRoomServiceManager();
 
-    @RequestMapping(value = "/chatRooms", method = RequestMethod.GET)
+    @RequestMapping(value = "/chatRooms")
     public ModelAndView showPage(HttpServletRequest request) {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
 	if (!manager.isParticipantInAnyRoom(chatParticipant)) {
-	   // manager.generateTextColorForParticipant(chatParticipant);
+	    // manager.generateTextColorForParticipant(chatParticipant);
 	    request.getSession().setAttribute("chatParticipant",
 		    chatParticipant);
 	    log.debug("Put ChatParticipant in session and in world particicipant list: "

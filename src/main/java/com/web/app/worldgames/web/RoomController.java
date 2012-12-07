@@ -174,13 +174,14 @@ public class RoomController {
 
     private List<ChatRoom> updateRoomList(ChatParticipant participant) {
 	manager.calculateRoomsSize();
-	for (ChatRoom chatRoom : manager.getChatRooms()) {
-	    if (chatRoom.getSize() == 0
-		    && chatRoom.getRoomId() != manager.getIdWorldRoom()) {
-		manager.deleteRoomById(chatRoom.getRoomId());
+	List<ChatRoom> roomList = manager.getChatRooms();
+	for (int i = 0; i < roomList.size(); i++) {
+	    if (roomList.get(i).getSize() == 0
+		    && roomList.get(i).getRoomId() != manager.getIdWorldRoom()) {
+		roomList.remove(i);
 	    }
 	}
-	return manager.getChatRooms();
+	return roomList;
     }
 
     private List<ChatParticipant> updateUserList(ChatParticipant participant) {

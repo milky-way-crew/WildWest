@@ -2,6 +2,7 @@ package com.web.app.worldgames.domain.guess;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class GuessGame {
 	private String currentAnswer = "apple";
 	private Timer timer = new Timer();
 
-	private static List<String> answers = AnswerLoader.loadAnswers();
+	private static List<String> answers = new ArrayList<String>(Arrays.asList("dog", "cat"));
 
 	private List<GuessPlayer> players = new ArrayList<GuessPlayer>();
 

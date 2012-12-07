@@ -28,10 +28,10 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="#">Milky-way Games</a>
+				</a> <a class="brand" href="./chatRooms">Go to Milky-way </a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li class="active"><a href="#">Home</a></li>
+						<li><a href="./goHome">Home</a></li>
 						<li><a href="#">Profile</a></li>
 						<li><a href="#">TOP-100</a></li>
 						<li><a href="./logout">Sign out</a></li>
@@ -90,7 +90,8 @@
 			<div class="modal-footer">
 				<a id="accept" href="#" class="btn btn-success" data-dismiss="modal">Accept
 					<i class="icon-white icon-share-alt"></i>
-				</a> <a id="reject" class="btn btn-medium btn-warning" data-dismiss="modal">Reject</a>
+				</a> <a id="reject" class="btn btn-medium btn-warning"
+					data-dismiss="modal">Reject</a>
 			</div>
 		</div>
 	</div>
@@ -123,7 +124,8 @@
 			<div class="modal-footer">
 				<a id="createRoom" href="#" class="btn btn-success"
 					data-dismiss="modal">Create <i class="icon-white icon-edit"></i>
-				</a> <a id="closeModal" class="btn btn-medium btn-warning" data-dismiss="modal">Close</a>
+				</a> <a id="closeModal" class="btn btn-medium btn-warning"
+					data-dismiss="modal">Close</a>
 			</div>
 		</div>
 	</div>
