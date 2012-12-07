@@ -1,8 +1,7 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -14,12 +13,20 @@ import com.web.app.worldgames.domain.monopoly.StartGame;
 public class RailCard extends SellableCard {
 	private String name;
 	private int price;
-	private final static Logger LOG = Logger.getLogger(RailCard.class);
+	private int position;
 	Rails rails = null;
+
+	private final static Logger log = Logger.getLogger(RailCard.class);
 
 	public RailCard(Rails rails) {
 		this.name = rails.getName();
 		this.price = rails.getPrice();
+		this.position = rails.getPosition();
+	}
+
+	public RailCard(Rails rails, Player player) {
+		this(rails);
+		setOwner(player);
 	}
 
 	public String getName() {
@@ -38,36 +45,56 @@ public class RailCard extends SellableCard {
 		this.price = price;
 	}
 
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((rails == null) ? 0 : rails.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RailCard other = (RailCard) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (rails != other.rails)
+			return false;
+		return true;
+	}
+
 	@Override
 	public void effectOnPlayer(Player player) {
-		Player owner = null;
-		SellableCard cell = StartGame.boardRails().get(player.getPosition());
-		System.out.println(info());
-		String action = null;
-		// if rail hasn't owner player may buy this rail or not
-		if (cell.getOwner() == null) {
-			System.out.println("You can buy it. Press 1 if you agree");
-			action = player.playerAction();
-			if (action.equals("1")) {
-				cell.buyOrMortage(cell, player);
-			} else {
-				System.out.println("You refuse.");
-				player.setPosition(player.getPosition());
-				player.setMoney(player.getMoney());
-			}
-		} else {
-			owner = cell.getOwner();
-			// if owner isn't player
-			if (!owner.equals(player)) {
-				// if this rail isn't mortage player pay rent
-				payOrMortage(cell, player, owner);
-			} else if (owner.equals(player)) {
-				// if player is owner of thia rail he can mortage it
-				System.out.println("You are owner of this rail.");
-				player.setMoney(player.getMoney());
-				player.setPosition(player.getPosition());
-			}
+		if (this.getOwner() != null && !player.equals(this.getOwner())) {
+			// if (this.getOwner() != null && player != this.getOwner()) {
+			log.info("[OWNER]: " + this.getOwner().getColor());
+			this.payRentToOwner(player, this.getOwner(),
+					this.getRent(player, this.getOwner()));
+			log.info("[OWNER]:  money" + this.getOwner().getMoney());
+			log.info("[PLAYER]: money" + player.getMoney());
+			// }
 		}
+		// else if (player.equals(this.getOwner())) {
+		// log.info("[OWNER]: You are owner");
+		// }
 	}
 
 	@Override
@@ -80,25 +107,17 @@ public class RailCard extends SellableCard {
 	}
 
 	@Override
-	public void payRentToOwner(Player player, Player owner, int price) {
-		player.setMoney(player.getMoney() - price);
-		owner.setMoney(owner.getMoney() + price);
-	}
-
-	@Override
-	public int getRent(SellableCard cell, Player player, Player owner) {
+	public int getRent(Player player, Player owner) {
 		if (isMortage()) {
 			player.setMoney(player.getMoney());
 			player.setPosition(player.getPosition());
 			return 0;
 		} else {
-			System.out.println("Owner of this rail is: "
-					+ cell.getOwner().getName());
+			log.info("Owner of this rail is: " + this.getOwner().getName());
 			int numberOfRails = owner.getNumberOfRails();
-			System.out.println("Number of rails are: " + numberOfRails);
+			log.info("Number of rails are: " + numberOfRails);
 			if (numberOfRails == 1) {
 				return CardPrices.TAX_ONE_RAIL_CARD;
-
 			} else if (numberOfRails == 2) {
 				return CardPrices.TAX_TWO_RAIL_CARD;
 			} else if (numberOfRails == 3) {
@@ -111,41 +130,75 @@ public class RailCard extends SellableCard {
 	}
 
 	@Override
-	public void payOrMortage(SellableCard cell, Player player, Player owner) {
-		boolean check = true;
-		int price = getRent(cell, player, owner);
-		if (player.checkMoney(player, price)) {
-			payRentToOwner(player, owner, price);
-		} else {
-			while (check) {
-				player.mortageAction(player);
-				if (player.checkMoney(player, price)) {
-					payRentToOwner(player, owner, price);
-					check = false;
-				} else {
-					check = true;
-				}
-
-			}
-		}
-	}
-
-	@Override
-	public void buyCityOrRail(SellableCard cell, Player player) {
-		cell.setOwner(player);
+	public void buyCityOrRail(Player player) {
+		this.setOwner(player);
 		player.addProperty(player);
-		System.out.println("You are owner now");
+		player.listPropertyForMortage();
+		player.listPropertyForSell();
 		player.setMoney(player.getMoney() - getPrice());
-		System.out.println("Your money: " + player.getMoney());
 		player.addNumberOfRails();
-		System.out.println("Your have ports number: "
-				+ player.getNumberOfRails());
 	}
 
 	@Override
-	public void refuse(SellableCard cell, Player player) {
-		player.setPosition(player.getPosition());
-		player.setMoney(player.getMoney());
+	public void sell(Player player) {
+		log.info("OWNER BEFORE SELL RAIL " + this.getOwner());
+		SellableCard sell_city = StartGame.boardRails.get(this.getPosition());
+		log.info("POSIOTION OF SELLABLE CARD" + this.getPosition()
+				+ " sell_city: " + sell_city);
+		sell_city.setOwner(null);
+		log.info("NOW OWNER OF THIS CITY: " + sell_city.getOwner());
+		log.info("OWNER AFTER SELL RAIL " + this.getOwner());
+		player.setNumberOfRails(player.getNumberOfRails() - 1);
+		player.setMoney(player.getMoney() + this.getPrice() / 2);
 	}
 
+	@Override
+	public void auctionCityOrRail(Player player, Player auctionCreator,
+			int price) {
+		log.info("auctionn method");
+		if (this.getOwner() == null) {
+			this.setOwner(player);
+			player.addProperty(player);
+			player.listPropertyForMortage();
+			player.listPropertyForSell();
+			if (player.equals(auctionCreator)) {
+				player.setMoney(player.getMoney() - price);
+			} else {
+				player.setMoney(player.getMoney() - price);
+				auctionCreator.setMoney(auctionCreator.getMoney() + price);
+			}
+			player.addNumberOfRails();
+			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
+		}
+		// else {
+		// log.info("is owner");
+		// }
+	}
+
+	public Map<String, Object> currentRailState() {
+		Map<String, Object> temp = new HashMap<String, Object>();
+		temp.put("position", this.getPosition());
+		temp.put("owner", this.getOwner().getColor());
+		temp.put("mortage", this.isMortage());
+		return temp;
+	}
+
+	@Override
+	public boolean canMortage(Player player) {
+		// return (this.getOwner() == player) ? true : false;
+		return this.getOwner().equals(player);
+	}
+
+	@Override
+	public boolean canUnMortage(Player player) {
+		return this.getOwner().equals(player) && this.isMortage();
+		// return (this.getOwner() == player && this.isMortage());
+	}
+
+	@Override
+	public boolean canSell(Player player) {
+		return !this.isMortage() && this.getOwner().equals(player);
+		// return (!this.isMortage() && this.getOwner() == player) ? true :
+		// false;
+	}
 }

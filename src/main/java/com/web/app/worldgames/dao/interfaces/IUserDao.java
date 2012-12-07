@@ -4,66 +4,36 @@ import com.web.app.worldgames.domain.User;
 
 public interface IUserDao {
 
-	/**
-	 * Find user by its login
-	 * 
-	 * @param login
-	 *            - user login
-	 * @return User object
-	 * */
-	User findUserByLogin(final String login);
+	/*** find user by id ***/
+	public User findUserById(int id);
 
-	/**
-	 * Find user by its nickname
-	 * 
-	 * @param nickname
-	 *            - user nickname
-	 * @return User object
-	 * */
-	User findUserByNickname(final String nickname);
+	/*** find user by login ***/
+	public User findUserByLogin(final String login);
 
-	/**
-	 * Find user by its email
-	 * 
-	 * @param email
-	 *            - user email
-	 * @return User object
-	 * */
-	User findUserByEmail(final String email);
+	/*** find user by nickname ***/
+	public User findUserByNickname(final String nickname);
 
-	/**
-	 * Find user by its login and password
-	 * 
-	 * @param login
-	 *            - user login
-	 * @param password
-	 *            - user password
-	 * @return User object
-	 * */
-	User logInUser(final String login, final String password);
+	/*** find user by email ***/
+	public User findUserByEmail(final String email);
 
-	/**
-	 * Find user by its id
-	 * 
-	 * @param id
-	 *            - user login
-	 * @return User object
-	 * */
-	User findUserById(int id);
+	/*** find user by login and password ***/
+	public User logInUser(final String login, final String password);
 
-	/**
-	 * Add new user
-	 * 
-	 * @param user
-	 *            - User object
-	 * @return id of User
-	 * */
-	int insertUser(final User user);
+	/*** insert user into table ***/
+	public int insertUser(final User user);
 
-	/**
-	 * Add starting user's statistics
-	 * 
-	 * @return id of statistics
-	 * */
-	int insertEmptyStatistics();
+	/*** change user's login ***/
+	public boolean changeUserLogin(int userId, String login);
+
+	/*** change user's password ***/
+	public boolean changeUserPassword(int userId, String password);
+
+	/*** change user's email ***/
+	public boolean changeUserEmail(int userId, String email);
+
+	/*** change user's nickname ***/
+	public boolean changeUserNickname(int userId, String nickname);
+
+	/*** change user's avatar ***/
+	public boolean changeUserAvatar(int userId, String avatar);
 }

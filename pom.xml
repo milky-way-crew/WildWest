@@ -156,7 +156,8 @@
 			<!-- jrebel + jetty for deploy/redeploy -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.21</version>
 				<configuration>
 					<webApp>
 						<contextPath>/WildWest</contextPath>

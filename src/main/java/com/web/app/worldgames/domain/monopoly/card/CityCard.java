@@ -1,5 +1,8 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.Cities;
@@ -22,10 +25,8 @@ public class CityCard extends SellableCard {
 	private boolean isHotel;
 	private int taxHotel;
 	private int position;
-
-	private final static Logger LOG = Logger.getLogger(CityCard.class);
-
 	Cities cities = null;
+	private final static Logger log = Logger.getLogger(CityCard.class);
 
 	public CityCard(Cities cities) {
 		this.name = cities.getCityName();
@@ -43,6 +44,17 @@ public class CityCard extends SellableCard {
 		this.taxHotel = cities.getTaxHotel();
 		this.isHotel = cities.isHotel();
 		this.position = cities.getPosition();
+	}
+
+	public CityCard(Cities cities, Player owner) {
+		this(cities);
+		setOwner(owner);
+	}
+
+	public CityCard(Cities cities, Player owner, boolean mortage) {
+		this(cities);
+		setOwner(owner);
+		setMortage(mortage);
 	}
 
 	public String getName() {
@@ -69,67 +81,67 @@ public class CityCard extends SellableCard {
 		return taxThreeCard;
 	}
 
-	protected int getHousePrice() {
+	public int getHousePrice() {
 		return housePrice;
 	}
 
-	protected void setHousePrice(int housePrice) {
+	public void setHousePrice(int housePrice) {
 		this.housePrice = housePrice;
 	}
 
-	protected int getNumbersOfHouses() {
+	public int getNumbersOfHouses() {
 		return numbersOfHouses;
 	}
 
-	protected void setNumbersOfHouses(int numbersOfHouses) {
+	public void setNumbersOfHouses(int numbersOfHouses) {
 		this.numbersOfHouses = numbersOfHouses;
 	}
 
-	protected int getTaxOneHouse() {
+	public int getTaxOneHouse() {
 		return taxOneHouse;
 	}
 
-	protected void setTaxOneHouse(int taxOneHouse) {
+	public void setTaxOneHouse(int taxOneHouse) {
 		this.taxOneHouse = taxOneHouse;
 	}
 
-	protected int getTaxTwoHouse() {
+	public int getTaxTwoHouse() {
 		return taxTwoHouse;
 	}
 
-	protected void setTaxTwoHouse(int taxTwoHouse) {
+	public void setTaxTwoHouse(int taxTwoHouse) {
 		this.taxTwoHouse = taxTwoHouse;
 	}
 
-	protected int getTaxThreeHouse() {
+	public int getTaxThreeHouse() {
 		return taxThreeHouse;
 	}
 
-	protected void setTaxThreeHouse(int taxThreeHouse) {
+	public void setTaxThreeHouse(int taxThreeHouse) {
 		this.taxThreeHouse = taxThreeHouse;
 	}
 
-	protected int getHotelPrice() {
+	public int getHotelPrice() {
 		return hotelPrice;
 	}
 
-	protected void setHotelPrice(int hotelPrice) {
+	public void setHotelPrice(int hotelPrice) {
 		this.hotelPrice = hotelPrice;
 	}
 
-	protected boolean isHotel() {
+	public boolean isHotel() {
 		return isHotel;
 	}
 
-	protected void setHotel(boolean isHotel) {
+	public void setHotel(boolean isHotel) {
 		this.isHotel = isHotel;
 	}
 
-	protected int getTaxHotel() {
+	public int getTaxHotel() {
 		return taxHotel;
 	}
 
-	protected void setTaxHotel(int taxHotel) {
+	public void setTaxHotel(int taxHotel) {
 		this.taxHotel = taxHotel;
 	}
 
@@ -145,7 +157,7 @@ public class CityCard extends SellableCard {
 		return position;
 	}
 
-	protected void setPosition(int position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
 
@@ -157,118 +169,98 @@ public class CityCard extends SellableCard {
 		this.cities = cities;
 	}
 
-	public void buildHouse(Player player) {
-		CityCard city = (CityCard) StartGame.boardCities().get(
-				player.getPosition());
-		if (getNumbersOfHouses() < 3) {
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cities == null) ? 0 : cities.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
 
-			if (canBuildHouse(player)) {
-				player.setMoney(player.getMoney() - city.getHousePrice());
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CityCard other = (CityCard) obj;
+		if (cities != other.cities)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	/**
+	 * The execute method builds houses and hotels
+	 * 
+	 * @param player
+	 * @return map: key=position value=number of buildings
+	 */
+	public Map<Integer, Integer> build(Player player) {
+		Map<Integer, Integer> buildings = new HashMap<Integer, Integer>();
+		if (player.canBuild()) {
+			// build house
+			if (this.getNumbersOfHouses() < 3) {
+				player.setMoney(player.getMoney() - this.getHousePrice());
 				numbersOfHouses++;
 				setNumbersOfHouses(numbersOfHouses);
+				player.setNumberOfBuildings(player.getNumberOfBuildings() + 1);
+				buildings.put(this.getPosition(), this.getNumbersOfHouses());
+				player.setBuildings(buildings);
+				log.info("[Message]: "
+						+ "You build house. Number of houses are: "
+						+ getNumbersOfHouses());
+			} else if (this.getNumbersOfHouses() == 3) {
+				// build hotel
+				player.setMoney(player.getMoney() - this.getHotelPrice());
+				setHotel(true);
+				player.setNumberOfBuildings(player.getNumberOfBuildings() + 1);
+				buildings
+						.put(this.getPosition(), this.getNumbersOfHouses() + 1);
+				player.setBuildings(buildings);
+				log.info("[Message]: "
+						+ "You build houtel. Number of  houses are: "
+						+ getNumbersOfHouses() + " : hotel: " + this.isHotel());
 			}
-			System.out.println("You build castle. Number of houses are: "
-					+ getNumbersOfHouses());
-		}
-	}
 
-	public boolean canBuildHouse(Player player) {
-		if ((region.equals("brown") || region.equals("blue"))
-				&& player.getNumberOfRegions(player,
-						player.getRegion(player.getPosition())) == 2
-				&& !isMortage() && player.checkMoney(player, getHousePrice())) {
-			return true;
-		} else if (player.getNumberOfRegions(player,
-				player.getRegion(player.getPosition())) == 3
-				&& !isMortage() && player.checkMoney(player, getHousePrice())) {
-			return true;
-		} else
-			return false;
-	}
-
-	public boolean buildHotel(Player player) {
-		CityCard city = (CityCard) StartGame.boardCities().get(
-				player.getPosition());
-		if (getNumbersOfHouses() == 3 && !isMortage()
-				&& player.checkMoney(player, getHousePrice())) {
-			System.out.println("You can build hotel");
-			player.setMoney(player.getMoney() - city.getHotelPrice());
-			setHotel(true);
-			System.out.println("You build hotel.");
-		} else {
-			System.out.println("You cannot build hotel");
 		}
-		return isHotel();
+		return buildings;
 	}
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		Player owner = null;
-		CityCard cell = (CityCard) StartGame.boardCities().get(
-				player.getPosition());
-		System.out.println(info());
-		String action = null;
-		// if city haven't owner player may buy this city or not
-		if (cell.getOwner() == null) {
-			System.out.println("You can buy it. Press 1 if you agree");
-			action = player.playerAction();
-			if (action.equals("1")) {
-				cell.buyOrMortage(cell, player);
-			}
-		} else {
-			owner = cell.getOwner();
-			// if owner isn't player
-			if (!owner.equals(player)) {
-				// if this city isn't mortage player pay rent to owner else no
-				// action
-				payOrMortage(cell, player, owner);
-			} else if (owner.equals(player)) {
-				if (canBuildHouse(player)) {
-					System.out
-							.println("You can build house. Press: 1 - build house. 2 -  build hotel)");
-					action = player.playerAction();
-					if (action.equals("1")) {
-						buildHouse(player);
-
-					} else if (action.equals("2")) {
-						buildHotel(player);
-					}
-				}
-			}
+		if (this.getOwner() != null && !player.equals(this.getOwner())) {
+			log.info("[OWNER before effect]: money"
+					+ this.getOwner().getMoney());
+			log.info("[PLAYER before effect]: money" + player.getMoney());
+			log.info("[OWNER]: " + this.getOwner().getColor());
+			log.info("MORTAGE: " + this.isMortage());
+			this.payRentToOwner(player, this.getOwner(),
+					this.getRent(player, this.getOwner()));
+			log.info("[OWNER]: money" + this.getOwner().getMoney());
+			log.info("[PLAYER]: money" + player.getMoney());
 		}
 	}
 
 	@Override
-	public void payOrMortage(SellableCard cell, Player player, Player owner) {
-		boolean check = true;
-		int price = getRent(cell, player, owner);
-		if (player.checkMoney(player, price)) {
-			payRentToOwner(player, owner, price);
-		} else {
-			while (check) {
-				player.mortageAction(player);
-				if (player.checkMoney(player, price)) {
-					payRentToOwner(player, owner, price);
-					check = false;
-				} else {
-					check = true;
-				}
-
-			}
-		}
-	}
-
-	@Override
-	public int getRent(SellableCard cell, Player player, Player owner) {
-		if (isMortage()) {
+	public int getRent(Player player, Player owner) {
+		if (this.isMortage()) {
 			player.setMoney(player.getMoney());
 			player.setPosition(player.getPosition());
-		} else {
-			System.out.println("Owner of this city is: "
-					+ cell.getOwner().getName());
+			log.info("[CITY IS MORTAGE]: " + this.isMortage());
+		} else if (!this.isMortage()) {
+			log.info("[OWNER]: " + this.getOwner().getName());
 			int numberOfRegions = owner.getNumberOfRegions(owner,
 					owner.getRegion(player.getPosition()));
-			System.out.println(" Number of regions are: " + numberOfRegions);
+			log.info("[NUMBER OF REGIONS NEW]: " + numberOfRegions);
+			log.info("[REGIONS]: " + numberOfRegions);
 			if (numberOfRegions == 1) {
 				return getTaxOneCard();
 			} else if (numberOfRegions == 2) {
@@ -280,7 +272,7 @@ public class CityCard extends SellableCard {
 				} else if (getNumbersOfHouses() == 2) {
 					return getTaxThreeCard() + getTaxTwoHouse();
 				} else if (getNumbersOfHouses() == 3) {
-					return getTaxThreeCard() + getTaxTwoHouse();
+					return getTaxThreeCard() + getTaxThreeHouse();
 				}
 				if (isHotel()) {
 					return getTaxHotel();
@@ -288,12 +280,6 @@ public class CityCard extends SellableCard {
 			}
 		}
 		return 0;
-	}
-
-	@Override
-	public void payRentToOwner(Player player, Player owner, int price) {
-		player.setMoney(player.getMoney() - price);
-		owner.setMoney(owner.getMoney() + price);
 	}
 
 	@Override
@@ -310,21 +296,92 @@ public class CityCard extends SellableCard {
 	}
 
 	@Override
-	public void  buyCityOrRail(SellableCard cell, Player player) {
-		cell.setOwner(player);
+	public void buyCityOrRail(Player player) {
+		this.setOwner(player);
 		player.addProperty(player);
-		System.out.println("You are owner now");
+		player.listPropertyForMortage();
+		player.listPropertyForSell();
 		player.setMoney(player.getMoney() - getPrice());
-		System.out.println("Your money: " + player.getMoney());
+		log.info("[MONEY]: " + player.getMoney());
+		log.info("[BUY::: OWNER]: " + this.getOwner());
 		player.addRegions(player);
-		System.out.println("Your regions: " + player.listRegions(player));
+		player.addBuildAvailable();
+		// log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
+		log.info("[REGIONS LIST]: " + player.listRegions(player));
 
 	}
 
 	@Override
-	public void refuse(SellableCard cell, Player player) {
-		// TODO Auto-generated method stub
-		
+	public void sell(Player player) {
+		if (this.getNumbersOfHouses() > 0) {
+			this.setNumbersOfHouses(this.getNumbersOfHouses() - 1);
+			player.setMoney(player.getMoney() + this.getHousePrice() / 2);
+			if (this.isHotel()) {
+				this.setHotel(false);
+				player.setMoney(player.getMoney() + this.getHotelPrice() / 2);
+			}
+		} else {
+			log.info("OWNER BEFORE SELL CITY " + this.getOwner());
+			SellableCard sell_city = StartGame.boardCities.get(this
+					.getPosition());
+			log.info("POSIOTION OF SELLABLE CARD" + this.getPosition()
+					+ " sell_city: " + sell_city);
+			sell_city.setOwner(null);
+			log.info("NOW OWNER OF THIS CITY: " + sell_city.getOwner());
+			log.info("OWNER AFTER SELL CITY " + this.getOwner());
+			player.setMoney(player.getMoney() + this.getPrice() / 2);
+			player.listRegions(player).remove(this.getRegion());
+		}
 	}
 
+	@Override
+	public void auctionCityOrRail(Player player, Player auctionCreator,
+			int price) {
+		log.info("auctionn method");
+		if (this.getOwner() == null) {
+			this.setOwner(player);
+			player.addProperty(player);
+			player.listPropertyForMortage();
+			player.listPropertyForSell();
+			log.info("[MESSAGE AUCTION]: You are owner now");
+			if (player.equals(auctionCreator)) {
+				player.setMoney(player.getMoney() - price);
+			} else {
+				player.setMoney(player.getMoney() - price);
+				auctionCreator.setMoney(auctionCreator.getMoney() + price);
+			}
+			log.info("[MONEY AUCTION]: " + player.getMoney());
+			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
+			player.addRegions(player);
+			player.addBuildAvailable();
+			log.info("[REGIONS LIST:::AUCTION]: " + player.listRegions(player));
+		}
+
+	}
+
+	public Map<String, Object> currentCityState() {
+		Map<String, Object> temp = new HashMap<String, Object>();
+		temp.put("position", this.getPosition());
+		temp.put("owner", this.getOwner().getColor());
+		temp.put("mortage", this.isMortage());
+		temp.put("houses", this.getNumbersOfHouses());
+		temp.put("hotel", this.isHotel());
+		return temp;
+	}
+
+	@Override
+	public boolean canMortage(Player player) {
+		return this.numbersOfHouses == 0 && !this.isHotel
+				&& this.getOwner().equals(player);
+	}
+
+	@Override
+	public boolean canUnMortage(Player player) {
+		return this.getOwner() == player && this.isMortage();
+	}
+
+	@Override
+	public boolean canSell(Player player) {
+		return !this.isMortage() && this.getOwner().equals(player);
+	}
 }

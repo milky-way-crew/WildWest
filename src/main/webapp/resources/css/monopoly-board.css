@@ -1,0 +1,494 @@
+/* >>>>> >>>>>>>> >>>>> */
+/* >>>>> @herbion >>>>> */
+/* >>>>> >>>>>>>> >>>>> */
+body {
+  background-image: url("../img/board/bg_wood.jpg");
+}
+.label-money {
+  background-color: #095;
+  font-size: 14px;
+}
+.tip-content > li {
+  margin-bottom: 3px;
+  text-align: left;
+}
+.tip-owner {
+  margin-top: 3px;
+  display: block;
+}
+.dice {
+    box-shadow: 1px 0px 1px #203891,
+                0px 1px 1px #3852B1,
+                2px 1px 1px #203891,
+                1px 2px 1px #3852B1,
+                3px 2px 1px #203891,
+                2px 3px 1px #3852B1,
+                4px 3px 1px #203891,
+                3px 4px 1px #3852B1,
+                5px 4px 1px #203891,
+                4px 5px 1px #3852B1,
+                6px 5px 1px #203891;
+}
+.well {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.tooltip-inner {
+  font-size: 15px;
+}
+.lot-image {
+  border: 3px dotted #eee;
+  width: 160px;
+  height: 120px;
+}
+.tabbable, #controls, #controls2 {
+  -moz-box-shadow:    0px 0px 10px #888;
+  -webkit-box-shadow: 0px 0px 10px #888;
+  box-shadow:         0px 0px 10px #888;
+}
+#controls, #controls2 {
+  font-size: 1.5em;
+}
+
+#ready, #start, #money .label {
+  display: none;
+}
+
+#cell41 {
+  background-image: url("../img/board/bg_wood.jpg");
+  border: 2px solid;
+}
+#cell1 .label {
+  font-size: 65px;  
+  background: green; 
+  margin: 0px; 
+  vertical-align: middle;
+}
+
+#menu {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* ******************* */
+/* center-cell section */
+/* ******************* */
+  #center div.tabbable {
+    height: 350px;
+    padding: 20px;
+  }
+
+  #auction-tab .row {
+    text-align: left;
+    margin-left: 10px;
+  }
+  #auction-tab h3 {
+    text-align: left;
+    display: inline-block;
+    font-family: 'Yanone Kaffeesatz', 'Bubblegum sans', sans;
+  }
+  #auction-tab strong {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  #auction-tab small {
+    font-size: 16px;
+  }
+
+  #auction-tab .auction-controls {
+    margin-left: 0px;
+    text-align: center;
+  }
+  #auction-tab .auction-controls button {
+    background: #64C;
+  }
+  #auction-tab .auction-controls button:hover {
+    background: #647;
+  }
+
+  #auction-tab .lot-name, #auction-tab .badge {
+    font-family: 'Yanone Kaffeesatz', 'Archivo Narrow', 'Helvetica';
+    font-size: 20px;
+  }
+  #auction-tab .lot-name {
+    display: inline-block;
+  }
+  #auction-tab a {
+    margin: 10px;
+    margin-top: 10px;
+  }
+
+  #mini-map {
+    border: 1px dashed;
+  }
+  #controls, #controls2 {
+    display: inline-block;
+  }
+  #chat {
+    overflow-y: scroll;
+    height: 220px;
+    padding: 10px;
+    margin: 0;
+    margin-bottom: 10px;
+    border: none;
+  }
+    ul#chat > li {
+      border-bottom: 1px dashed blueviolet;
+      font-size: 20px;
+      font-family: 'Yanone Kaffeesatz', 'Archivo Narrow', 'Helvetica';
+      margin-bottom: 7px;
+    }
+    ul#chat > li > .label {
+      font-size: 1em;
+    }
+  #chat-log {
+    font-family: 'Bubblegum sans', 'Helvetica', 'Arial';
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 2px solid #eee;
+    padding: 5px;
+  }
+  #chat-log input {
+    width: 485px;
+    margin: 0px;
+  }
+  #chat-log form {
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+  #center {
+    width: 690px;
+    height: 650px;
+    margin: 0 auto;
+    text-align: center;
+    background-image: url("../img/board/bg-info.png")
+    border-radius: 5px;
+  }
+
+  #button-menu {
+    margin-top: 20px;
+    margin-bottom: 0px;
+  }
+
+
+
+/* ****************** */
+/* game-table section */
+/* ****************** */
+  #game-table {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    width: 1230px;
+    text-align: center;
+
+    border: 3px #000 solid;
+    background-color: #eee;
+
+    -moz-box-shadow:    0px 0px 10px #000;
+    -webkit-box-shadow: 0px 0px 10px #000;
+    box-shadow:         0px 0px 10px #000;
+  }
+
+  .owner {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+  }
+  .house {
+    border: 1px solid;
+  }
+  .town-image {
+    text-align: center;
+  }
+  .town-title {
+    font-family: 'Lobster Two';
+    font-size: 22px;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+  }
+  /* resolution of cells */
+  td.north, td.south {
+    width: 75px;
+  }
+  .west, .east {
+    height: 80px;
+  }
+  /* ******************* */
+
+   /* ^^^ up cells */
+  div.north  {
+    height: 145px;
+    position: relative;
+  }
+    .north .owner {
+      position: absolute;
+      width: 98%;
+      height: 18%;
+      left: 0px;
+      top: 0px;
+      border: 1px dashed;
+    }
+    .north .house {
+      position: absolute;
+      width: 98%;
+      height: 18%;
+      left: 0px;
+      bottom: 0px;
+    }
+    .north .town-image {
+      width: 90px;
+      height: 90px;
+      position: absolute;
+      margin-top: 30px;
+      margin-left: 0px;      
+    }
+    .north .town-image img {
+      height: 90px;
+      width: 90px;
+    }
+
+
+  /* down cells */
+  div.south {
+    height: 145px;
+    position: relative;
+  }
+    .south .owner {
+      position: absolute;
+      width: 98%;
+      height: 18%;
+      left: 0px;
+      bottom: 0px;
+      border: 1px dashed;
+    }
+    .south .house {
+      position: absolute;
+      width: 98%;
+      height: 18%;
+      left: 0px;
+      top: 0px;
+    }
+    .south .town-image {
+      width: 90px;
+      height: 90px;
+      position: absolute;
+      bottom: 30px;
+    }
+    .south .town-image img {
+      height: 90px;
+      width: 90px;
+    }
+
+  /* <<< left cells */
+  .west .owner {
+    width: 18%;
+    height: 100%;
+    float: left;
+    border: 1px dashed;
+  }
+  .west .house {
+    width: 18%;
+    height: 100%; 
+    float: right;
+  }
+  .west .house img {
+    position: absolute;
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    margin-top: 26px;
+    margin-left: -23px;
+  }
+  .west .town-image {
+    width: 100px;
+    height: 74px;
+    position: absolute;
+    margin-top: -15px;
+    margin-left: 45px;
+  }
+
+  /* >>> right cells */
+  .east .owner {
+    width: 18%;
+    height: 100%;
+    float: right;
+    border: 1px dashed;
+  }
+  .east .house {
+    width: 18%;
+    height: 100%;
+    float: left;
+  }
+  .east .house img {
+    position: absolute;
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    margin-top: 26px;
+    margin-left: -23px;
+  }
+  .east .town-image {
+    width: 100px;
+    height: 74px;
+    position: absolute;
+    margin-top: -15px;
+    margin-left: 45px;
+  }
+
+/*!-- ************** --*/
+/*!-- [Info seciton] --*/
+/*!-- ************** --*/
+  #info {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+    height: 270px;
+  }
+    #info-table-1, #info-table-2 {
+      float: left;
+      margin-right: 15px;
+    }
+    /* fixed cells w*h needed to corect display images */
+    #info-table-1 td, #info-table-2 td {
+      width: 40px;
+      height: 40px;
+    }
+
+  #money {
+    float: right;
+    font-family: 'Archivo Narrow', 'Helvetica';
+    margin-top: 10px;
+  }
+
+  #money > .label {
+    font-size: 20px;
+  }
+
+/* <<<<< <<<<<<<< <<<<< */
+/* <<<<< @herbion <<<<< */
+/* <<<<< <<<<<<<< <<<<< */
+
+/* Corner cells */
+.northwest,.northeast,.southwest,.southeast {
+  width: 160px; 
+  height: 145px;
+}
+
+.city {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+}
+
+.mini {
+  border-style: solid;
+  border-width: 2px;
+}
+.brown {   
+  background-color: #955438;
+}
+.azure {   
+  background-color: #A9E1FA;
+}
+
+.lightred {   
+  background-color: #D83996;
+}
+
+.orange {   
+  background-color: orange;
+}
+
+.red {   
+  background-color: red;
+}
+
+.yellow {   
+  background-color: yellow;
+}
+
+.green {   
+  background-color: green;
+}
+
+.blue {   
+  background-color: blue;
+}
+
+.gray {   
+  background-color: gray;
+}
+
+.color-player-1 {
+  background-color: #BB7E3D;
+}
+
+.color-player-2 {
+  background-color: #B2B73D;
+}
+
+.color-player-3 {
+  background-color: #742630;
+}
+
+.color-player-4 {
+  background-color: #A13AB2;
+}
+
+.setDefaultColor {
+  background-color: #CCE7D0;
+}
+
+.setMortageCell {
+  background-color: white;
+}
+
+.visibleCell {
+  border-color: #ffffff;
+  cursor: pointer;
+}
+
+.unmortageSelected {
+  border-color: #000000;
+  cursor: pointer;
+}
+
+#player1, #player2, #player3, #player4 {
+  position: absolute;
+  display: none;
+} 
+
+.disableButton {
+  opacity: 0.5;
+}
+/*****************************************/
+/*                :font:                 */
+/*****************************************/
+
+@font-face {
+  font-family: 'Lobster Two';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lobster Two'), local('LobsterTwo'), url(../font/LobsterTwo.woff) format('woff'),
+  url(http://themes.googleusercontent.com/static/fonts/lobstertwo/v4/Law3VVulBOoxyKPkrNsAaIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Archivo Narrow';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../font/ArchivoNarrow-Regular.woff') format('woff'),
+  url(http://themes.googleusercontent.com/static/fonts/archivonarrow/v1/DsLzC9scoPnrGiwYYMQXphdbPw3QSf9R-kE0EsQUn2A.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yanone Kaffeesatz Regular'), local('YanoneKaffeesatz-Regular'), url('../font/YanoneKaffeesatz-Regular.woff') format('woff'), 
+  url(http://themes.googleusercontent.com/static/fonts/yanonekaffeesatz/v4/YDAoLskQQ5MOAgvHUQCcLRTHiN2BPBirwIkMLKUspj4.woff) format('woff');
+}

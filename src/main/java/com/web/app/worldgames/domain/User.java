@@ -8,9 +8,7 @@ public class User {
 	private String password;
 	private String nickname;
 	private String email;
-	private int userStat;
 	private String avatar;
-	private String role;
 	private Timestamp userDate;
 
 	public User() {
@@ -19,30 +17,37 @@ public class User {
 		nickname = new String();
 		email = new String();
 		avatar = new String();
-		role = new String();
 	}
 
-	public User(int id, String login, String password, String nickname,
-			String email, int userStat, String avatar, String role,
-			Timestamp userDate) {
+	public User(int id, String login, String password, String email, String nickname,
+			 String avatar, Timestamp userDate) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.nickname = nickname;
 		this.email = email;
-		this.userStat = userStat;
 		this.avatar = avatar;
-		this.role = role;
 		this.userDate = userDate;
+	}
+
+	public User(int id, String login, String password, String nickname,
+			String email, String avatar) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.nickname = nickname;
+		this.avatar = avatar;
+
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", login=" + login + ", password=" + password
-				+ ", nickname=" + nickname + ", email=" + email + ", userStat="
-				+ userStat + ", avatar=" + avatar + ", role=" + role
-				+ ", userDate=" + userDate + "]";
+				+ ", nickname=" + nickname + ", email=" + email + ", avatar="
+				+ avatar + ", userDate=" + userDate + "]";
 	}
 
 	public int getId() {
@@ -93,28 +98,12 @@ public class User {
 		this.avatar = avatar;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 	public void setUserDate(Timestamp userDate) {
 		this.userDate = userDate;
 	}
 
 	public Timestamp getUserDate() {
 		return userDate;
-	}
-
-	public int getUserStat() {
-		return userStat;
-	}
-
-	public void setUserStat(int userStat) {
-		this.userStat = userStat;
 	}
 
 	@Override
@@ -129,10 +118,9 @@ public class User {
 				+ ((nickname == null) ? 0 : nickname.hashCode());
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result
 				+ ((userDate == null) ? 0 : userDate.hashCode());
-		result = prime * result + userStat;
+
 		return result;
 	}
 
@@ -172,18 +160,12 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (role == null) {
-			if (other.role != null)
-				return false;
-		} else if (!role.equals(other.role))
-			return false;
 		if (userDate == null) {
 			if (other.userDate != null)
 				return false;
 		} else if (!userDate.equals(other.userDate))
 			return false;
-		if (userStat != other.userStat)
-			return false;
+
 		return true;
 	}
 

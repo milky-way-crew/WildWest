@@ -34,15 +34,32 @@ public class UserDao implements IUserDao {
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return new User(rs.getInt("userId"), rs.getString("userLogin"),
 					rs.getString("userPassword"), rs.getString("userEmail"),
-					rs.getString("userNickname"), rs.getInt("userStat"),
-					rs.getString("userImage"), rs.getString("userProf"),
+					rs.getString("userNickname"), rs.getString("userImage"),
 					rs.getTimestamp("userDate"));
 		}
 	}
 
+	/*** find user by id ***/
+	@Override
+	public User findUserById(int id) {
+
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userImage, userDate from users WHERE userId=?";
+		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userId=?";
+		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { id });
+		if (num > 0) {
+
+			User user = jdbcTemplate.queryForObject(query, new Object[] { id },
+					new UserMapping());
+			return user;
+		} else {
+			return null;
+		}
+	}
+
+	/*** find user by login ***/
 	@Override
 	public User findUserByLogin(final String login) {
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userLogin=?";
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname,  userImage,  userDate from users WHERE userLogin=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userLogin=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { login });
 		if (num > 0) {
@@ -55,9 +72,10 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	/*** find user by nickname ***/
 	@Override
 	public User findUserByNickname(final String nickname) {
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userNickname=?";
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userImage, userDate from users WHERE userNickname=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userNickname=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY,
 				new Object[] { nickname });
@@ -71,10 +89,11 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	/*** find user by email ***/
 	@Override
 	public User findUserByEmail(final String email) {
 
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userEmail=?";
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userImage, userDate from users WHERE userEmail=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userEmail=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { email });
 		if (num > 0) {
@@ -87,9 +106,10 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	/*** find user by login and password ***/
 	@Override
 	public User logInUser(final String login, final String password) {
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userLogin=? AND userPassword=?";
+		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userImage, userDate from users WHERE userLogin=? AND userPassword=?";
 		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userLogin=?";
 		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { login,
 				password });
@@ -103,10 +123,11 @@ public class UserDao implements IUserDao {
 		}
 	}
 
+	/*** insert user into table ***/
 	@Override
 	public int insertUser(final User user) {
 
-		final String query = "INSERT INTO users (userLogin, userPassword, userEmail, userNickname, userStat, userImage) VALUES(?,?,?,?,?,?)";
+		final String query = "INSERT INTO users (userLogin, userPassword, userEmail, userNickname, userImage) VALUES(?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(
@@ -117,8 +138,7 @@ public class UserDao implements IUserDao {
 				ps.setString(2, user.getPassword());
 				ps.setString(3, user.getEmail());
 				ps.setString(4, user.getNickname());
-				ps.setInt(5, insertEmptyStatistics());
-				ps.setString(6, user.getAvatar());
+				ps.setString(5, user.getAvatar());
 				return ps;
 			}
 		}, keyHolder);
@@ -127,35 +147,61 @@ public class UserDao implements IUserDao {
 
 	}
 
+	/*** change user's login ***/
 	@Override
-	public int insertEmptyStatistics() {
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		final String query = "INSERT INTO userStatistics VALUES()";
-		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(
-					Connection connection) throws SQLException {
-				PreparedStatement ps = connection.prepareStatement(query,
-						Statement.RETURN_GENERATED_KEYS);
-				//
-				return ps;
-			}
-		}, keyHolder);
-		return keyHolder.getKey().intValue();
+	public boolean changeUserLogin(int userId, String login) {
+		final String query = "UPDATE users SET userLogin=? WHERE userId = ?";
+		int i = jdbcTemplate.update(query, new Object[] { login, userId });
+		if (i == 0)
+			return false;
+		else
+			return true;
 	}
 
+	/*** change user's password ***/
 	@Override
-	public User findUserById(int id) {
-
-		final String query = "SELECT userId, userLogin, userPassword, userEmail, userNickname, userStat, userImage, userProf, userDate from users WHERE userId=?";
-		final String CHECK_QUERY = "SELECT COUNT(*) FROM users WHERE userId=?";
-		int num = jdbcTemplate.queryForInt(CHECK_QUERY, new Object[] { id });
-		if (num > 0) {
-
-			User user = jdbcTemplate.queryForObject(query, new Object[] { id },
-					new UserMapping());
-			return user;
-		} else {
-			return null;
-		}
+	public boolean changeUserPassword(int userId, String password) {
+		final String query = "UPDATE users SET userPassword=? WHERE userId = ?";
+		int i = jdbcTemplate.update(query, new Object[] { password, userId });
+		if (i == 0)
+			return false;
+		else
+			return true;
 	}
+
+	/*** change user's email ***/
+	@Override
+	public boolean changeUserEmail(int userId, String email) {
+		final String query = "UPDATE users SET userEmail=? WHERE userId = ?";
+		int i = jdbcTemplate.update(query, new Object[] { email, userId });
+		if (i == 0)
+			return false;
+		else
+			return true;
+	}
+
+	/*** change user's nickname ***/
+	@Override
+	public boolean changeUserNickname(int userId, String nickname) {
+		final String query = "UPDATE users SET userNickname=? WHERE userId = ?";
+		int i = jdbcTemplate.update(query, new Object[] { nickname, userId });
+		if (i == 0)
+			return false;
+		else
+			return true;
+	}
+
+	/*** change user's avatar ***/
+	@Override
+	public boolean changeUserAvatar(int userId, String avatar) {
+		final String query = "UPDATE users SET userAavatar=? WHERE userId = ?";
+		int i = jdbcTemplate.update(query, new Object[] { avatar, userId });
+		if (i == 0)
+			return false;
+		else
+			return true;
+	}
+	
+	
+
 }

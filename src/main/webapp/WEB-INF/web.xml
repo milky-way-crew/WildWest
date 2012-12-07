@@ -44,5 +44,11 @@
 		<error-code>500</error-code>
 		<location>/error/500.html</location>
 	</error-page>
+	<!-- 
+	<mime-mapping>
+    	<extension>less</extension>
+    	<mime-type>text/css</mime-type>
+	</mime-mapping>
+	 -->
 </web-app>
 

@@ -8,8 +8,6 @@ public class FreeStation extends Cell {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-		//System.out.println("You are at the free sation: ");
-		player.setMoney(player.getMoney());
 		player.setPosition(player.getPosition());
 	}
 
