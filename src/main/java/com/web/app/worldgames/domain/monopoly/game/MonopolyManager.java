@@ -813,6 +813,8 @@ public class MonopolyManager {
 	public void deleteLoserPlayer(List<Player> players, List<Player> losers,
 			Player player) {
 		players.remove(player);
+		int pointRate = losers.size()+1;
+		player.setPoints(pointRate);
 		losers.add(player);
 	}
 
