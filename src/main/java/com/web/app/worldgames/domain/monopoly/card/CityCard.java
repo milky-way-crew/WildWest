@@ -342,6 +342,7 @@ public class CityCard extends SellableCard {
 			this.setOwner(player);
 			player.addProperty(player);
 			player.listPropertyForMortage();
+			log.info("::: AUCTION LIST FOR MORTAGE:::"+player.getForMortage());
 			player.listPropertyForSell();
 			log.info("[MESSAGE AUCTION]: You are owner now");
 			if (player.equals(auctionCreator)) {
