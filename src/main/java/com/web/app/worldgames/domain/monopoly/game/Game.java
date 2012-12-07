@@ -24,13 +24,15 @@ public class Game {
 	private boolean started = false;
 	private boolean end = false;
 	private Player currentPlayer = null;
+	public List<User> userList = new ArrayList<User>();
 	public List<Player> playerList = new ArrayList<Player>();
 	public List<Player> loserList = new ArrayList<Player>();
 	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
 
 	private static final Logger log = Logger.getLogger(Game.class);
 	@Autowired
-	private  IStatisticsServiceManager userService;
+	private IStatisticsServiceManager userService;
+
 	public Game() {
 	}
 
@@ -108,6 +110,15 @@ public class Game {
 		return true;
 	}
 
+	public boolean checkNewUserId(User user) {
+		boolean canConnect = false;
+		for(Player player: playerList){
+			if(player.getId()==user.getId());
+			canConnect=  false;
+		}
+		return canConnect;
+	}
+
 	/**
 	 * Method add new user to player list in game
 	 * 
@@ -122,8 +133,12 @@ public class Game {
 				color = playerColors.getColor();
 			}
 		}
+		userList.add(user);
+		log.info("------------------- USER INFO-----------" + user);
+		if(checkNewUserId(user)){
 		playerList.add(new Player(user, CellPositions.START,
 				CardPrices.START_MONEY, color));
+		}
 		log.info("[PLAYER  LIST AFTER --ADD--] " + playerList);
 	}
 
@@ -153,19 +168,20 @@ public class Game {
 	 * The execute method starting game
 	 */
 	public void start() {
-		try{
-			
-		StartGame.initCities();
-		StartGame.initRails();
-		this.setStarted(true);
-		if (currentPlayer == null) {
-			this.setCurrentPlayer(this.getAllPlayers().get(0));
-			for(Player player:this.getAllPlayers()){
-				log.info(":::::::::::::::  ID:::"+player.getId());
-				//userService.incrementUserAllGames(player.getId(), "monopoly");
+		try {
+
+			StartGame.initCities();
+			StartGame.initRails();
+			this.setStarted(true);
+			if (currentPlayer == null) {
+				this.setCurrentPlayer(this.getAllPlayers().get(0));
+				for (Player player : this.getAllPlayers()) {
+					log.info(":::::::::::::::  ID:::" + player.getId());
+					// userService.incrementUserAllGames(getUserById(player.getId()).getId(),
+					// "monopoly");
 				}
-		}
-		}catch(Exception e){
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -217,5 +233,15 @@ public class Game {
 			players.put(player.getColor(), player.currentPlayerState());
 		}
 		return players;
+	}
+
+	public User getUserById(int id) {
+		User user = null;
+		for (User users : userList) {
+			if (users.getId() == id) {
+				user = users;
+			}
+		}
+		return user;
 	}
 }

@@ -10,8 +10,10 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.stereotype.Service;
 
 import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.domain.UserStatistics;
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Player;
@@ -23,7 +25,7 @@ import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
-
+//@Service
 public class MonopolyManager {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	private Game monopolyGame;
@@ -33,9 +35,8 @@ public class MonopolyManager {
 	//private boolean auctionEnd = false;
 	private int maxAuctionPricePrice = 0;
 	private Thread auction = null;
-	
 	private  IStatisticsServiceManager userService;
-	
+	private UserStatistics statistics;
 	public Player getAuctionWinner() {
 		return auctionWinner;
 	}
@@ -388,13 +389,38 @@ public class MonopolyManager {
 		Map<String, Object> turn = new HashMap<String, Object>();
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
+		String messages=null;
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
-		// if (currentPlayer.getId() == idPlayer) {
+		 if (currentPlayer.getId() == idPlayer) {
 		currentPlayer.setRolled(false);
 		log.info("[CURRENT PLAYER] : " + getMonopolyGame().getCurrentPlayer());
 		getMonopolyGame().setCurrentPlayer(getMonopolyGame().getNextPlayer());
 		log.info("[NEXT PLAYER] : " + getMonopolyGame().getCurrentPlayer());
 		currentPlayer = getMonopolyGame().getCurrentPlayer();
+//		log.info("can done;;;;;;;;"+(!currentPlayer.canRollDices()&&!currentPlayer.canContinueGame()));
+//		if(!currentPlayer.canRollDices()&&!currentPlayer.canContinueGame()){
+//			leaveGame(currentPlayer);
+//			log.info("[Player money(loser)]:"
+//					+ currentPlayer.getMoney());
+//			response.put("loser", currentPlayer.getColor());
+//			state.put("buttons", buttons);
+//			state.put("massages", messages);
+//			response.put("game_state", state);
+//			if (hasWinner()) {
+//				Player winner = monopolyGame.getAllPlayers().get(0);
+//				winner.setWinner(true);
+//				monopolyGame.setEnd(true);
+//				monopolyGame.setStarted(false);
+//				log.info("[WINNER ]:" + winner.getColor());
+//				response.put("type", ButtonsLabel.LOGIC);
+//				response.put("winner", winner.getColor());
+//				messages = "Game ended. Winner is "
+//						+ winner.getName();
+//				state.put("messages", messages);
+//				state.put("buttons", buttons);
+//				response.put("game_state", state);
+//		}
+//		}
 		log.info("[Player: ]" + currentPlayer.getName() + ":"
 				+ currentPlayer.getColor() + " can roll dice");
 		turn.put("type", ButtonsLabel.TURN);
@@ -406,7 +432,7 @@ public class MonopolyManager {
 		turn.put("player", currentPlayer.getColor());
 		state.put("buttons", buttons);
 		turn.put("game_state", state);
-		// }
+		 }
 		broadcast(turn);
 	}
 
@@ -664,6 +690,7 @@ public class MonopolyManager {
 						messages = "Player " + currentPlayer.getColor()
 								+ " leave game!";
 						buttons.put(ButtonsLabel.DONE, true);
+						
 						leaveGame(currentPlayer);
 						log.info("[Player money(loser)]:"
 								+ currentPlayer.getMoney());
@@ -693,7 +720,7 @@ public class MonopolyManager {
 							state.put("messages", messages);
 							state.put("buttons", buttons);
 							response.put("game_state", state);
-							// broadcast(response);
+							 broadcast(response);
 						}
 					}
 				}
@@ -712,6 +739,8 @@ public class MonopolyManager {
 				&& !getMonopolyGame().isStarted()) {
 			getMonopolyGame().start();
 //			for(Player player:monopolyGame.getAllPlayers()){
+//			statistics.setIdUser(player.getId());
+//			statistics.setUserAllGames(1);
 //			userService.incrementUserAllGames(player.getId(), "monopoly");
 //			}
 			log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
@@ -829,7 +858,7 @@ public class MonopolyManager {
 					monopolyGame.getAllLosers(), player);
 			try{
 				
-				//userService.changeUserMoneyAmount(player.getId(), player.getMoney(), "monopoly");
+				userService.changeUserMoneyAmount(player.getId(), player.getMoney(), "monopoly");
 			}catch(Exception e){e.printStackTrace();}
 			log.info("[PLAYER LEAVE THIS GAME: ]" + player.getColor());
 			log.info("[PLAYER LIST ]" + monopolyGame.getAllPlayers());
