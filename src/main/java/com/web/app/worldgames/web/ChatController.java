@@ -109,7 +109,7 @@ public class ChatController {
 	participant.getMessages().clear();
 	log.debug("Updating message: " + messages.toString());
 	return join(messages, "\n");
-    }
+    } 
 
     private String join(List<String> messages, String delimiter) {
 	if (messages.size() < 1) {
