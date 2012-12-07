@@ -5,9 +5,6 @@ import java.util.Map;
 
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.card.CardFactory;
-import com.web.app.worldgames.domain.monopoly.card.JailCard;
-import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class ButtonsAction {
 	static Map<String, Object> buttons = new HashMap<String, Object>();

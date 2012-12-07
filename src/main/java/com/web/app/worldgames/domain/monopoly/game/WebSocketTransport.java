@@ -3,8 +3,9 @@ package com.web.app.worldgames.domain.monopoly.game;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.web.app.worldgames.websocket.MonoWebSocketHandler.MonoWebSocket;
 import org.apache.log4j.Logger;
+
+import com.web.app.worldgames.websocket.MonoWebSocketHandler.MonoWebSocket;
 
 public class WebSocketTransport {
 	private final static Logger log = Logger.getLogger(WebSocketTransport.class);

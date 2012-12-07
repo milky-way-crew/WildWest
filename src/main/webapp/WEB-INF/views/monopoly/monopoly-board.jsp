@@ -1269,7 +1269,7 @@
 
 <!-- @herbion -->
 <!-- JQuery + ui -->
-<script type="text/javascript" src="resources/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery.min.js"></script>
 <!-- Bootstrap JS -->
 <script type="text/javascript" src="resources/js/bootstrap-transition.js"></script>
 <script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>

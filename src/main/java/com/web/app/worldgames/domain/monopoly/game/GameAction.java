@@ -4,18 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.log.Log;
 
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.PlayerColors;
-import com.web.app.worldgames.domain.monopoly.StartGame;
 import com.web.app.worldgames.domain.monopoly.card.CardFactory;
 import com.web.app.worldgames.domain.monopoly.card.Cell;
 import com.web.app.worldgames.domain.monopoly.card.ChanceCard;
-import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.CommunityChestCard;
 import com.web.app.worldgames.domain.monopoly.card.FreeStation;
 import com.web.app.worldgames.domain.monopoly.card.GoToJailCard;

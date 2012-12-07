@@ -9,13 +9,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-
 import org.springframework.stereotype.Service;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.chess.ChessGame;
-import com.web.app.worldgames.domain.chess.ChessPlayer;
 import com.web.app.worldgames.domain.chess.ChessGameManager;
+import com.web.app.worldgames.domain.chess.ChessPlayer;
 import com.web.app.worldgames.service.interfaces.IChessGameService;
 
 @Service

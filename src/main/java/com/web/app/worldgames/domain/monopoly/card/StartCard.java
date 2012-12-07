@@ -1,6 +1,5 @@
 package com.web.app.worldgames.domain.monopoly.card;
 
-import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
 

@@ -19,8 +19,8 @@ import com.web.app.worldgames.dao.interfaces.IUserDao;
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.chat.ChatParticipant;
 import com.web.app.worldgames.domain.chess.Board;
-import com.web.app.worldgames.domain.chess.ChessPlayer;
 import com.web.app.worldgames.domain.chess.ChessGameManager;
+import com.web.app.worldgames.domain.chess.ChessPlayer;
 import com.web.app.worldgames.service.ChatRoomServiceManager;
 import com.web.app.worldgames.service.ChessGameService;
 

@@ -22,7 +22,6 @@ import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
-import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 
 public class MonopolyManager {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
@@ -34,7 +33,7 @@ public class MonopolyManager {
 	private int maxAuctionPricePrice = 0;
 	private Thread auction = null;
 	
-	private  IStatisticsServiceManager userService;
+//	private  IStatisticsServiceManager userService;
 	
 	public Player getAuctionWinner() {
 		return auctionWinner;

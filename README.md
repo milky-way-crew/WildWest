@@ -8,11 +8,11 @@ then `Project | Team | Reset | Hard`
 
 Git tutorial for dummies -> http://vk.cc/7NY3D <-
 
-Tasks
+Deployment instructions
 -------
 
-Current tasks will be here:
-
-* `logic monopoly`
-* `view monopoly`
-* `chat-rooms`
+List -_- :
+* at first CREATE DATABASE `worldgames`
+* `mvn tomcat:deploy`
+* ???????
+* `PROFIT`

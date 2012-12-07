@@ -918,4 +918,3 @@ function() {
     BOARD.init();
     MONO.init();
 });
->>>>>>> refs/remotes/origin/monopoly-game

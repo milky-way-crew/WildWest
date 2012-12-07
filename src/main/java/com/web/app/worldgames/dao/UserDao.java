@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.sql.DataSource;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -21,8 +21,6 @@ import com.web.app.worldgames.domain.User;
 
 @Repository
 public class UserDao implements IUserDao {
-
-	private Logger log = Logger.getLogger(UserDao.class);
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired

@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
-import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class Auction implements Runnable {
