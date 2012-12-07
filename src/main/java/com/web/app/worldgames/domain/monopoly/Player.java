@@ -32,6 +32,7 @@ public class Player {
 	private boolean readyToStart = false;
 	private boolean isLosser = false;
 	private boolean isWinner = false;
+	private int points;
 	private List<String> listRegions = new CopyOnWriteArrayList<String>();
 	// private List<String> listRegions = new ArrayList<String>();
 	// private List<SellableCard> property = new ArrayList<SellableCard>();
@@ -217,6 +218,14 @@ public class Player {
 
 	public void setAuctionRates(int auctionRates) {
 		this.auctionRates = auctionRates;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
 	}
 
 	@Override
@@ -572,12 +581,10 @@ public class Player {
 //		log.info(" can mortage: "+this.canMortage());
 //		log.info(" can sell: "+this.canSell());
 		return this.canMortage() || this.canSell();
-		// return (this.canMortage() && this.canSell()) ? true : false;
 	}
 
 	public boolean canBuild() {
 		return !getBuildAvailable().isEmpty();
-		// return (!getBuildAvailable().isEmpty()) ? true : false;
 	}
 
 	public boolean canAuction(int auctionPrice) {

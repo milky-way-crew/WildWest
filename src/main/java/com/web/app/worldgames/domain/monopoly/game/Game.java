@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
@@ -16,6 +17,7 @@ import com.web.app.worldgames.domain.monopoly.StartGame;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
+import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 
 public class Game {
 	private int id;
@@ -27,7 +29,8 @@ public class Game {
 	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
 
 	private static final Logger log = Logger.getLogger(Game.class);
-
+	@Autowired
+	private  IStatisticsServiceManager userService;
 	public Game() {
 	}
 
@@ -150,11 +153,20 @@ public class Game {
 	 * The execute method starting game
 	 */
 	public void start() {
+		try{
+			
 		StartGame.initCities();
 		StartGame.initRails();
 		this.setStarted(true);
 		if (currentPlayer == null) {
 			this.setCurrentPlayer(this.getAllPlayers().get(0));
+			for(Player player:this.getAllPlayers()){
+				log.info(":::::::::::::::  ID:::"+player.getId());
+				//userService.incrementUserAllGames(player.getId(), "monopoly");
+				}
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
