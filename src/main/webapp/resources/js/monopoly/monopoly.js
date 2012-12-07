@@ -284,8 +284,8 @@ function() {
                     if (json.seconds_left) {
                         $('.lot-name+.badge').html(json.seconds_left + 's');
                     }
-                    if (json.buttons ) {
-                        ui.refreshButtons(json.buttons);
+                    if (json.game_state && json.game_state.buttons ) {
+                        ui.refreshButtons(json.game_state.buttons);
                     }
                     if (json.invoker) {
                         $('#auction-tab .invoker').html(json.invoker);
@@ -309,7 +309,17 @@ function() {
 
                         $('.label.price-caller').html(json.highest.who);
                         $('.label.price').html(json.highest.money + '$');                       
-
+                    }
+                    if (json.auction_status) {
+                        $('.lot-name+.badge').html('Sold to: ' + $('.label.price-caller').html());
+                        // reset auction
+                        $('#auction-tab .rates small').each(function() {
+                            $(this).html('0$');
+                        });
+                        $('.label.price').html('0$');
+                        $('.price-caller').html('-');
+                        $('.invoker').html('-');
+                        BOARD.draw.updateMoney(json.auction_creator, json.auction_creator_money);
                     }
                     if (json.player) {
                         $('.label.price-caller').html(json.player);
@@ -391,8 +401,7 @@ function() {
                         + ' is ready to start.', '#08C');
                 },
                 'turn': function(json) {
-                    chat.appendWithColor('>> ' //It is a turn of player with color - '
-                        +' <span class="label label-info color-player-' 
+                    chat.appendWithColor('>> <span class="label label-info color-player-' 
                         + BOARD.colorToIndex(json.player) 
                         +'">' + json.player.toLowerCase() + '</span> hey its your turn.', '#08C');
 
@@ -480,6 +489,10 @@ function() {
                             "message": msg
                         });   
                     }
+                },
+                miniHover = function() { 
+                    var id = parseInt($(this).attr('id').match(/\d+$/)[0], 10);
+                    $('#cell' + id  +' .tip').toggleClass('hover'); 
                 };
             $('#controls button').each(initButton);
             $('#controls2 button').each(initButton);
@@ -532,14 +545,16 @@ function() {
                 });
             });
 
-            $('.cell .tip').click(function() { 
-                $(this).toggleClass('hover');
-            });
+            // $('.cell .tip').click(function() { 
+            //     $(this).toggleClass('hover');
+            // });
 
             $('.cell .tip').unbind('click');
             $('.cell .tip').hover(function() { 
                 $(this).toggleClass('hover');
             });
+
+            $('.mini').hover(miniHover, miniHover);
         }
     };
 
