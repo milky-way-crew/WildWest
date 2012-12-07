@@ -3,6 +3,7 @@ package com.web.app.worldgames.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.domain.chat.ChatParticipant;
 import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
+import com.web.app.worldgames.service.ChatRoomServiceManager;
 import com.web.app.worldgames.service.MonopolyService;
 import com.web.app.worldgames.service.interfaces.IMonopolyService;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
@@ -28,6 +31,8 @@ public class MonopolyController {
 	@Autowired
 	private IUserServiceManager userService;
 	private IMonopolyService monopolyService = MonopolyService.getInstance();
+	 private static ChatRoomServiceManager manager = ChatRoomsController
+		    .getManager();
 
 	public static Map<Integer, MonoWebSocket> socketMap = new HashMap<Integer, MonoWebSocket>();
 
@@ -40,8 +45,8 @@ public class MonopolyController {
 //		return "monopoly/monopoly-game";
 	}
 
-	@RequestMapping(value = "/mono-create")
-	public String createServer(HttpSession session) {
+	@RequestMapping(value = "/monopoly-create")
+	public String createServer(HttpSession session, HttpServletRequest request) {
 		if (session.getAttribute("user") == null) {
 			log.info("**************** Setting test user to session ***************");
 			session.setAttribute("user", userService.findUserByLogin("test"));
@@ -50,14 +55,17 @@ public class MonopolyController {
 		log.info("Starting creating monopoly-game");
 		User userHost = (User) session.getAttribute("user");
 		int gameId = monopolyService.createGame(userHost);
+		ChatParticipant host = ChatRoomsController
+			.getChatParticipantFromRequest(request);
+		manager.getChatRoomById(host.getId_room()).setGameId(gameId);
 		session.setAttribute(ID_MONO_GAME, gameId);
 		log.info("Finished creating chess-game with id: " + gameId);
 
 		return "redirect:/mono-server";
 	}
 
-	@RequestMapping(value = "/mono-connect")
-	public String onConnectToServer(@RequestParam int id,
+	@RequestMapping(value = "/monopoly-connect")
+	public String onConnectToServer(@RequestParam int idServer,
 			HttpSession session) {
 		if (session.getAttribute("user") == null) {
 			log.info("**************** Setting doggi user to session ***************");
@@ -65,7 +73,7 @@ public class MonopolyController {
 		}
 
 		User client = (User) session.getAttribute("user");
-		MonopolyManager monopolyGame = monopolyService.getGameById(id);
+		MonopolyManager monopolyGame = monopolyService.getGameById(idServer);
 
 		if (monopolyGame == null || monopolyGame.getCreator() == null) {
 			return "redirect:/404";
@@ -73,8 +81,8 @@ public class MonopolyController {
 			return "redirect:/mono-server";
 		}
 		
-		log.info("Connecting client to server with id" + id);
-		session.setAttribute(ID_MONO_GAME, id);
+		log.info("Connecting client to server with id" + idServer);
+		session.setAttribute(ID_MONO_GAME, idServer);
 		monopolyGame.addClient(client);
 		return "redirect:/mono-server";
 	}

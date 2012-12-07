@@ -13,22 +13,23 @@
 	href="http://fonts.googleapis.com/css?family=Lobster+Two&effect=shadow-multiple">
 	-->
 <link href="./resources/css/bootstrap.css" rel="stylesheet"
-	type="text/css"> 
+	type="text/css">
 <link href="./resources/css/chess.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" href="./home">#home</a>
+				<a class="brand" href="./chatRooms">Milky-way</a>
 				<ul class="nav">
 					<li class="divider-vertical"></li>
-					<li><a href="./chess">Chess rooms</a></li>
-					<li><a href="./chess-server#">Blablabla</a></li>
+					<li><a href="./goHome">Home</a></li>
+					<li><a href="#">Profile</a></li>
+					<li><a href="#">TOP-100</a></li>
 				</ul>
 				<ul class="nav pull-right">
 					<li class="divider-vertical"></li>
-					<li><a href="./logout">sign out</a></li>
+					<li><a href="./logout">Sign out</a></li>
 				</ul>
 			</div>
 		</div>
@@ -47,10 +48,12 @@
 				<div class="menu-entry well" id="before_game" align="center">
 					<div id="bf">
 						<button id="ready" class="btn btn btn-primary">Ready</button>
-					or
-					<button id="shuffle" class="btn btn btn-success">Shuffle figures?</button>
+						or
+						<button id="shuffle" class="btn btn btn-success">Shuffle
+							figures?</button>
 					</div>
-					<img src="./resources/img/chess/dazz2.gif" alt="Omg, failed to load image :(" style="margin-top:20px">
+					<img src="./resources/img/chess/dazz2.gif"
+						alt="Omg, failed to load image :(" style="margin-top: 20px">
 
 				</div>
 			</div>
@@ -97,9 +100,11 @@
 		</div>
 	</div>
 
-	<div id="fin" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="fin" class="modal hide fade" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">×</button>
 			<h3 id="fin-label">Congradulations, you win!</h3>
 		</div>
 		<div class="modal-body">
@@ -110,10 +115,11 @@
 			</center>
 		</div>
 		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+			<button class="btn btn-primary" data-dismiss="modal"
+				aria-hidden="true">Close</button>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript" src="./resources/js/jquery.js"></script>
 	<script type="text/javascript" src="./resources/js/jquery-ui.js"></script>
 	<script type="text/javascript" src="./resources/js/bootstrap-modal.js"></script>

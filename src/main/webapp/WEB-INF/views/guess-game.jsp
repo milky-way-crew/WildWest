@@ -15,15 +15,21 @@
 	rel="stylesheet">
 </head>
 <body>
-	<div id="navbar" class="navbar navbar-inverse">
+	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
-			<a class="brand" href="./home">#Home</a>
-			<ul class="nav">
-				<li><a href="./chess">Guess&amp;Draw rooms</a></li>
-			</ul>
-			<ul class="nav pull-right">
-				<li><a href="./logout">Logout</a></li>
-			</ul>
+			<div class="container">
+				<a class="brand" href="./chatRooms">Milky-way</a>
+				<ul class="nav">
+					<li class="divider-vertical"></li>
+					<li><a href="./goHome">Home</a></li>
+					<li><a href="#">Profile</a></li>
+					<li><a href="#">TOP-100</a></li>
+				</ul>
+				<ul class="nav pull-right">
+					<li class="divider-vertical"></li>
+					<li><a href="./logout">Sign out</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 
@@ -64,7 +70,8 @@
 								<i class="icon-retweet"></i> I want new game!
 							</button>
 							<!-- color-picker -->
-							<a href="#" class="btn btn-small btn-info " id="cp" data-color-format="hex" data-color="rgb(255, 255, 255)">Color</a>
+							<a href="#" class="btn btn-small btn-info " id="cp"
+								data-color-format="hex" data-color="rgb(255, 255, 255)">Color</a>
 							<!-- 
 							
 							<div class="input-append color" data-color="rgb(255, 146, 180)"
@@ -75,7 +82,7 @@
 									</span>
 							</div>
 							 -->
-							
+
 						</div>
 
 						<div id="chat-header">
@@ -106,7 +113,8 @@
 
 
 	<script src="resources/js/jquery.js" type="text/javascript"></script>
-	<script src="resources/js/colorpicker/js/bootstrap-colorpicker.js" type="text/javascript"></script>
+	<script src="resources/js/colorpicker/js/bootstrap-colorpicker.js"
+		type="text/javascript"></script>
 	<script src="resources/js/guess/guess-engine.js" type="text/javascript"></script>
 
 </body>
