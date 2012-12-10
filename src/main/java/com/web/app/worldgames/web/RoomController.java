@@ -39,7 +39,7 @@ public class RoomController {
 	JSONObject json = new JSONObject();
 
 	if (type.toLowerCase().trim().equals("lists")) {
-	    log.debug("Update lists from user: " + participant.getNickname());
+	    //log.debug("Update lists from user: " + participant.getNickname());
 	    json = updateChatRoomPage(participant);
 	    return json;
 	}

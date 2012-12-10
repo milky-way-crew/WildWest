@@ -30,11 +30,19 @@
 <body>
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
-			<a class="brand" href="./home">#home</a>
-			<ul class="nav">
-				<li><a href="./chess">Chess rooms</a></li>
-				<li><a href="#">Blablabla</a></li>
-			</ul>
+			<div class="container">
+				<a class="brand" href="./chatRooms">Milky-way</a>
+				<ul class="nav">
+					<li class="divider-vertical"></li>
+					<li><a href="./goHome">Home</a></li>
+					<li><a href="#">Profile</a></li>
+					<li><a href="#">TOP-100</a></li>
+				</ul>
+				<ul class="nav pull-right">
+					<li class="divider-vertical"></li>
+					<li><a href="./logout">Sign out</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	<div class="container" style=" width: 1230px; ">
@@ -81,15 +89,10 @@
 					<div class="north tip">
 						<img class="town-image" src="resources/img/board/city/tree11.svg" alt="" width="90" style="position:initial;">
 						<span class="bottom bottom-small">
-							<strong class="town-title">Tree of chaos</strong>
+							<strong class="town-title">Tree of chance</strong>
 							<img src="resources/img/board/city/tree11.svg" width="170">
-							<hr>Chance card<hr>
-							<p>You may:</p>
-							<ul class="tip-content">
-									<li>to go to free station</li>
-									<li>to go to jail</li>
-									<li>to go to Stonehenge star </li>
-								</ul>
+							<hr>
+							<p>Old tree shows you the future way</p>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
 								<a href="javascript:void(0);" class="build btn btn-succes">build</a>
@@ -254,15 +257,9 @@
 							<img src="resources/img/board/city/mountain4.svg" width="170">
 							<hr>
 							<div class="tip-header">
-								<p>Community chest</p>
+								<p>Mountains where you can find valuable items or become a victim of robbery</p>
 							</div>
 							<hr>
-							<p> You may:
-						<ul class="tip-content">
-						<li>win money</li>
-						<li>lost money</li>
-						<li>pay compulsory tax</li>
-						</ul>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
 								<a href="javascript:void(0);" class="build btn btn-succes">build</a>
@@ -618,19 +615,14 @@
 				<td class="cell west" id="cell18">
 					<div class="west tip">
 					<span class="right">
-						<strong class="town-title">Community chest</strong>
+						<strong class="town-title">Caravan wreck</strong>
 						<img src="resources/img/board/city/caravan_wreck.svg" width="170">
 						<hr>
 						<div class="tip-header">
-							<p>Community chest</p>
+							<p> Place where ghosts live. Introduction to fight with them and fight for victory
 						</div>
 						<hr>
-						<p> You may:
-						<ul class="tip-content">
-							<li>win money</li>
-							<li>lost money</li>
-							<li>pay compulsory tax</li>
-						</ul>
+						
 						<span class="nub"></span>
 					</span>
 						<!-- <div class="town-image"> -->
@@ -640,18 +632,12 @@
 				<td class="cell east" id="cell34">
 					<div class="east tip">
 					<span class="left">
-						<strong class="town-title">Community chest</strong>
+						<strong class="town-title">Lucky tree</strong>
 						<img src="resources/img/board/city/tree02.svg" width="170">
 						<hr>
 						<div class="tip-header">
-						<p>Community chest</p>
+						<p>Lucky tree gives an opportunity to win or lose money or get a release from prison</p>
 						</div>
-						<hr>
-						<ul class="tip-content">
-						<li>win money</li>
-						<li>lost money</li>
-						<li>pay compulsory tax</li>
-						</ul>
 						<span class="nub"></span>
 					</span>
 					<!-- <div class="town-image"> -->
@@ -818,18 +804,11 @@
 				<td class="cell east" id="cell37">
 					<div class="east tip">
 					<span class="left">
-						<strong class="town-title">Chance</strong>
+						<strong class="town-title">Bridge stone</strong>
 						<img src="resources/img/board/city/bridge_stone2.svg" width="170">
 						<div class="tip-header">
-							<p>Chance</p>
+						<p>Staying on this bridge you get the chance to travel in space</p>
 						</div>
-						<hr>
-						<p>Your chance is:</p>
-						<ul class="tip-content">
-								<li>to go to free station</li>
-								<li>to go to jail</li>
-								<li>to go to Stonehenge star </li>
-							</ul>
 						<span class="nub"></span>
 					</span> 
 						<img src="resources/img/board/city/bridge_stone2.svg" width="80">
@@ -907,18 +886,12 @@
 				<td class="cell west" id="cell13">
 					<div class="west tip">
 					<span class="right">
+					<strong class="town-title">Shipwreck</strong>
 						<img src="resources/img/board/city/shipwreck.svg" width="170" height="300">
 						<hr>
 						<div class="tip-header">
-						<p>Community chest</p>
+						<p>After shipwreck you can find valuable items or become a victim of robbery of former sailors</p>
 						</div>
-						<hr>
-						<p> You may:
-					<ul class="tip-content">
-						<li>win money</li>
-						<li>lost money</li>
-						<li>pay compulsory tax</li>
-						</ul>
 						<span class="nub"></span>
 					</span> 
 						<!-- <div class="town-image"> -->
@@ -929,11 +902,11 @@
 					<div class="east tip">
 					<!-- <div class="town-image"> -->
 					<span class="left">
-						<strong class="town-title">Tax</strong>
+						<strong class="town-title">Sword of King Arthur.</strong>
 			<ul class="tip-content">
 						</ul>
 						<img src="resources/img/board/city/sword_in_the_stone.svg" width="170" height="300">
-						<p class="tip-header">Pay tax : <strong class="label label-money">$150</strong></p>
+						<p class="tip-header">The legend states that only one who can pull the sword can go ahead. Otherwise you pay money for going <strong class="label label-money">$150</strong></p>
 						<span class="nub"></span>
 					</span> 
 							<img src="resources/img/board/city/sword_in_the_stone.svg" alt="" width="75">
@@ -1078,24 +1051,20 @@
 				</td>
 				<td class="cell south" id="cell8">
 					<div class="south tip">
-						<div class="town-image">
-							<img src="resources/img/board/city/wishing_well.svg" alt="" width="100">
-						</div>
+					
 						<span class="top top-small">
+						<strong class="town-title">Well</strong>
 							<img src="resources/img/board/city/wishing_well.svg" width="170">
 							<hr>
 							<div class="tip-header">
-								<p>Chance</p>
+								<p>Well where live mermaids. They can point you the way. Be gentle with them, or they will send you in jail</p>
 							</div>
 							<hr>
-							<p>Your chance is:</p>
-							<ul class="tip-content">
-									<li>to go to free station</li>
-									<li>to go to jail</li>
-									<li>to go to Stonehenge star </li>
-								</ul>
 							<span class="nub"></span>
 						</span>
+						<div class="town-image">
+							<img src="resources/img/board/city/wishing_well.svg" alt="" width="100">
+						</div>
 					</div>
 				</td>
 				<td class="cell south" id="cell7">
@@ -1160,13 +1129,17 @@
 				<td class="cell south" id="cell5">
 					<div class="south tip">
 						<span class="top top-small">
-							<strong class="town-title">Tax</strong>
+							<strong class="town-title">Donation</strong>
 							<img src="resources/img/board/city/statue.svg" width="170">
 							<hr>
 							<div class="tip-header">
-								<p>Pay tax: <strong class="label label-money">$150</strong></p>
+							<p>Donation price:
+								<strong class="label label-money">$150</strong></p>
 							</div>
 							<hr>
+							<ul class="tip-content">
+								<p>Pay donation to God of War 
+								</ul>
 							<span class="nub"></span>
 						</span>
 						<div class="town-image">
@@ -1208,15 +1181,10 @@
 				<td class="cell south" id="cell3">
 					<div class="south tip">
 						<span class="top top-small">
-							<strong class="town-title">Community chest</strong>
+							<strong class="town-title">Ruins</strong>
 							<img src="resources/img/board/city/ruins.svg" width="170">
 							<hr>
-							<p> You may:
-							<ul class="tip-content">
-									<li>win money</li>
-									<li>lost money</li>
-									<li>pay compulsory tax</li>
-								</ul>
+							<p>Ruins of a time machine, giving the chance to move</p>
 							<span class="nub"></span>
 						</span>
 						<div class="town-image">

@@ -51,8 +51,8 @@ public class ChatRoomsController {
 	    HttpServletRequest request) {
 	ChatParticipant chatParticipant = (ChatParticipant) request
 		.getSession().getAttribute("chatParticipant");
-	log.debug("getChatParticipant from Request: "
-		+ chatParticipant.getNickname());
+	//log.debug("getChatParticipant from Request: "
+	//	+ chatParticipant.getNickname());
 	return chatParticipant;
     }
 

@@ -11,6 +11,10 @@ body {
 	background-size: cover;
 }
 
+.navbar {
+    margin-bottom: 7px;
+}
+
 #listBox {
 	background: url(../img/list.jpg) no-repeat center;
 	height: 280px;

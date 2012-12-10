@@ -234,6 +234,7 @@ function getClientPanel(json) {
 	if (json.creatorRedirect && json.myRedirect) {
 		$("#ready").attr('disabled', true);
 		$("#connect").attr('disabled', false);
+		$("#connect").click();
 	}
 }
 
@@ -384,4 +385,4 @@ function joinToRoom(id) {
 	});
 };
 
-setInterval(updateList, 4000);
+setInterval(updateList, 2500);
