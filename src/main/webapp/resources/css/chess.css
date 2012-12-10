@@ -2,7 +2,11 @@
 #main {
 	width: 1240px;
 }
-
+.modal-body {
+    overflow-x: hidden;
+    text-align: center;
+    font-size: 20px;
+}
 body {
     background-image: url('../img/chess/chess-bg.png');
     background-color: rgb(39,144,176);
@@ -55,6 +59,7 @@ body {
 }
 #chat-history {
     overflow-y: scroll; 
+    overflow-x: hidden;
     height: 330px;
 }
     #chat-history ul {
@@ -64,6 +69,9 @@ body {
     }
     #chat-history  li  h4 {
         font-family: 'Anaheim', Helvetica;
+        font-size: 14px;
+        color: #056;
+        text-shadow: .04em .04em 0 white,.08em .08em 0 #AAA;
         word-wrap:break-word;
         border-bottom: 1px dashed rgba(20,20,20,.2);
     }
@@ -166,12 +174,12 @@ form {
     #chess_board tr:nth-child(odd) td:nth-child(even),
     #chess_board tr:nth-child(even) td:nth-child(odd) { 
         background:#ccc;
-        /*Ta xz */
-/*        background:-moz-linear-gradient(top, #ccc, #eee); */
-/*        background:-webkit-gradient(linear,0 0, 0 100%, from(#ccc), to(#eee)); */
-/*        box-shadow:inset 0 0 10px rgba(0,0,0,.4); */
-/*        -moz-box-shadow:inset 0 0 10px rgba(0,0,0,.4); */
-/*        -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,.4); */
+        /*Ta xz, cant choose */
+        background:-moz-linear-gradient(top, #ccc, #eee); 
+        background:-webkit-gradient(linear,0 0, 0 100%, from(#ccc), to(#eee)); 
+        box-shadow:inset 0 0 10px rgba(0,0,0,.4); 
+        -moz-box-shadow:inset 0 0 10px rgba(0,0,0,.4); 
+        -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,.4); 
     }
 
 

@@ -502,16 +502,14 @@
         });
         // ********************
         
-        var bu = function(e) { 
-        	e.preventDefault();
-       		GAME.sendMessage({
-       			'chat': 'disconnected.'
-       		}, function(a) {});
-       		GAME.sendMessage({
-       			'disco' : true
-       		}, function(a) {});
-        };
-        $(window).on("beforeunload", bu);
+        $(window).on("beforeunload", function() { 
+            GAME.sendMessage({
+                'chat': 'disconnected.'
+            }, function(a) {});
+            GAME.sendMessage({
+                'disco' : true
+            }, function(a) {});
+        });
         
         setInterval(GAME.updaterService, 3000);
     });
