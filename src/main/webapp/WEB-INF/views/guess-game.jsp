@@ -35,7 +35,7 @@
 
 	<div class="container" id="main">
 		<div class="row-fluid">
-			<div class="span3">
+			<div class="span3 well">
 				<h1>Chat</h1>
 				<ul id="chat-history">
 					<li>No messages for now :(</li>
@@ -102,8 +102,8 @@
 			</div>
 
 
-			<div class="span3">
-				<h1>Anybody there?</h1>
+			<div class="span3 well">
+				<h2>Anybody there?</h2>
 				<ul id="stats">
 					<h3>Player - Total wins</h3>
 				</ul>

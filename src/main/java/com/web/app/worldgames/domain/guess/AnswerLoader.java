@@ -9,7 +9,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 public class AnswerLoader {
-	private static final String ANSWERS_FILE = "src/main/resources/answers";
+	private static final String ANSWERS_FILE = "answers";
 	private static final Logger log = Logger.getLogger(AnswerLoader.class);
 	
 	public static List<String> loadAnswers() {

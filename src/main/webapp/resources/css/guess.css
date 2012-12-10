@@ -1,5 +1,10 @@
-#navbar {
-	font-family:"Helvetica", "arial";
+body {
+    background: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/3171/3171465.png);
+    /*background: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/3171/3171469.png);*/
+}
+.span3.well {
+	margin-top: 10px;
+	box-shadow: 0px 0px 5px black;
 }
 
 #main {
@@ -50,7 +55,7 @@ body {
 	
 	border: 10px solid #fffeff;
 	background: #f1f3ef;
-	box-shadow:0px 3px 5px #333;
+	box-shadow:0px 0px 5px #333;
 }
 
 #drawing-pad:hover, #drawing-pad:active, #drawing-pad:focus {
@@ -61,9 +66,9 @@ body {
 	font-size: 20px;
 }
 	#drawing-pallete button{
-	//	font-size: 1.2em;
+		font-size: 1.2em;
 		cursor : pointer;
-	//	display : none;
+		display : none;
 	}
 
 

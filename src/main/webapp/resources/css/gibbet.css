@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+ 
+a {
+	font: 1px;
+	wight: 15px;
+	height: 15px;
+	color: #0000FF;
+	text-decoration: none;
+}
+
+#select {
+	wight: 20px;
+	height: 20px
+}
+
+#send {
+	wight: 20px;
+	height: 20px
+}
+
+#exit {
+	wight: 20px;
+	height: 20px
+}
+
+#usermsg {
+	font: 12px;
+	width: 200px;
+	border: 1px solid #ACD8F0;
+}
+#word {
+	width: 200px;
+	height: 30px;
+	font: 12px;
+	border: 1px solid #ACD8F0;
+}
+#live {
+	width: 25px;
+	height: 20px;
+	border: 1px solid #ACD8F0;
+}
+
+.error {
+	color: #ff0000;
+}

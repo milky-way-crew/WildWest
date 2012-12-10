@@ -36,9 +36,19 @@ public class GuessGame {
 	private String currentAnswer = "apple";
 	private Timer timer = new Timer();
 
-	private static List<String> answers = new ArrayList<String>(Arrays.asList("dog", "cat"));
-
+	private static List<String> answers;
 	private List<GuessPlayer> players = new ArrayList<GuessPlayer>();
+
+	static {
+		try {
+			log.info(AnswerLoader.class.getClassLoader().getResource("answers"));
+			answers = AnswerLoader.loadAnswers();			
+		} catch (Exception e) {
+			log.warn("Cannot load words from file for Guess game, using custom set", e);
+			answers = new ArrayList<String>(Arrays.asList("dog", "cat", "human", "student"));
+		}
+	}
+	
 
 	public void addPlayer(GuessPlayer player) {
 		if (this.getPlayerById(player.getId()) == null) {

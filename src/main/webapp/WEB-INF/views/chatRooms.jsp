@@ -46,6 +46,7 @@
 	<!-- world chat and room list -->
 	<div class="container">
 		<p></p>
+		<p></p>
 		<div class="row-fluid">
 			<div class="span8">
 				<div id="title" class="well">
