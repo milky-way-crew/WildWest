@@ -9,7 +9,7 @@ public class GoToJailCard extends Cell {
 	public void effectOnPlayer(Player player) {
 		player.setPosition(CellPositions.JAIL);
 		player.setMoney(player.getMoney() + 200);
-		//CardFactory.chooseCard(player).effectOnPlayer(player);
+		player.setInJail(true);
 	}
 
 	@Override
