@@ -33,7 +33,6 @@ public class ChatRoomsController {
 	} else {
 	    chatParticipant = manager.getChatParticipantById(user.getId());
 	    setChatParticipantToRequest(request, chatParticipant);
-	    chatParticipant.setRedirectState(false);
 	    log.debug("ChatParticipant get from session "
 		    + chatParticipant.getNickname());
 	}
