@@ -143,6 +143,7 @@ public class ChessGameManager {
 	private void onChatReceived(Map<String, Object> responseJson, User user,
 			Object message) {
 		log.info("Received chat message from id=" + user.getId());
+		message = message.toString().replaceAll(">", "&gt;").replaceAll("<", "&lt;");
 		ChessPlayer opponent = game.getOpponentOf(game.getPlayerById(user.getId()));
 		opponent.getMail().add(game.getPlayerById(user.getId()).getNick() + " : " + message);
 	}
