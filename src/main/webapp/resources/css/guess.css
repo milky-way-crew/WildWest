@@ -66,9 +66,9 @@ body {
 	font-size: 20px;
 }
 	#drawing-pallete button{
-		font-size: 1.2em;
+		font-size: 1.em;
 		cursor : pointer;
-		display : none;
+		/*display : none;*/
 	}
 
 
