@@ -44,10 +44,7 @@
 												<div class="box transparent">
 													<form:input style="margin-bottom: 15px;" type="text"
 														path="login" class="input-xlarge" id="login" name="login"
-														rel="popover" data-placement='left'
-														data-content="What is your login, buddy?"
-														placeholder="What is your login, buddy?"
-														data-original-title="Login field" />
+														placeholder="What is your login, buddy?"/>
 													<form:errors path="login" cssClass="btn-mini btn-danger"></form:errors>
 												</div>
 											</div>
@@ -61,11 +58,8 @@
 											<div class="controls">
 												<div class="box transparent">
 													<form:input style="margin-bottom: 15px;" type="password"
-														path="password" class="input-xlarge" id="password"
-														name="password" rel="popover" data-placement='left'
-														data-content="What is your password?"
-														data-original-title="Password field"
-														placeholder="keep your password in safe place" />
+														path="password" class="input-xlarge" id="password2"
+														name="password" placeholder="keep your password in safe place" />
 													<form:errors path="password" cssClass="btn-mini btn-danger"></form:errors>
 												</div>
 											</div>
@@ -148,8 +142,9 @@
 						<div class="control-group">
 							<label class="control-label">Confirm password</label>
 							<div class="controls">
-								<input type="password" path="password" class="input-xlarge"
-									id="conf_password" name="conf_password" rel="popover"
+								<input id="conf_password" type="password" 
+									path="password" class="input-xlarge"
+									name="conf_password" rel="popover"
 									data-content="Confirm your password here"
 									data-original-title="Password" />
 							</div>
@@ -175,8 +170,6 @@
 	<script type="text/javascript" src="resources/js/bootstrap-alert.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-modal.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-dropdown.js"></script>
-	<!-- // <script type="text/javascript" src="resources/js/bootstrap-scrollspy.js"></script> -->
-	<!-- // <script type="text/javascript" src="resources/js/bootstrap-tab.js"></script> -->
 	<script type="text/javascript" src="resources/js/bootstrap-tooltip.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap-popover.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.validate.js"></script>
