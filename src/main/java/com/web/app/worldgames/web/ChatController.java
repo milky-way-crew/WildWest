@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
+ 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -38,13 +38,13 @@ public class ChatController {
 	JSONObject json = new JSONObject();
 
 	if (type.toLowerCase().trim().equals("update")) {
-	    // log.debug("Update messages from user: " +
-	    // participant.getNickname());
+	    log.trace("Update messages from user: " +
+	    participant.getNickname());
 	    json.put("update", updateUserMessages(participant));
 	    return json;
 	} else {
-	    // log.debug("Broadcast request from user: "
-	    // + participant.getNickname() + " and message: " + data);
+	    log.trace("Broadcast request from user: "
+	     + participant.getNickname() + " and message: " + data);
 	    broadcast(participant, data);
 	    json.put("message", answerOnMessage(participant, data));
 	    return json;
@@ -108,7 +108,7 @@ public class ChatController {
     private String updateUserMessages(ChatParticipant participant) {
 	List<String> messages = new ArrayList<String>(participant.getMessages());
 	participant.getMessages().clear();
-	//log.debug("Updating message: " + messages.toString());
+	log.trace("Updating message: " + messages.toString());
 	return join(messages, "\n");
     }
 

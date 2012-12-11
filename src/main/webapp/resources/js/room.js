@@ -234,7 +234,7 @@ function getClientPanel(json) {
 	if (json.creatorRedirect && json.myRedirect) {
 		$("#ready").attr('disabled', true);
 		$("#connect").attr('disabled', false);
-		$("#connect").click();
+		setTimeout("window.location='./connect'", 1500);
 	}
 }
 
@@ -325,19 +325,14 @@ function createRoom() {
 						alert("Room not created");
 					},
 					success : function() {
+						$("#closeModal").click();
 						$("#listTitle").html("");
 						$("#menu").html("");
 						$("#list").html("");
 					}
 				});
-			} else {
-				alert("Choose your Game");
 			}
-		} else {
-			alert("Room name must be <= 10 symbols");
 		}
-	} else {
-		alert("Enter room name");
 	}
 };
 
