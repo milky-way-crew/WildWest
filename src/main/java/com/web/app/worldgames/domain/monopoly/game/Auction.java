@@ -38,6 +38,7 @@ public class Auction implements Runnable {
 				manager.broadcast(secondsLeft);
 				if (seconds == 0) {
 					isEnd = true;
+					log.info("max__________"+ manager.getMaxAuctionPrice());
 					if (manager.getMaxAuctionPrice() > 0) {
 						buttons.put(ButtonsLabel.BUY, false);
 						buttons.putAll(ButtonsAction.buttonsAction(manager
@@ -46,9 +47,9 @@ public class Auction implements Runnable {
 								manager.auctionCreator(),
 								manager.getMaxAuctionPrice());
 						manager.setAuctionPrice(0);
+						manager.setMaxAuctionPrice(0);
 						log.info(":::::::::: auction price ::::: "
 								+ manager.getAuctionPrice());
-						manager.setMaxAuctionPrice(0);
 						log.info(":::::::::: max auction price::::: "
 								+ manager.getMaxAuctionPrice());
 						responseAuction.put("type", ButtonsLabel.AUCTION);
@@ -56,7 +57,7 @@ public class Auction implements Runnable {
 						responseAuction.put("auction_money",
 								manager.getMaxAuctionPrice());
 						responseAuction.put("auction_creator",
-								manager.auctionCreator());
+								manager.auctionCreator().getColor());
 						responseAuction.put("auction_creator_money", manager
 								.auctionCreator().getMoney());
 						response.put("type", ButtonsLabel.BUY);
@@ -74,11 +75,19 @@ public class Auction implements Runnable {
 							player.setAuctionCreator(false);
 							player.setInAuction(false);
 							player.setAuctionRates(0);
+							player.setCanCreateAuction(false);
+							log.info("Player info::::: "
+									+ player.getAuctionRates() + " "
+									+ player.isInAuction() + ":"
+									+ player.isAuctionCreator());
 						}
 					} else if (manager.getMaxAuctionPrice() == 0) {
-						manager.auctionCreator().canBuy(
-								(SellableCard) CardFactory.chooseCard(manager
-										.auctionCreator()));
+//						buttons.put(ButtonsLabel.BUY, manager.auctionCreator().canBuy(
+//								(SellableCard) CardFactory.chooseCard(manager
+//										.auctionCreator())));
+//						state.put("buttons", buttons);
+//						response.put("game_state", state);
+//						manager.broadcast(response);
 					}
 				}
 			} catch (InterruptedException e) {

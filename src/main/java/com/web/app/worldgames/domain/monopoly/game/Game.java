@@ -142,9 +142,13 @@ public class Game {
 		}
 		userList.add(user);
 		log.info("------------------- USER INFO-----------" + user);
+		try{
 		if (checkNewUserId(user)) {
 			playerList.add(new Player(user, CellPositions.START,
 					CardPrices.START_MONEY, color));
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		log.info("[PLAYER  LIST AFTER --ADD--] " + playerList);
 	}

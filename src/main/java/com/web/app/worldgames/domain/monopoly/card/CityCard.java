@@ -298,13 +298,15 @@ public class CityCard extends SellableCard {
 	@Override
 	public void buyCityOrRail(Player player) {
 		this.setOwner(player);
-		player.addProperty(player);
+		//player.addProperty(player);
+		player.addProperty(this);
 		player.listPropertyForMortage();
 		player.listPropertyForSell();
 		player.setMoney(player.getMoney() - getPrice());
 		log.info("[MONEY]: " + player.getMoney());
 		log.info("[BUY::: OWNER]: " + this.getOwner());
-		player.addRegions(player);
+		//player.addRegions(player);
+		player.addRegions(this);
 		player.addBuildAvailable();
 		// log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
 		log.info("[REGIONS LIST]: " + player.listRegions(player));
@@ -340,7 +342,8 @@ public class CityCard extends SellableCard {
 		log.info("auctionn method");
 		if (this.getOwner() == null) {
 			this.setOwner(player);
-			player.addProperty(player);
+			player.addProperty(this);
+			//player.addProperty((SellableCard) CardFactory.chooseCard(auctionCreator));
 			player.listPropertyForMortage();
 			log.info("::: AUCTION LIST FOR MORTAGE:::"+player.getForMortage());
 			player.listPropertyForSell();
@@ -353,8 +356,11 @@ public class CityCard extends SellableCard {
 			}
 			log.info("[MONEY AUCTION]: " + player.getMoney());
 			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
-			player.addRegions(player);
+//			player.addRegions((SellableCard) CardFactory.chooseCard(auctionCreator));
+//			player.addRegions(player);
+			player.addRegions(this);
 			player.addBuildAvailable();
+			this.setAuctionStarted(false);
 			log.info("[REGIONS LIST:::AUCTION]: " + player.listRegions(player));
 		}
 

@@ -132,7 +132,7 @@ public class RailCard extends SellableCard {
 	@Override
 	public void buyCityOrRail(Player player) {
 		this.setOwner(player);
-		player.addProperty(player);
+		player.addProperty(this);
 		player.listPropertyForMortage();
 		player.listPropertyForSell();
 		player.setMoney(player.getMoney() - getPrice());
@@ -158,7 +158,7 @@ public class RailCard extends SellableCard {
 		log.info("auctionn method");
 		if (this.getOwner() == null) {
 			this.setOwner(player);
-			player.addProperty(player);
+			player.addProperty(this);
 			player.listPropertyForMortage();
 			player.listPropertyForSell();
 			if (player.equals(auctionCreator)) {
@@ -168,6 +168,7 @@ public class RailCard extends SellableCard {
 				auctionCreator.setMoney(auctionCreator.getMoney() + price);
 			}
 			player.addNumberOfRails();
+			this.setAuctionStarted(false);
 			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
 		}
 		// else {
