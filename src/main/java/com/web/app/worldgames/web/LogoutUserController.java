@@ -17,10 +17,13 @@ public class LogoutUserController {
 
     @RequestMapping(value = { "/logout" })
     public String logout(HttpServletRequest request) {
-	ChatParticipant participant = ChatRoomsController
-		.getChatParticipantFromRequest(request);
-	manager.getChatRoomById(participant.getId_room())
-		.deleteChatParticipantById(participant.getParticipantId());
+    try {
+		ChatParticipant participant = ChatRoomsController.getChatParticipantFromRequest(request);
+		manager.getChatRoomById(participant.getId_room())
+			.deleteChatParticipantById(participant.getParticipantId());
+    } catch (Exception e) {
+    	// it's ok, user don't entered chat
+    }
 	HttpSession session = request.getSession();
 	session.removeAttribute("chatParticipant");
 	session.removeAttribute("user");

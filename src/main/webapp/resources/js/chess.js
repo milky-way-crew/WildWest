@@ -220,11 +220,11 @@
                 GAME.view.animateWin(idFrom, idTo, json);
 
                 if(GAME.isOwnerOf(idFrom) === true || typeof idFrom === 'undefined') {
-                	$('#fin-label').html('Congradulations! You win the game.');
-                	$('#fin img').attr("src", "./resources/img/chess/win.png");
+                    $('#fin-label').html('Congradulations! You win the game.');
+                    $('#fin img').attr("src", "./resources/img/chess/win.png");
                 } else {
-                	$('#fin img').attr("src", "./resources/img/chess/loose.png");
-                	$('#fin-label').html('You loose the game, better luck next time.');
+                    $('#fin img').attr("src", "./resources/img/chess/loose.png");
+                    $('#fin-label').html('You loose the game, better luck next time.');
                 }
 
                 $('#fin').modal();
@@ -484,7 +484,7 @@
                 var msg = $('#chat-input').val();
                 $('#chat-input').val('');
                 if(msg.length > 0) {
-                    chat.prepend('<h4>me : ' + msg + '</h4>');
+                    chat.prepend('<h4>me : ' + msg.replace("<", '&lt;').replace('>','&gt;') + '</h4>');
                     GAME.sendMessage({
                         'chat': msg
                     }, function(argument) {
