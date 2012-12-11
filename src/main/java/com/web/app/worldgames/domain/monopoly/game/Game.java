@@ -30,8 +30,8 @@ public class Game {
 	private List<SellableCard> activeBoard = new ArrayList<SellableCard>();
 
 	private static final Logger log = Logger.getLogger(Game.class);
-	@Autowired
-	private IStatisticsServiceManager userService;
+//	@Autowired
+//	private IStatisticsServiceManager userService;
 
 	public Game() {
 	}
@@ -112,9 +112,16 @@ public class Game {
 
 	public boolean checkNewUserId(User user) {
 		boolean canConnect = false;
-		for(Player player: playerList){
-			if(player.getId()==user.getId());
-			canConnect=  false;
+		if (playerList.isEmpty()) {
+			canConnect = true;
+		} else {
+			for (Player player : playerList) {
+				if (player.getId() == user.getId()) {
+					canConnect = false;
+				} else {
+					canConnect = true;
+				}
+			}
 		}
 		return canConnect;
 	}
@@ -135,9 +142,9 @@ public class Game {
 		}
 		userList.add(user);
 		log.info("------------------- USER INFO-----------" + user);
-		if(checkNewUserId(user)){
-		playerList.add(new Player(user, CellPositions.START,
-				CardPrices.START_MONEY, color));
+		if (checkNewUserId(user)) {
+			playerList.add(new Player(user, CellPositions.START,
+					CardPrices.START_MONEY, color));
 		}
 		log.info("[PLAYER  LIST AFTER --ADD--] " + playerList);
 	}
@@ -168,7 +175,7 @@ public class Game {
 	 * The execute method starting game
 	 */
 	public void start() {
-		try {
+		try { 
 
 			StartGame.initCities();
 			StartGame.initRails();
@@ -235,9 +242,6 @@ public class Game {
 		return players;
 	}
 
-
-
-
 	public User getUserById(int id) {
 		User user = null;
 		for (User users : userList) {
@@ -248,4 +252,3 @@ public class Game {
 		return user;
 	}
 }
-

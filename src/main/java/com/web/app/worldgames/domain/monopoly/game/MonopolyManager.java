@@ -179,6 +179,7 @@ public class MonopolyManager {
 			ObjectMapper objectMapper = new ObjectMapper();
 			Player currentPlayer = getPlayerById(idPlayer);
 			currentPlayer.setAuctionRates(getMaxAuctionPrice());
+			currentPlayer.setInAuction(true);
 			SellableCard card = (SellableCard) CardFactory
 					.chooseCard(monopolyGame.getCurrentPlayer());
 			Player auctionCreator = monopolyGame.getCurrentPlayer();
@@ -189,6 +190,7 @@ public class MonopolyManager {
 					&& !card.isAuctionStarted()) {
 				card.setAuctionStarted(true);
 				auctionCreator.setCanCreateAuction(true);
+				
 			}
 			response.put("type", ButtonsLabel.AUCTION);
 			response.put("invoker", auctionCreator.getColor());
@@ -196,6 +198,7 @@ public class MonopolyManager {
 			rates.put("rates", currentPlayer.getAuctionRates());
 			buttons.put(ButtonsLabel.UP10, currentPlayer.canUpAuctionPrice(CardPrices.UP10_AUCTION_PRICE+10));
 			buttons.put(ButtonsLabel.UP50, currentPlayer.canUpAuctionPrice(CardPrices.UP50_AUCTION_PRICE+50));
+			buttons.put(ButtonsLabel.ROLL, false);
 			response.put("card", auctionCreator.getPosition());
 
 			if (card.isAuctionStarted() && currentPlayer.equals(auctionCreator)
@@ -404,30 +407,34 @@ public class MonopolyManager {
 		getMonopolyGame().setCurrentPlayer(getMonopolyGame().getNextPlayer());
 		log.info("[NEXT PLAYER] : " + getMonopolyGame().getCurrentPlayer());
 		currentPlayer = getMonopolyGame().getCurrentPlayer();
-//		log.info("can done;;;;;;;;"+(!currentPlayer.canRollDices()&&!currentPlayer.canContinueGame()));
-//		if(!currentPlayer.canRollDices()&&!currentPlayer.canContinueGame()){
-//			leaveGame(currentPlayer);
-//			log.info("[Player money(loser)]:"
-//					+ currentPlayer.getMoney());
+		log.info("can done;;;;;;;;"+(currentPlayer.getMoney()<0&&!currentPlayer.canContinueGame()));
+		if(currentPlayer.getMoney()<0&&!currentPlayer.canContinueGame()){
+			currentPlayer.setLosser(true);
+			broadcast(leaveGame(currentPlayer));
+			log.info("[Player money(loser)]:"
+					+ currentPlayer.getMoney());
 //			response.put("loser", currentPlayer.getColor());
 //			state.put("buttons", buttons);
 //			state.put("massages", messages);
 //			response.put("game_state", state);
-//			if (hasWinner()) {
-//				Player winner = monopolyGame.getAllPlayers().get(0);
-//				winner.setWinner(true);
-//				monopolyGame.setEnd(true);
-//				monopolyGame.setStarted(false);
-//				log.info("[WINNER ]:" + winner.getColor());
-//				response.put("type", ButtonsLabel.LOGIC);
-//				response.put("winner", winner.getColor());
-//				messages = "Game ended. Winner is "
-//						+ winner.getName();
-//				state.put("messages", messages);
-//				state.put("buttons", buttons);
-//				response.put("game_state", state);
-//		}
-//		}
+			if (hasWinner()) {
+				Player winner = monopolyGame.getAllPlayers().get(0);
+				winner.setWinner(true);
+				monopolyGame.setEnd(true);
+				monopolyGame.setStarted(false);
+				log.info("[WINNER ]:" + winner.getColor());
+				response.put("type", ButtonsLabel.LOGIC);
+				state.put("winner", winner.getColor());
+				state.put("player_money", winner.getMoney());
+				state.put("game_end", monopolyGame.isEnd());
+				messages = "Game ended. Winner is "
+						+ winner.getName();
+				state.put("messages", messages);
+				//state.put("buttons", buttons);
+				response.put("game_state", state);
+				broadcast(response);
+		}
+		}
 		log.info("[Player: ]" + currentPlayer.getName() + ":"
 				+ currentPlayer.getColor() + " can roll dice");
 		turn.put("type", ButtonsLabel.TURN);
@@ -697,38 +704,6 @@ public class MonopolyManager {
 						messages = "Player " + currentPlayer.getColor()
 								+ " leave game!";
 						buttons.put(ButtonsLabel.DONE, true);
-						
-						leaveGame(currentPlayer);
-						log.info("[Player money(loser)]:"
-								+ currentPlayer.getMoney());
-						response.put("loser", currentPlayer.getColor());
-						state.put("buttons", buttons);
-						state.put("massages", messages);
-						response.put("game_state", state);
-						if (hasWinner()) {
-							Player winner = monopolyGame.getAllPlayers().get(0);
-							winner.setWinner(true);
-							monopolyGame.setEnd(true);
-							monopolyGame.setStarted(false);
-							log.info("[WINNER ]:" + winner.getColor());
-							response.put("type", ButtonsLabel.LOGIC);
-							response.put("winner", winner.getColor());
-							buttons.put(ButtonsLabel.DONE, false);
-							buttons.put(ButtonsLabel.AUCTION, false);
-							buttons.put(ButtonsLabel.BUILD, false);
-							buttons.put(ButtonsLabel.BUY, false);
-							buttons.put(ButtonsLabel.MORTAGE, false);
-							buttons.put(ButtonsLabel.PAY, false);
-							buttons.put(ButtonsLabel.ROLL, false);
-							buttons.put(ButtonsLabel.SELL, false);
-							buttons.put(ButtonsLabel.UNMORTAGE, false);
-							messages = "Game ended. Winner is "
-									+ winner.getName();
-							state.put("messages", messages);
-							state.put("buttons", buttons);
-							response.put("game_state", state);
-							 broadcast(response);
-						}
 					}
 				}
 			}
@@ -854,9 +829,10 @@ public class MonopolyManager {
 		losers.add(player);
 	}
 
-	public void leaveGame(Player player) {
+	public Map<String, Object> leaveGame(Player player) {
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
+		Map<String, Object> response = new HashMap<String, Object>();
 		List<Integer> index = new ArrayList<Integer>();
 		String messages = null;
 		if (player.isLosser()) {
@@ -865,7 +841,7 @@ public class MonopolyManager {
 					monopolyGame.getAllLosers(), player);
 			try{
 				
-				userService.changeUserMoneyAmount(player.getId(), player.getMoney(), "monopoly");
+				//userService.changeUserMoneyAmount(player.getId(), player.getMoney(), "monopoly");
 			}catch(Exception e){e.printStackTrace();}
 			log.info("[PLAYER LEAVE THIS GAME: ]" + player.getColor());
 			log.info("[PLAYER LIST ]" + monopolyGame.getAllPlayers());
@@ -897,13 +873,14 @@ public class MonopolyManager {
 			}
 			messages = "Player " + player.getName() + " leave game";
 			log.info("list property players: " + player.playerProperty());
-			buttons.put(ButtonsLabel.DONE, true);
-			state.put("buttons", buttons);
+			buttons.put("type", ButtonsLabel.LOGIC);
 			state.put("messages", messages);
 			state.put("player_loser", player.getColor());
 			state.put("index", index);
 			state.put("player_money", player.getMoney());
+			response.put("game_state", state);
 		}
+		return response;
 	}
 
 	public boolean hasWinner() {

@@ -7,12 +7,12 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
+import com.web.app.worldgames.domain.monopoly.Player;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
 public class Auction implements Runnable {
 	private static final Logger log = Logger.getLogger(Auction.class);
 	MonopolyManager manager;
-	// SellableCard card = (SellableCard) CardFactory.chooseCard(player);
 	SellableCard card = null;
 
 	public Auction(MonopolyManager manager, SellableCard card) {
@@ -27,7 +27,7 @@ public class Auction implements Runnable {
 		Map<String, Object> state = new HashMap<String, Object>();
 		Map<String, Object> response = new HashMap<String, Object>();
 		Map<String, Object> responseAuction = new HashMap<String, Object>();
-		int seconds = 60;
+		int seconds = 20;
 		boolean isEnd = false;
 		while (seconds >= 0) {
 			try {
@@ -39,7 +39,6 @@ public class Auction implements Runnable {
 					isEnd = true;
 					buttons.put(ButtonsLabel.BUY, false);
 					buttons.putAll(ButtonsAction.buttonsAction(manager.getAuctionWinner()));
-					log.info(":::::::::: second ::::: " + seconds);
 					card.auctionCityOrRail(manager.getAuctionWinner(),manager.auctionCreator(),
 							manager.getMaxAuctionPrice());
 					manager.setAuctionPrice(0);
@@ -65,6 +64,10 @@ public class Auction implements Runnable {
 					log.info(":::::::::: response ::::: " + response);
 					manager.broadcast(response);
 					manager.broadcast(responseAuction);
+					for(Player player: manager.getMonopolyGame().getAllPlayers()){
+						player.setAuctionCreator(false);
+						player.setInAuction(false);
+					}
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();

@@ -46,6 +46,7 @@ public class Player {
 	private boolean isAuctionCreator;
 	private boolean canCreateAuction;
 	private int auctionRates;
+	private boolean inAuction;
 
 	public boolean isCanCreateAuction() {
 		return canCreateAuction;
@@ -226,6 +227,14 @@ public class Player {
 
 	public void setPoints(int points) {
 		this.points = points;
+	}
+
+	public boolean isInAuction() {
+		return inAuction;
+	}
+
+	public void setInAuction(boolean inAuction) {
+		this.inAuction = inAuction;
 	}
 
 	@Override
@@ -564,22 +573,22 @@ public class Player {
 
 	public boolean canRollDices() {
 		boolean roll = false;
-//		log.info(" getMoney>=0: "+(this.getMoney()>=0));
-//		log.info(" double points: "+this.doublePoints());
-//		log.info(" is rolled: "+this.isRolled());
+		log.info(" getMoney>=0: "+(this.getMoney()>=0));
+		log.info(" double points: "+this.doublePoints());
+		log.info(" is rolled: "+this.isRolled());
 		if (this.getMoney() >= 0 && this.doublePoints() && this.isRolled()) {
 			roll = true;
 		} else if (this.getMoney() >= 0 && !this.isRolled()) {
-//			log.info(" getMoney>=0: "+(this.getMoney()>=0));
-//			log.info(" is rolled: "+this.isRolled());
+			log.info(" getMoney>=0: "+(this.getMoney()>=0));
+			log.info(" is rolled: "+this.isRolled());
 			roll = true;
 		}
 		return roll;
 	}
 
 	public boolean canContinueGame() {
-//		log.info(" can mortage: "+this.canMortage());
-//		log.info(" can sell: "+this.canSell());
+		log.info(" can mortage: "+this.canMortage());
+		log.info(" can sell: "+this.canSell());
 		return this.canMortage() || this.canSell();
 	}
 
