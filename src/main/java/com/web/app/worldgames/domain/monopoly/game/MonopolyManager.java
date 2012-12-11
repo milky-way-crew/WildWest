@@ -206,8 +206,6 @@ public class MonopolyManager {
 				auctionCreator.setCanCreateAuction(false);
 				auction = new Thread(new Auction(this, card));
 				auction.start();
-//				rates.put("player", currentPlayer.getColor());
-//				rates.put("rates", currentPlayer.getAuctionRates());
 			}
 
 			JsonNode tree = null;
@@ -413,10 +411,6 @@ public class MonopolyManager {
 			broadcast(leaveGame(currentPlayer));
 			log.info("[Player money(loser)]:"
 					+ currentPlayer.getMoney());
-//			response.put("loser", currentPlayer.getColor());
-//			state.put("buttons", buttons);
-//			state.put("massages", messages);
-//			response.put("game_state", state);
 			if (hasWinner()) {
 				Player winner = monopolyGame.getAllPlayers().get(0);
 				winner.setWinner(true);
@@ -430,7 +424,6 @@ public class MonopolyManager {
 				messages = "Game ended. Winner is "
 						+ winner.getName();
 				state.put("messages", messages);
-				//state.put("buttons", buttons);
 				response.put("game_state", state);
 				broadcast(response);
 		}
