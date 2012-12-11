@@ -231,7 +231,7 @@
                 
                 clearInterval(GAME.updaterService);
                 GAME.inform('redirecting in 5 seconds');
-                setTimeout("window.location='./chess/exit'", 7000);
+                setTimeout("window.location='./goHome'", 7000);
             },
             "END": function(json) {
                 bootbox.alert('End of game, redirecting to home in 4 seconds');

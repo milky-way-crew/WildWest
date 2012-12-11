@@ -39,7 +39,7 @@ public class RoomController {
 	JSONObject json = new JSONObject();
 
 	if (type.toLowerCase().trim().equals("lists")) {
-	    //log.debug("Update lists from user: " + participant.getNickname());
+	    log.trace("Update lists from user: " + participant.getNickname());
 	    json = updateChatRoomPage(participant);
 	    return json;
 	}
@@ -89,17 +89,6 @@ public class RoomController {
 	return null;
     }
 
-    private ChatParticipant getChatParticipantById(int id) {
-	for (ChatRoom room : manager.getChatRooms()) {
-	    for (ChatParticipant participant : room.getChatParticipants()) {
-		if (participant.getParticipantId() == id) {
-		    return participant;
-		}
-	    }
-	}
-	return null;
-    }
-
     private JSONObject updateChatRoomPage(ChatParticipant participant) {
 	JSONObject json = new JSONObject();
 	if (participant.getId_room() == manager.getIdWorldRoom()) {
@@ -116,13 +105,13 @@ public class RoomController {
 	json.put("roomList", updateRoomList(participant));
 	if (participant.isInviteState()) {
 	    json.put("inviteStatus", participant.isInviteState());
-	    log.debug("User inviteState = " + participant.isInviteState());
-	    ChatParticipant invitator = getChatParticipantById(participant
+	    log.trace("User inviteState = " + participant.isInviteState());
+	    ChatParticipant invitator = manager.getChatParticipantById(participant
 		    .getId_invitator());
 	    json.put("invitator", invitator.getNickname());
-	    log.debug("Invitator = " + invitator.getNickname());
+	    log.trace("Invitator = " + invitator.getNickname());
 	    json.put("room", manager.getChatRoomById(invitator.getId_room()));
-	    log.debug("roomId = "
+	    log.trace("roomId = "
 		    + manager.getChatRoomById(invitator.getId_room())
 			    .getRoomId());
 	    participant.setInviteState(false);
@@ -148,7 +137,7 @@ public class RoomController {
     @SuppressWarnings("unchecked")
     private JSONObject invite(int idUser, ChatParticipant participant) {
 	JSONObject json = new JSONObject();
-	ChatParticipant invitedParticipant = getChatParticipantById(idUser);
+	ChatParticipant invitedParticipant = manager.getChatParticipantById(idUser);
 	log.debug("User: " + participant.getNickname() + " invite user - "
 		+ invitedParticipant.getNickname());
 	if (invitedParticipant.getParticipantId() == participant
@@ -253,8 +242,8 @@ public class RoomController {
     private boolean joinToRoom(ChatParticipant participant, int id) {
 	int roomSize = manager.getChatRoomById(id).getSize();
 	int maxRoomSize = manager.getChatRoomById(id).getMaxSize();
-	log.debug("roomSize = " + roomSize);
-	log.debug("roomMaxSize = " + maxRoomSize);
+	log.trace("roomSize = " + roomSize);
+	log.trace("roomMaxSize = " + maxRoomSize);
 	if (roomSize < maxRoomSize) {
 	    manager.getChatRoomById(participant.getId_room())
 		    .deleteChatParticipantById(participant.getParticipantId());

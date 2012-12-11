@@ -14,83 +14,60 @@
 	type="text/css">
 <title>KaBoom</title>
 <style type="text/css">
-body {
-	background-image: url('resources/img/chess/chess-bg-1.png'); /*url(resources/img/home-bg.png)*/
-}
-
-.hero-unit {
-	background-color: rgba(255, 255, 255, 0.7);
-}
+	body {
+		background-image: url(resources/img/home-bg.png);
+	}
+	.hero-unit {
+		background-color: rgba(255,255,255,0.7);
+	}
 </style>
 </head>
 <body>
 	<div class="container ">
-		<div class="hero-unit">
-			<!-- 
+	<div class="hero-unit">
+		<!-- 
 		<h1>Oh, hi doggy.</h1>
 		 -->
-			<h1>
-				Oh, hi
-				<c:out value="${user.login}" />
-				;)
-			</h1>
-		</div>
+		<h1>
+			Oh, hi
+			<c:out value="${user.login}" /> ;)
+		</h1>
+	</div>
 		<div class="span6 well">
-			<!-- <center> -->
+							<!-- <center> -->
 			<img src="resources/img/404.png" alt="">
-			<!-- </center> -->
+		<!-- </center> -->
 		</div>
 		<div class="span4 well">
-			<div class="well" id="info">
-				<h4>Information about user</h4>
-				<table class="table table-hover">
-					<tr>
-						<td>login</td>
-						<td><c:out value="${user.login}" /></td>
-					</tr>
-					<tr>
-						<td>nickname</td>
-						<td><c:out value="${user.nickname}" /></td>
-					</tr>
-					<tr>
-						<td>email</td>
-						<td><c:out value="${user.email}" /></td>
-					</tr>
-				</table>
-			</div>
+					<p><%=new Date()%></p>
+		<c:choose>
+			<c:when test="${user == null }">
+				<p>
+					<a href="./login" class="btn">login</a> <a href="./register"
+						class="btn btn-danger">register</a>
+				</p>
+			</c:when>
+			<c:otherwise>
+				<p>
+					<a href="./chatRooms" class="btn btn-primary">Link to game
+						rooms</a>
+				</p>
+				<p><a href="./personal" class="btn btn-large">&#9500; Personal</a></p>
+				<p>
+					<a href="./logout" class="btn btn-danger">Logout</a>
+				</p>
+				<p>
+					<a href="./test" class="btn btn-warning">&#9827; Link to buggy chat &#9827;</a>
+				</p>
+				<p><a href="./chess" class="btn btn-primary">&#9829; Chess-servers</a></p>
+				<p><a href="./gibbet" class="btn btn-primary">&#9820; Gibbet</a></p>
+				<p><a href="./mgibbet" class="btn btn-primary">&#9700; MultiGibbet</a></p>
 
-			<div class="well">
-				<p><%=new Date()%></p>
-				<c:choose>
-					<c:when test="${user == null }">
-						<p>
-							<a href="./login" class="btn">login</a> <a href="./register"
-								class="btn btn-danger">register</a>
-						</p>
-					</c:when>
-					<c:otherwise>
-
-						<p>
-							<a href="./chatRooms" class="btn btn-primary">Link to game
-								rooms</a>
-						</p>
-						<p>
-							<a href="./logout" class="btn btn-danger">Logout</a>
-						</p>
-						<p>
-							<a href="./test" class="btn btn-warning">&#9827; Link to
-								buggy chat &#9827;</a>
-						</p>
-						<p>
-							<a href="./chess" class="btn btn-primary">&#9829;
-								Chess-servers</a>
-						</p>
-					</c:otherwise>
-				</c:choose>
-			</div>
-
-
+			</c:otherwise>
+		</c:choose>
 		</div>
+
+
 
 	</div>
 </body>

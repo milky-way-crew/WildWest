@@ -25,22 +25,20 @@ public class ChatRoomsController {
 	ChatParticipant chatParticipant = new ChatParticipant(user);
 	if (!manager.isParticipantInAnyRoom(chatParticipant)) {
 	    // manager.generateTextColorForParticipant(chatParticipant);
-	    request.getSession().setAttribute("chatParticipant",
-		    chatParticipant);
+	    setChatParticipantToRequest(request, chatParticipant);
 	    log.debug("Put ChatParticipant in session and in world particicipant list: "
 		    + chatParticipant.getNickname());
 	    manager.getChatRoomById(manager.getIdWorldRoom())
 		    .addChatParticipant(chatParticipant);
 	} else {
-	    chatParticipant = getChatParticipantFromRequest(request);
-	    chatParticipant.setRedirectState(false);
+	    chatParticipant = manager.getChatParticipantById(user.getId());
+	    setChatParticipantToRequest(request, chatParticipant);
 	    log.debug("ChatParticipant get from session "
 		    + chatParticipant.getNickname());
 	}
 	ModelAndView modelAndView = new ModelAndView();
 	modelAndView.setViewName("chatRooms");
 	return modelAndView;
-
     }
 
     public static ChatRoomServiceManager getManager() {
@@ -51,9 +49,17 @@ public class ChatRoomsController {
 	    HttpServletRequest request) {
 	ChatParticipant chatParticipant = (ChatParticipant) request
 		.getSession().getAttribute("chatParticipant");
-	//log.debug("getChatParticipant from Request: "
-	//	+ chatParticipant.getNickname());
+	log.trace("getChatParticipant from Request: "
+		+ chatParticipant.getNickname());
 	return chatParticipant;
     }
+    
+    public static void setChatParticipantToRequest(
+	    HttpServletRequest request, ChatParticipant participant) {
+	request.getSession().setAttribute("chatParticipant", participant);
+	log.trace("getChatParticipant from Request: "
+		+ participant.getNickname());
+    }
+
 
 }

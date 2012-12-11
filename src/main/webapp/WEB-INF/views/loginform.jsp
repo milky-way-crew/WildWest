@@ -144,20 +144,26 @@
         </div><!-- end cta -->
 
       <div class="row">
-        <div class="span4">
-          <h2>So cool...</h2>
-           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <div class="span3">
+          <h2>Monopoly history</h2>
+          <p>The history of Monopoly can be traced back to 1903, when an American woman named Elizabeth (Lizzie) J. Magie Phillips created a game through which she hoped to be able to explain the single tax theory of Henry George (it was intended to illustrate the negative aspects of concentrating land in private monopolies). </p>
           <!-- <p><a class="btn" href="#">View details &raquo;</a></p> -->
         </div>
-        <div class="span4">
-          <h2>So awesome...</h2>
-           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <!-- <p><a class="btn" href="#">View details &raquo;</a></p> -->
+        <div class="span3">
+          <h2>About chess</h2>
+           <p> "Scissors cut paper". "Paper wraps stone". "Stone beats scissors"  Chess is a two-player strategy board game played on a chessboard, a square checkered gameboard with 64 squares arranged in an eight-by-eight grid. It is one of the world's most popular games, played by millions of people worldwide at home, in clubs, online, by correspondence, and in tournaments.</p>
+      <!--     <p><a class="btn" href="#">View details &raquo;</a></p> -->
        </div>
-        <div class="span4">
-          <h2>So amazing...</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <!-- <p><a class="btn" href="#">View details &raquo;</a></p> -->
+        <div class="span3">
+          <h2>Gibbet(hangman)</h2>
+          <p>You must choose categorie. Then you are solving the word. Also you have 7 live (mistake).  Hangman  is a paper and pencil guessing game for two or more players. One player thinks of a word, phrase or sentence and the other tries to guess it by suggesting letters.</p>
+        <!--   <p><a class="btn" href="#">View details &raquo;</a></p> -->
+        </div> 
+         <div class="span3">
+          <h2>Draw N Guess</h2>
+          <p>One player is drowing a picture, and other players are guessing it.  Hilarious and crazily addictive, Draw N Guess is more than just a social game; it's a complete real-time fun-filled gaming experience.
+Your goal is to draw a given word, and your opponent has to guess that word; and then vice versa.</p>
+   <!--        <p><a class="btn" href="#">View details &raquo;</a></p> -->
         </div>
       </div>
 
