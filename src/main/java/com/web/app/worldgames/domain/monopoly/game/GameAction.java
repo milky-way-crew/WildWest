@@ -55,8 +55,8 @@ public class GameAction {
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		String messages = null;
 		boolean move = false;
-		if (cell instanceof SellableCard) {
-			try {
+		try {
+			if (cell instanceof SellableCard) {
 				cell.effectOnPlayer(player);
 				buttons.put(ButtonsLabel.BUY,
 						player.canBuy((SellableCard) cell));
@@ -70,89 +70,37 @@ public class GameAction {
 				if (((SellableCard) cell).getOwner() == null) {
 					buttons.put(ButtonsLabel.AUCTION, true);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			if (cell instanceof StartCard) {
-				cell.effectOnPlayer(player);
-			} else if (cell instanceof TaxCard) {
-				cell.effectOnPlayer(player);
-				messages = "Payed tax " + CardPrices.TAX;
-			} else if (cell instanceof JailCard) {
-				cell.effectOnPlayer(player);
-				messages = ((JailCard) cell).getMsg();
-				if (player.isInJail()) {
-					buttons.put(ButtonsLabel.PAY,
-							((JailCard) cell).canPayRansom(player));
-					messages = "You may pay a ransom or roll dices";
-				} else {
-					messages = "You may roll dices";
-					buttons.put(ButtonsLabel.PAY, false);
-				}
-			} else if (cell instanceof FreeStation) {
-				cell.effectOnPlayer(player);
-				messages = "You stay at Free Station";
-			} else if (cell instanceof GoToJailCard) {
-				cell.effectOnPlayer(player);
-				messages = "You are going to jail";
-				move = true;
-				state.put("move", move);
-				state.put("was", CellPositions.GO_TO_JAIL);
-				state.put("dice1", (CELL_NUMBER - CellPositions.GO_TO_JAIL)
-						+ CellPositions.JAIL);
-				state.put("dice2", 0);
-				player.setPosition(CellPositions.JAIL);
-				if (player.getPosition() == CellPositions.JAIL) {
-					JailCard jailCard = (JailCard) CardFactory
-							.chooseCard(player);
-					jailCard.effectOnPlayer(player);
+
+			} else {
+				if (cell instanceof StartCard) {
+					cell.effectOnPlayer(player);
+				} else if (cell instanceof TaxCard) {
+					cell.effectOnPlayer(player);
+					messages = "Payed tax " + CardPrices.TAX;
+				} else if (cell instanceof JailCard) {
+					cell.effectOnPlayer(player);
+					messages = ((JailCard) cell).getMsg();
 					if (player.isInJail()) {
 						buttons.put(ButtonsLabel.PAY,
-								jailCard.canPayRansom(player));
+								((JailCard) cell).canPayRansom(player));
+						messages = "You may pay a ransom or roll dices";
 					} else {
+						messages = "You may roll dices";
 						buttons.put(ButtonsLabel.PAY, false);
 					}
-				}
-			} else if (cell instanceof ChanceCard) {
-				cell.effectOnPlayer(player);
-				messages = ((ChanceCard) cell).getInformation();
-				move = true;
-				int start = player.getPosition();
-				int end = ((ChanceCard) cell).getMovePosition();
-				int dice1 = 0;
-				if (end > start) {
-					dice1 = end - start;
-				} else if (start > end) {
-					dice1 = (CELL_NUMBER - start) + end;
-				}
-				state.put("move", move);
-				state.put("was", start);
-				state.put("dice1", dice1);
-				state.put("dice2", 0);
-				player.setPosition(end);
-				Cell chanceCell = CardFactory.chooseCard(player);
-				if (chanceCell instanceof RailCard) {
-					log.info(" CARD IS RAIL");
-					RailCard rail = (RailCard) chanceCell;
-					try {
-						rail.effectOnPlayer(player);
-						buttons.put(ButtonsLabel.BUY, player.canBuy(rail));
-						messages = player.messages(rail);
-						if (rail.getOwner() != null) {
-							state.put("owner", (rail).getOwner().getColor());
-							state.put("owner_money", (rail).getOwner()
-									.getMoney());
-						}
-						if (rail.getOwner() == null) {
-							buttons.put(ButtonsLabel.AUCTION, true);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					buttons.put(ButtonsLabel.PAY, false);
-
-				} else if (chanceCell instanceof JailCard) {
+				} else if (cell instanceof FreeStation) {
+					cell.effectOnPlayer(player);
+					messages = "You stay at Free Station";
+				} else if (cell instanceof GoToJailCard) {
+					cell.effectOnPlayer(player);
+					messages = "You are going to jail";
+					move = true;
+					state.put("move", move);
+					state.put("was", CellPositions.GO_TO_JAIL);
+					state.put("dice1", (CELL_NUMBER - CellPositions.GO_TO_JAIL)
+							+ CellPositions.JAIL);
+					state.put("dice2", 0);
+					player.setPosition(CellPositions.JAIL);
 					if (player.getPosition() == CellPositions.JAIL) {
 						JailCard jailCard = (JailCard) CardFactory
 								.chooseCard(player);
@@ -164,32 +112,72 @@ public class GameAction {
 							buttons.put(ButtonsLabel.PAY, false);
 						}
 					}
-				} else {
-					chanceCell.effectOnPlayer(player);
+				} else if (cell instanceof ChanceCard) {
+					cell.effectOnPlayer(player);
+					messages = ((ChanceCard) cell).getInformation();
+					move = true;
+					int start = player.getPosition();
+					int end = ((ChanceCard) cell).getMovePosition();
+					int dice1 = 0;
+					if (end > start) {
+						dice1 = end - start;
+					} else if (start > end) {
+						dice1 = (CELL_NUMBER - start) + end;
+					}
+					state.put("move", move);
+					state.put("was", start);
+					state.put("dice1", dice1);
+					state.put("dice2", 0);
+					player.setPosition(end);
+					Cell chanceCell = CardFactory.chooseCard(player);
+					if (chanceCell instanceof RailCard) {
+						log.info(" CARD IS RAIL");
+						RailCard rail = (RailCard) chanceCell;
+						try {
+							rail.effectOnPlayer(player);
+							buttons.put(ButtonsLabel.BUY, player.canBuy(rail));
+							messages = player.messages(rail);
+							if (rail.getOwner() != null) {
+								state.put("owner", (rail).getOwner().getColor());
+								state.put("owner_money", (rail).getOwner()
+										.getMoney());
+							}
+							if (rail.getOwner() == null) {
+								buttons.put(ButtonsLabel.AUCTION, true);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						buttons.put(ButtonsLabel.PAY, false);
+
+					} else if (chanceCell instanceof JailCard) {
+						if (player.getPosition() == CellPositions.JAIL) {
+							JailCard jailCard = (JailCard) CardFactory
+									.chooseCard(player);
+							jailCard.effectOnPlayer(player);
+							if (player.isInJail()) {
+								buttons.put(ButtonsLabel.PAY,
+										jailCard.canPayRansom(player));
+							} else {
+								buttons.put(ButtonsLabel.PAY, false);
+							}
+						}
+					} else {
+						chanceCell.effectOnPlayer(player);
+					}
+				} else if (cell instanceof CommunityChestCard) {
+					cell.effectOnPlayer(player);
+					messages = ((CommunityChestCard) cell).getMsg();
 				}
-			} else if (cell instanceof CommunityChestCard) {
-				cell.effectOnPlayer(player);
-				messages = ((CommunityChestCard) cell).getMsg();
 			}
+			buttons.putAll(ButtonsAction.buttonsAction(player));
+			state.put("buttons", buttons);
+			state.put("messages", messages);
+			state.put("player", player.getColor());
+			state.put("player_money", player.getMoney());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		buttons.putAll(ButtonsAction.buttonsAction(player));
-//		buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
-//		buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
-//		buttons.put(ButtonsLabel.BUILD, player.canBuild());
-//		buttons.put(ButtonsLabel.SELL, player.canSell());
-//		buttons.put(ButtonsLabel.DONE, true);
-//		if (player.isInJail()) {
-//			buttons.put(ButtonsLabel.ROLL, true);
-//		} else if (!player.isInJail()
-//				&& player.getPosition() == CellPositions.JAIL) {
-//			buttons.put(ButtonsLabel.ROLL, true);
-//		} else {
-//			buttons.put(ButtonsLabel.ROLL, player.doublePoints());
-//		}
-		state.put("buttons", buttons);
-		state.put("messages", messages);
-		state.put("player", player.getColor());
-		state.put("player_money", player.getMoney());
 		return state;
 	}
 }

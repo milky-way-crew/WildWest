@@ -76,7 +76,9 @@
 							<strong class="town-title">Tree of chance</strong>
 							<img src="resources/img/board/city/tree11.svg" width="170">
 							<hr>
-							<p>Old tree shows you the future way</p>
+							<p>Old tree shows you the future way.</p>
+							<p>Unless you're lucky you may move to jail</p>
+							<hr>
 							<div class="tip-controls">
 								<a href="javascript:void(0);" class="mortage btn btn-info">mortage</a>
 								<a href="javascript:void(0);" class="build btn btn-succes">build</a>
@@ -242,6 +244,7 @@
 							<hr>
 							<div class="tip-header">
 								<p>Mountains where you can find valuable items or become a victim of robbery</p>
+								<p>Try to win this competition</p>
 							</div>
 							<hr>
 							<div class="tip-controls">
@@ -1121,9 +1124,9 @@
 								<strong class="label label-money">$150</strong></p>
 							</div>
 							<hr>
-							<ul class="tip-content">
-								<p>Pay donation to God of War 
-								</ul>
+								<p>Pay donation to God of War </p>
+								<p>Paying it he can become your patron</p>
+								<hr>
 							<span class="nub"></span>
 						</span>
 						<div class="town-image">
@@ -1169,6 +1172,8 @@
 							<img src="resources/img/board/city/ruins.svg" width="170">
 							<hr>
 							<p>Ruins of a time machine, giving the chance to move</p>
+							<p>If you are lucky you will be able to take ownership of stonehenge star </p>
+							<hr>
 							<span class="nub"></span>
 						</span>
 						<div class="town-image">
