@@ -1,6 +1,10 @@
 /* >>>>> >>>>>>>> >>>>> */
 /* >>>>> @herbion >>>>> */
 /* >>>>> >>>>>>>> >>>>> */
+#chat-log form {
+  text-align: center;
+  margin-top: 5px;
+}
 body {
   background-image: url("../img/board/bg_wood.jpg");
 }

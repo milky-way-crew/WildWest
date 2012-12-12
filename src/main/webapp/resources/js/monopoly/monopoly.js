@@ -284,8 +284,13 @@ function() {
                     if (json.seconds_left) {
                         $('.lot-name+.badge').html(json.seconds_left + 's');
                     }
-                    if (json.game_state && json.game_state.buttons ) {
-                        ui.refreshButtons(json.game_state.buttons);
+                    if (json.game_state) {
+                        if (json.game_state.onwner) {
+                            BOARD.draw.updateMoney(json.game_state.onwner, json.game_state.onwner_money);
+                        }
+                        if (json.game_state.buttons) {
+                            ui.refreshButtons(json.game_state.buttons);
+                        }                        
                     }
                     if (json.invoker) {
                         $('#auction-tab .invoker').html(json.invoker);
@@ -426,12 +431,14 @@ function() {
         },
         animate: {
             money: function(who, money) {
-                chat.appendWithColor('>> {debug?} now <span class="label label-info color-player-' 
-                        + BOARD.colorToIndex(who) 
-                        +'">' + who.toLowerCase() + '</span>'
-                        + ' money is - ' + ui.makeLabel(money + '$', '', '#095'), '#08C');
-                console.log('Setting money to', money, 'player=', who);
-                BOARD.draw.updateMoney(who, money);
+            	if (money) {
+            		chat.appendWithColor('>> now <span class="label label-info color-player-' 
+            				+ BOARD.colorToIndex(who) 
+            				+'">' + who.toLowerCase() + '</span>'
+            				+ ' money is - ' + ui.makeLabel(money + '$', '', '#095'), '#08C');
+            		console.log('Setting money to', money, 'player=', who);
+            		BOARD.draw.updateMoney(who, money);
+            	}
             },
             move: function(who, d1, d2, was) {
                 log('Animating [move]');
@@ -866,12 +873,14 @@ function() {
                 BOARD.sellAll(player, cell);
             },
             updateMoney: function(who, money) {
-                $("#money-player-" + BOARD.colorToIndex(who))
-                    .fadeOut(300)
-                    .html(money + "$")
-                    .css({'display':'inline'})
-                    .fadeIn(300)
-                ;
+                if (money) {
+                    $("#money-player-" + BOARD.colorToIndex(who))
+                        .fadeOut(300)
+                        .html(money + "$")
+                        .css({'display':'inline'})
+                        .fadeIn(300)
+                    ;                    
+                }
             },
             toggleOutline: function(cell, mode) {
                 // change outline of img in cell & tip

@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	$.validator.addMethod("lettersdigits", function(value, element) {
+	  return this.optional(element) || /^[a-zA-Z0-9_]+$/i.test(value);
+	}, "Letters & digits only please"); 
+
+
+
 	$('input').hover(function() {
 		$(this).popover('show');
 	}, function() {
@@ -10,10 +16,12 @@ $(document).ready(function() {
 			login : {
 				required : true,
 				minlength : 6,
+				lettersdigits: true
 			},
 			nickname : {
 				required : true,
 				minlength : 4,
+				lettersdigits: true
 			},
 			email : {
 				required : true,
@@ -31,7 +39,7 @@ $(document).ready(function() {
 		messages : {
 			login : {
 				required : "You forgot to enter your login here.",
-				minlength : "Login must be longer than 6 symbols."
+				minlength : "Login must be longer than 6 symbols.",
 			},
 			nickname : {
 				required : "You forgot to enter your nickname here.",
