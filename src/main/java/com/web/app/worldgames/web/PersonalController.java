@@ -25,7 +25,7 @@ public class PersonalController {
 	 private final String monopoly = "monopoly";
 	 private final String chess = "chess";
 	 private final String gibbet = "gibbet";
-	 private final String draw = "draw&guess";
+	 private final String draw = "drow&guess";
 	
 	@Autowired
 	private IStatisticsServiceManager userStatService;
@@ -90,18 +90,16 @@ public class PersonalController {
 			e.printStackTrace();
 		    }
 		json.put("monoG", ""+userStatService.getUserAllGames(user.getId(), monopoly));
+		log.info("JSON "+json.get("monoG"));
 		json.put("monoW", ""+userStatService.getUserAllWinGames(user.getId(), monopoly));
 		json.put("monoP", ""+userStatService.getUserPoints(user.getId(), monopoly));
+		json.put("monoM", ""+userStatService.getUserMoneyAmount(user.getId(), monopoly));
 		json.put("chess", ""+userStatService.getUserAllGames(user.getId(), chess));
 		json.put("chessW", ""+userStatService.getUserAllWinGames(user.getId(), chess));
-		json.put("shessP", ""+userStatService.getUserPoints(user.getId(), chess));
 		json.put("gibbet", ""+userStatService.getUserAllGames(user.getId(), gibbet));
 		json.put("gibbetW", ""+userStatService.getUserAllWinGames(user.getId(), gibbet));
-		json.put("gibbetP", ""+userStatService.getUserPoints(user.getId(), gibbet));
 		json.put("draw", ""+userStatService.getUserAllGames(user.getId(), draw));
 		json.put("drawW", ""+userStatService.getUserAllWinGames(user.getId(), draw));
-		json.put("drawP", ""+userStatService.getUserPoints(user.getId(), draw));
-		log.info("JSON"+json.get("monoG"));
 		return json;
 	 }
 }

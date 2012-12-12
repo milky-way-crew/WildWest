@@ -84,12 +84,12 @@
 				<div  id="stat">
 				<label id="labelStat">My statistic</label>
 		<table  class="table3" border=2 cellspacing=3 cellpadding=3 align="center" id="tableStat">
-						<tr>
+						<!-- <tr>
 							<td width=100><b>Name</b></td>
 							<td width=150><b>Game</b></td>
 							<td width=150><b>GameWin</b></td>
 							<td width=150><b>Point</b></td>
-						</tr>
+						</tr> -->
 						<%-- <tr>
 							<td width=100><b>Monopoly</b></td>
 							<td width=150><b><c:out value="${user.login}" /></b></td>

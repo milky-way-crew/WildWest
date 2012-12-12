@@ -137,50 +137,58 @@ function table(){
 				"monoG" : "",
 				"monoW" : "",
 				"monoP" : "",
+				"monoM" : "",
 				"chess" : "",
 				"chessW" : "",
-				"chessP" : "",
 				"gibbet" : "",
 				"gibbetW" : "",
-				"gibbetP" : "",
 				"draw" : "",
-				"drawW" : "",
-				"drawP" : "",
+				"drawW" : ""
 			}),
 		},
 		error : function() {
 			alert("table not create");
 		},
 		success : function(json) {
-			$("#tableStat").append(
+			$("#tableStat").html(
+					'<tr>'+
+					'<td width=100><b>Name</b></td>'+
+					'<td width=150><b>Game</b></td>'+
+					'<td width=150><b>GameWin</b></td>'+
+					'<td width=150><b>Point</b></td>'+
+					'<td width=150><b>Money</b></td>'+
+				'</tr>'+
 					'<tr>'+
 						'<td width=100><b>Monopoly</b></td>'+
 						'<td width=150><b>'+json.monoG+'</b></td>'+
 						'<td width=150><b>'+json.monoW+'</b></td>'+
 						'<td width=150><b>'+json.monoP+'</b></td>'+
+						'<td width=150><b>'+json.monoM+'</b></td>'+
 					'</tr>'+
 					'<tr>'+
 						'<td width=100><b>Chess</b></td>'+
 						'<td width=150><b>'+json.chess+'</b></td>'+
 						'<td width=150><b>'+json.chessW+'</b></td>'+
-						'<td width=150><b>'+json.chessP+'</b></td>'+
+						'<td width=150><b></b></td>'+
+						'<td width=150><b></b></td>'+
 					'</tr>'+
 					'<tr>'+
 						'<td width=100><b>Gibbet</b></td>'+
 						'<td width=150><b>'+json.gibbet+'</b></td>'+
 						'<td width=150><b>'+json.gibbetW+'</b></td>'+
-						'<td width=150><b>'+json.gibbetP+'</b></td>'+
+						'<td width=150><b></b></td>'+
+						'<td width=150><b></b></td>'+
 					'</tr>'+
 					'<tr>'+
 						'<td width=100><b>Draw</b></td>'+
 						'<td width=150><b>'+json.draw+'</b></td>'+
 						'<td width=150><b>'+json.drawW+'</b></td>'+
-						'<td width=150><b>'+json.drawP+'</b></td>'+
+						'<td width=150><b></b></td>'+
+						'<td width=150><b></b></td>'+
 					'</tr>');
 		}
 	});
 }
-
 
 document.getElementById('passwordBtn').style.visibility = "hidden";
 document.getElementById('number').disabled = true;
@@ -195,5 +203,5 @@ document.getElementById('loginBtn').onclick = editLogin;
 document.getElementById('nicknameBtn').onclick = editNickname;
 document.getElementById('emailBtn').onclick = editEmail;
 document.getElementById('passBtn').onclick = editPass;
-document.getElementById('edit').onclick = table;
-//windows.onunload = table();
+document.getElementById('edit').onclick = showEditIcon;
+window.onload = table;

@@ -24,6 +24,7 @@ import com.web.app.worldgames.gibbet.GibbetGameService;
 import com.web.app.worldgames.gibbet.GibbetPlayer;
 import com.web.app.worldgames.gibbet.ReadWord;
 import com.web.app.worldgames.service.ChatRoomServiceManager;
+import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 
 @Controller
 public class MultiGibbetController {
@@ -32,6 +33,10 @@ public class MultiGibbetController {
     private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
 
+    @Autowired
+	private IStatisticsServiceManager userStatService;
+    
+    private final String gibbetS = "gibbet";
     @Autowired
     private IUserDao userDao;
 
@@ -309,21 +314,27 @@ public class MultiGibbetController {
 	    if (gibbetGame.getClient().getNick().equals("")
 		    || gibbetGame.getClient() == null) {
 		request.getSession().removeAttribute("idGibbetGame");
+		userStatService.incrementUserAllGames(gibbetGame.getHost().getId(), gibbetS );
+		userStatService.incrementUserAllWinGames(gibbetGame.getHost().getId(), gibbetS );
 		gibbetService.removeGameById(id);
 		return "redirect:/goHome";
 	    }
 	    gibbetGame.getHost().setNick("");
 	    gibbetGame.getClient().setWin("win");
+	    userStatService.incrementUserAllGames(gibbetGame.getHost().getId(), gibbetS );
 	    return "redirect:/goHome";
 	}
 	if (gibbetGame.getClient().getId() == user.getId()) {
 	    if (gibbetGame.getHost().getNick().equals("")) {
 		request.getSession().removeAttribute("idGibbetGame");
+		userStatService.incrementUserAllGames(gibbetGame.getClient().getId(), gibbetS );
+		userStatService.incrementUserAllWinGames(gibbetGame.getClient().getId(), gibbetS );
 		gibbetService.removeGameById(id);
 		return "redirect:/goHome";
 	    }
 	    gibbetGame.getClient().setNick("");
 	    gibbetGame.getHost().setWin("win");
+	    userStatService.incrementUserAllGames(gibbetGame.getClient().getId(), gibbetS );
 	    return "redirect:/goHome";
 	}
 
