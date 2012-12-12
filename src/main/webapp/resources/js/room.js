@@ -234,7 +234,7 @@ function getClientPanel(json) {
 	if (json.creatorRedirect && json.myRedirect) {
 		$("#ready").attr('disabled', true);
 		$("#connect").attr('disabled', false);
-		setTimeout("window.location='./connect'", 1500);
+		setTimeout("window.location='./connect'", 7000);
 	}
 }
 
@@ -302,6 +302,7 @@ function setReadyStatus() {
 		success : function() {
 			$("#list").html("");
 			$("#menu").html("");
+			updateList();
 		}
 	});
 }
@@ -329,6 +330,7 @@ function createRoom() {
 						$("#listTitle").html("");
 						$("#menu").html("");
 						$("#list").html("");
+						updateList();
 					}
 				});
 			}
@@ -353,6 +355,7 @@ function exitFromRoom() {
 			$("#list").html("");
 			$("#chatOption").html("");
 			$("#invMenu").html("");
+			updateList();
 		}
 	});
 }
@@ -376,8 +379,11 @@ function joinToRoom(id) {
 			} else {
 				alert("Room is full");
 			}
+			updateList();
 		}
 	});
 };
 
-setInterval(updateList, 2500);
+window.onunload = updateList();
+//window.beforeunload = exitFromRoom();
+
