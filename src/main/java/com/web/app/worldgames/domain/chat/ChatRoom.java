@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 public class ChatRoom {
     private static final Logger log = Logger.getLogger(ChatRoom.class);
+    private static final int ID_WORLD_ROOM = 0;
     static final String MONOPOLY = "monopoly";
     static final String CHESS = "chess";
     static final String DRAW = "guess";
@@ -49,6 +50,7 @@ public class ChatRoom {
 	    if (id == chatParticipants.get(i).getParticipantId()) {
 		log.debug("User " + chatParticipants.get(i).getNickname()
 			+ " deleted from room " + this.roomName);
+		chatParticipants.get(i).setId_room(ID_WORLD_ROOM);
 		chatParticipants.remove(i);
 		break;
 	    }
@@ -73,6 +75,15 @@ public class ChatRoom {
 	return participant;
     }
 
+    public void broadcastInRoom(ChatParticipant participant, String data) {
+	for (ChatParticipant chatParticipant : chatParticipants) {
+	    if (chatParticipant.getParticipantId() != participant
+		    .getParticipantId()) {
+		chatParticipant.addMessage(data);
+	    }
+	}
+    }
+    
     public List<ChatParticipant> getChatParticipants() {
 	return chatParticipants;
     }
