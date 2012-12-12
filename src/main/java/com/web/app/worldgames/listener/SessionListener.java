@@ -6,7 +6,16 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
+
+import com.web.app.worldgames.service.ChatRoomServiceManager;
+import com.web.app.worldgames.web.ChatRoomsController;
+
 public class SessionListener implements HttpSessionListener {
+
+    private static ChatRoomServiceManager manager = ChatRoomsController
+	    .getManager();
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {
@@ -18,9 +27,9 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent event) {
 	HttpSession session = event.getSession();
+	manager.onSessionClose(session.getId());
 	ServletContext context = session.getServletContext();
 	context.removeAttribute(session.getId());
-	
     }
 
     public static HttpSession getSession(HttpServletRequest request,

@@ -78,7 +78,26 @@ public class ChatRoomServiceManager {
 	}
 	return null;
     }
-    
+
+    public ChatParticipant getChatParticipantBySessionID(String sessionID) {
+	for (ChatRoom room : getChatRooms()) {
+	    for (ChatParticipant participant : room.getChatParticipants()) {
+		if (participant.getSessionID().equals(sessionID)) {
+		    return participant;
+		}
+	    }
+	}
+	return null;
+    }
+
+    public void onSessionClose(String sessionID) {
+	ChatParticipant participant = getChatParticipantBySessionID(sessionID);
+	String disconnectMessage = "[System] User "+participant.getNickname() + " was disconnected!";
+	getChatRoomById(participant.getId_room()).broadcastInRoom(participant, disconnectMessage);
+	getChatRoomById(participant.getId_room()).deleteChatParticipantById(
+		participant.getParticipantId());
+    }
+
     public int getIdWorldRoom() {
 	return ID_WORLD_ROOM;
     }
