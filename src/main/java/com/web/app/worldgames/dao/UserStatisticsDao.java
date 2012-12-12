@@ -43,11 +43,11 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	
 	@Override
 	/*** Get count of user's games any type of game ***/
-	public int getUserAllGames(int userId, String typeGame) {
+	public int getUserAllGames(int userId, String gameType) {
 		int allGames = 0;
-		final String query = "SELECT userAllGames FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		final String query = "SELECT userAllGames FROM users, userStatistics WHERE userId = ? AND gameType=? AND userId = idUser";
 		allGames = jdbcTemplate.queryForInt(query, new Object[] { userId,
-				typeGame });
+				gameType });
 		return allGames;
 	}
 
@@ -62,10 +62,10 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 
 	@Override
 	/*** Get count of user's win games any type of game ***/
-	public int getUserAllWinGames(int userId, String typeGame) {
+	public int getUserAllWinGames(int userId, String gameType) {
 		int allWinGames = 0;
-		final String query = "SELECT userAllWinGames FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
-		allWinGames = jdbcTemplate.queryForInt(query, new Object[] { userId });
+		final String query = "SELECT userAllWinGames FROM users, userStatistics WHERE userId = ? AND gameType=? AND userId = idUser";
+		allWinGames = jdbcTemplate.queryForInt(query, new Object[] { userId, gameType });
 		return allWinGames;
 	}
 
@@ -80,11 +80,11 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 
 	@Override
 	/*** Get count of user's points any type of game ***/
-	public int getUserPoints(int userId, String typeGame) {
+	public int getUserPoints(int userId, String gameType) {
 		int userPoints = 0;
-		final String query = "SELECT userPoints FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		final String query = "SELECT userPoints FROM users, userStatistics WHERE userId = ? AND gameType=? AND userId = idUser";
 		userPoints = jdbcTemplate.queryForInt(query, new Object[] { userId,
-				typeGame });
+				gameType});
 		return userPoints;
 	}
 
@@ -99,11 +99,11 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 
 	@Override
 	/*** Get count of money any type of game ***/
-	public int getUserMoneyAmount(int userId, String typeGame) {
+	public int getUserMoneyAmount(int userId, String gameType) {
 		int moneyAmount = 0;
-		final String query = "SELECT userMoneyAmount FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		final String query = "SELECT userMoneyAmount FROM users, userStatistics WHERE userId = ? AND gameType=? AND userId = idUser";
 		moneyAmount = jdbcTemplate.queryForInt(query, new Object[] { userId,
-				typeGame });
+				gameType});
 		return moneyAmount;
 	}
 
