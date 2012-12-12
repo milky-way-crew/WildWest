@@ -19,6 +19,7 @@ public class ChatRoom {
     private int size;
     private String type;
     private int maxSize;
+    private boolean roomState;
 
     public ChatRoom(String roomName, int id, String type) {
 	this.roomId = id;
@@ -139,5 +140,13 @@ public class ChatRoom {
 
     public void setMaxSize(int maxSize) {
 	this.maxSize = maxSize;
+    }
+
+    public boolean isRoomState() {
+	return roomState;
+    }
+
+    public void setRoomState(boolean roomState) {
+	this.roomState = roomState;
     }
 }

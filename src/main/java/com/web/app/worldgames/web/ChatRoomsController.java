@@ -24,7 +24,6 @@ public class ChatRoomsController {
 	User user = (User) request.getSession().getAttribute("user");
 	ChatParticipant chatParticipant = new ChatParticipant(user);
 	if (!manager.isParticipantInAnyRoom(chatParticipant)) {
-	    // manager.generateTextColorForParticipant(chatParticipant);
 	    setChatParticipantToRequest(request, chatParticipant);
 	    log.debug("Put ChatParticipant in session and in world particicipant list: "
 		    + chatParticipant.getNickname());
@@ -36,6 +35,7 @@ public class ChatRoomsController {
 	    log.debug("ChatParticipant get from session "
 		    + chatParticipant.getNickname());
 	}
+	chatParticipant.setSessionID(request.getSession().getId());
 	ModelAndView modelAndView = new ModelAndView();
 	modelAndView.setViewName("chatRooms");
 	return modelAndView;

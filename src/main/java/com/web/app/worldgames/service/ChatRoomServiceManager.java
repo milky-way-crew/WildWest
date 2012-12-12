@@ -1,9 +1,7 @@
 package com.web.app.worldgames.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -70,14 +68,6 @@ public class ChatRoomServiceManager {
 	}
     }
 
-    public void generateTextColorForParticipant(ChatParticipant participant) {
- 	List<String> colorList = new ArrayList<String>(Arrays.asList("red",
- 		"green", "blue", "yellow", "violet", "brown", "black", "azure"));
- 	Random rand = new Random();
- 	participant
- 		.setTextColor(colorList.get(rand.nextInt(colorList.size() - 1)));
-     }
-    
     public ChatParticipant getChatParticipantById(int id) {
 	for (ChatRoom room : getChatRooms()) {
 	    for (ChatParticipant participant : room.getChatParticipants()) {
