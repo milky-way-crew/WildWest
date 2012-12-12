@@ -36,20 +36,14 @@
 	<div class="container" id="main">
 		<div class="row-fluid">
 			<div class="span3 well">
-				<h1>Chat</h1>
+				<h1 id="timer">Time: 0</h1>
+				<!-- <h1>Chat</h1> -->
 				<ul id="chat-history">
 					<li>No messages for now :(</li>
 				</ul>
 			</div>
 			<div class="span7" id="game-container">
 				<div id="wrapper">
-					<div style="float: left; width: 40%">
-						<h1 id="timer">Time: 0</h1>
-					</div>
-					<div style="float: right; width: 60%;">
-						<h1 id="title">Draw &amp; Guess</h1>
-					</div>
-
 					<section id="game">
 						<canvas id="drawing-pad" width="500" height="400"></canvas>
 						<div id="drawing-pallete">
@@ -72,23 +66,12 @@
 							<!-- color-picker -->
 							<a href="#" class="btn btn-small btn-info " id="cp"
 								data-color-format="hex" data-color="rgb(255, 255, 255)">Color</a>
-							<!-- 
-							
-							<div class="input-append color" data-color="rgb(255, 146, 180)"
-								data-color-format="hex" id="cp">
-								<input class="span2" value="rgb(60,115,27)" readonly="readonly"
-									type="text"> <span class="add-on">
-									<i style="background-color: rgb(60, 115, 27);"></i>
-									</span>
-							</div>
-							 -->
-
 						</div>
 
 						<div id="chat-header">
 							<form class="form-inline">
 								<h3>
-									Chat or Guess: <input type="text" id="chat-input"
+									<input type="text" id="chat-input"
 										placeholder="I guess it..">
 									<button class="btn btn-primary" type="button" id="send">
 										<i class="icon-envelope icon-white"></i> Send
@@ -103,9 +86,10 @@
 
 
 			<div class="span3 well">
-				<h2>Anybody there?</h2>
+				<h1 id="title">Draw &amp; Guess</h1>
+				<h4>Statistics</h4>
 				<ul id="stats">
-					<h3>Player - Total wins</h3>
+					<!-- <h3>Player - Total wins</h3> -->
 				</ul>
 			</div>
 		</div>

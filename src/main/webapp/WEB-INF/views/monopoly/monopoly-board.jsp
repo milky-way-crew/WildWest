@@ -1256,7 +1256,7 @@
 	});
 	$('#myTab [href=#chat-tab]').tab('show');
 	if (!window.WebSocket) {
-		alert('Sorry buddy, you cannot player this game without browser, taht supports web-sockets');
+		alert('Sorry buddy, you cannot player this game without browser, that supports web-sockets');
 	}
 </script>
 </body>

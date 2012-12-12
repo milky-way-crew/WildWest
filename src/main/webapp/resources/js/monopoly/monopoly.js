@@ -426,7 +426,7 @@ function() {
         },
         animate: {
             money: function(who, money) {
-                chat.appendWithColor('>> {debug?} now <span class="label label-info color-player-' 
+                chat.appendWithColor('>> now <span class="label label-info color-player-' 
                         + BOARD.colorToIndex(who) 
                         +'">' + who.toLowerCase() + '</span>'
                         + ' money is - ' + ui.makeLabel(money + '$', '', '#095'), '#08C');
