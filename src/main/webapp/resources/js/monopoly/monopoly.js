@@ -284,8 +284,13 @@ function() {
                     if (json.seconds_left) {
                         $('.lot-name+.badge').html(json.seconds_left + 's');
                     }
-                    if (json.game_state && json.game_state.buttons ) {
-                        ui.refreshButtons(json.game_state.buttons);
+                    if (json.game_state) {
+                        if (json.game_state.onwner) {
+                            BOARD.draw.updateMoney(json.game_state.onwner, json.game_state.onwner_money);
+                        }
+                        if (json.game_state.buttons) {
+                            ui.refreshButtons(json.game_state.buttons);
+                        }                        
                     }
                     if (json.invoker) {
                         $('#auction-tab .invoker').html(json.invoker);
