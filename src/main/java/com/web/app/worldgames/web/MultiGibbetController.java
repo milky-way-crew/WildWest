@@ -284,7 +284,6 @@ public class MultiGibbetController {
 		gibbetGame.getHost().setWin("lose");
 		gibbetGame.getClient().setWin("win");
 	    }
-	    log.info("Host " + gibbetGame.getClient().getWin());
 	    return gibbetGame.getHost().getWin();
 	}
 	if (gibbetGame.getClient().getId() == user.getId()) {
@@ -292,7 +291,6 @@ public class MultiGibbetController {
 		gibbetGame.getHost().setWin("win");
 		gibbetGame.getClient().setWin("lose");
 	    }
-	    log.info("Klient " + gibbetGame.getClient().getWin());
 	    return gibbetGame.getClient().getWin();
 	}
 	return "";
@@ -312,26 +310,24 @@ public class MultiGibbetController {
 		    || gibbetGame.getClient() == null) {
 		request.getSession().removeAttribute("idGibbetGame");
 		gibbetService.removeGameById(id);
-		return "redirect:/home";
+		return "redirect:/goHome";
 	    }
 	    gibbetGame.getHost().setNick("");
 	    gibbetGame.getClient().setWin("win");
-	    return "redirect:/home";
+	    return "redirect:/goHome";
 	}
 	if (gibbetGame.getClient().getId() == user.getId()) {
 	    if (gibbetGame.getHost().getNick().equals("")) {
 		request.getSession().removeAttribute("idGibbetGame");
 		gibbetService.removeGameById(id);
-		return "redirect:/home";
+		return "redirect:/goHome";
 	    }
 	    gibbetGame.getClient().setNick("");
 	    gibbetGame.getHost().setWin("win");
-	    return "redirect:/home";
+	    return "redirect:/goHome";
 	}
-	// request.getSession().removeAttribute("idGibbetGame");
-	// gibbetService.removeGameById(id);
 
-	return "redirect:/home";
+	return "redirect:/goHome";
     }
 
 }

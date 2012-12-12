@@ -7,7 +7,7 @@ function showEditInfo(){
 	$('#editInf').modal();
 }
 function nextImage() {
-	if(image>=65){
+	if(image>=45){
 		image=1;
 	}else{
 		image=image+1;
@@ -15,19 +15,19 @@ function nextImage() {
 	     img = new Image();
 	     img.src = "resources/img/avatar/emo"+image+".gif";
 	     document.getElementById('image').src = img.src;
-	     document.getElementById('number').value=image+"/65";
+	     document.getElementById('number').value=image+"/45";
 }
 
 function previousImage() {
 	if(image<=1){
-		image=65;
+		image=45;
 	}else{
 		image=image-1;
 	}
     img = new Image();
     img.src = "resources/img/avatar/emo"+image+".gif";
     document.getElementById('image').src = img.src;
-    document.getElementById('number').value=image+"/65";
+    document.getElementById('number').value=image+"/45";
 }
 
 function setAvatar(){
@@ -127,6 +127,59 @@ function editPass() {
 
 
 
+function table(){
+	$.ajax({
+		url : "table",
+		type : "POST",
+		data : {
+			type : "create",
+			data : JSON.stringify({
+				"monoG" : "",
+				"monoW" : "",
+				"monoP" : "",
+				"chess" : "",
+				"chessW" : "",
+				"chessP" : "",
+				"gibbet" : "",
+				"gibbetW" : "",
+				"gibbetP" : "",
+				"draw" : "",
+				"drawW" : "",
+				"drawP" : "",
+			}),
+		},
+		error : function() {
+			alert("table not create");
+		},
+		success : function(json) {
+			$("#tableStat").append(
+					'<tr>'+
+						'<td width=100><b>Monopoly</b></td>'+
+						'<td width=150><b>'+json.monoG+'</b></td>'+
+						'<td width=150><b>'+json.monoW+'</b></td>'+
+						'<td width=150><b>'+json.monoP+'</b></td>'+
+					'</tr>'+
+					'<tr>'+
+						'<td width=100><b>Chess</b></td>'+
+						'<td width=150><b>'+json.chess+'</b></td>'+
+						'<td width=150><b>'+json.chessW+'</b></td>'+
+						'<td width=150><b>'+json.chessP+'</b></td>'+
+					'</tr>'+
+					'<tr>'+
+						'<td width=100><b>Gibbet</b></td>'+
+						'<td width=150><b>'+json.gibbet+'</b></td>'+
+						'<td width=150><b>'+json.gibbetW+'</b></td>'+
+						'<td width=150><b>'+json.gibbetP+'</b></td>'+
+					'</tr>'+
+					'<tr>'+
+						'<td width=100><b>Draw</b></td>'+
+						'<td width=150><b>'+json.draw+'</b></td>'+
+						'<td width=150><b>'+json.drawW+'</b></td>'+
+						'<td width=150><b>'+json.drawP+'</b></td>'+
+					'</tr>');
+		}
+	});
+}
 
 
 document.getElementById('passwordBtn').style.visibility = "hidden";
@@ -142,4 +195,5 @@ document.getElementById('loginBtn').onclick = editLogin;
 document.getElementById('nicknameBtn').onclick = editNickname;
 document.getElementById('emailBtn').onclick = editEmail;
 document.getElementById('passBtn').onclick = editPass;
-//document.getElementById('edit').onclick = showEditIcon;
+document.getElementById('edit').onclick = table;
+//windows.onunload = table();
