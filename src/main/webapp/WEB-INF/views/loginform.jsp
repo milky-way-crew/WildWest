@@ -41,7 +41,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Milky-way games</a>
+          <a class="brand" href="/">Milky-way games</a>
           <div class="nav-collapse">
             <ul class="nav">
               <!-- <li class="active"><a href="#">Home</a></li> -->
@@ -136,7 +136,7 @@
         <div class="row" id="call-to-action">
           
           <div class="span9">
-              <h2>Our games so sweeeeet!</h2>
+              <!-- <h2>Our games so sweeeeet!</h2> -->
           </div><!-- end text -->
 
           <a href="register" class="btn btn-large btn-success offset1">Wow, i wanna try!</a>

@@ -25,13 +25,29 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	/****************************/
 	/** Statistics information **/
 	/****************************/
+	
+	public void createStatisticsField(int userId){
+		final String queryMonopoly = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'monopoly')";
+		jdbcTemplate.update(queryMonopoly, new Object[]{userId});
+		log.info("Add 'mopoly' row in statistics for user["+userId+"");
+		final String queryChess = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'chess')";
+		jdbcTemplate.update(queryChess, new Object[]{userId});
+		log.info("Add 'chess' row in statistics for user["+userId+"");
+		final String queryGibbet = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'gibbet')";
+		jdbcTemplate.update(queryGibbet, new Object[]{userId});
+		log.info("Add 'gibbet' row in statistics for user["+userId+"");
+		final String queryDrowGuess = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'drow&guess')";
+		jdbcTemplate.update(queryDrowGuess, new Object[]{userId});
+		log.info("Add 'drow&guess' row in statistics for user["+userId+"");
+	}
+	
 	@Override
 	/*** Get count of user's games any type of game ***/
-	public int getUserAllGames(int userId, String typeGame) {
+	public int getUserAllGames(int userId, String gameType) {
 		int allGames = 0;
-		final String query = "SELECT userAllGames FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		final String query = "SELECT userAllGames FROM users, userStatistics WHERE userId = ? AND gameType=? AND userId = idUser";
 		allGames = jdbcTemplate.queryForInt(query, new Object[] { userId,
-				typeGame });
+				gameType });
 		return allGames;
 	}
 
@@ -46,10 +62,10 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 
 	@Override
 	/*** Get count of user's win games any type of game ***/
-	public int getUserAllWinGames(int userId, String typeGame) {
+	public int getUserAllWinGames(int userId, String gameType) {
 		int allWinGames = 0;
-		final String query = "SELECT userAllWinGames FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
-		allWinGames = jdbcTemplate.queryForInt(query, new Object[] { userId });
+		final String query = "SELECT userAllWinGames FROM users, userStatistics WHERE userId = ? AND gameType=? AND userId = idUser";
+		allWinGames = jdbcTemplate.queryForInt(query, new Object[] { userId, gameType });
 		return allWinGames;
 	}
 
@@ -64,11 +80,11 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 
 	@Override
 	/*** Get count of user's points any type of game ***/
-	public int getUserPoints(int userId, String typeGame) {
+	public int getUserPoints(int userId, String gameType) {
 		int userPoints = 0;
-		final String query = "SELECT userPoints FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		final String query = "SELECT userPoints FROM users, userStatistics WHERE userId = ? AND gameType=? AND userId = idUser";
 		userPoints = jdbcTemplate.queryForInt(query, new Object[] { userId,
-				typeGame });
+				gameType});
 		return userPoints;
 	}
 
@@ -83,11 +99,11 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 
 	@Override
 	/*** Get count of money any type of game ***/
-	public int getUserMoneyAmount(int userId, String typeGame) {
+	public int getUserMoneyAmount(int userId, String gameType) {
 		int moneyAmount = 0;
-		final String query = "SELECT userMoneyAmount FROM users, userStatistics WHERE userId = ? AND typeGame=? AND userId = idUser";
+		final String query = "SELECT userMoneyAmount FROM users, userStatistics WHERE userId = ? AND gameType=? AND userId = idUser";
 		moneyAmount = jdbcTemplate.queryForInt(query, new Object[] { userId,
-				typeGame });
+				gameType});
 		return moneyAmount;
 	}
 

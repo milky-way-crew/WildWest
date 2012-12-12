@@ -29,7 +29,7 @@ $(function() {
 			}
 		},
 		update: function() {
-			timer.config.timerElement.innerHTML = 'Time: ' + timer.config.secondsLeft + 's';
+			timer.config.timerElement.innerHTML = 'Time left: ' + timer.config.secondsLeft + 's';
 		},
 		start: function(secondsLeft) {
 			timer.config.isStopped = false;

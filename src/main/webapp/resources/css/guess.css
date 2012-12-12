@@ -1,12 +1,16 @@
-body {
-    background: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/3171/3171465.png);
-    /*background: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/3171/3171469.png);*/
+@font-face {
+  font-family: 'Cabin Sketch';
+  font-style: normal;
+  font-weight: 700;
+  src: local('CabinSketch Bold'), local('CabinSketch-Bold'), url('../font/sketch.woff') format('woff');
 }
 .span3.well {
-	margin-top: 10px;
 	box-shadow: 0px 0px 5px black;
+	font-family: 'Cabin Sketch', arial, serif;
 }
-
+#timer, #title {
+	text-align: center;
+}
 #main {
 	width: 1200px;
 }
@@ -16,12 +20,6 @@ body {
 	font-family: "Arial";
 }
 
-@font-face {
-  font-family: 'Cabin Sketch';
-  font-style: normal;
-  font-weight: 700;
-  src: local('CabinSketch Bold'), local('CabinSketch-Bold'), url('../font/sketch.woff') format('woff');
-}
 
 #game-container {
     width: 584px;
@@ -33,11 +31,24 @@ body {
 }
 
 #chat-header {
+	width: 520px; 
+	margin: 0 auto; 
 	text-align : center;
 }
+	#chat-header h3 {
+		 background: rgba(255,255,255,0.5); 
+		 border: 1px dashed; 
+		 border-radius: 10px; 
+	}
+	#chat-header input {
+		width: 400px
+	}
 body {
-	background: #ccd6e1;
-	font-family: 'Cabin Sketch', arial, serif;
+	/*background: #ccd6e1;*/
+    /*background: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/3171/3171465.png);*/
+    /*background: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/3171/3171469.png);*/
+    background: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/3177/3177297.png);
+    /*background: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/3177/3177300.png);*/
 }
 
 #game {
@@ -64,6 +75,11 @@ body {
 
 #drawing-pallete {
 	font-size: 20px;
+	background: rgba(222, 222, 222, 0.7); 
+	width: 510px; 
+	margin: 0 auto; 
+	padding: 3px; 
+	border: 1px dashed; 
 }
 	#drawing-pallete button{
 		font-size: 1.em;
@@ -90,3 +106,4 @@ body {
 	font-family: 'Neucha', Helvetica;
 	font-size: 1.4em;	
 }
+

@@ -15,6 +15,12 @@ public class StatisticsServiceManager implements IStatisticsServiceManager {
 	public void setStatisticsDao(UserStatisticsDao statisticsDao) {
 		this.statisticsDao = statisticsDao;
 	}
+	
+	
+	
+	public void createStatisticsField(int userId){
+		statisticsDao.createStatisticsField(userId);
+	}
 
 	@Override
 	public boolean updateStatistics(int userId, UserStatistics stat) {
