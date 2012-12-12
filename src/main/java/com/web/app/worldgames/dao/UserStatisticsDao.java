@@ -25,6 +25,22 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	/****************************/
 	/** Statistics information **/
 	/****************************/
+	
+	public void createStatisticsField(int userId){
+		final String queryMonopoly = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'monopoly')";
+		jdbcTemplate.update(queryMonopoly, new Object[]{userId});
+		log.info("Add 'mopoly' row in statistics for user["+userId+"");
+		final String queryChess = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'chess')";
+		jdbcTemplate.update(queryChess, new Object[]{userId});
+		log.info("Add 'chess' row in statistics for user["+userId+"");
+		final String queryGibbet = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'gibbet')";
+		jdbcTemplate.update(queryGibbet, new Object[]{userId});
+		log.info("Add 'gibbet' row in statistics for user["+userId+"");
+		final String queryDrowGuess = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'drow&guess')";
+		jdbcTemplate.update(queryDrowGuess, new Object[]{userId});
+		log.info("Add 'drow&guess' row in statistics for user["+userId+"");
+	}
+	
 	@Override
 	/*** Get count of user's games any type of game ***/
 	public int getUserAllGames(int userId, String typeGame) {

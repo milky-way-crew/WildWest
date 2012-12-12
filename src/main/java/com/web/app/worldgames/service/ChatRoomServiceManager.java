@@ -1,9 +1,7 @@
 package com.web.app.worldgames.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -32,7 +30,7 @@ public class ChatRoomServiceManager {
 
     public void addChatRoom(String roomName, int id, String type) {
 	chatRooms.add(new ChatRoom(roomName, id, type));
-	log.debug("ChatRoom " + roomName + " added to room list");
+	log.trace("ChatRoom " + roomName + " added to room list");
     }
 
     public ChatRoom getChatRoomById(int id) {
@@ -47,7 +45,7 @@ public class ChatRoomServiceManager {
     public void deleteRoomById(int id) {
 	for (int i = 0; i < chatRooms.size(); i++) {
 	    if (id == chatRooms.get(i).getRoomId()) {
-		log.debug("Room " + chatRooms.get(i).getRoomName() + " removed");
+		log.trace("Room " + chatRooms.get(i).getRoomName() + " removed");
 		chatRooms.remove(i);
 		break;
 	    }
@@ -67,18 +65,39 @@ public class ChatRoomServiceManager {
     public void calculateRoomsSize() {
 	for (ChatRoom room : chatRooms) {
 	    room.setSize(room.getChatParticipants().size());
-	    log.debug(room.getRoomName() + " Size = " + room.getSize());
 	}
     }
 
-    public void generateTextColorForParticipant(ChatParticipant participant) {
- 	List<String> colorList = new ArrayList<String>(Arrays.asList("red",
- 		"green", "blue", "yellow", "violet", "brown", "black", "azure"));
- 	Random rand = new Random();
- 	participant
- 		.setTextColor(colorList.get(rand.nextInt(colorList.size() - 1)));
-     }
-    
+    public ChatParticipant getChatParticipantById(int id) {
+	for (ChatRoom room : getChatRooms()) {
+	    for (ChatParticipant participant : room.getChatParticipants()) {
+		if (participant.getParticipantId() == id) {
+		    return participant;
+		}
+	    }
+	}
+	return null;
+    }
+
+    public ChatParticipant getChatParticipantBySessionID(String sessionID) {
+	for (ChatRoom room : getChatRooms()) {
+	    for (ChatParticipant participant : room.getChatParticipants()) {
+		if (participant.getSessionID().equals(sessionID)) {
+		    return participant;
+		}
+	    }
+	}
+	return null;
+    }
+
+    public void onSessionClose(String sessionID) {
+	ChatParticipant participant = getChatParticipantBySessionID(sessionID);
+	String disconnectMessage = "[System] User "+participant.getNickname() + " was disconnected!";
+	getChatRoomById(participant.getId_room()).broadcastInRoom(participant, disconnectMessage);
+	getChatRoomById(participant.getId_room()).deleteChatParticipantById(
+		participant.getParticipantId());
+    }
+
     public int getIdWorldRoom() {
 	return ID_WORLD_ROOM;
     }

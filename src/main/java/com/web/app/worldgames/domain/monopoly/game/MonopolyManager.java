@@ -25,6 +25,7 @@ import com.web.app.worldgames.domain.monopoly.card.JailCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
+
 //@Service
 
 public class MonopolyManager {
@@ -33,15 +34,13 @@ public class MonopolyManager {
 	private User creator;
 	private Player auctionWinner;
 	private int auctionPrice;
-	//private boolean auctionEnd = false;
+	// private boolean auctionEnd = false;
 	private int maxAuctionPricePrice = 0;
 	private Thread auction = null;
 
-	
-//	private  IStatisticsServiceManager userService;
-	
+	// private IStatisticsServiceManager userService;
 
-	private  IStatisticsServiceManager userService;
+	private IStatisticsServiceManager userService;
 	private UserStatistics statistics;
 
 	public Player getAuctionWinner() {
@@ -87,15 +86,17 @@ public class MonopolyManager {
 		message = message.replaceAll("<", "&lt;");
 		return message;
 	}
-	public Player auctionCreator(){
-		Player player=null;
-		for(Player players:monopolyGame.getAllPlayers()){
-			if(players.isAuctionCreator()){
-				player=players;
+
+	public Player auctionCreator() {
+		Player player = null;
+		for (Player players : monopolyGame.getAllPlayers()) {
+			if (players.isAuctionCreator()) {
+				player = players;
 			}
 		}
 		return player;
 	}
+
 	public Map<String, ? extends Object> onMessage(int idPlayer, String type,
 			String data) {
 
@@ -190,14 +191,18 @@ public class MonopolyManager {
 					&& !card.isAuctionStarted()) {
 				card.setAuctionStarted(true);
 				auctionCreator.setCanCreateAuction(true);
-				
+
 			}
 			response.put("type", ButtonsLabel.AUCTION);
 			response.put("invoker", auctionCreator.getColor());
 			rates.put("player", currentPlayer.getColor());
 			rates.put("rates", currentPlayer.getAuctionRates());
-			buttons.put(ButtonsLabel.UP10, currentPlayer.canUpAuctionPrice(CardPrices.UP10_AUCTION_PRICE+10));
-			buttons.put(ButtonsLabel.UP50, currentPlayer.canUpAuctionPrice(CardPrices.UP50_AUCTION_PRICE+50));
+			buttons.put(ButtonsLabel.UP10, currentPlayer
+					.canUpAuctionPrice(CardPrices.UP10_AUCTION_PRICE
+							+ CardPrices.UP10_AUCTION_PRICE));
+			buttons.put(ButtonsLabel.UP50, currentPlayer
+					.canUpAuctionPrice(CardPrices.UP50_AUCTION_PRICE
+							+ CardPrices.UP50_AUCTION_PRICE));
 			buttons.put(ButtonsLabel.ROLL, false);
 			response.put("card", auctionCreator.getPosition());
 
@@ -235,38 +240,29 @@ public class MonopolyManager {
 				} else if (currentPlayer.getAuctionRates() <= getAuctionPrice()) {
 					setMaxAuctionPrice(price);
 				}
-					log.info("max::::" + getMaxAuctionPrice());
-					currentPlayer.setAuctionRates(getMaxAuctionPrice());
-					log.info("rate:::::player"
-							+ currentPlayer.getAuctionRates() + ":::"
-							+ currentPlayer.getColor());
-//					rates.put("player", currentPlayer.getColor());
-//					rates.put("rates", currentPlayer.getAuctionRates());
-					log.info("chect can auction:::"
-							+ (currentPlayer.canAuction(getMaxAuctionPrice())));
-					// if (currentPlayer.canAuction(getMaxAuctionPrice())) {
-					setAuctionWinner(currentPlayer);
-					highest.put("who", getAuctionWinner().getColor());
-					highest.put("money", getMaxAuctionPrice());
-					// }
-					// else {
-					// messages = "You cann't continue auction";
-					// price = 0;
-					// }
-				
-				log.info(" NOW PRICE======" + getMaxAuctionPrice());
+				log.info("max::::" + getMaxAuctionPrice());
+				currentPlayer.setAuctionRates(getMaxAuctionPrice());
+				log.info("rate:::::player" + currentPlayer.getAuctionRates()
+						+ ":::" + currentPlayer.getColor());
+				log.info("check can auction:::"
+						+ (currentPlayer.canAuction(getMaxAuctionPrice())));
+				setAuctionWinner(currentPlayer);
+				highest.put("who", getAuctionWinner().getColor());
+				highest.put("money", getMaxAuctionPrice());
 			} else {
 				messages = "No player wants to buy this object";
 				log.info("no price: ");
 				setMaxAuctionPrice(0);
 				setAuctionPrice(0);
+				buttons.putAll(ButtonsAction.buttonsAction(auctionCreator));
+				buttons.put(ButtonsLabel.BUY, auctionCreator().canBuy(card));
 			}
-			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
-			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
-			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
-			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
-			buttons.put(ButtonsLabel.ROLL, currentPlayer.canRollDices());
-			buttons.put(ButtonsLabel.BUY, false);
+			// buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+			// buttons.put(ButtonsLabel.UNMORTAGE,
+			// currentPlayer.canUnmortage());
+			// buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+			// buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+			buttons.put(ButtonsLabel.ROLL, auctionCreator().doublePoints());
 			rates.put("player", currentPlayer.getColor());
 			rates.put("rates", currentPlayer.getAuctionRates());
 			state.put("buttons", buttons);
@@ -397,49 +393,53 @@ public class MonopolyManager {
 		Map<String, Object> turn = new HashMap<String, Object>();
 		Map<String, Object> buttons = new HashMap<String, Object>();
 		Map<String, Object> state = new HashMap<String, Object>();
-		String messages=null;
+		String messages = null;
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
-		 if (currentPlayer.getId() == idPlayer) {
-		currentPlayer.setRolled(false);
-		log.info("[CURRENT PLAYER] : " + getMonopolyGame().getCurrentPlayer());
-		getMonopolyGame().setCurrentPlayer(getMonopolyGame().getNextPlayer());
-		log.info("[NEXT PLAYER] : " + getMonopolyGame().getCurrentPlayer());
-		currentPlayer = getMonopolyGame().getCurrentPlayer();
-		log.info("can done;;;;;;;;"+(currentPlayer.getMoney()<0&&!currentPlayer.canContinueGame()));
-		if(currentPlayer.getMoney()<0&&!currentPlayer.canContinueGame()){
-			currentPlayer.setLosser(true);
-			broadcast(leaveGame(currentPlayer));
-			log.info("[Player money(loser)]:"
-					+ currentPlayer.getMoney());
-			if (hasWinner()) {
-				Player winner = monopolyGame.getAllPlayers().get(0);
-				winner.setWinner(true);
-				monopolyGame.setEnd(true);
-				monopolyGame.setStarted(false);
-				log.info("[WINNER ]:" + winner.getColor());
-				response.put("type", ButtonsLabel.LOGIC);
-				state.put("winner", winner.getColor());
-				state.put("player_money", winner.getMoney());
-				state.put("game_end", monopolyGame.isEnd());
-				messages = "Game ended. Winner is "
-						+ winner.getName();
-				state.put("messages", messages);
-				response.put("game_state", state);
-				broadcast(response);
+		if (currentPlayer.getId() == idPlayer) {
+			currentPlayer.setRolled(false);
+			log.info("[CURRENT PLAYER] : "
+					+ getMonopolyGame().getCurrentPlayer());
+			getMonopolyGame().setCurrentPlayer(
+					getMonopolyGame().getNextPlayer());
+			log.info("[NEXT PLAYER] : " + getMonopolyGame().getCurrentPlayer());
+			currentPlayer = getMonopolyGame().getCurrentPlayer();
+			log.info("can done;;;;;;;;"
+					+ (currentPlayer.getMoney() < 0 && !currentPlayer
+							.canContinueGame()));
+			if (currentPlayer.getMoney() < 0
+					&& !currentPlayer.canContinueGame()) {
+				currentPlayer.setLosser(true);
+				broadcast(leaveGame(currentPlayer));
+				log.info("[Player money(loser)]:" + currentPlayer.getMoney());
+				if (hasWinner()) {
+					Player winner = monopolyGame.getAllPlayers().get(0);
+					winner.setWinner(true);
+					monopolyGame.setEnd(true);
+					monopolyGame.setStarted(false);
+					log.info("[WINNER ]:" + winner.getColor());
+					response.put("type", ButtonsLabel.LOGIC);
+					state.put("winner", winner.getColor());
+					state.put("player_money", winner.getMoney());
+					state.put("game_end", monopolyGame.isEnd());
+					messages = "Game ended. Winner is " + winner.getName();
+					state.put("messages", messages);
+					response.put("game_state", state);
+					broadcast(response);
+				}
+			}
+			log.info("[Player: ]" + currentPlayer.getName() + ":"
+					+ currentPlayer.getColor() + " can roll dice");
+			turn.put("type", ButtonsLabel.TURN);
+//			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+//			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+//			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+//			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+			buttons.putAll(ButtonsAction.buttonsAction(currentPlayer));
+			buttons.put(ButtonsLabel.ROLL, currentPlayer.canRollDices());
+			turn.put("player", currentPlayer.getColor());
+			state.put("buttons", buttons);
+			turn.put("game_state", state);
 		}
-		}
-		log.info("[Player: ]" + currentPlayer.getName() + ":"
-				+ currentPlayer.getColor() + " can roll dice");
-		turn.put("type", ButtonsLabel.TURN);
-		buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
-		buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
-		buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
-		buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
-		buttons.put(ButtonsLabel.ROLL, currentPlayer.canRollDices());
-		turn.put("player", currentPlayer.getColor());
-		state.put("buttons", buttons);
-		turn.put("game_state", state);
-		 }
 		broadcast(turn);
 	}
 
@@ -452,7 +452,6 @@ public class MonopolyManager {
 		if (currentPlayer.getId() == idPlayer) {
 			if (currentPlayer.canMortage()) {
 				response.put("type", "mortage");
-				// response.put("player_money", currentPlayer.getMoney());
 				JsonNode tree = null;
 				try {
 					tree = objectMapper.readTree(data);
@@ -469,15 +468,17 @@ public class MonopolyManager {
 					cell = currentPlayer.cardByPosition(pos);
 					response.put("position", pos);
 					response.put("player", currentPlayer.getColor());
-					log.info(":::::::::::::::::::CITY FOR MORTAGE:::::"+cell.info());
+					log.info(":::::::::::::::::::CITY FOR MORTAGE:::::"
+							+ cell.info());
 					cell.mortage(currentPlayer);
-					if(cell instanceof CityCard){
+					if (cell instanceof CityCard) {
 						StartGame.boardCities.get(pos).setMortage(true);
 					}
-					if(cell instanceof RailCard){
+					if (cell instanceof RailCard) {
 						StartGame.boardRails.get(pos).setMortage(true);
 					}
-					log.info(":::::::::::::::::::cell AFTER MORTAGE:::::"+cell.info());
+					log.info(":::::::::::::::::::cell AFTER MORTAGE:::::"
+							+ cell.info());
 					currentPlayer
 							.removeObj(currentPlayer.getForMortage(), cell);
 					log.info("list after mortage: "
@@ -499,10 +500,11 @@ public class MonopolyManager {
 				}
 			}
 			currentPlayer.addBuildAvailable();
-			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
-			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
-			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
-			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+//			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+//			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+//			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+//			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+			buttons.putAll(ButtonsAction.buttonsAction(currentPlayer));
 			buttons.put(ButtonsLabel.ROLL, currentPlayer.canRollDices());
 			state.put("buttons", buttons);
 			response.put("game_state", state);
@@ -536,10 +538,10 @@ public class MonopolyManager {
 					cell = currentPlayer.cardByPosition(pos);
 					response.put("position", pos);
 					cell.unMortage(currentPlayer);
-					if(cell instanceof CityCard){
+					if (cell instanceof CityCard) {
 						StartGame.boardCities.get(pos).setMortage(false);
 					}
-					if(cell instanceof RailCard){
+					if (cell instanceof RailCard) {
 						StartGame.boardRails.get(pos).setMortage(false);
 					}
 
@@ -564,10 +566,11 @@ public class MonopolyManager {
 				}
 			}
 			currentPlayer.addBuildAvailable();
-			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
-			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
-			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
-			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+//			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+//			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+//			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+//			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+			buttons.putAll(ButtonsAction.buttonsAction(currentPlayer));
 			buttons.put(ButtonsLabel.ROLL, currentPlayer.canRollDices());
 			state.put("buttons", buttons);
 			response.put("game_state", state);
@@ -586,10 +589,11 @@ public class MonopolyManager {
 				((JailCard) cell).payRansom(currentPlayer);
 			}
 			buttons.put(ButtonsLabel.ROLL, currentPlayer.canRollDices());
-			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
-			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
-			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
-			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+//			buttons.put(ButtonsLabel.MORTAGE, currentPlayer.canMortage());
+//			buttons.put(ButtonsLabel.UNMORTAGE, currentPlayer.canUnmortage());
+//			buttons.put(ButtonsLabel.BUILD, currentPlayer.canBuild());
+//			buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
+			buttons.putAll(ButtonsAction.buttonsAction(currentPlayer));
 			buttons.put(ButtonsLabel.AUCTION, false);
 			state.put("buttons", buttons);
 			response.put("type", ButtonsLabel.PAY);
@@ -632,77 +636,77 @@ public class MonopolyManager {
 		Player currentPlayer = getMonopolyGame().getCurrentPlayer();
 		boolean move = false;
 		String messages = null;
-		try{
-			
-		
-		if (!monopolyGame.isEnd()) {
-			if (currentPlayer.getId() == idPlayer) {
-				if (currentPlayer.canRollDices()) {
-					if (currentPlayer.isInJail()) {
-						response.put("type", ButtonsLabel.ROLL);
-						response.put("was", currentPlayer.getPosition());
-						JailCard jail = new JailCard();
-						response.put(
-								"game_state",
-								jail.rollAndWait(currentPlayer,
-										currentPlayer.rollDicesAndWait()));
-						log.info("[Dice1: ]" + currentPlayer.getDiceOne());
-						log.info("[Dice2: ]" + currentPlayer.getDiceTwo());
+		try {
+			if (!monopolyGame.isEnd()) {
+				if (currentPlayer.getId() == idPlayer) {
+					if (currentPlayer.canRollDices()) {
+						if (currentPlayer.isInJail()) {
+							response.put("type", ButtonsLabel.ROLL);
+							response.put("was", currentPlayer.getPosition());
+							JailCard jail = new JailCard();
+							response.put("game_state", jail.rollAndWait(
+									currentPlayer,
+									currentPlayer.rollDicesAndWait()));
+							log.info("[Dice1: ]" + currentPlayer.getDiceOne());
+							log.info("[Dice2: ]" + currentPlayer.getDiceTwo());
+						} else {
+							move = true;
+							response.put("type", ButtonsLabel.ROLL);
+							response.put("was", currentPlayer.getPosition());
+							currentPlayer.rollDicesAndMove();
+							log.info("[Dice1: ]" + currentPlayer.getDiceOne());
+							log.info("[Dice2: ]" + currentPlayer.getDiceTwo());
+							log.info("[-----------------Cell:----------------------------- ]"
+									+ CardFactory.chooseCard(currentPlayer)
+											.info());
+							response.put("dice1", currentPlayer.getDiceOne());
+							response.put("dice2", currentPlayer.getDiceTwo());
+							response.put("move", move);
+							response.put("game_state", GameAction.action(
+									CardFactory.chooseCard(currentPlayer),
+									currentPlayer));
+						}
 					} else {
-						move = true;
-						response.put("type", ButtonsLabel.ROLL);
-						response.put("was", currentPlayer.getPosition());
-						currentPlayer.rollDicesAndMove();
-						log.info("[Dice1: ]" + currentPlayer.getDiceOne());
-						log.info("[Dice2: ]" + currentPlayer.getDiceTwo());
-						log.info("[-----------------Cell:----------------------------- ]"
-								+ CardFactory.chooseCard(currentPlayer).info());
-						response.put("dice1", currentPlayer.getDiceOne());
-						response.put("dice2", currentPlayer.getDiceTwo());
-						response.put("move", move);
-						response.put("game_state", GameAction.action(
-								CardFactory.chooseCard(currentPlayer),
-								currentPlayer));
-					}
-				} else {
-					log.info("------------------------CAN ROLL------------PLAYER----"
-							+ currentPlayer.getColor()
-							+ ": "
-							+ currentPlayer.canRollDices());
-					log.info("---------------CAN CONTINUE GAME------PLAYER---"
-							+ currentPlayer.canContinueGame() + ": "
-							+ currentPlayer.getColor());
-					if (currentPlayer.canContinueGame()) {
-						move = false;
-						response.put("type", ButtonsLabel.ROLL);
-						response.put("move", move);
-						buttons.put(ButtonsLabel.DONE, true);
-						buttons.put(ButtonsLabel.MORTAGE,
-								currentPlayer.canMortage());
-						buttons.put(ButtonsLabel.UNMORTAGE,
-								currentPlayer.canUnmortage());
-						buttons.put(ButtonsLabel.BUILD,
-								currentPlayer.canBuild());
-						buttons.put(ButtonsLabel.SELL, currentPlayer.canSell());
-						buttons.put(ButtonsLabel.ROLL,
-								currentPlayer.canRollDices());
-						response.put("game_state", buttons);
-					} else {
+						log.info("------------------------CAN ROLL------------PLAYER----"
+								+ currentPlayer.getColor()
+								+ ": "
+								+ currentPlayer.canRollDices());
 						log.info("---------------CAN CONTINUE GAME------PLAYER---"
 								+ currentPlayer.canContinueGame()
 								+ ": "
 								+ currentPlayer.getColor());
-						currentPlayer.setLosser(true);
-						response.put("type", ButtonsLabel.LOGIC);
-						messages = "Player " + currentPlayer.getColor()
-								+ " leave game!";
-						buttons.put(ButtonsLabel.DONE, true);
+						if (currentPlayer.canContinueGame()) {
+							move = false;
+							response.put("type", ButtonsLabel.ROLL);
+							response.put("move", move);
+							buttons.put(ButtonsLabel.DONE, true);
+							buttons.put(ButtonsLabel.MORTAGE,
+									currentPlayer.canMortage());
+							buttons.put(ButtonsLabel.UNMORTAGE,
+									currentPlayer.canUnmortage());
+							buttons.put(ButtonsLabel.BUILD,
+									currentPlayer.canBuild());
+							buttons.put(ButtonsLabel.SELL,
+									currentPlayer.canSell());
+							buttons.put(ButtonsLabel.ROLL,
+									currentPlayer.canRollDices());
+							response.put("game_state", buttons);
+						} else {
+							log.info("---------------CAN CONTINUE GAME------PLAYER---"
+									+ currentPlayer.canContinueGame()
+									+ ": "
+									+ currentPlayer.getColor());
+							currentPlayer.setLosser(true);
+							response.put("type", ButtonsLabel.LOGIC);
+							messages = "Player " + currentPlayer.getColor()
+									+ " leave game!";
+							buttons.put(ButtonsLabel.DONE, true);
+						}
 					}
 				}
+				broadcast(response);
 			}
-			broadcast(response);
-		}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -713,11 +717,11 @@ public class MonopolyManager {
 		if (getMonopolyGame().isReadyToStart()
 				&& !getMonopolyGame().isStarted()) {
 			getMonopolyGame().start();
-//			for(Player player:monopolyGame.getAllPlayers()){
-//			statistics.setIdUser(player.getId());
-//			statistics.setUserAllGames(1);
-//			userService.incrementUserAllGames(player.getId(), "monopoly");
-//			}
+			// for(Player player:monopolyGame.getAllPlayers()){
+			// statistics.setIdUser(player.getId());
+			// statistics.setUserAllGames(1);
+			// userService.incrementUserAllGames(player.getId(), "monopoly");
+			// }
 			log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
 			response.put("game_status", "start");
 			turn = new HashMap<String, Object>();
@@ -817,7 +821,7 @@ public class MonopolyManager {
 	public void deleteLoserPlayer(List<Player> players, List<Player> losers,
 			Player player) {
 		players.remove(player);
-		int pointRate = losers.size()+1;
+		int pointRate = losers.size() + 1;
 		player.setPoints(pointRate);
 		losers.add(player);
 	}
@@ -832,10 +836,13 @@ public class MonopolyManager {
 			monopolyGame.setCurrentPlayer(monopolyGame.getPreventPlayer());
 			this.deleteLoserPlayer(monopolyGame.getAllPlayers(),
 					monopolyGame.getAllLosers(), player);
-			try{
-				
-				//userService.changeUserMoneyAmount(player.getId(), player.getMoney(), "monopoly");
-			}catch(Exception e){e.printStackTrace();}
+			try {
+
+				// userService.changeUserMoneyAmount(player.getId(),
+				// player.getMoney(), "monopoly");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			log.info("[PLAYER LEAVE THIS GAME: ]" + player.getColor());
 			log.info("[PLAYER LIST ]" + monopolyGame.getAllPlayers());
 			log.info("[LOSER LIST ]" + monopolyGame.getAllLosers());
@@ -894,4 +901,3 @@ public class MonopolyManager {
 	// Thread t = new Thread(new Auction(new MonopolyManager(monopolyGame), c));
 	// }
 }
-

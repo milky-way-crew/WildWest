@@ -42,4 +42,11 @@ $("#send").click(function() {
 	message();
 });
 
+$("#usermsg").keypress(function(event) {
+	if (event.keyCode == '13') {
+		message();
+		return false;
+	}
+});
+
 setInterval(updateMessages, 3000);

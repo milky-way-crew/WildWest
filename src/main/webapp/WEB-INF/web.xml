@@ -13,7 +13,9 @@
 	<listener>
 		<listener-class>com.web.app.worldgames.listener.ContextLoaderHandler</listener-class>
 	</listener>
-
+	<listener>
+		<listener-class>com.web.app.worldgames.listener.SessionListener</listener-class>
+	</listener>
 
 	<!-- Spring dispatcher servlet -->
 	<servlet>
@@ -39,16 +41,12 @@
 		<error-code>404</error-code>
 		<location>/error/404.html</location>
 	</error-page>
-	
+
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error/500.html</location>
 	</error-page>
-	<!-- 
-	<mime-mapping>
-    	<extension>less</extension>
-    	<mime-type>text/css</mime-type>
-	</mime-mapping>
-	 -->
+	<!-- <mime-mapping> <extension>less</extension> <mime-type>text/css</mime-type> 
+		</mime-mapping> -->
 </web-app>
 

@@ -296,13 +296,20 @@ public class Player {
 		return (diceOne == diceTwo) ? true : false;
 	}
 
-	public void addRegions(Player player) {
+	public void addRegions(SellableCard card) {
 		for (Cities cities : Cities.values()) {
-			if (cities.getPosition() == player.getPosition()) {
+			if (cities.getPosition() == card.getPosition()) {
 				listRegions.add(cities.getRegion());
 			}
 		}
 	}
+//	public void addRegions(Player player) {
+//		for (Cities cities : Cities.values()) {
+//			if (cities.getPosition() == player.getPosition()) {
+//				listRegions.add(cities.getRegion());
+//			}
+//		}
+//	}
 
 	public List<SellableCard> getForSell() {
 		return forSell;
@@ -353,18 +360,30 @@ public class Player {
 		this.numberOfRails = numberOfRails;
 	}
 
-	public void addProperty(Player player) {
+	public void addProperty(SellableCard card) {
 		for (Cities cities : Cities.values()) {
-			if (cities.getPosition() == player.getPosition()) {
+			if (cities.getPosition() == card.getPosition()) {
 				property.add(new CityCard(cities, this));
 			}
 		}
 		for (Rails rails : Rails.values()) {
-			if (rails.getPosition() == player.getPosition()) {
+			if (rails.getPosition() == card.getPosition()) {
 				property.add(new RailCard(rails, this));
 			}
 		}
 	}
+//	public void addProperty(Player player) {
+//		for (Cities cities : Cities.values()) {
+//			if (cities.getPosition() == player.getPosition()) {
+//				property.add(new CityCard(cities, this));
+//			}
+//		}
+//		for (Rails rails : Rails.values()) {
+//			if (rails.getPosition() == player.getPosition()) {
+//				property.add(new RailCard(rails, this));
+//			}
+//		}
+//	}
 
 	public void addForMortage() {
 	}

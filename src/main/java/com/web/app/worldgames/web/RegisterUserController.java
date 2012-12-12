@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.web.app.worldgames.domain.User;
+import com.web.app.worldgames.service.StatisticsServiceManager;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 import com.web.app.worldgames.validator.IValidator;
 
@@ -25,6 +26,8 @@ public class RegisterUserController {
 
 	@Autowired
 	private IUserServiceManager userService;
+	@Autowired
+	private StatisticsServiceManager statisticsService;
 	
 	@Autowired
 	@Qualifier(value="userRegistrationValidator")
@@ -52,6 +55,7 @@ public class RegisterUserController {
 			log.info("insering user into database");
 			
 			int id = userService.insertUser(user);
+			statisticsService.createStatisticsField(id);
 			log.info("ID of new user: " + id);
 			
 			recordUserInSession(request, user);
