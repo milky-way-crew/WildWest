@@ -431,12 +431,14 @@ function() {
         },
         animate: {
             money: function(who, money) {
-                chat.appendWithColor('>> now <span class="label label-info color-player-' 
-                        + BOARD.colorToIndex(who) 
-                        +'">' + who.toLowerCase() + '</span>'
-                        + ' money is - ' + ui.makeLabel(money + '$', '', '#095'), '#08C');
-                console.log('Setting money to', money, 'player=', who);
-                BOARD.draw.updateMoney(who, money);
+            	if (money) {
+            		chat.appendWithColor('>> now <span class="label label-info color-player-' 
+            				+ BOARD.colorToIndex(who) 
+            				+'">' + who.toLowerCase() + '</span>'
+            				+ ' money is - ' + ui.makeLabel(money + '$', '', '#095'), '#08C');
+            		console.log('Setting money to', money, 'player=', who);
+            		BOARD.draw.updateMoney(who, money);
+            	}
             },
             move: function(who, d1, d2, was) {
                 log('Animating [move]');
@@ -871,12 +873,14 @@ function() {
                 BOARD.sellAll(player, cell);
             },
             updateMoney: function(who, money) {
-                $("#money-player-" + BOARD.colorToIndex(who))
-                    .fadeOut(300)
-                    .html(money + "$")
-                    .css({'display':'inline'})
-                    .fadeIn(300)
-                ;
+                if (money) {
+                    $("#money-player-" + BOARD.colorToIndex(who))
+                        .fadeOut(300)
+                        .html(money + "$")
+                        .css({'display':'inline'})
+                        .fadeIn(300)
+                    ;                    
+                }
             },
             toggleOutline: function(cell, mode) {
                 // change outline of img in cell & tip
