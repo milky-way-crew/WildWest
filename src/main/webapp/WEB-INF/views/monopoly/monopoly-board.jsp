@@ -33,6 +33,7 @@
 		<table id="game-table" border="1" rules="all">
 			<tr>
 				<td class="cell northwest tip" id="cell21">
+					<strong class="town-title" style="display:none;">Free Station</strong>
 					<span class="label label-info" style=" top: 0px; text-align: center; ">Free Station</span>
 						<img src="resources/img/board/city/sign_left.svg">
 				</td>
