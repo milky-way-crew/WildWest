@@ -17,7 +17,7 @@ public class StatisticsServiceManager implements IStatisticsServiceManager {
 	}
 	
 	
-	
+	@Override
 	public void createStatisticsField(int userId){
 		statisticsDao.createStatisticsField(userId);
 	}

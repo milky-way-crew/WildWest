@@ -26,6 +26,7 @@ public class UserStatisticsDao implements IUserStatisticsDao {
 	/** Statistics information **/
 	/****************************/
 	
+	@Override
 	public void createStatisticsField(int userId){
 		final String queryMonopoly = "INSERT INTO userstatistics (idUser, gameType) VALUES (?, 'monopoly')";
 		jdbcTemplate.update(queryMonopoly, new Object[]{userId});

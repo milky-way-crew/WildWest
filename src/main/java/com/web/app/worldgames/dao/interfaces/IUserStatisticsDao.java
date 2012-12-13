@@ -3,6 +3,8 @@ package com.web.app.worldgames.dao.interfaces;
 import com.web.app.worldgames.domain.UserStatistics;
 
 public interface IUserStatisticsDao {
+	
+	public void createStatisticsField(int userId);
 
 	public int getUserAllGames(int userId, String typeGame);
 
