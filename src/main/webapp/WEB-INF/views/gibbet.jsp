@@ -25,7 +25,7 @@
 	<div class="container " >
 	<div id="game">
 	<div class="hero-unit" >
-		<h1>
+		<h1 id="title">
 			Welcome to gibbet 
 			<c:out value="${user.login}" /> 
 		</h1>
