@@ -46,7 +46,7 @@
 					<form name="messages" >
 						<input  type="text" id="word"> 
 					</form>
-					<input type="text" id="live" value="0">Your life:</input>
+					Your life:<input type="text" id="live" value="0"></input>
 				<p id="controls">
 				
 				<p><a class="btn btn-primary btn-medium" id="q" >Q</a>
