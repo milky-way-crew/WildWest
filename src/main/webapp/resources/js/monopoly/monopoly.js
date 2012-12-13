@@ -209,11 +209,11 @@ function() {
                     // this player moves
                     if(MONO.config.color === color) {
                         ui.refreshButtons(buttons);
-                        if(message) {
-                            chat.append("server: " + message);
-                            ui.attachTooltip('#cell' + MONO.config.position, message);
-                            $('#cell' + MONO.config.position).tooltip('show');
-                        }
+                    }
+                    if(message) {
+                        chat.append("server: " + message);
+                        ui.attachTooltip('#cell' + MONO.config.position, message);
+                        $('#cell' + MONO.config.position).tooltip('show');
                     }
                 },
                 'buy': function(json) {
