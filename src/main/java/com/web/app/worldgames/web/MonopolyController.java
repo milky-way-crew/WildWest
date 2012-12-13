@@ -20,6 +20,7 @@ import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 import com.web.app.worldgames.service.ChatRoomServiceManager;
 import com.web.app.worldgames.service.MonopolyService;
 import com.web.app.worldgames.service.interfaces.IMonopolyService;
+import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 import com.web.app.worldgames.websocket.MonoWebSocketHandler.MonoWebSocket;
 
@@ -28,8 +29,13 @@ public class MonopolyController {
 	private static final String ID_MONO_GAME = "idMonoGame";
 	private final static Logger log = Logger
 			.getLogger(MonopolyController.class);
+	private final String monopoly = "monopoly";
 	@Autowired
 	private IUserServiceManager userService;
+	
+	@Autowired
+	private IStatisticsServiceManager serviceManager;
+	
 	private IMonopolyService monopolyService = MonopolyService.getInstance();
 	 private static ChatRoomServiceManager manager = ChatRoomsController
 		    .getManager();
@@ -59,6 +65,8 @@ public class MonopolyController {
 			.getChatParticipantFromRequest(request);
 		manager.getChatRoomById(host.getId_room()).setGameId(gameId);
 		session.setAttribute(ID_MONO_GAME, gameId);
+		
+		serviceManager.incrementUserAllGames(userHost.getId(), monopoly);
 		log.info("Finished creating chess-game with id: " + gameId);
 
 		return "redirect:/mono-server";
@@ -67,10 +75,7 @@ public class MonopolyController {
 	@RequestMapping(value = "/monopoly-connect")
 	public String onConnectToServer(@RequestParam int idServer,
 			HttpSession session) {
-		if (session.getAttribute("user") == null) {
-			log.info("**************** Setting doggi user to session ***************");
-			session.setAttribute("user", userService.findUserByLogin("doggi"));
-		}
+		
 
 		User client = (User) session.getAttribute("user");
 		MonopolyManager monopolyGame = monopolyService.getGameById(idServer);
@@ -80,7 +85,7 @@ public class MonopolyController {
 		} else if (monopolyGame.getCreator().getId() == client.getId()) {
 			return "redirect:/mono-server";
 		}
-		
+		serviceManager.incrementUserAllGames(client.getId(), monopoly);
 		log.info("Connecting client to server with id" + idServer);
 		session.setAttribute(ID_MONO_GAME, idServer);
 		monopolyGame.addClient(client);

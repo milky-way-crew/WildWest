@@ -23,16 +23,21 @@ import com.web.app.worldgames.domain.chess.ChessGameManager;
 import com.web.app.worldgames.domain.chess.ChessPlayer;
 import com.web.app.worldgames.service.ChatRoomServiceManager;
 import com.web.app.worldgames.service.ChessGameService;
+import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 
 @Controller
 public class ChessContoller {
     private static final Logger log = Logger.getLogger(ChessContoller.class);
     private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
+    private final String chess = "chess";
 
     @Autowired
     private IUserDao userDao;
-
+    
+    @Autowired
+    private IStatisticsServiceManager serviceManager;
+    
     @Autowired
     private ChessGameService chessService;
 
@@ -63,6 +68,7 @@ public class ChessContoller {
 		ChatParticipant host = ChatRoomsController.getChatParticipantFromRequest(request);
 		manager.getChatRoomById(host.getId_room()).setGameId(gameId);
 		session.setAttribute("idChessGame", gameId);
+		serviceManager.incrementUserAllGames(userHost.getId(), chess);
 		log.info("Finished creating chess-game with id: " + gameId);
 
 		return "redirect:/chess-server";
@@ -70,11 +76,7 @@ public class ChessContoller {
 
 	@RequestMapping(value = "/chess-connect")
 	public String onConnectToServer(@RequestParam int idServer, HttpSession session) {
-		if (session.getAttribute("user") == null) {
-			log.info("**************** Setting doggi user to session ***************");
-			session.setAttribute("user", userDao.findUserByLogin("doggi"));
-		}
-
+		
 		User client = (User) session.getAttribute("user");
 		ChessGameManager chessGame = chessService.getGameById(idServer);
 
@@ -92,6 +94,7 @@ public class ChessContoller {
 			log.info("Connecting client to server with id" + idServer);
 			session.setAttribute("idChessGame", idServer);
 			chessGame.setClient(new ChessPlayer(client));
+			serviceManager.incrementUserAllGames(client.getId(), chess);
 			return "redirect:/chess-server";
 		} else {
 			log.info("Server is full");
@@ -115,6 +118,7 @@ public class ChessContoller {
 		    "Exit requested from user-id=%d chess-id=%d", user.getId(),
 		    id));
 	    ChessGameManager gameManager = chessService.getGameById(id);
+	    
 	    if (gameManager != null) {
 		gameManager.onDisconnect(null, user);
 		// session.removeAttribute("idChessGame");

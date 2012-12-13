@@ -17,6 +17,7 @@ import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.chat.ChatParticipant;
 import com.web.app.worldgames.service.ChatRoomServiceManager;
 import com.web.app.worldgames.service.GuessGameService;
+import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 import com.web.app.worldgames.service.interfaces.IUserServiceManager;
 
 @Controller
@@ -24,9 +25,13 @@ public class GuessController {
     private static final Logger log = Logger.getLogger(GuessController.class);
     private static ChatRoomServiceManager manager = ChatRoomsController
 	    .getManager();
+    private final String drawGuess = "drow&guess";
 
     @Autowired
     private IUserServiceManager userService;
+    
+    @Autowired
+    private IStatisticsServiceManager serviceManager;
 
     @RequestMapping(value = "/guess-game")
     public String showPage() {
@@ -35,33 +40,30 @@ public class GuessController {
 
     @RequestMapping(value = "/guess-create")
     public String createServer(HttpSession session, HttpServletRequest request) {
-	if (getUserFromSession(session) == null) {
-	    log.info("*** setting doggi user to session");
-	    session.setAttribute("user", userService.findUserByLogin("doggi"));
-	}
-	log.info("Starting creating draw-game");
+
+    	log.info("Starting creating draw-game");
 	User user = getUserFromSession(session);
 	int idGame = GuessGameService.INSTANCE.createGame(user);
 	ChatParticipant host = ChatRoomsController
 		.getChatParticipantFromRequest(request);
 	manager.getChatRoomById(host.getId_room()).setGameId(idGame);
 	session.setAttribute("idGuessGame", idGame);
+	
+	serviceManager.incrementUserAllGames(user.getId(), drawGuess);
 	log.info("Finished creating chess-game with id: " + idGame);
 	return "redirect:/guess-game";
     }
 
     @RequestMapping(value = "/guess-connect")
     public String connect(@RequestParam int idServer, HttpSession session) {
-	if (getUserFromSession(session) == null) {
-	    log.info("*** setting test user to session");
-	    session.setAttribute("user", userService.findUserByLogin("test"));
-	}
+
 	User client = getUserFromSession(session);
 	boolean connectStatus = GuessGameService.INSTANCE.connectUserTo(idServer,
 		client);
 
 	if (connectStatus) {
 	    session.setAttribute("idGuessGame", idServer);
+	    serviceManager.incrementUserAllGames(client.getId(), drawGuess);
 	    return "redirect:/guess-game";
 	} else {
 	    return "redirect:/404";
