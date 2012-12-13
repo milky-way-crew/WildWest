@@ -234,7 +234,7 @@ function getClientPanel(json) {
 	if (json.creatorRedirect && json.myRedirect) {
 		$("#ready").attr('disabled', true);
 		$("#connect").attr('disabled', false);
-		setTimeout("window.location='./connect'", 7000);
+		setTimeout("window.location='./connect'", 10000);
 	}
 }
 
@@ -383,7 +383,5 @@ function joinToRoom(id) {
 		}
 	});
 };
-
+setInterval(updateList, 4000);
 window.onunload = updateList();
-//window.beforeunload = exitFromRoom();
-

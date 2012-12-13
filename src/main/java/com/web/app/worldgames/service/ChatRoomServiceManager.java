@@ -92,8 +92,11 @@ public class ChatRoomServiceManager {
 
     public void onSessionClose(String sessionID) {
 	ChatParticipant participant = getChatParticipantBySessionID(sessionID);
-	String disconnectMessage = "[System] User "+participant.getNickname() + " was disconnected!";
-	getChatRoomById(participant.getId_room()).broadcastInRoom(participant, disconnectMessage);
+	StringBuilder disconnectMessage = new StringBuilder();
+	disconnectMessage.append("[System] User ");
+	disconnectMessage.append(participant.getNickname());
+	disconnectMessage.append(" was disconnected!");
+	getChatRoomById(participant.getId_room()).broadcastInRoom(participant, disconnectMessage.toString());
 	getChatRoomById(participant.getId_room()).deleteChatParticipantById(
 		participant.getParticipantId());
     }
