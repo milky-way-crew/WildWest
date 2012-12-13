@@ -8,6 +8,7 @@ import com.web.app.worldgames.domain.monopoly.Player;
 
 public class ChanceCard extends Cell {
 	String information;
+
 	public String getInformation() {
 		return information;
 	}
@@ -37,7 +38,6 @@ public class ChanceCard extends Cell {
 					player.setMoney(player.getMoney() + CardPrices.CIRCLE_MONEY);
 				}
 				setMovePosition(chance.getPosition());
-				//player.setPosition(chance.getPosition());
 			}
 		}
 	}

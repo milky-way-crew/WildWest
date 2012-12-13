@@ -237,15 +237,8 @@ public class CityCard extends SellableCard {
 	@Override
 	public void effectOnPlayer(Player player) {
 		if (this.getOwner() != null && !player.equals(this.getOwner())) {
-			log.info("[OWNER before effect]: money"
-					+ this.getOwner().getMoney());
-			log.info("[PLAYER before effect]: money" + player.getMoney());
-			log.info("[OWNER]: " + this.getOwner().getColor());
-			log.info("MORTAGE: " + this.isMortage());
 			this.payRentToOwner(player, this.getOwner(),
 					this.getRent(player, this.getOwner()));
-			log.info("[OWNER]: money" + this.getOwner().getMoney());
-			log.info("[PLAYER]: money" + player.getMoney());
 		}
 	}
 
@@ -259,8 +252,6 @@ public class CityCard extends SellableCard {
 			log.info("[OWNER]: " + this.getOwner().getName());
 			int numberOfRegions = owner.getNumberOfRegions(owner,
 					owner.getRegion(player.getPosition()));
-			log.info("[NUMBER OF REGIONS NEW]: " + numberOfRegions);
-			log.info("[REGIONS]: " + numberOfRegions);
 			if (numberOfRegions == 1) {
 				return getTaxOneCard();
 			} else if (numberOfRegions == 2) {
@@ -298,17 +289,12 @@ public class CityCard extends SellableCard {
 	@Override
 	public void buyCityOrRail(Player player) {
 		this.setOwner(player);
-		//player.addProperty(player);
 		player.addProperty(this);
 		player.listPropertyForMortage();
 		player.listPropertyForSell();
 		player.setMoney(player.getMoney() - getPrice());
-		log.info("[MONEY]: " + player.getMoney());
-		log.info("[BUY::: OWNER]: " + this.getOwner());
-		//player.addRegions(player);
 		player.addRegions(this);
 		player.addBuildAvailable();
-		// log.info("[BUILD AVAILABLE]: " + player.getBuildAvailable());
 		log.info("[REGIONS LIST]: " + player.listRegions(player));
 
 	}
@@ -326,10 +312,7 @@ public class CityCard extends SellableCard {
 			log.info("OWNER BEFORE SELL CITY " + this.getOwner());
 			SellableCard sell_city = StartGame.boardCities.get(this
 					.getPosition());
-			log.info("POSIOTION OF SELLABLE CARD" + this.getPosition()
-					+ " sell_city: " + sell_city);
 			sell_city.setOwner(null);
-			log.info("NOW OWNER OF THIS CITY: " + sell_city.getOwner());
 			log.info("OWNER AFTER SELL CITY " + this.getOwner());
 			player.setMoney(player.getMoney() + this.getPrice() / 2);
 			player.listRegions(player).remove(this.getRegion());
@@ -339,25 +322,18 @@ public class CityCard extends SellableCard {
 	@Override
 	public void auctionCityOrRail(Player player, Player auctionCreator,
 			int price) {
-		log.info("auctionn method");
 		if (this.getOwner() == null) {
 			this.setOwner(player);
 			player.addProperty(this);
-			//player.addProperty((SellableCard) CardFactory.chooseCard(auctionCreator));
 			player.listPropertyForMortage();
-			log.info("::: AUCTION LIST FOR MORTAGE:::"+player.getForMortage());
+			log.info("::: AUCTION LIST FOR MORTAGE:::" + player.getForMortage());
 			player.listPropertyForSell();
-			log.info("[MESSAGE AUCTION]: You are owner now");
 			if (player.equals(auctionCreator)) {
 				player.setMoney(player.getMoney() - price);
 			} else {
 				player.setMoney(player.getMoney() - price);
 				auctionCreator.setMoney(auctionCreator.getMoney() + price);
 			}
-			log.info("[MONEY AUCTION]: " + player.getMoney());
-			log.info("[BUY::: OWNER:::AUCTION]: " + this.getOwner());
-//			player.addRegions((SellableCard) CardFactory.chooseCard(auctionCreator));
-//			player.addRegions(player);
 			player.addRegions(this);
 			player.addBuildAvailable();
 			this.setAuctionStarted(false);

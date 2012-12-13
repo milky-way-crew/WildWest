@@ -7,7 +7,6 @@ public class StartCard extends Cell {
 
 	@Override
 	public void effectOnPlayer(Player player) {
-//		player.setMoney(CardPrices.START_MONEY);
 		player.setPosition(CellPositions.START);
 	}
 

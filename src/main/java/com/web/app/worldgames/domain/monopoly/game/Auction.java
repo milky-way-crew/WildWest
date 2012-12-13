@@ -7,10 +7,14 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
+import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Player;
-import com.web.app.worldgames.domain.monopoly.card.CardFactory;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
+/**
+ * 
+ * @author Inna Thread that runs auction
+ */
 public class Auction implements Runnable {
 	private static final Logger log = Logger.getLogger(Auction.class);
 	MonopolyManager manager;
@@ -28,7 +32,7 @@ public class Auction implements Runnable {
 		Map<String, Object> state = new HashMap<String, Object>();
 		Map<String, Object> response = new HashMap<String, Object>();
 		Map<String, Object> responseAuction = new HashMap<String, Object>();
-		int seconds = 20;
+		int seconds = CardPrices.AUCTION_TIME;
 		boolean isEnd = false;
 		while (seconds >= 0) {
 			try {
@@ -38,7 +42,6 @@ public class Auction implements Runnable {
 				manager.broadcast(secondsLeft);
 				if (seconds == 0) {
 					isEnd = true;
-					log.info("max__________"+ manager.getMaxAuctionPrice());
 					if (manager.getMaxAuctionPrice() > 0) {
 						buttons.put(ButtonsLabel.BUY, false);
 						buttons.putAll(ButtonsAction.buttonsAction(manager
@@ -56,8 +59,8 @@ public class Auction implements Runnable {
 						responseAuction.put("auction_status", isEnd);
 						responseAuction.put("auction_money",
 								manager.getMaxAuctionPrice());
-						responseAuction.put("auction_creator",
-								manager.auctionCreator().getColor());
+						responseAuction.put("auction_creator", manager
+								.auctionCreator().getColor());
 						responseAuction.put("auction_creator_money", manager
 								.auctionCreator().getMoney());
 						response.put("type", ButtonsLabel.BUY);
@@ -67,7 +70,6 @@ public class Auction implements Runnable {
 								.getMoney());
 						state.put("buttons", buttons);
 						response.put("game_state", state);
-						log.info(":::::::::: response ::::: " + response);
 						manager.broadcast(response);
 						manager.broadcast(responseAuction);
 						for (Player player : manager.getMonopolyGame()
@@ -76,18 +78,8 @@ public class Auction implements Runnable {
 							player.setInAuction(false);
 							player.setAuctionRates(0);
 							player.setCanCreateAuction(false);
-							log.info("Player info::::: "
-									+ player.getAuctionRates() + " "
-									+ player.isInAuction() + ":"
-									+ player.isAuctionCreator());
 						}
 					} else if (manager.getMaxAuctionPrice() == 0) {
-//						buttons.put(ButtonsLabel.BUY, manager.auctionCreator().canBuy(
-//								(SellableCard) CardFactory.chooseCard(manager
-//										.auctionCreator())));
-//						state.put("buttons", buttons);
-//						response.put("game_state", state);
-//						manager.broadcast(response);
 					}
 				}
 			} catch (InterruptedException e) {

@@ -29,7 +29,8 @@ public abstract class SellableCard extends Cell {
 	 * @param price
 	 *            of purchase
 	 */
-	public abstract void auctionCityOrRail(Player player, Player auctionCreator, int price);
+	public abstract void auctionCityOrRail(Player player,
+			Player auctionCreator, int price);
 
 	/**
 	 * The execute method sell city, houses and hotel
@@ -45,7 +46,6 @@ public abstract class SellableCard extends Cell {
 
 	public abstract boolean canSell(Player player);
 
-	
 	private int price;
 	private boolean mortage;
 	private Player owner;
@@ -86,28 +86,6 @@ public abstract class SellableCard extends Cell {
 		this.owner = owner;
 	}
 
-//	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = 1;
-//		result = prime * result + price;
-//		return result;
-//	}
-//
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		SellableCard other = (SellableCard) obj;
-//		if (price != other.price)
-//			return false;
-//		return true;
-//	}
-
 	public boolean isAuctionStarted() {
 		return auctionStarted;
 	}
@@ -127,9 +105,6 @@ public abstract class SellableCard extends Cell {
 	public boolean canBuy(Player player) {
 		return player.checkMoney(this.getPrice()) && this.getOwner() == null
 				&& this instanceof SellableCard;
-		// return (player.checkMoney(this.getPrice()) && this.getOwner() == null
-		// && this instanceof SellableCard) ? true
-		// : false;
 	}
 
 	public void payRentToOwner(Player player, Player owner, int price) {

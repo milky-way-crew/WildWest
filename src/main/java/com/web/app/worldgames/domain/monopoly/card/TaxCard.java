@@ -4,7 +4,11 @@ import org.apache.log4j.Logger;
 
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.Player;
-
+/**
+ * 
+ * @author Inna
+ *
+ */
 public class TaxCard extends Cell {
 	
 	private final static Logger log = Logger.getLogger(TaxCard.class);
@@ -15,10 +19,6 @@ public class TaxCard extends Cell {
 		player.setMoney(player.getMoney() - CardPrices.TAX);
 		log.info("[PLAYER]: " +player.getColor()+" money after tax " +player.getMoney());
 	}
-
-//	public boolean canPayTax(Player player) {
-//		return (player.checkMoney(CardPrices.TAX)) ? true : false;
-//	}
 
 	@Override
 	public String info() {

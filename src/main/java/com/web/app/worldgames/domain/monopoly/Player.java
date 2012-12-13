@@ -34,8 +34,6 @@ public class Player {
 	private boolean isWinner = false;
 	private int points;
 	private List<String> listRegions = new CopyOnWriteArrayList<String>();
-	// private List<String> listRegions = new ArrayList<String>();
-	// private List<SellableCard> property = new ArrayList<SellableCard>();
 	private String user;
 	private List<SellableCard> property = new CopyOnWriteArrayList<SellableCard>();
 	private List<SellableCard> forSell = new ArrayList<SellableCard>();
@@ -71,12 +69,14 @@ public class Player {
 		this.money = money;
 		this.color = color;
 	}
+
 	public Player(String user, int position, int money, String color) {
 		this.setUser(user);
 		this.position = position;
 		this.money = money;
 		this.color = color;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -276,8 +276,6 @@ public class Player {
 		if (position > 40) {
 			this.setCircle(c++);
 			this.setMoney(this.getMoney() + CardPrices.CIRCLE_MONEY);
-			log.info("[-----PLAYER:-------] " + this.getName()
-					+ " GET CIRCLE MONEY +$200");
 			position = position - 40;
 		}
 		setPosition(position);
@@ -286,7 +284,6 @@ public class Player {
 	}
 
 	public int rollDicesAndWait() {
-		//position = getPosition() + (rollDiceOne() + rollDiceTwo());
 		position = rollDiceOne() + rollDiceTwo();
 		return position;
 
@@ -303,13 +300,14 @@ public class Player {
 			}
 		}
 	}
-//	public void addRegions(Player player) {
-//		for (Cities cities : Cities.values()) {
-//			if (cities.getPosition() == player.getPosition()) {
-//				listRegions.add(cities.getRegion());
-//			}
-//		}
-//	}
+
+	// public void addRegions(Player player) {
+	// for (Cities cities : Cities.values()) {
+	// if (cities.getPosition() == player.getPosition()) {
+	// listRegions.add(cities.getRegion());
+	// }
+	// }
+	// }
 
 	public List<SellableCard> getForSell() {
 		return forSell;
@@ -372,18 +370,6 @@ public class Player {
 			}
 		}
 	}
-//	public void addProperty(Player player) {
-//		for (Cities cities : Cities.values()) {
-//			if (cities.getPosition() == player.getPosition()) {
-//				property.add(new CityCard(cities, this));
-//			}
-//		}
-//		for (Rails rails : Rails.values()) {
-//			if (rails.getPosition() == player.getPosition()) {
-//				property.add(new RailCard(rails, this));
-//			}
-//		}
-//	}
 
 	public void addForMortage() {
 	}
@@ -575,39 +561,34 @@ public class Player {
 
 	public boolean canMortage() {
 		return !this.getForMortage().isEmpty();
-		// return (!this.getForMortage().isEmpty()) ? true : false;
 	}
 
 	public boolean canUnmortage() {
 		return !this.getForUnMortage().isEmpty() && this.getMoney() > 0;
-		// return (!this.getForUnMortage().isEmpty() && this.getMoney() > 0) ?
-		// true
-		// : false;
 	}
 
 	public boolean canSell() {
 		return !this.getSellAvailable().isEmpty();
-		// return (!this.getSellAvailable().isEmpty()) ? true : false;
 	}
 
 	public boolean canRollDices() {
 		boolean roll = false;
-		log.info(" getMoney>=0: "+(this.getMoney()>=0));
-		log.info(" double points: "+this.doublePoints());
-		log.info(" is rolled: "+this.isRolled());
+		log.info(" getMoney>=0: " + (this.getMoney() >= 0));
+		log.info(" double points: " + this.doublePoints());
+		log.info(" is rolled: " + this.isRolled());
 		if (this.getMoney() >= 0 && this.doublePoints() && this.isRolled()) {
 			roll = true;
 		} else if (this.getMoney() >= 0 && !this.isRolled()) {
-			log.info(" getMoney>=0: "+(this.getMoney()>=0));
-			log.info(" is rolled: "+this.isRolled());
+			log.info(" getMoney>=0: " + (this.getMoney() >= 0));
+			log.info(" is rolled: " + this.isRolled());
 			roll = true;
 		}
 		return roll;
 	}
 
 	public boolean canContinueGame() {
-		log.info(" can mortage: "+this.canMortage());
-		log.info(" can sell: "+this.canSell());
+		log.info(" can mortage: " + this.canMortage());
+		log.info(" can sell: " + this.canSell());
 		return this.canMortage() || this.canSell();
 	}
 
@@ -618,18 +599,18 @@ public class Player {
 	public boolean canAuction(int auctionPrice) {
 		return this.checkMoney(auctionPrice);
 	}
-	
-	public boolean canUpAuctionPrice(int upPrice){
-		return this.checkMoney(this.getAuctionRates()+upPrice);
+
+	public boolean canUpAuctionPrice(int upPrice) {
+		return this.checkMoney(this.getAuctionRates() + upPrice);
 	}
-	
-	public boolean canBuy( SellableCard card){
+
+	public boolean canBuy(SellableCard card) {
 		boolean buyState = false;
-		if (!this.equals(card.getOwner())
-				&& card.getOwner() != null && !card.isMortage()) {
+		if (!this.equals(card.getOwner()) && card.getOwner() != null
+				&& !card.isMortage()) {
 			buyState = false;
-		} else if (!this.equals(card.getOwner())
-				&& card.getOwner() != null && card.isMortage()) {
+		} else if (!this.equals(card.getOwner()) && card.getOwner() != null
+				&& card.isMortage()) {
 			buyState = false;
 		} else {
 			buyState = card.canBuy(this);
@@ -639,20 +620,20 @@ public class Player {
 		}
 		return buyState;
 	}
-	public String messages(SellableCard card){
-		String messages=null;
-		if (!this.equals(card.getOwner())
-				&& card.getOwner() != null && !card.isMortage()) {
-			messages = "Pay rent $"
-					+ card.getRent(this, card.getOwner())
+
+	public String messages(SellableCard card) {
+		String messages = null;
+		if (!this.equals(card.getOwner()) && card.getOwner() != null
+				&& !card.isMortage()) {
+			messages = "Pay rent $" + card.getRent(this, card.getOwner())
 					+ " to " + card.getOwner().getName();
 		} else if (this.equals(card.getOwner())) {
 			messages = "Owner " + this.getName();
-		} else if (!this.equals(card.getOwner())
-				&& card.getOwner() != null && card.isMortage()) {
+		} else if (!this.equals(card.getOwner()) && card.getOwner() != null
+				&& card.isMortage()) {
 			messages = "Object is mortage";
 		}
-		return messages; 
+		return messages;
 	}
 
 	public String getUser() {

@@ -92,9 +92,6 @@ public class JailCard extends Cell {
 			response.put("dice1", player.getDiceOne());
 			response.put("dice2", player.getDiceTwo());
 			response.put("move", false);
-//			buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
-//			buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
-//			buttons.put(ButtonsLabel.SELL, player.canSell());
 			buttons.putAll(ButtonsAction.buttonsAction(player));
 			buttons.put(ButtonsLabel.PAY, false);
 		}

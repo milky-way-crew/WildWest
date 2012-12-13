@@ -171,6 +171,14 @@ public class GameAction {
 				}
 			}
 			buttons.putAll(ButtonsAction.buttonsAction(player));
+			if (player.isInJail()) {
+				buttons.put(ButtonsLabel.ROLL, true);
+			} else if (!player.isInJail()
+					&& player.getPosition() == CellPositions.JAIL) {
+				buttons.put(ButtonsLabel.ROLL, true);
+			} else {
+				buttons.put(ButtonsLabel.ROLL, player.doublePoints());
+			}
 			state.put("buttons", buttons);
 			state.put("messages", messages);
 			state.put("player", player.getColor());

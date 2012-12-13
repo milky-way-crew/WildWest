@@ -7,6 +7,11 @@ import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 
+/**
+ * 
+ * @author Inna Class executes initialization of cities and rails
+ */
+
 public class StartGame {
 	public static Map<Integer, SellableCard> boardCities = new HashMap<Integer, SellableCard>();
 	public static Map<Integer, SellableCard> boardRails = new HashMap<Integer, SellableCard>();
@@ -44,7 +49,7 @@ public class StartGame {
 
 	}
 
-	public static  Map<Integer, SellableCard> boardCities() {
+	public static Map<Integer, SellableCard> boardCities() {
 		return boardCities;
 	}
 
