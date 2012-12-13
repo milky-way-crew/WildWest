@@ -13,7 +13,6 @@ import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
-
 public class Player {
 	private int id;
 	private String name;

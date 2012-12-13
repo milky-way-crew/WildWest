@@ -178,9 +178,6 @@ public class Game {
 		this.setStarted(true);
 		if (currentPlayer == null) {
 			this.setCurrentPlayer(this.getAllPlayers().get(0));
-			// for (Player player : this.getAllPlayers()) {
-			// log.info(":::::::::::::::  ID:::" + player.getId());
-			// }
 		}
 	}
 
