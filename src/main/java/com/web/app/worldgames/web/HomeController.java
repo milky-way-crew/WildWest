@@ -21,7 +21,7 @@ public class HomeController {
 		log.info("HomeController: Passing through...");
 		model.addAttribute("user", loginedUser);
 		log.info(loginedUser.toString());
-		return "home";
+		return "personal";
 	}
 	
 	

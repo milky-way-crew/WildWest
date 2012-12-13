@@ -202,6 +202,9 @@ function() {
                             }
                         }
                     }
+                    if (json.game_state && json.game_state.owner) {
+                        MONO.animate.money(json.game_state.owner, json.game_state.owner_money);
+                    }
                     ui.clearTooltipsIn('#game-table .cell[rel=tooltip]');
                     // this player moves
                     if(MONO.config.color === color) {

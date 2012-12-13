@@ -12,21 +12,22 @@ import com.web.app.worldgames.service.ChatRoomServiceManager;
 @Controller
 public class LogoutUserController {
 
-    private static ChatRoomServiceManager manager = ChatRoomsController
-	    .getManager();
+	private static ChatRoomServiceManager manager = ChatRoomsController.getManager();
 
-    @RequestMapping(value = { "/logout" })
-    public String logout(HttpServletRequest request) {
-    try {
-		ChatParticipant participant = ChatRoomsController.getChatParticipantFromRequest(request);
-		manager.getChatRoomById(participant.getId_room())
-			.deleteChatParticipantById(participant.getParticipantId());
-    } catch (Exception e) {
-    	// it's ok, user don't entered chat
-    }
-	HttpSession session = request.getSession();
-	session.removeAttribute("chatParticipant");
-	session.removeAttribute("user");
-	return "redirect:login";
-    }
+	@RequestMapping(value = { "/logout" })
+	public String logout(HttpServletRequest request) {
+		try {
+			ChatParticipant participant = ChatRoomsController
+					.getChatParticipantFromRequest(request);
+			manager.getChatRoomById(participant.getId_room())
+					.deleteChatParticipantById(participant.getParticipantId());
+		} catch (Exception e) {
+			// it's ok, user don't entered chat
+		}
+		HttpSession session = request.getSession();
+		session.removeAttribute("chatParticipant");
+		session.removeAttribute("user");
+		session.invalidate();
+		return "redirect:login";
+	}
 }

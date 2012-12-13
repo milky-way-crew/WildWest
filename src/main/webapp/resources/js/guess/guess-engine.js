@@ -205,11 +205,13 @@ $(function() {
 		var sendMessage = function() {
 				var message, data;
 				message = $("#chat-input").val();
-				data = {};
-				data.dataType = guessGame.CHAT;
-				data.message = message;
-				guessGame.send(data);
-				$("#chat-input").val("");
+				if (message.trim().length > 0) {
+					data = {};
+					data.dataType = guessGame.CHAT;
+					data.message = message;
+					guessGame.send(data);
+				}
+				$("#chat-input").val("");					
 				return false;
 			};
 
@@ -312,7 +314,9 @@ $(function() {
 						});
 						tokens = data.message.split(" ");
 						if(tokens[0].toLowerCase() === "welcome") {
-							stats.update(data.player, data.wins);
+							if (data.player && data.wins) {
+								stats.update(data.player, data.wins);
+							}
 						}
 					}
 				} else if(data.dataType === guessGame.LINE) {
