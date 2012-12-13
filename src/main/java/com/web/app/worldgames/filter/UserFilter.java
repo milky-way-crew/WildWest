@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 public class UserFilter implements Filter {
 	private final static Logger log = Logger.getLogger(UserFilter.class);
+	
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -32,8 +33,7 @@ public class UserFilter implements Filter {
 			if(requestAdrr.equals("/login") || requestAdrr.endsWith(".css") || requestAdrr.endsWith(".img")
 					|| requestAdrr.equals("/register") || requestAdrr.endsWith(".png")||
 					requestAdrr.endsWith(".js") || requestAdrr.endsWith(".ttc") || requestAdrr.endsWith(".ttf")
-					|| requestAdrr.endsWith(".fon")){
-//				log.info("Filter");
+					|| requestAdrr.endsWith(".woff")){
 				chain.doFilter(request, response);
 			}else{ 
 				((HttpServletResponse) response).sendRedirect("login");
@@ -41,7 +41,6 @@ public class UserFilter implements Filter {
 				}
 		}else{
 			chain.doFilter(request, response);
-//			log.info("Filter");
 		}
 		
 	}
