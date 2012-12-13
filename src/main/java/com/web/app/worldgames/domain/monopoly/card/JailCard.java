@@ -9,6 +9,7 @@ import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
 import com.web.app.worldgames.domain.monopoly.CardPrices;
 import com.web.app.worldgames.domain.monopoly.CellPositions;
 import com.web.app.worldgames.domain.monopoly.Player;
+import com.web.app.worldgames.domain.monopoly.game.ButtonsAction;
 import com.web.app.worldgames.domain.monopoly.game.MonopolyManager;
 
 public class JailCard extends Cell {
@@ -47,8 +48,6 @@ public class JailCard extends Cell {
 	public boolean canPayRansom(Player player) {
 		return player.checkMoney(CardPrices.RANSOM_FROM_JAIL)
 				&& player.isInJail();
-		// return (player.checkMoney(CardPrices.RANSOM_FROM_JAIL) && player
-		// .isInJail()) ? true : false;
 	}
 
 	public void payRansom(Player player) {
@@ -78,8 +77,6 @@ public class JailCard extends Cell {
 			response.put("was", CellPositions.JAIL);
 			response.put("dice1", player.getDiceOne());
 			response.put("dice2", player.getDiceTwo());
-//			response.put("dice1", dicePoint);
-//			response.put("dice2", 0);
 			response.put("move", move);
 			message = "You are going from jail";
 			buttons.put(ButtonsLabel.PAY, false);
@@ -95,9 +92,7 @@ public class JailCard extends Cell {
 			response.put("dice1", player.getDiceOne());
 			response.put("dice2", player.getDiceTwo());
 			response.put("move", false);
-			buttons.put(ButtonsLabel.MORTAGE, player.canMortage());
-			buttons.put(ButtonsLabel.UNMORTAGE, player.canUnmortage());
-			buttons.put(ButtonsLabel.SELL, player.canSell());
+			buttons.putAll(ButtonsAction.buttonsAction(player));
 			buttons.put(ButtonsLabel.PAY, false);
 		}
 		buttons.put(ButtonsLabel.DONE, true);

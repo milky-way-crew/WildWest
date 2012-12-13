@@ -15,81 +15,53 @@
 	<link type="text/css" rel="stylesheet"
 	href="resources/css/personal.css" />
 <title>KaBoom</title>
-<style type="text/css">
-	body {
-		/* background-image: url(resources/img/wood.jpg); */
-	}
-	.hero-unit {
-		background-color: rgba(255,255,255,0.7);
-	}
-</style>
 </head>
 <body>
+<!-- top panel -->
+	<jsp:include page="navbar.jsp" />
+	<!-- top panel -->
 	<div class="container ">
-	<div class="span10 ">
+	<%-- <div class="span10 well" id="top">
 		<!-- 
 		<h1>Oh, hi doggy.</h1>
 		 -->
 		<h1>
-			Welcome to personal account
-			<c:out value="${user.nickname}" /> ;)
+			My personal account <c:out value="${user.nickname}" /> 
 		</h1>
-		<p><%=new Date()%> <a id="logout" href="./logout" class="btn btn-danger">Logout</a></p>
-	</div>
+		<p><%=new Date()%>  <a id="logout" href="./logout" class="btn btn-danger">Logout</a></p>
+	</div> --%>
+	
 	
 	<!-- -----------------------------avatar---------------------------------- -->	
 		<div id="avatarDiv" class="span4">
-							 <center> 
+		<%-- <center> --%>
+		<label>My avatar</label>
 		<!-- 	<img id="avatar" src="resources/img/avatar/smile0.jpg" alt=""> -->
 			<%--  <img id="avatar"  alt="" src=<c:out value="${user.avatar}" />>  --%>
 			<a id="avatarka" target="_blank">
-        <div><img id="avatar"  alt="" src=<c:out value="${user.avatar}" />></div>
+        <div ><img id="avatar"  alt="" src=<c:out value="${user.avatar}" />></div>
        <div id="hope">New Avatar</div>
     </a>
-			<!-- <p><a id="edit" class="btn btn-large">&#9829; Edit</a></p> -->
-	<label id="labelStat">My statistic</label>
-		<table  class="table3" border=2 cellspacing=3 cellpadding=3 align="center" id="tableStat">
-						<tr>
-							<td width=100><b>Name</b></td>
-							<td width=150><b>Game</b></td>
-							<td width=150><b>GameWin</b></td>
-							<td width=150><b>Point</b></td>
-						</tr>
-						<tr>
-							<td width=100><b>Monopoly</b></td>
-							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b><c:out value="${user.login}" /></b></td>
-						</tr>
-						<tr>
-							<td width=100><b>Chess</b></td>
-							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b>0</b></td>
-						</tr>
-						<tr>
-							<td width=100><b>Gibbet</b></td>
-							<td width=150><b><c:out value="${user.email}" /></b></td>
-							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b>0</b></td>
-						</tr>
-						<tr>
-							<td width=100><b>Drow</b></td>
-							<td width=150><b><c:out value="${user.email}" /></b></td>
-							<td width=150><b><c:out value="${user.login}" /></b></td>
-							<td width=150><b>0</b></td>
-						</tr>
-					</table>			
-		 </center> 
+			 <p><a id="edit" class="btn btn-large">&#9829; Edit avatar</a></p> 
+  <!--   	<p><a id="editInformation" class="btn btn-primary">&#9700; Edit My Information</a> </p> -->
+  <div >
+  	<label>Control Panel</label>
+	<p><a id="editInformation" class="btn btn-primary">&#9700; Edit My Information</a> </p>
+	<p><a id="chatRoom" href="./chatRooms" class="btn btn-primary">Link to game rooms</a></p>
+	<p><a href="./gibbet" id="editInformation" class="btn btn-primary"> Gibbet solo</a> </p>
+		</div>				
+			
+		 <%-- </center>  --%>
 		</div>
 <!-- -----------------------------end avatar---------------------------------- -->		
 		
 		
 <!-- -----------------------------buttons---------------------------------- -->
 		<div id="buttons"  class="span6">
-		<center> 
-		<label id="labelMyInfo">My information</label>
-		<table class="table3" border=2 cellspacing=3 cellpadding=3 align="center" id="tableInfo">
+	 <%-- 	<center>   --%>
+	 	<div id="infoDiv" class="well">
+		<label  id="labelMyInfo">My information</label>
+		<table class="table3" border=2 cellspacing=3 cellpadding=3 id="tableInfo">
 						<tbody>
 						<tr>
 							<td  width=100><b>Login</b></td>
@@ -109,20 +81,47 @@
 						</tr>
 						</tbody>
 					</table>
-				<p><a id="editInformation" class="btn btn-primary">&#9700; Edit My Information</a></p> 
-				<p>
-					<a id="chatRoom" href="./chatRooms" class="btn btn-primary">Link to game
-						rooms</a>
-				</p>
-				<!--  <p>
-					<a href="./test" class="btn btn-warning">&#9827; Link to buggy chat &#9827;</a>
-				</p>
-				<p><a href="./chess" class="btn btn-primary">&#9829; Chess-servers</a></p>
-				<p><a href="./gibbet" class="btn btn-primary">&#9820; Gibbet</a></p> -->
-		</center> 
-			
+					</div>
+				<p></p>
+				<div  id="stat">
+				<label id="labelStat">My statistic</label>
+		<table  class="table3" border=2 cellspacing=3 cellpadding=3 align="center" id="tableStat">
+						<!-- <tr>
+							<td width=100><b>Name</b></td>
+							<td width=150><b>Game</b></td>
+							<td width=150><b>GameWin</b></td>
+							<td width=150><b>Point</b></td>
+						</tr> -->
+						<%-- <tr>
+							<td width=100><b>Monopoly</b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+						</tr>
+						<tr>
+							<td width=100><b>Chess</b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+							<td width=150><b>0</b></td>
+						</tr>
+						<tr>
+							<td width=100><b>Gibbet</b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+							<td width=150><b>0</b></td>
+						</tr>
+						<tr>
+							<td width=100><b>Drow</b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+							<td width=150><b><c:out value="${user.login}" /></b></td>
+							<td width=150><b>0</b></td>
+						</tr> --%>
+					</table>	
+					</div>
+ 	<%-- 	</center> --%> 
 		</div>
 <!-- -----------------------------end buttons---------------------------------- -->
+
 
 <!-- -----------------------------modal edit Avatar---------------------------------- -->
 		<div id="editAvatar" class="modal" style="display:none ;">
