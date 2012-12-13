@@ -238,4 +238,13 @@ public class Game {
 		}
 		return user;
 	}
+	public Player getPlayerById(int id){
+		Player player = null;
+		for(Player players: playerList){
+			if(players.getId() == id){
+				player = players;
+			}
+		}
+		return player;
+	}
 }
