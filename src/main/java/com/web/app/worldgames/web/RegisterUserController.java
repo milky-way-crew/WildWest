@@ -57,9 +57,10 @@ public class RegisterUserController {
 			int id = userService.insertUser(user);
 			statisticsService.createStatisticsField(id);
 			log.info("ID of new user: " + id);
-			
+			user.setId(id);
+			user.setUserDate(userService.findUserById(id).getUserDate());
 			recordUserInSession(request, user);
-			return "redirect:home";
+			return "redirect:personal";
 		}
 	}
 
