@@ -37,7 +37,7 @@ public class LoginUserConroller {
 		log.debug("LoginController passing through");
 		if (request.getSession().getAttribute("user") != null) {
 			log.info("User already logined redirecting to home.");
-			return "redirect:home";
+			return "redirect:personal";
 		}
 
 		model.addAttribute("user", new User());
@@ -58,7 +58,7 @@ public class LoginUserConroller {
 			return modelAndView;
 		} else {
 			log.info("User logined succesfully, redirecting to home page.");
-			modelAndView.setViewName("redirect:home");
+			modelAndView.setViewName("redirect:personal");
 			recordUserInSession(request, restoreUserFromDatabase(user));
 			return modelAndView;
 		}

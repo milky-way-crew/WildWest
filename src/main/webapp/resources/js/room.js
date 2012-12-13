@@ -156,9 +156,9 @@ function updateRoomList(json) {
 
 function createInviteWindow(json) {
 	$("#invite").modal();
-	$("#invBody").html("<p>User " + json.invitator + " invite you</p>");
-	$("#invBody").append("<p>to room by name " + json.room.roomName + "</p>");
-	$("#invBody").append("<p>game type is " + json.room.type + "</p>");
+	$("#invText").html("<p>User " + json.invitator + " invite you</p>");
+	$("#invText").append("<p>to room by name " + json.room.roomName + "</p>");
+	$("#invText").append("<p>game type is " + json.room.type + "</p>");
 }
 
 function getInvitedUser(pElement) {
@@ -234,7 +234,7 @@ function getClientPanel(json) {
 	if (json.creatorRedirect && json.myRedirect) {
 		$("#ready").attr('disabled', true);
 		$("#connect").attr('disabled', false);
-		setTimeout("window.location='./connect'", 7000);
+		setTimeout("window.location='./connect'", 10000);
 	}
 }
 
@@ -376,14 +376,10 @@ function joinToRoom(id) {
 				$("#listTitle").html("");
 				$("#menu").html("");
 				$("#list").html("");
-			} else {
-				alert("Room is full");
 			}
 			updateList();
 		}
 	});
 };
-
+setInterval(updateList, 5000);
 window.onunload = updateList();
-//window.beforeunload = exitFromRoom();
-
