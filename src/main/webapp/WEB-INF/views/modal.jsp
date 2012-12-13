@@ -6,8 +6,10 @@
 				<h1>Invitation</h1>
 			</div>
 			<div id="invBody" class="modal-body">
+			<div id="invText" class="well">
 				<p></p>
 			</div>
+		</div>
 			<div class="modal-footer">
 				<a id="accept" href="#" class="btn btn-success" data-dismiss="modal">Accept
 					<i class="icon-white icon-share-alt"></i>
