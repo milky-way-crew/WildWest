@@ -19,6 +19,9 @@
 <title>Gibbet</title>
 </head>
 <body>
+<!-- top panel -->
+	<jsp:include page="navbar.jsp" />
+	<!-- top panel -->
 	<div class="container " >
 	<div id="game">
 	<div class="hero-unit" >
