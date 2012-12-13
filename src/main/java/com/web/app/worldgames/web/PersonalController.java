@@ -90,7 +90,6 @@ public class PersonalController {
 			e.printStackTrace();
 		    }
 		json.put("monoG", ""+userStatService.getUserAllGames(user.getId(), monopoly));
-		log.info("JSON "+json.get("monoG"));
 		json.put("monoW", ""+userStatService.getUserAllWinGames(user.getId(), monopoly));
 		json.put("monoP", ""+userStatService.getUserPoints(user.getId(), monopoly));
 		json.put("monoM", ""+userStatService.getUserMoneyAmount(user.getId(), monopoly));

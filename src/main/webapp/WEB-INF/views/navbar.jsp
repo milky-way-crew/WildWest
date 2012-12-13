@@ -5,7 +5,7 @@
 				<ul class="nav">
 					<li class="divider-vertical"></li>
 					<li><a href="./goHome">Home</a></li>
-					<li><a href="#">Profile</a></li>
+					<li><a href="./personal">Profile</a></li>
 					<li><a href="#">TOP-100</a></li>
 				</ul>
 				<ul class="nav pull-right">

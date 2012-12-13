@@ -17,17 +17,19 @@
 <title>KaBoom</title>
 </head>
 <body>
-
+<!-- top panel -->
+	<jsp:include page="navbar.jsp" />
+	<!-- top panel -->
 	<div class="container ">
-	<div class="span10 well" id="top">
+	<%-- <div class="span10 well" id="top">
 		<!-- 
 		<h1>Oh, hi doggy.</h1>
 		 -->
 		<h1>
-			My personal account <%-- <c:out value="${user.nickname}" />  --%>
+			My personal account <c:out value="${user.nickname}" /> 
 		</h1>
 		<p><%=new Date()%>  <a id="logout" href="./logout" class="btn btn-danger">Logout</a></p>
-	</div>
+	</div> --%>
 	
 	
 	<!-- -----------------------------avatar---------------------------------- -->	
