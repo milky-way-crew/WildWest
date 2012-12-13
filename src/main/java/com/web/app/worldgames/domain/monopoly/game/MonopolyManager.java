@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.ws.BindingType;
+
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
@@ -26,7 +28,7 @@ import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 
-@Controller
+
 public class MonopolyManager {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	private Game monopolyGame;
@@ -678,11 +680,11 @@ public class MonopolyManager {
 				&& !getMonopolyGame().isStarted()) {
 			getMonopolyGame().start();
 			for (Player player : monopolyGame.getAllPlayers()) {
-				// userService.incrementUserAllGames(player.getId(),
-				// "monopoly");
-				// log.info("good"
-				// + userService.getUserAllGames(player.getId(),
-				// "monopoly"));
+				 userService.incrementUserAllGames(player.getId(),
+				 "monopoly");
+				 log.info("good"
+				 + userService.getUserAllGames(player.getId(),
+				 "monopoly"));
 			}
 			log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
 			response.put("game_status", "start");

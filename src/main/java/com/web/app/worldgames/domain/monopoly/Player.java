@@ -46,6 +46,10 @@ public class Player {
 	private int auctionRates;
 	private boolean inAuction;
 
+	public Player() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public boolean isCanCreateAuction() {
 		return canCreateAuction;
 	}
