@@ -71,7 +71,7 @@ body {
 }
 
 #usermsg {
-	width: 380px;
+	width: 370px;
 	margin-bottom: 20px;
 	border: 1px solid #ACD8F0;
 	background: #FFFF99;
@@ -113,6 +113,7 @@ body {
 	height: 180px;
 	width: auto;
 	text-align: center;
+	overflow: hidden;
 }
 
 #roomName {
@@ -178,12 +179,21 @@ p.hilite p {
 	font-family: 'Margarine';
 }
 
-#invBody p {
+#invText {
+	height: 70px;
+	width: 370px;
+	border-radius: 10px;
+	background-color: rgba(220, 216, 228, 0.3);
+	text-align: center;
+}
+
+#invText p {
 	word-wrap: normal;
 	color: #003366;
 	margin-top: 3px;
-	margin-left: 50px;
 	font-size: 16pt;
+	text-align: center;
+	font-family: 'Margarine';
 }
 
 .btn-group {
