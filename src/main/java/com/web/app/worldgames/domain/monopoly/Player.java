@@ -13,7 +13,6 @@ import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.card.CityCard;
 import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
-
 public class Player {
 	private int id;
 	private String name;
@@ -45,6 +44,10 @@ public class Player {
 	private boolean canCreateAuction;
 	private int auctionRates;
 	private boolean inAuction;
+
+	public Player() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public boolean isCanCreateAuction() {
 		return canCreateAuction;

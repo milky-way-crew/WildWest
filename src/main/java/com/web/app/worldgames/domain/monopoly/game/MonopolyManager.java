@@ -11,7 +11,6 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import com.web.app.worldgames.domain.User;
 import com.web.app.worldgames.domain.monopoly.ButtonsLabel;
@@ -26,7 +25,6 @@ import com.web.app.worldgames.domain.monopoly.card.RailCard;
 import com.web.app.worldgames.domain.monopoly.card.SellableCard;
 import com.web.app.worldgames.service.interfaces.IStatisticsServiceManager;
 
-@Controller
 public class MonopolyManager {
 	private static final Logger log = Logger.getLogger(MonopolyManager.class);
 	private Game monopolyGame;
@@ -677,13 +675,6 @@ public class MonopolyManager {
 		if (getMonopolyGame().isReadyToStart()
 				&& !getMonopolyGame().isStarted()) {
 			getMonopolyGame().start();
-			for (Player player : monopolyGame.getAllPlayers()) {
-				// userService.incrementUserAllGames(player.getId(),
-				// "monopoly");
-				// log.info("good"
-				// + userService.getUserAllGames(player.getId(),
-				// "monopoly"));
-			}
 			log.info("[GAME IS STARTED] " + getMonopolyGame().isStarted());
 			response.put("game_status", "start");
 			turn = new HashMap<String, Object>();
@@ -802,6 +793,7 @@ public class MonopolyManager {
 			log.info("[PLAYER LIST ]" + monopolyGame.getAllPlayers());
 			log.info("[LOSER LIST ]" + monopolyGame.getAllLosers());
 			log.info("******************Cards after leave game*************");
+			userService.changeUserMoneyAmount(player.getId(), player.getMoney(), "monopoly");
 			for (SellableCard card : player.playerProperty()) {
 				index.add(card.getPosition());
 				if (card instanceof CityCard) {
