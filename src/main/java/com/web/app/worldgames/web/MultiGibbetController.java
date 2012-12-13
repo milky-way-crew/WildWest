@@ -99,10 +99,6 @@ public class MultiGibbetController {
 	} else if (gibbetGame.getHost().getId() == client.getId()) {
 	    return "/multigibbet";
 	}
-	// TODO:
-	// connect to self
-	// connect if other games are running
-	// connect if
 
 	if (!gibbetGame.isFull()) {
 	    log.info("Connecting client to server with id" + idServer);

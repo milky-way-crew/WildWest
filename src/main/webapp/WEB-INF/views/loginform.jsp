@@ -160,7 +160,7 @@
         <!--   <p><a class="btn" href="#">View details &raquo;</a></p> -->
         </div> 
          <div class="span3">
-          <h2>Draw N Guess</h2>
+          <h2>Draw&Guess</h2>
           <p>One player is drowing a picture, and other players are guessing it.  Hilarious and crazily addictive, Draw N Guess is more than just a social game; it's a complete real-time fun-filled gaming experience.
 Your goal is to draw a given word, and your opponent has to guess that word; and then vice versa.</p>
    <!--        <p><a class="btn" href="#">View details &raquo;</a></p> -->
