@@ -1,12 +1,36 @@
 @CHARSET "UTF-8";
 
-body{
+.hero-unit {
+		background-color: rgba(255,255,255,0.7);
+	}
+	
+label {
+	font-size: 30px;
+	font-family: cursive;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: normal;
+	/* font-size: medium; */
+	line-height: 100%;
+	word-spacing: normal;
+	letter-spacing: 0.1ex;
+	text-decoration: initial;
+	text-transform: none;
+	text-align: left;
+	text-indent: 0ex;
+	text-shadow: .04em .04em 0 white, .08em .08em 0 #000
+}
+.back{
+	width: 150px;
+	heigth: 150px;]
+}
+ body{
 	background: url(../img/background.jpg) no-repeat center center fixed;
  -webkit-background-size: cover;
  -moz-background-size: cover;
  -o-background-size: cover;
  background-size: cover;
-}
+} 
 a {
 	font: 1px;
 	width: 100px;
@@ -15,7 +39,7 @@ a {
 	text-decoration: none;
 }
 label {
-	color: #FFFFFF;
+	color: #000000;
 }
 table {
 	color: #FFFFFF;
@@ -35,6 +59,7 @@ background-image: url(../img/123.jpg);
 }
  #editInf{
 width: 400px;
+	
 }
 /* #tableInfo {
 	   -webkit-transition: all 1s ease-in-out;
@@ -68,11 +93,11 @@ width: 400px;
     transform: rotate(360deg) scale(2);
   } */
 #chatRoom {
-	width: 200px;
+	width: 150px;
 }
 #editInformation{
-	width: 200px;
-	margin-top: 15px;
+	width: 150px;
+/* 	margin-top: 15px; */
 }
 #edit {
 	width: 100px;
@@ -107,7 +132,7 @@ width: 400px;
 #logout {
 	width: 70px;
 	height: 20px;
-	float: right;
+	float: right; 
 }
 
 #avatarka {
@@ -166,14 +191,14 @@ table.table3{
 }
 .table3 tbody td:nth-child(even){
     background-color:#444;
-    color:#444;
+    color:#000;
     border-bottom:1px solid #444;
     background:-webkit-gradient(
         linear,
         left bottom,
         left top,
-        color-stop(0.39, rgb(189,189,189)),
-        color-stop(0.7, rgb(224,224,224))
+        color-stop(0.39, #A59020),
+        color-stop(0.7, #E0B65D)
         );
     background:-moz-linear-gradient(
         center bottom,
@@ -184,7 +209,7 @@ table.table3{
 }
 .table3 tbody td:nth-child(odd){
     background-color:#555;
-    color:#f0f0f0;
+    color:#fff;
     border-bottom:1px solid #444;
     background:-webkit-gradient(
         linear,
@@ -199,4 +224,67 @@ table.table3{
         rgb(105,105,105) 70%
         );
     text-shadow:1px 1px 1px #000;
+}
+#infoDiv{
+	width: 300px;
+	height: 210px;
+	min-height: 20px;
+	padding: 19px;
+	margin-bottom: 20px;
+	background-color: #A7A7A7;
+	border: 1px solid #E3E3E3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0px 0px 10px #000;
+	-webkit-box-shadow: 0px 0px 10px #000;
+	box-shadow: 0px 0px 10px #000;
+	text-shadow: .04em .04em 0 white, .08em .08em 0 #fff
+}
+#stat{
+	min-height: 20px;
+	padding: 19px;
+	margin-bottom: 20px;
+	background-color: #A7A7A7;
+	border: 1px solid #E3E3E3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0px 0px 10px #000;
+	-webkit-box-shadow: 0px 0px 10px #000;
+	box-shadow: 0px 0px 10px #000;
+	text-shadow: .04em .04em 0 white, .08em .08em 0 #fff
+}
+#avatarDiv{
+	width: 210px;
+	min-height: 20px;
+	padding: 19px;
+	margin-bottom: 20px;
+	background-color: #A7A7A7;
+	border: 1px solid #E3E3E3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0px 0px 10px #000;
+	-webkit-box-shadow: 0px 0px 10px #000;
+	box-shadow: 0px 0px 10px #000;
+	text-shadow: .04em .04em 0 white, .08em .08em 0 #fff
+}
+#top{
+	color: #000
+	min-height: 20px;
+	padding: 19px;
+	margin-bottom: 20px;
+	background-color: #A7A7A7;
+	border: 1px solid #E3E3E3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0px 0px 10px #000;
+	-webkit-box-shadow: 0px 0px 10px #000;
+	box-shadow: 0px 0px 10px #000;
+	text-shadow: .04em .04em 0 white, .08em .08em 0 #fff
+}
+#top p{
+	font-size: 16px;
 }

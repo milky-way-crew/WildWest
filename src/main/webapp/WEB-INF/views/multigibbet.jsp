@@ -14,21 +14,18 @@
 	type="text/css">
 	<link type="text/css" rel="stylesheet"
 	href="resources/css/multigibbet.css" />
+	<link href='http://fonts.googleapis.com/css?family=Margarine'
+	rel='stylesheet' type='text/css'>
 <title>Gibbet</title>
-<style type="text/css">
-	body {
-		background-image: url(resources/img/gibbet/gibbetback.jpg);
-	}
-	.hero-unit {
-		background-color: rgba(255,255,255,0.7);
-	}
-</style>
 </head>
 <body>
+<!-- top panel -->
+	<jsp:include page="navbar.jsp" />
+	<!-- top panel -->
 	<div class="container " >
 	<div id="game">
-	<div class="hero-unit" >
-		<h1>
+	<div  >
+		<h1 id="welcome">
 			Welcome to gibbet 
 			<c:out value="${user.login}" /> 
 		</h1>
@@ -36,7 +33,7 @@
 	
 
 	
-		<div class="span6 well" align="center">
+		<div class="span6" align="center" id="control">
 		<select name="list" id="list" onChange="javascript: selfSubmit();"> 
 		<option value="random">random</option>
 		<option value="mathematic">mathematic</option>
@@ -55,7 +52,7 @@
 						<input  type="text" id="word"> 
 					</form></p>
 					
-					<input type="text" id="live" value="7">Your life:</input>
+					Your life:<input type="text" id="live" value="7"></input>
 				<p id="controls">
 				
 				<p><a class="btn btn-primary btn-medium" id="q" >Q</a>

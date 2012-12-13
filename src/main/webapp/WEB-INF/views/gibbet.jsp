@@ -14,15 +14,9 @@
 	type="text/css">
 	<link type="text/css" rel="stylesheet"
 	href="resources/css/gibbet.css" />
+		<link href='http://fonts.googleapis.com/css?family=Margarine'
+	rel='stylesheet' type='text/css'>
 <title>Gibbet</title>
-<style type="text/css">
-	body {
-		background-image: url(resources/img/gibbet/gibbetback.jpg);
-	}
-	.hero-unit {
-		background-color: rgba(255,255,255,0.7);
-	}
-</style>
 </head>
 <body>
 	<div class="container " >
@@ -36,7 +30,7 @@
 	
 
 	
-		<div class="span6 well" align="center">
+		<div class="span6 well" align="center" id="control">
 		<select name="list" id="list" onChange="javascript: selfSubmit();"> 
 		<option value="random">random</option>
 		<option value="mathematic">mathematic</option>
@@ -82,7 +76,7 @@
 				<a class="btn btn-primary btn-medium" id="m" >M</a>
 				</p>
 				</p>
-					<a href="./home" class="btn btn-danger" id="exit">Exit<i class="icon-white icon-remove"></i></a>
+					<a href="./personal" class="btn btn-danger" id="exit">Exit<i class="icon-white icon-remove"></i></a>
 		</div>
 		
 		<div class="span4">
