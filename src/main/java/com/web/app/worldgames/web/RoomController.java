@@ -228,6 +228,7 @@ public class RoomController {
 
     private void createRoom(ChatParticipant participant, String roomName,
 	    String type) {
+	manager.setChatRooms(updateRoomList(participant));
 	manager.getChatRoomById(participant.getId_room())
 		.deleteChatParticipantById(participant.getParticipantId());
 	int lastRoom = manager.getChatRooms().size() - 1;

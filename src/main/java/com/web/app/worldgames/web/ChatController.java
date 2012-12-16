@@ -43,6 +43,7 @@ public class ChatController {
 	    json.put("update", updateUserMessages(participant));
 	    return json;
 	} else {
+	    data = data.replace(">", "&gt;").replace("<", "&lt;");
 	    log.trace("Broadcast request from user: "
 	     + participant.getNickname() + " and message: " + data);
 	    broadcast(participant, data);
