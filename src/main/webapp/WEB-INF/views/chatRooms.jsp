@@ -13,10 +13,10 @@
 <link rel="stylesheet" href="resources/css/bootstrap-responsive.min.css">
 <link type="text/css" rel="stylesheet"
 	href="resources/css/chatroom_style.css" />
-<link href='http://fonts.googleapis.com/css?family=Scada'
+<!-- <link href='http://fonts.googleapis.com/css?family=Scada'
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Margarine'
-	rel='stylesheet' type='text/css'>
+	rel='stylesheet' type='text/css'> -->
 <title>Welcome!</title>
 </head>
 <body>

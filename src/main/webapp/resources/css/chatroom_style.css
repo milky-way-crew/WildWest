@@ -13,6 +13,20 @@ body {
 	margin-bottom: 7px;
 }
 
+@font-face {
+  font-family: 'Scada';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Scada'), local('Scada-Regular'), url(../font/Scada.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Margarine';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Margarine'), local('Margarine-Regular'), url(../font/Margarine.woff) format('woff');
+}
+
 #listBox {
 	background: url(../img/list.jpg) no-repeat center;
 	height: 280px;

@@ -223,7 +223,7 @@ public class MultiGibbetController {
 		    && gibbetGame.getClient().isReady()) {
 		return "game";
 	    }
-	    if (gibbetGame.getHost().isReady() == false
+	    if (gibbetGame.getHost().isReady() == false && gibbetGame.getClient()!=null
 		    && gibbetGame.getClient().isReady()) {
 		return "wait fo host";
 	    }
