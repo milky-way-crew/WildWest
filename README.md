@@ -1,30 +1,22 @@
-Milky-way games inc.
-====================
+Milky-way team.
+===============
 
-http://wiki.eclipse.org/EGit/User_Guide#Manual_conflict_resolution
-
-if "org.eclipse.jgit.errors.CheckoutConflictException"
-then `Project | Team | Reset | Hard`
-
-Git tutorial for dummies -> http://vk.cc/7NY3D <-
-
+What are inside: `monopoly`, `chess`, `draw&guess` & `gibbet` games.
+ 
 Deployment instructions
 -------
 
-List -_- :
-* at first CREATE DATABASE `worldgames`
+* in terminal  `mysql -u {username} -p` 
+	> change sql-user and db-port in `webapp/WEB-INF/spring/servlet-context.xml` if needed
+	> default setting are `root:root` on port=`3306`
+* `create database worldgames;`
+* update maven dependencies
+* configure `${TOMCAT_HOME}/conf/tomcat-users.xml` (add manager\admin user)
+	> don't forget to add `manager-script` to roles
+* configure `${MAVEN_HOME}/settings.xml` (in server section add user from previous step)
 * `mvn tomcat:deploy`
-* ???????
-* `PROFIT`
+* goto browser on `localhost:8080/WildWest`
+* enjoy ;)
 
-inna commit***********
-	Add check id, when player connect
-	Auction 20sec
-	Win/lose - working correctly
-	Sending message after win or lose:
-	type:logic
-		game_state:{messages:(),player_loser:COLOR,player_money:(money),
-		index:(list of players properties, can be available to buy by another players)}
-		
-		game_state:{messages:(),winner:COLOR,player_money:(money),game_end:ture/false}
-*******************************
+------
+Project development finished.

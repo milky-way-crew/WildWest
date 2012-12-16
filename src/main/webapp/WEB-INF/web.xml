@@ -7,6 +7,21 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>WEB-INF/spring/servlet-context.xml</param-value>
 	</context-param>
+	
+	<filter>
+		<filter-name>UserFilter</filter-name>
+		<filter-class>
+			com.web.app.worldgames.filter.UserFilter
+		</filter-class>
+		<init-param>
+			<param-name>test-param</param-name>
+			<param-value>This parameter is for testing.</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
 
 	<listener>
 		<listener-class>com.web.app.worldgames.listener.ContextLoaderHandler</listener-class>
@@ -14,20 +29,6 @@
 	<listener>
 		<listener-class>com.web.app.worldgames.listener.SessionListener</listener-class>
 	</listener>
-<filter>
-    <filter-name>UserFilter</filter-name>
-    <filter-class>
-        com.web.app.worldgames.filter.UserFilter
-    </filter-class>
-    <init-param>
-        <param-name>test-param</param-name>
-        <param-value>This parameter is for testing.</param-value>
-    </init-param>
-</filter>
-<filter-mapping>
-    <filter-name>UserFilter</filter-name>
-    <url-pattern>*</url-pattern>
-</filter-mapping>
 	<!-- Spring dispatcher servlet -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -57,11 +58,11 @@
 		<error-code>500</error-code>
 		<location>/error/500.html</location>
 	</error-page>
-	
-	<mime-mapping> 
-		<extension>woff</extension> 
-		<mime-type>application/x-font-woff</mime-type> 
+
+	<mime-mapping>
+		<extension>woff</extension>
+		<mime-type>application/x-font-woff</mime-type>
 	</mime-mapping>
-	
+
 </web-app>
 
