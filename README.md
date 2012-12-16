@@ -6,7 +6,7 @@ What are inside: `monopoly`, `chess`, `draw&guess` & `gibbet` games.
 Deployment instructions
 -------
 
-* in terminal  `mysql -u {username} -p`, default mysql settings are `root:root` on port=`3306` 
+* in terminal  `mysql -u {username} -p` -> default mysql settings are `root:root` on port=`3306` 
 * or change mysql-user and db-port in `webapp/WEB-INF/spring/servlet-context.xml` if needed
 * `create database worldgames;`
 * update maven dependencies
